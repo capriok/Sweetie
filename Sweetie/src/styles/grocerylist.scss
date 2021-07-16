@@ -1,0 +1,23 @@
+@import "./index.scss";
+
+.grocerylist {
+	width: 80%;
+	align-self: flex-start;
+	padding-top: 200px;
+	h3 {
+		font-size: 1.8rem;
+		font-weight: 400;
+		margin-bottom: 20px;
+		border-bottom: 2px solid grey;
+	}
+	.store {
+		width: 100%;
+		margin: 0 auto;
+		margin-bottom: 40px;
+	}
+	.item {
+		font-size: 1.4rem;
+		padding-bottom: 10px;
+		margin-bottom: 5px;
+	}
+}

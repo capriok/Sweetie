@@ -1,0 +1,46 @@
+@import "./index.scss";
+
+main {
+	@include flex;
+	flex-direction: column;
+	header {
+		h1 {
+			font-size: 1.8em;
+			margin-bottom: 40px;
+		}
+	}
+	section {
+		&:not(:last-child) {
+			// border-bottom: 3px solid crimson;
+		}
+		position: relative;
+		overflow: hidden;
+		@include flex;
+		flex-direction: column;
+		width: 90%;
+		min-height: 50vh;
+		max-height: 100vh;
+		padding: 50px 20px;
+		padding-bottom: 100px;
+		margin-bottom: 20px;
+		box-shadow: 0px 0px 2px 2px rgba(120, 120, 120, 0.4);
+		border-radius: 10px;
+		text-align: center;
+		h3 {
+			margin-top: 40px !important;
+		}
+		.list {
+			width: 90%;
+		}
+		.buttons {
+			user-select: none;
+			position: absolute;
+			bottom: 0px;
+			@include flex;
+			width: 100%;
+			button {
+				flex: 1;
+			}
+		}
+	}
+}

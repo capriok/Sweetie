@@ -1,0 +1,15 @@
+@import "./index.scss";
+
+.date-time {
+	.date,
+	.time {
+		font-family: "Quicksand", sans-serif;
+	}
+
+	.date {
+		font-size: 4.5rem;
+	}
+	.time {
+		font-size: 3.5rem;
+	}
+}

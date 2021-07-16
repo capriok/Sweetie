@@ -1,0 +1,43 @@
+@import "./index.scss";
+
+.weather {
+	@include flex;
+	flex-direction: column;
+	.top,
+	.bottom {
+		@include flex;
+		flex: 100%;
+	}
+	.top {
+		h3 {
+			font-size: 3rem;
+			font-weight: 400;
+		}
+	}
+	.description {
+		font-size: 3rem;
+		margin: 0px;
+	}
+	.temperature,
+	.humidity {
+		text-align: center;
+		min-width: 200px;
+		p {
+			margin: 0px;
+			font-size: 1.75rem !important;
+		}
+
+		.loader {
+			margin-top: 5px;
+			margin-bottom: 25px;
+		}
+	}
+	.icon {
+		@include flex;
+		img {
+			width: 175px;
+			min-height: 100px;
+			filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.3)) hue-rotate(180deg);
+		}
+	}
+}
