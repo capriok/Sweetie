@@ -7,7 +7,7 @@
 		},
 		{
 			"name": "Avacados",
-			"qty": 1,
+			"qty": 3,
 			"store": "wholefoods"
 		},
 		{
@@ -41,68 +41,119 @@
 	},
 	"plantList": [
 		{
-			"name": "Snake Plant",
-			"cycle": 8,
-			"offset": 0
+			"name": "Bird Of Paradise",
+			"cycle": 7,
+			"last": "7/6/2021"
 		},
 		{
-			"name": "Zebra Plant",
-			"cycle": 4,
-			"offset": 0
+			"name": "Bromeliad",
+			"cycle": 7,
+			"last": "7/19/2021"
 		},
 		{
-			"name": "Taco Shells",
-			"cycle": 4,
-			"offset": 0
-		},
-		{
-			"name": "Spikey Boy",
-			"cycle": 4,
-			"offset": 0
+			"name": "Calathea",
+			"cycle": 7,
+			"last": "7/13/2021"
 		},
 		{
 			"name": "Coleus",
-			"cycle": 2,
-			"offset": 0
+			"cycle": 14,
+			"last": "7/18/2021"
 		},
 		{
-			"name": "Cottage Cheese",
-			"cycle": 3,
-			"offset": 0
+			"name": "Dolphn Necklace",
+			"cycle": 30,
+			"last": "7/14/2021"
 		},
 		{
-			"name": "Umbrella Plant",
-			"cycle": 3,
-			"offset": 0
+			"name": "Dracena Dorado",
+			"cycle": 30,
+			"last": "6/29/2021"
+		},
+		{
+			"name": "Fiddle Leaf Fig",
+			"cycle": 7,
+			"last": "7/18/2021"
+		},
+		{
+			"name": "Golden Pathos",
+			"cycle": 7,
+			"last": "7/10/2021"
+		},
+		{
+			"name": "Heart Leaf Philendron",
+			"cycle": 7,
+			"last": "7/10/2021"
+		},
+		{
+			"name": "Jade Plant",
+			"cycle": 30,
+			"last": "7/18/2021"
+		},
+		{
+			"name": "Monstera",
+			"cycle": 7,
+			"last": "7/13/2021"
 		},
 		{
 			"name": "Ponytail Palm",
-			"cycle": 3,
-			"offset": 0
+			"cycle": 30,
+			"last": "6/28/2021"
 		},
 		{
-			"name": "Joint Plant",
-			"cycle": 5,
-			"offset": 0
+			"name": "Red Echeveria",
+			"cycle": 30,
+			"last": "7/18/2021"
+		},
+		{
+			"name": "Snake Plant",
+			"cycle": 30,
+			"last": "7/28/2021"
 		},
 		{
 			"name": "Spider Plant",
-			"cycle": 6,
-			"offset": 0
+			"cycle": 14,
+			"last": "7/1/2021"
 		},
 		{
-			"name": "Regular Pathos",
-			"cycle": 5,
-			"offset": 0
+			"name": "Baby Spider Plant",
+			"cycle": 14,
+			"last": "7/18/2021"
 		},
 		{
-			"name": "Heart Pathos",
-			"cycle": 5,
-			"offset": 0
+			"name": "Spikey SuccBoi",
+			"cycle": 14,
+			"last": "7/20/2021"
+		},
+		{
+			"name": "Sunflowers",
+			"cycle": 14,
+			"last": "7/18/2021"
+		},
+		{
+			"name": "Taco Plant",
+			"cycle": 14,
+			"last": "7/20/2021"
+		},
+		{
+			"name": "Umbrella Plant",
+			"cycle": 7,
+			"last": "7/18/2021"
+		},
+		{
+			"name": "Water Chain",
+			"cycle": 14,
+			"last": "7/12/2021"
+		},
+		{
+			"name": "Zebra Plant",
+			"cycle": 14,
+			"last": "7/20/2021"
+		},
+		{
+			"name": "ZZ Plant",
+			"cycle": 14,
+			"last": "6/30/2021"
 		}
-	],
-	"plantSchedule": {
-		"interval": 3,
-		"offset": 0
-	}
+	]
 }

@@ -16,6 +16,9 @@
 	align-items: center;
 }
 
+$light-grey: rgba(120, 120, 120, 0.1);
+$accent-color: rgba(179, 5, 5, 0.6);
+$drop-shadow: 0px 0px 2px 2px rgba(120, 120, 120, 0.4);
 * {
 	box-sizing: border-box;
 }
@@ -27,12 +30,22 @@ body {
 	height: 100vh;
 }
 
+input,
+select {
+	padding: 7px 10px;
+	border-radius: 5px;
+	border: none;
+	outline-color: $accent-color;
+	background-color: rgba(120, 120, 120, 0.1);
+	border: 1px solid rgb(219, 219, 219);
+}
+
 button {
 	cursor: pointer;
 	outline: none;
 	border: none;
 	padding: 10px;
-	border-top: 2px solid rgba(179, 5, 5, 0.6);
+	border-top: 2px solid $accent-color;
 	background-color: rgba(120, 120, 120, 0.1);
 	transition: 0.2s;
 	&:active {
@@ -48,9 +61,9 @@ h4 {
 	user-select: none;
 	cursor: default;
 }
+
 p {
 	cursor: pointer;
-	font-size: 1rem;
 	font-weight: 400;
-	font-size: 1.1rem;
+	font-size: 0.9rem;
 }

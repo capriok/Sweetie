@@ -1,0 +1,90 @@
+@import "./index.scss";
+
+.slidemodal {
+	z-index: 100;
+	position: fixed;
+	bottom: 0px;
+	width: 100vw;
+	border-top: 2px solid $accent-color;
+	background-color: rgb(255, 255, 255);
+
+	.modal {
+		position: relative;
+		text-align: center;
+		@include flex;
+		flex-direction: column;
+		.closer {
+			@include flex;
+			position: absolute;
+			top: -42px;
+			width: 100%;
+			height: 40px;
+			color: rgb(162, 1, 1);
+			font-size: 1.5rem;
+			font-weight: 600;
+		}
+		.title {
+			margin-bottom: 0;
+		}
+		.content {
+			margin: 50px;
+			@include flex;
+			flex-direction: column;
+			padding-bottom: 40px;
+			form {
+				max-width: 500px;
+				width: 90%;
+			}
+			form {
+				transition: all 0.2s;
+				.io-row,
+				.store {
+					@include flex;
+				}
+				.io-row {
+					margin: 0 7px;
+					input {
+						&:first-child {
+							margin-right: 7px;
+							width: 250%;
+						}
+						width: 100%;
+					}
+					label {
+						span {
+							font-size: 0.8rem;
+							padding: 0 10px;
+						}
+						input {
+							margin: 0;
+						}
+					}
+				}
+				.store {
+					margin-top: 7px;
+					select {
+						margin: 0 7px;
+						width: 100%;
+					}
+					button {
+						width: 100%;
+					}
+				}
+				.cats {
+					input {
+						&:first-child {
+							margin-right: 7px;
+						}
+						width: 45% !important;
+					}
+				}
+				.submit {
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					width: 100%;
+				}
+			}
+		}
+	}
+}

@@ -9,7 +9,7 @@ router.get('/gl', (req, res) => {
 	res.json({ list: groceryList })
 })
 
-router.get('/gl-add', (req, res) => {
+router.post('/gl-add', (req, res) => {
 	console.log('Request: Add Grocery');
 
 	const { item } = req.body
@@ -45,7 +45,7 @@ router.get('/tl', (req, res) => {
 	res.json({ list: taskList })
 })
 
-router.get('/tl-add', (req, res) => {
+router.post('/tl-add', (req, res) => {
 	console.log('Request: Add Task');
 
 	const { task } = req.body
@@ -63,11 +63,37 @@ router.post('/tl-rem', (req, res) => {
 	res.json({ list: taskList })
 })
 
-
 router.get('/tl-clr', (req, res) => {
 	console.log('Request: Clear Task List');
 
 	const taskList = Swt.clearTaskList()
 
 	res.json({ list: taskList })
+})
+
+
+router.get('/pl', (req, res) => {
+	console.log('Request: Plant List');
+
+	const plantList = Swt.getPlantList()
+
+	res.json({ list: plantList })
+})
+
+router.post('/pl-add', (req, res) => {
+	console.log('Request: Add Plant');
+
+	const { plant } = req.body
+	const plantList = Swt.addPlant(plant)
+
+	res.json({ list: plantList })
+})
+
+router.post('/pl-rem', (req, res) => {
+	console.log('Request: Remove Plant');
+
+	const { plant } = req.body
+	const plantList = Swt.removePlant(plant)
+
+	res.json({ list: plantList })
 })

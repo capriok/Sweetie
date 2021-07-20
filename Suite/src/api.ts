@@ -58,6 +58,46 @@ class Api {
 		const res = await AxiosInstance.get('/tl-clr')
 		return res.data.list
 	}
+
+	// CATS
+
+	// public async GetCatList(): Promise<Array<Task>> {
+	// 	const res = await AxiosInstance.get('/tl')
+	// 	return res.data.list
+	// }
+
+	// public async RemoveTask(task: Task): Promise<Array<Task>> {
+	// 	const res = await AxiosInstance.post('/tl-rem', { task: task })
+	// 	return res.data.list
+	// }
+
+	// public async AddTask(task: Task): Promise<Array<Task>> {
+	// 	const res = await AxiosInstance.post('/tl-add', { task: task })
+	// 	return res.data.list
+	// }
+
+	// public async ClearTaskList(): Promise<Array<Task>> {
+	// 	const res = await AxiosInstance.get('/tl-clr')
+	// 	return res.data.list
+	// }
+
+	// PLANTS
+
+	public async GetPlantList(): Promise<Array<Task>> {
+		const res = await AxiosInstance.get('/pl')
+		return res.data.list
+	}
+
+	public async RemovePlant(task: Task): Promise<Array<Task>> {
+		const res = await AxiosInstance.post('/pl-rem', { task: task })
+		return res.data.list
+	}
+
+	public async AddPlant(task: Task): Promise<Array<Task>> {
+		const res = await AxiosInstance.post('/pl-add', { task: task })
+		return res.data.list
+	}
+
 }
 
 

@@ -13,14 +13,22 @@ namespace SwtNameSpace {
 		pinned: boolean
 	}
 
+	type Plant = {
+		name: string
+		cycle: number
+		last: string
+	}
+
 	export class Sweetie {
 
 		groceryList: Array<Grocery>
 		taskList: Array<Task>
+		plantList: Array<Plant>
 
 		constructor() {
 			this.groceryList = SweetieStore['groceryList']
 			this.taskList = SweetieStore['taskList']
+			this.plantList = SweetieStore['plantList']
 		}
 
 		getGroceryList() {
@@ -53,6 +61,18 @@ namespace SwtNameSpace {
 		clearTaskList() {
 			this.taskList = []
 			return this.taskList
+		}
+
+		getPlantList() {
+			return this.plantList
+		}
+		addPlant(plant) {
+			this.plantList.push(plant)
+			return this.plantList
+		}
+		removePlant(plant) {
+			this.plantList = this.plantList.filter(p => p.name !== plant.name)
+			return this.plantList
 		}
 	}
 }

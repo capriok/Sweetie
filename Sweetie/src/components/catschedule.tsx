@@ -21,7 +21,6 @@ const CatSchedule: React.FC = () => {
 	const today = date.getDate()
 	const tomorrow = date.getDate() + 1
 
-
 	const [schedule, setSchedule] = useState<Array<Items>>([])
 
 	useEffect(() => {
