@@ -1,21 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CatSchedule from './components/catschedule';
-import GroceryList from './components/grocerylist';
-import PlantSchedule from './components/plantschedule';
-import TaskList from './components/tasklist';
+import Cats from './components/Cats';
+import Groceries from './components/Groceries';
+import Plants from './components/Plants';
+import Tasks from './components/Tasks';
 import './styles/index.scss';
 import './styles/suite.scss';
+import './styles/slidemodal.scss';
+import './styles/modalforms.scss';
 
 function Index() {
 
   return (
-    <main>
+    <main className="suite">
       <header><h1>Sweetie Suite</h1></header>
-      <GroceryList />
-      <TaskList />
-      <CatSchedule />
-      <PlantSchedule />
+      <Groceries />
+      <Tasks />
+      <Cats />
+      <Plants />
     </main>
   )
 }

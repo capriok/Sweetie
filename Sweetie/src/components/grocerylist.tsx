@@ -13,7 +13,7 @@ const GroceryList: React.FC = () => {
 	return (
 		<div className="grocerylist">
 			<h1>Groceries</h1>
-			{groceries.some(g => g.store === 'wholefoods') &&
+			{groceries.some((g: any) => g.store === 'wholefoods') &&
 				<>
 					<h3>Whole Foods</h3>
 					<div className="store">
@@ -23,11 +23,11 @@ const GroceryList: React.FC = () => {
 						})}
 					</div>
 				</>}
-			{groceries.some(g => g.store === 'bashas') &&
+			{groceries.some((g: any) => g.store === 'bashas') &&
 				<>
 					<h3>Bashas</h3>
 					<div className="store">
-						{groceries.map((ite: any, i: any) => {
+						{groceries.map((item: any, i: any) => {
 							return item.store === 'bashas' &&
 								<p key={i} className="item">{item.name}</p>
 						})}

@@ -1,0 +1,19 @@
+@import "./index.scss";
+
+.plants {
+	.plant {
+		text-align: left;
+		&:not(:last-child) {
+			border-bottom: 2px solid $light-grey;
+		}
+		.name {
+			font-weight: 600;
+			margin-bottom: 0;
+		}
+		.details {
+			width: 100%;
+			@include flex;
+			justify-content: space-between;
+		}
+	}
+}

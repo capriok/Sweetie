@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Api from '../api'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import SlideModal from './slidemodal'
+import SlideModal from './slide-modal'
+import Api from '../api'
 
 export type Task = {
 	name: string
 	pinned: boolean
 }
-const TaskList: React.FC = () => {
+
+const Tasks: React.FC = () => {
 	const [is, set] = useState({
 		adding: false,
 		removing: false
@@ -56,7 +57,7 @@ const TaskList: React.FC = () => {
 
 		console.log(task);
 
-		Api.AddTask(task).then(tl => setTaskList(tl))
+		Api.PostTask(task).then(tl => setTaskList(tl))
 	}
 
 	useEffect(() => {
@@ -64,58 +65,64 @@ const TaskList: React.FC = () => {
 	}, [])
 
 	useEffect(() => {
-		console.log(taskList)
+		taskList.length && console.log({ TaskList: taskList })
 	}, [taskList])
 
 	return (
 		<>
 			<section>
-				<h1>Task List</h1>
+				<h1>Tasks</h1>
 				{!taskList.length
 					? <div>Nothing here.</div>
 					: <div className="content">
-						<h3>Pinned</h3>
-						{taskList.filter(t => t.pinned).map((task, i) => (
-							<p
-								key={i}
-								className="task"
-								onClick={() => removeTask(task)}>
-								<strong>{task.name}</strong>
-							</p>
-						))}
-						<h3>General</h3>
-						{taskList.filter(t => !t.pinned).map((task, i) => (
-							<p
-								key={i}
-								className="task"
-								onClick={() => removeTask(task)}>
-								{task.name}
-							</p>
-						))}
+						{taskList.some(t => t.pinned) &&
+							<>
+								<h3>Pinned</h3>
+								{taskList.filter(t => t.pinned).map((task, i) => (
+									<p
+										key={i}
+										className="task"
+										onClick={() => removeTask(task)}>
+										<strong>{task.name}</strong>
+									</p>
+								))}
+							</>
+						}
+						{taskList.some(t => !t.pinned) &&
+							<>
+								<h3>General</h3>
+								{taskList.filter(t => !t.pinned).map((task, i) => (
+									<p
+										key={i}
+										className="task"
+										onClick={() => removeTask(task)}>
+										{task.name}
+									</p>
+								))}
+							</>
+						}
 					</div>
 				}
-				<div className="buttons">
+				<div className="action-btns">
 					<button onClick={AddBtnClick} disabled={is.removing}>Add</button>
 					<button onClick={RemoveBtnClick}>{is.removing ? 'Done' : 'Remove'}</button>
 					<button onClick={ClearBtnClick} disabled={is.removing}>Clear</button>
 				</div>
 			</section>
 			{is.adding &&
-				<SlideModal smref={modalRef} close={() => set({ ...is, adding: false })} title="Add Task">
-					<form onSubmit={(e) => postTask(e)}>
-						<div className="io-row">
+				<SlideModal smref={modalRef} close={() => set({ ...is, adding: false })} title="Add Chore">
+					<form onSubmit={(e) => postTask(e)} className="chores">
+						<input
+							type="text"
+							placeholder="Task"
+							onChange={(e) => setName(e.target.value)} />
+						<label className="pinned">
+							<span>Pinned</span>
 							<input
-								type="text"
-								placeholder="Task"
-								onChange={(e) => setName(e.target.value)} />
-							<label>
-								<span>Pinned</span>
-								<input
-									type="checkbox"
-									checked={pinned}
-									onChange={(e) => setPinned(e.target.checked)} />
-							</label>
-						</div>
+								type="checkbox"
+								checked={pinned}
+								onChange={(e) => setPinned(e.target.checked)} />
+						</label>
 						<button className="submit" type="submit">Submit</button>
 					</form>
 				</SlideModal>
@@ -124,4 +131,4 @@ const TaskList: React.FC = () => {
 	)
 }
 
-export default TaskList
+export default Tasks

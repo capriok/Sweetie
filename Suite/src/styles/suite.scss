@@ -1,6 +1,6 @@
 @import "./index.scss";
 
-main {
+.suite {
 	position: relative;
 	@include flex;
 	flex-direction: column;
@@ -12,18 +12,17 @@ main {
 	}
 	section {
 		position: relative;
-		overflow: hidden;
 		width: 90%;
 		min-height: 50vh;
-		max-height: 100vh;
-		padding: 40px 20px;
+		height: fit-content;
+		padding: 40px;
 		margin-bottom: 40px;
 		box-shadow: $drop-shadow;
 		border-radius: 10px;
 		text-align: center;
 		h1 {
 			padding: 20px 0;
-			margin: -40px -20px;
+			margin: -40px;
 			margin-bottom: 20px;
 			background-color: rgb(235, 235, 235);
 			border-bottom: 2px solid $accent-color;
@@ -31,16 +30,23 @@ main {
 		h3 {
 			margin-top: 20px !important;
 		}
-		.content {
-			max-width: 500px;
-			width: 90%;
-			margin: 0 auto;
+		.head {
+			width: 100%;
+			@include flex;
+			justify-content: space-between;
 			margin-bottom: 20px;
+			border-bottom: 2px solid $light-grey;
+			p {
+				font-weight: 600;
+			}
 		}
 		.content {
+			max-width: 700px;
+			margin: 0 auto;
+			margin-bottom: 20px;
+
 			.item,
-			.task,
-			.plant {
+			.task {
 				width: 100%;
 				@include flex;
 				justify-content: space-between;
@@ -49,11 +55,11 @@ main {
 				}
 			}
 		}
-		.buttons {
+		.action-btns {
 			user-select: none;
 			position: absolute;
 			bottom: 0px;
-			margin: 0 -20px;
+			margin: 0 -40px;
 			@include flex;
 			width: 100%;
 			button {

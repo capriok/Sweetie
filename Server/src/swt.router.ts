@@ -1,6 +1,8 @@
 export const router = require('express').Router()
 import Swt from './swt'
 
+// GROCERIES
+
 router.get('/gl', (req, res) => {
 	console.log('Request: Grocery List');
 
@@ -24,7 +26,6 @@ router.post('/gl-rem', (req, res) => {
 	const { item } = req.body
 
 	const groceryList = Swt.removeGrocery(item)
-	console.log(groceryList);
 
 	res.json({ list: groceryList })
 })
@@ -36,6 +37,8 @@ router.get('/gl-clr', (req, res) => {
 
 	res.json({ list: groceryList })
 })
+
+// TASKS
 
 router.get('/tl', (req, res) => {
 	console.log('Request: Task List');
@@ -71,6 +74,31 @@ router.get('/tl-clr', (req, res) => {
 	res.json({ list: taskList })
 })
 
+// CATS
+
+router.get('/co', (req, res) => {
+	console.log('Request: Cats Offsets');
+
+	const catsOffsets = Swt.getCatOffsets()
+	console.log(catsOffsets);
+
+
+	res.json({ offsets: catsOffsets })
+})
+
+router.post('/co-edit', (req, res) => {
+	console.log('Request: Edit Offset');
+
+	const { offsets } = req.body
+	console.log(offsets);
+
+	const catsOffsets = Swt.editCatOffsets(offsets)
+
+	res.json({ offsets: catsOffsets })
+})
+
+
+// PLANTS
 
 router.get('/pl', (req, res) => {
 	console.log('Request: Plant List');

@@ -13,6 +13,15 @@ namespace SwtNameSpace {
 		pinned: boolean
 	}
 
+	type CatOffsets = {
+		food: {
+			offset: number
+		}
+		waste: {
+			offset: number
+		}
+	}
+
 	type Plant = {
 		name: string
 		cycle: number
@@ -23,11 +32,13 @@ namespace SwtNameSpace {
 
 		groceryList: Array<Grocery>
 		taskList: Array<Task>
+		catOffsets: CatOffsets
 		plantList: Array<Plant>
 
 		constructor() {
 			this.groceryList = SweetieStore['groceryList']
 			this.taskList = SweetieStore['taskList']
+			this.catOffsets = SweetieStore['catOffsets']
 			this.plantList = SweetieStore['plantList']
 		}
 
@@ -61,6 +72,14 @@ namespace SwtNameSpace {
 		clearTaskList() {
 			this.taskList = []
 			return this.taskList
+		}
+
+		getCatOffsets() {
+			return this.catOffsets
+		}
+		editCatOffsets(os) {
+			this.catOffsets.food.offset = os.food.offset
+			this.catOffsets.waste.offset = os.waste.offset
 		}
 
 		getPlantList() {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
-import Api from '../api'
-import SlideModal from './slidemodal'
 import { useOutsideClick } from '../hooks/useOutsideClick'
+import SlideModal from './slide-modal'
+import Api from '../api'
 
 export type Grocery = {
 	name: string
@@ -9,7 +9,7 @@ export type Grocery = {
 	store: string
 }
 
-const GroceryList: React.FC = () => {
+const Groceries: React.FC = () => {
 	const [is, set] = useState({
 		adding: false,
 		removing: false
@@ -59,7 +59,7 @@ const GroceryList: React.FC = () => {
 
 		console.log(item);
 
-		Api.AddGrocery(item).then(gl => setGroceryList(gl))
+		Api.PostGrocery(item).then(gl => setGroceryList(gl))
 	}
 
 	useEffect(() => {
@@ -67,49 +67,47 @@ const GroceryList: React.FC = () => {
 	}, [])
 
 	useEffect(() => {
-		console.log(groceryList)
+		groceryList.length && console.log({ GroceryList: groceryList })
 	}, [groceryList])
 
 	return (
 		<>
 			<section>
-				<h1 className="title">Grocery List</h1>
+				<h1 className="title">Groceries</h1>
 				{!groceryList.length
 					? <div>Nothing here.</div>
 					: <div className="content">
 						{groceryList.some(g => g.store === 'wholefoods') &&
 							<>
 								<h3>Whole Foods</h3>
-								<div className="store">
-									{groceryList.filter(i => i.store === 'wholefoods').map((item, i) => (
-										<div
-											key={i}
-											className="item"
-											onClick={() => removeGrocery(item)}>
-											<p>{item.name}</p>
-											<p>{item.qty}</p>
-										</div>
-									))}
-								</div>
-							</>}
+								{groceryList.filter(i => i.store === 'wholefoods').map((item, i) => (
+									<div
+										key={i}
+										className="item"
+										onClick={() => removeGrocery(item)}>
+										<p>{item.name}</p>
+										<p>{item.qty}</p>
+									</div>
+								))}
+							</>
+						}
 						{groceryList.some(g => g.store === 'bashas') &&
 							<>
 								<h3>Bashas</h3>
-								<div className="store">
-									{groceryList.filter(i => i.store === 'bashas').map((item, i) => (
-										<div
-											key={i}
-											className="item"
-											onClick={() => removeGrocery(item)}>
-											<p>{item.name}</p>
-											<p>{item.qty}</p>
-										</div>
-									))}
-								</div>
-							</>}
+								{groceryList.filter(i => i.store === 'bashas').map((item, i) => (
+									<div
+										key={i}
+										className="item"
+										onClick={() => removeGrocery(item)}>
+										<p>{item.name}</p>
+										<p>{item.qty}</p>
+									</div>
+								))}
+							</>
+						}
 					</div>
 				}
-				<div className="buttons">
+				<div className="action-btns">
 					<button onClick={AddBtnClick} disabled={is.removing}>Add</button>
 					<button onClick={RemoveBtnClick}>{is.removing ? 'Done' : 'Remove'}</button>
 					<button onClick={ClearBtnClick} disabled={is.removing}>Clear</button>
@@ -117,8 +115,8 @@ const GroceryList: React.FC = () => {
 			</section>
 			{is.adding &&
 				<SlideModal smref={modalRef} close={() => set({ ...is, adding: false })} title="Add Grocery">
-					<form onSubmit={(e) => postGrocery(e)}>
-						<div className="io-row">
+					<form onSubmit={(e) => postGrocery(e)} className="groceries">
+						<div className="name-quan">
 							<input
 								type="text"
 								placeholder="Name"
@@ -131,7 +129,6 @@ const GroceryList: React.FC = () => {
 						</div>
 						<div className="store">
 							<select
-								className="store"
 								onChange={(e) => setStore(e.target.value)}>
 								<option value="wholefoods">Whole Foods</option>
 								<option value="bashas">Bashas</option>
@@ -145,5 +142,5 @@ const GroceryList: React.FC = () => {
 	)
 }
 
-export default GroceryList
+export default Groceries
 

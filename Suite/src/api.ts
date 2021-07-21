@@ -1,6 +1,8 @@
 import axios from 'axios'
-import { Grocery } from './components/grocerylist'
-import { Task } from './components/tasklist'
+import { Grocery } from './components/Groceries'
+import { Task } from './components/Tasks'
+import { Plant } from './components/Plants'
+import { CatOffsets } from './components/Cats'
 
 const baseInstanceParams = {
 	baseURL: 'http://localhost:9000/swt/',
@@ -23,12 +25,13 @@ class Api {
 		return res.data.list
 	}
 
-	public async RemoveGrocery(item: Grocery): Promise<Array<Grocery>> {
-		const res = await AxiosInstance.post('/gl-rem', { item: item })
+	public async PostGrocery(item: Grocery): Promise<Array<Grocery>> {
+		const res = await AxiosInstance.post('/gl-add', { item: item })
 		return res.data.list
 	}
-	public async AddGrocery(item: Grocery): Promise<Array<Grocery>> {
-		const res = await AxiosInstance.post('/gl-add', { item: item })
+
+	public async RemoveGrocery(item: Grocery): Promise<Array<Grocery>> {
+		const res = await AxiosInstance.post('/gl-rem', { item: item })
 		return res.data.list
 	}
 
@@ -44,13 +47,13 @@ class Api {
 		return res.data.list
 	}
 
-	public async RemoveTask(task: Task): Promise<Array<Task>> {
-		const res = await AxiosInstance.post('/tl-rem', { task: task })
+	public async PostTask(task: Task): Promise<Array<Task>> {
+		const res = await AxiosInstance.post('/tl-add', { task: task })
 		return res.data.list
 	}
 
-	public async AddTask(task: Task): Promise<Array<Task>> {
-		const res = await AxiosInstance.post('/tl-add', { task: task })
+	public async RemoveTask(task: Task): Promise<Array<Task>> {
+		const res = await AxiosInstance.post('/tl-rem', { task: task })
 		return res.data.list
 	}
 
@@ -61,40 +64,30 @@ class Api {
 
 	// CATS
 
-	// public async GetCatList(): Promise<Array<Task>> {
-	// 	const res = await AxiosInstance.get('/tl')
-	// 	return res.data.list
-	// }
+	public async GetCatOffsets(): Promise<CatOffsets> {
+		const res = await AxiosInstance.get('/co')
+		return res.data.offsets
+	}
 
-	// public async RemoveTask(task: Task): Promise<Array<Task>> {
-	// 	const res = await AxiosInstance.post('/tl-rem', { task: task })
-	// 	return res.data.list
-	// }
-
-	// public async AddTask(task: Task): Promise<Array<Task>> {
-	// 	const res = await AxiosInstance.post('/tl-add', { task: task })
-	// 	return res.data.list
-	// }
-
-	// public async ClearTaskList(): Promise<Array<Task>> {
-	// 	const res = await AxiosInstance.get('/tl-clr')
-	// 	return res.data.list
-	// }
+	public async PostOffsets(offsets: CatOffsets): Promise<CatOffsets> {
+		const res = await AxiosInstance.post('/co-edit', { offsets: offsets })
+		return res.data.offsets
+	}
 
 	// PLANTS
 
-	public async GetPlantList(): Promise<Array<Task>> {
+	public async GetPlantList(): Promise<Array<Plant>> {
 		const res = await AxiosInstance.get('/pl')
 		return res.data.list
 	}
 
-	public async RemovePlant(task: Task): Promise<Array<Task>> {
-		const res = await AxiosInstance.post('/pl-rem', { task: task })
+	public async RemovePlant(plant: Plant): Promise<Array<Plant>> {
+		const res = await AxiosInstance.post('/pl-rem', { plant: plant })
 		return res.data.list
 	}
 
-	public async AddPlant(task: Task): Promise<Array<Task>> {
-		const res = await AxiosInstance.post('/pl-add', { task: task })
+	public async PostPlant(plant: Plant): Promise<Array<Plant>> {
+		const res = await AxiosInstance.post('/pl-add', { plant: plant })
 		return res.data.list
 	}
 

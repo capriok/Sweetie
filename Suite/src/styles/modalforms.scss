@@ -1,0 +1,86 @@
+@import "./index.scss";
+
+.slidemodal {
+	input[type="number"] {
+		width: 45% !important;
+	}
+	.groceries,
+	.chores {
+		width: 100%;
+	}
+
+	input,
+	select,
+	button {
+		width: 100%;
+	}
+
+	.groceries {
+		.name-quan,
+		.store {
+			@include flex;
+		}
+		.name-quan {
+			input {
+				&:first-child {
+					margin-right: 7px;
+				}
+			}
+			label {
+				span {
+					font-size: 0.8rem;
+					padding: 0 10px;
+				}
+				input {
+					margin: 0;
+				}
+			}
+		}
+		.store {
+			margin-top: 7px;
+		}
+	}
+
+	.chores {
+		@include flex;
+		&:first-child {
+			input {
+				margin-right: 7px;
+			}
+		}
+		.pinned {
+			@include flex;
+			flex-direction: column;
+		}
+	}
+
+	.cats {
+		width: 100%;
+		.offsets {
+			width: 100%;
+			@include flex;
+			input {
+				&:first-child {
+					margin-right: 7px;
+				}
+				width: 100%;
+			}
+		}
+	}
+
+	.plants {
+		.name-cycle,
+		.lastwater {
+			width: 100%;
+		}
+		.name-cycle {
+			@include flex;
+		}
+		.lastwater {
+			margin-top: 7px;
+			input {
+				width: 100%;
+			}
+		}
+	}
+}
