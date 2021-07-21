@@ -44,9 +44,7 @@
 			max-width: 700px;
 			margin: 0 auto;
 			margin-bottom: 20px;
-
-			.item,
-			.task {
+			.item {
 				width: 100%;
 				@include flex;
 				justify-content: space-between;

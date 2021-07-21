@@ -21,6 +21,44 @@
 			"store": "bashas"
 		}
 	],
+	"staticTasks": [
+		{
+			"name": "Laundry",
+			"weekday": "Sunday"
+		},
+		{
+			"name": "Full Clean",
+			"weekday": "Sunday"
+		},
+		{
+			"name": "Fill Fountain",
+			"weekday": "Monday"
+		},
+		{
+			"name": "Trash Out",
+			"weekday": "Tuesday"
+		},
+		{
+			"name": "Trash In",
+			"weekday": "Wednesday"
+		},
+		{
+			"name": "Mini Clean",
+			"weekday": "Wednesday"
+		},
+		{
+			"name": "Vaccuum Maint",
+			"weekday": "Thursday"
+		},
+		{
+			"name": "Wash Towels",
+			"weekday": "Friday"
+		},
+		{
+			"name": "Property Maint",
+			"weekday": "Saturday"
+		}
+	],
 	"taskList": [
 		{
 			"name": "Wipe Counters",
@@ -37,10 +75,10 @@
 	],
 	"catOffsets": {
 		"food": {
-			"offset": 0
+			"offset": 1
 		},
 		"waste": {
-			"offset": 0
+			"offset": 1
 		}
 	},
 	"plantList": [

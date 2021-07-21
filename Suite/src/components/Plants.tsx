@@ -85,6 +85,7 @@ const Plants: React.FC = () => {
 									onChange={(e) => setCycle(parseInt(e.target.value))} />
 							</div>
 							<div className="lastwater">
+								<div><p>Last Water</p></div>
 								<input type="date"
 									onChange={(e) => setLastWater(e.target.value)} />
 							</div>

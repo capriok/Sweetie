@@ -23,7 +23,7 @@
 		.name-quan {
 			input {
 				&:first-child {
-					margin-right: 7px;
+					margin-right: $padgap;
 				}
 			}
 			label {
@@ -37,7 +37,7 @@
 			}
 		}
 		.store {
-			margin-top: 7px;
+			margin-top: $padgap;
 		}
 	}
 
@@ -45,7 +45,7 @@
 		@include flex;
 		&:first-child {
 			input {
-				margin-right: 7px;
+				margin-right: $padgap;
 			}
 		}
 		.pinned {
@@ -61,7 +61,7 @@
 			@include flex;
 			input {
 				&:first-child {
-					margin-right: 7px;
+					margin-right: $padgap;
 				}
 				width: 100%;
 			}
@@ -71,15 +71,22 @@
 	.plants {
 		.name-cycle,
 		.lastwater {
+			@include flex;
 			width: 100%;
 		}
 		.name-cycle {
-			@include flex;
+			input {
+				&:first-child {
+					margin-right: $padgap;
+				}
+			}
 		}
 		.lastwater {
-			margin-top: 7px;
-			input {
-				width: 100%;
+			justify-content: space-between;
+			margin-top: $padgap;
+			p {
+				white-space: nowrap;
+				margin-right: $padgap;
 			}
 		}
 	}

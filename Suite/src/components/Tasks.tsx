@@ -61,7 +61,14 @@ const Tasks: React.FC = () => {
 	}
 
 	useEffect(() => {
-		(async () => Api.GetTaskList().then(tl => setTaskList(tl)))()
+		(async () => Api.GetTaskList().then(tl => {
+			tl.map((t, i) => {
+				if (!t.pinned) return t
+				tl.splice(i, 1)
+				return tl.unshift(t)
+			})
+			setTaskList(tl)
+		}))()
 	}, [])
 
 	useEffect(() => {
@@ -75,28 +82,14 @@ const Tasks: React.FC = () => {
 				{!taskList.length
 					? <div>Nothing here.</div>
 					: <div className="content">
-						{taskList.some(t => t.pinned) &&
+						{taskList.length &&
 							<>
-								<h3>Pinned</h3>
-								{taskList.filter(t => t.pinned).map((task, i) => (
+								{taskList.map((task, i) => (
 									<p
 										key={i}
 										className="task"
 										onClick={() => removeTask(task)}>
-										<strong>{task.name}</strong>
-									</p>
-								))}
-							</>
-						}
-						{taskList.some(t => !t.pinned) &&
-							<>
-								<h3>General</h3>
-								{taskList.filter(t => !t.pinned).map((task, i) => (
-									<p
-										key={i}
-										className="task"
-										onClick={() => removeTask(task)}>
-										{task.name}
+										{task.pinned ? <strong>{task.name}</strong> : task.name}
 									</p>
 								))}
 							</>
