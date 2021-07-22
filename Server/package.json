@@ -1,7 +1,7 @@
 {
   "name": "server",
-  "version": "1.0.0",
-  "description": "bm-server",
+  "version": "0.1.0",
+  "description": "sweetie-server",
   "main": "server.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node-dev ./src/server.ts",

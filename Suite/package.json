@@ -1,6 +1,7 @@
 {
-  "name": "sweetie",
+  "name": "suite",
   "version": "0.1.0",
+  "description": "sweetie suite",
   "private": true,
   "scripts": {
     "start": "react-scripts start"
