@@ -70,19 +70,19 @@ namespace SwtNameSpace {
 		}
 
 		getTaskList() {
-			return this.taskList
+			return sortByPinned(this.taskList)
 		}
 		addTask(task) {
-			this.taskList.push(task)
-			return this.taskList
+			this.taskList.unshift(task)
+			return this.getTaskList()
 		}
 		removeTask(task) {
 			this.taskList = this.taskList.filter(t => t.name !== task.name)
-			return this.taskList
+			return this.getTaskList()
 		}
 		clearTaskList() {
 			this.taskList = []
-			return this.taskList
+			return this.getTaskList()
 		}
 
 		getCatOffsets() {
@@ -94,16 +94,31 @@ namespace SwtNameSpace {
 		}
 
 		getPlantList() {
-			return this.plantList
+			return sortByName(this.plantList)
 		}
 		addPlant(plant) {
 			this.plantList.push(plant)
-			return this.plantList
+			return this.getPlantList()
 		}
 		removePlant(plant) {
 			this.plantList = this.plantList.filter(p => p.name !== plant.name)
-			return this.plantList
+			return this.getPlantList()
 		}
+	}
+
+	function sortByPinned(tl: Array<Task>) {
+		tl.map((t, i) => {
+			if (!t.pinned) return t
+			tl.splice(i, 1)
+			tl.unshift(t)
+		})
+		console.log(tl);
+
+		return tl
+	}
+
+	function sortByName(pl: Array<Plant>) {
+		return pl.sort((a, b) => a.name.localeCompare(b.name))
 	}
 }
 

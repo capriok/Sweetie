@@ -21,9 +21,9 @@ const Plants: React.FC = () => {
 	const [cycle, setCycle] = useState(0)
 	const [lastWater, setLastWater] = useState(new Date().toLocaleDateString())
 
-	const modalRef = useRef()
-	useOutsideClick(modalRef, () => {
-		if (!is.adding) return
+	const outClickRef: any = useRef()
+	useOutsideClick(outClickRef, () => {
+		if (!is.adding && !is.removing) return
 		set({ adding: false, removing: false })
 	})
 
@@ -66,7 +66,7 @@ const Plants: React.FC = () => {
 
 	return (
 		<>
-			<section>
+			<section ref={outClickRef}>
 				<h1>Plants</h1>
 				<div className="content plants">
 					<div className="head">
@@ -90,7 +90,7 @@ const Plants: React.FC = () => {
 				</div>
 			</section>
 			{is.adding &&
-				<SlideModal smref={modalRef} close={() => set({ ...is, adding: !is.adding })} title="Add Plant">
+				<SlideModal smref={outClickRef} close={() => set({ ...is, adding: !is.adding })} title="Add Plant">
 					<form onSubmit={(e) => postPlant(e)}>
 						<div className="plants">
 							<div className="name-cycle">

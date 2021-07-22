@@ -55,12 +55,6 @@ router.get('/tl', (req, res) => {
 
 	const taskList = Swt.getTaskList()
 
-	taskList.map((t, i) => {
-		if (!t.pinned) return t
-		taskList.splice(i, 1)
-		return taskList.unshift(t)
-	})
-
 	res.json({ list: taskList })
 })
 
@@ -96,8 +90,6 @@ router.get('/co', (req, res) => {
 	console.log('Request: Cats Offsets');
 
 	const catsOffsets = Swt.getCatOffsets()
-	console.log(catsOffsets);
-
 
 	res.json({ offsets: catsOffsets })
 })
@@ -106,7 +98,6 @@ router.post('/co-edit', (req, res) => {
 	console.log('Request: Edit Offset');
 
 	const { offsets } = req.body
-	console.log(offsets);
 
 	const catsOffsets = Swt.editCatOffsets(offsets)
 
@@ -120,8 +111,6 @@ router.get('/pl', (req, res) => {
 	console.log('Request: Plant List');
 
 	const plantList = Swt.getPlantList()
-
-	plantList.sort((a, b) => a.name.localeCompare(b.name))
 
 	res.json({ list: plantList })
 })

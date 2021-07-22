@@ -23,12 +23,11 @@ const Tasks: React.FC = () => {
 	const [name, setName] = useState('')
 	const [pinned, setPinned] = useState(false)
 
-	const modalRef = useRef()
-	useOutsideClick(modalRef, () => {
-		if (!is.adding) return
+	const outClickRef: any = useRef()
+	useOutsideClick(outClickRef, () => {
+		if (!is.adding && !is.removing) return
 		set({ adding: false, removing: false })
 	})
-
 
 	function AddBtnClick() {
 		set({ ...is, adding: !is.adding })
@@ -84,7 +83,7 @@ const Tasks: React.FC = () => {
 
 	return (
 		<>
-			<section>
+			<section ref={outClickRef}>
 				<h1>Tasks</h1>
 				<div className="content">
 					{!taskList.length
@@ -120,7 +119,7 @@ const Tasks: React.FC = () => {
 				</div>
 			</section>
 			{is.adding &&
-				<SlideModal smref={modalRef} close={() => set({ ...is, adding: false })} title="Add Chore">
+				<SlideModal smref={outClickRef} close={() => set({ ...is, adding: false })} title="Add Chore">
 					<form onSubmit={(e) => postTask(e)} className="chores">
 						<input
 							type="text"

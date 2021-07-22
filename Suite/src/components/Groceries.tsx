@@ -21,9 +21,9 @@ const Groceries: React.FC = () => {
 	const [quantity, setQuantity] = useState(1)
 	const [store, setStore] = useState('wholefoods')
 
-	const modalRef = useRef()
-	useOutsideClick(modalRef, () => {
-		if (!is.adding) return
+	const outClickRef: any = useRef()
+	useOutsideClick(outClickRef, () => {
+		if (!is.adding && !is.removing) return
 		set({ adding: false, removing: false })
 	})
 
@@ -72,7 +72,7 @@ const Groceries: React.FC = () => {
 
 	return (
 		<>
-			<section>
+			<section ref={outClickRef}>
 				<h1 className="title">Groceries</h1>
 				{!groceryList.length
 					? <div>Nothing here.</div>
@@ -114,7 +114,7 @@ const Groceries: React.FC = () => {
 				</div>
 			</section>
 			{is.adding &&
-				<SlideModal smref={modalRef} close={() => set({ ...is, adding: false })} title="Add Grocery">
+				<SlideModal smref={outClickRef} close={() => set({ ...is, adding: false })} title="Add Grocery">
 					<form onSubmit={(e) => postGrocery(e)} className="groceries">
 						<div className="name-quan">
 							<input

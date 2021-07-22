@@ -79,6 +79,17 @@
 					border-bottom: 2px solid $light-grey;
 				}
 			}
+			.item {
+				* {
+					min-width: 25px;
+				}
+				.day {
+					text-align: left;
+				}
+				.food {
+					margin-right: 15px;
+				}
+			}
 		}
 		.action-btns {
 			user-select: none;
