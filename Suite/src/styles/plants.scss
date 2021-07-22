@@ -3,17 +3,17 @@
 .plants {
 	.plant {
 		text-align: left;
-		&:not(:last-child) {
-			border-bottom: 2px solid $light-grey;
-		}
 		.name {
 			font-weight: 600;
-			margin-bottom: 0;
+			margin: 10px 0 $padgap;
 		}
 		.details {
 			width: 100%;
 			@include flex;
 			justify-content: space-between;
+			P {
+				margin: $padgap 0;
+			}
 		}
 	}
 }

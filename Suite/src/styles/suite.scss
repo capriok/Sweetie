@@ -1,30 +1,51 @@
 @import "./index.scss";
 
 .suite {
+	z-index: 100;
 	position: relative;
 	@include flex;
 	flex-direction: column;
 	header {
+		overflow: hidden;
+		text-align: center;
+		width: 100%;
 		h1 {
+			overflow: hidden;
 			font-size: 1.8em;
+			padding: 10px 0;
 			margin-bottom: 20px;
+			margin: 0 0 40px;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+			background-color: $section-h-bg;
+			color: $section-h-color;
 		}
 	}
 	section {
 		position: relative;
-		width: 90%;
+		overflow: hidden;
+		width: 100%;
+		max-width: 700px;
+		margin: 0 auto;
 		min-height: 50vh;
 		height: fit-content;
 		padding: 40px;
+		border-radius: 5px;
 		margin-bottom: 40px;
 		box-shadow: $drop-shadow;
-		border-radius: 10px;
 		text-align: center;
+		background-color: white;
+
+		@media (min-width: 500px) {
+			border-radius: 10px;
+		}
+
 		h1 {
 			padding: 20px 0;
 			margin: -40px;
 			margin-bottom: 20px;
-			background-color: rgb(235, 235, 235);
+			background-color: $section-h-bg;
+			color: $section-h-color;
 			border-bottom: 2px solid $accent-color;
 		}
 		h3 {
@@ -35,21 +56,26 @@
 			@include flex;
 			justify-content: space-between;
 			margin-bottom: 20px;
-			border-bottom: 2px solid $light-grey;
 			p {
 				font-weight: 600;
 			}
 		}
 		.content {
-			max-width: 700px;
-			margin: 0 auto;
 			margin-bottom: 20px;
-			.item {
+			.item,
+			.static-task {
 				width: 100%;
 				@include flex;
 				justify-content: space-between;
 				p {
-					margin: 10px 0;
+					margin: 7px 0;
+				}
+			}
+			.item,
+			.static-task,
+			.plant {
+				&:not(:last-child) {
+					border-bottom: 2px solid $light-grey;
 				}
 			}
 		}

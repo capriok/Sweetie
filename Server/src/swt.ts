@@ -8,6 +8,11 @@ namespace SwtNameSpace {
 		store: string
 	}
 
+	type StaticTask = {
+		name: string
+		weekday: string
+	}
+
 	type Task = {
 		name: string
 		pinned: boolean
@@ -31,12 +36,14 @@ namespace SwtNameSpace {
 	export class Sweetie {
 
 		groceryList: Array<Grocery>
+		staticTasks: Array<StaticTask>
 		taskList: Array<Task>
 		catOffsets: CatOffsets
 		plantList: Array<Plant>
 
 		constructor() {
 			this.groceryList = SweetieStore['groceryList']
+			this.staticTasks = SweetieStore['staticTasks']
 			this.taskList = SweetieStore['taskList']
 			this.catOffsets = SweetieStore['catOffsets']
 			this.plantList = SweetieStore['plantList']
@@ -56,6 +63,10 @@ namespace SwtNameSpace {
 		clearGroceryList() {
 			this.groceryList = []
 			return this.groceryList
+		}
+
+		getStaticTasks() {
+			return this.staticTasks
 		}
 
 		getTaskList() {

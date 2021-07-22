@@ -3,6 +3,10 @@ import { useOutsideClick } from '../hooks/useOutsideClick'
 import SlideModal from './slide-modal'
 import Api from '../api'
 
+export type StaticTask = {
+	name: string
+	weekday: boolean
+}
 export type Task = {
 	name: string
 	pinned: boolean
@@ -14,6 +18,7 @@ const Tasks: React.FC = () => {
 		removing: false
 	})
 
+	const [staticTasks, setStaticTasks] = useState<Array<StaticTask>>([])
 	const [taskList, setTaskList] = useState<Array<Task>>([])
 	const [name, setName] = useState('')
 	const [pinned, setPinned] = useState(false)
@@ -68,8 +73,17 @@ const Tasks: React.FC = () => {
 				return tl.unshift(t)
 			})
 			setTaskList(tl)
-		}))()
+		}))();
+
+		(async () => Api.GetStaticTasks().then(st => {
+			setStaticTasks(st)
+		}))();
+
 	}, [])
+
+	useEffect(() => {
+		staticTasks.length && console.log({ StaticTasks: staticTasks })
+	}, [staticTasks])
 
 	useEffect(() => {
 		taskList.length && console.log({ TaskList: taskList })
@@ -79,23 +93,33 @@ const Tasks: React.FC = () => {
 		<>
 			<section>
 				<h1>Tasks</h1>
-				{!taskList.length
-					? <div>Nothing here.</div>
-					: <div className="content">
-						{taskList.length &&
-							<>
-								{taskList.map((task, i) => (
-									<p
-										key={i}
-										className="task"
-										onClick={() => removeTask(task)}>
-										{task.pinned ? <strong>{task.name}</strong> : task.name}
-									</p>
-								))}
-							</>
-						}
-					</div>
-				}
+				<div className="content">
+					{!taskList.length
+						? <div>Nothing here.</div>
+						: <>
+							{taskList.length &&
+								<>
+									{taskList.map((task, i) => (
+										<p
+											key={i}
+											className="task"
+											onClick={() => removeTask(task)}>
+											{task.pinned ? <strong>{task.name}</strong> : task.name}
+										</p>
+									))}
+								</>
+							}
+						</>
+					}
+					<br />
+					<h3>Weekly</h3>
+					{staticTasks.map((task, i: number) => (
+						<div key={i} className="static-task">
+							<p>{task.weekday}</p>
+							<p>{task.name}</p>
+						</div>
+					))}
+				</div>
 				<div className="action-btns">
 					<button onClick={AddBtnClick} disabled={is.removing}>Add</button>
 					<button onClick={RemoveBtnClick}>{is.removing ? 'Done' : 'Remove'}</button>

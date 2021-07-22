@@ -72,8 +72,6 @@ const Cats: React.FC = () => {
 				isWaste
 			})
 		}
-		console.log(newSchedule);
-
 		setSchedule(newSchedule);
 
 		console.log({ Offsets: offsets })

@@ -38,6 +38,16 @@ router.get('/gl-clr', (req, res) => {
 	res.json({ list: groceryList })
 })
 
+// STATIC TASKS
+
+router.get('/st', (req, res) => {
+	console.log('Request: Static Tasks');
+
+	const staticTasks = Swt.getStaticTasks()
+
+	res.json({ list: staticTasks })
+})
+
 // TASKS
 
 router.get('/tl', (req, res) => {

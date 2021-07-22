@@ -12,13 +12,16 @@ import './styles/modalforms.scss';
 function Index() {
 
   return (
-    <main className="suite">
-      <header><h1>Sweetie Suite</h1></header>
-      <Groceries />
-      <Tasks />
-      <Cats />
-      <Plants />
-    </main>
+    <>
+      <main className="suite">
+        <header><h1>Sweetie Suite</h1></header>
+        <Groceries />
+        <Tasks />
+        <Cats />
+        <Plants />
+      </main>
+      <div className="bg" />
+    </>
   )
 }
 

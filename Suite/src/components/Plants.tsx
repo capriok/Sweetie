@@ -12,7 +12,7 @@ export interface Plant {
 
 const Plants: React.FC = () => {
 	const [is, set] = useState({
-		editing: false,
+		adding: false,
 		removing: false
 	})
 	const [plantList, setPlantList] = useState<Array<Plant>>([])
@@ -23,8 +23,8 @@ const Plants: React.FC = () => {
 
 	const modalRef = useRef()
 	useOutsideClick(modalRef, () => {
-		if (!is.editing) return
-		set({ editing: false, removing: false })
+		if (!is.adding) return
+		set({ adding: false, removing: false })
 	})
 
 	async function postPlant(e: any) {
@@ -54,23 +54,23 @@ const Plants: React.FC = () => {
 						<p>Water Cycle</p>
 						<p>Last Water</p>
 					</div>
-					{plantList.map((p: any, i: number) => (
+					{plantList.map((plant: any, i: number) => (
 						<div key={i} className="plant">
-							<p className="name">{p.name}</p>
+							<p className="name">{plant.name}</p>
 							<div className="details">
-								<p>{p.cycle} Days</p>
-								<p>{p.last}</p>
+								<p>{plant.cycle} Days</p>
+								<p>{plant.last}</p>
 							</div>
 						</div>
 					))}
 				</div>
 				<div className="action-btns">
-					<button onClick={() => set({ ...is, editing: !is.editing })}>Edit</button>
+					<button onClick={() => set({ ...is, adding: !is.adding })}>Add</button>
 					<button onClick={() => set({ ...is, removing: !is.removing })}>Remove</button>
 				</div>
 			</section>
-			{is.editing &&
-				<SlideModal smref={modalRef} close={() => set({ ...is, editing: !is.editing })} title="Add Plant">
+			{is.adding &&
+				<SlideModal smref={modalRef} close={() => set({ ...is, adding: !is.adding })} title="Add Plant">
 					<form onSubmit={(e) => postPlant(e)}>
 						<div className="plants">
 							<div className="name-cycle">

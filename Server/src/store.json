@@ -23,11 +23,7 @@
 	],
 	"staticTasks": [
 		{
-			"name": "Laundry",
-			"weekday": "Sunday"
-		},
-		{
-			"name": "Full Clean",
+			"name": "Clean & Laundry",
 			"weekday": "Sunday"
 		},
 		{
@@ -39,15 +35,11 @@
 			"weekday": "Tuesday"
 		},
 		{
-			"name": "Trash In",
-			"weekday": "Wednesday"
-		},
-		{
 			"name": "Mini Clean",
 			"weekday": "Wednesday"
 		},
 		{
-			"name": "Vaccuum Maint",
+			"name": "Floor Maint",
 			"weekday": "Thursday"
 		},
 		{
@@ -75,10 +67,10 @@
 	],
 	"catOffsets": {
 		"food": {
-			"offset": 1
+			"offset": 0
 		},
 		"waste": {
-			"offset": 1
+			"offset": 0
 		}
 	},
 	"plantList": [

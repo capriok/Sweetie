@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Grocery } from './components/Groceries'
-import { Task } from './components/Tasks'
+import { StaticTask, Task } from './components/Tasks'
 import { Plant } from './components/Plants'
 import { CatOffsets } from './components/Cats'
 
@@ -37,6 +37,13 @@ class Api {
 
 	public async ClearGroceryList(): Promise<Array<Grocery>> {
 		const res = await AxiosInstance.get('/gl-clr')
+		return res.data.list
+	}
+
+	// STATIC TASKS 
+
+	public async GetStaticTasks(): Promise<Array<StaticTask>> {
+		const res = await AxiosInstance.get('/st')
 		return res.data.list
 	}
 

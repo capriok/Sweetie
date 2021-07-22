@@ -4,9 +4,6 @@
 	.item {
 		@include flex;
 		justify-content: space-between;
-		&:not(:last-child) {
-			border-bottom: 2px solid $light-grey;
-		}
 		input {
 			margin: 0;
 		}

@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200, 400;500&display=swap");
 ::-webkit-scrollbar {
 	width: 1px;
 	height: 1px;
@@ -16,9 +16,13 @@
 	align-items: center;
 }
 
+$suite-bg: rgb(0, 0, 0);
+$suite-title: rgb(255, 255, 255);
+$accent-color: rgba(0, 100, 200, 0.8);
+$section-h-bg: rgb(240, 240, 240);
+$section-h-color: rgb(0, 0, 0);
 $light-grey: rgba(120, 120, 120, 0.1);
-$accent-color: rgba(179, 5, 5, 0.7);
-$drop-shadow: 0px 0px 2px 2px rgba(120, 120, 120, 0.4);
+$drop-shadow: 0px 0px 5px 2px rgba(255, 255, 255, 1);
 $padgap: 7px;
 
 * {
@@ -30,6 +34,18 @@ body {
 	padding: 0;
 	font-family: "Quicksand", sans-serif;
 	height: 100vh;
+	@media (max-width: 500px) {
+		font-size: 14px;
+	}
+}
+
+.bg {
+	top: 0;
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	background-image: url("../assets/bg.jpg");
+	background-size: cover;
 }
 
 input,
@@ -48,10 +64,12 @@ button {
 	border: none;
 	padding: 10px;
 	border-top: 2px solid $accent-color;
-	background-color: rgba(120, 120, 120, 0.1);
+	color: $section-h-color;
+	background-color: $section-h-bg;
 	transition: 0.2s;
 	&:active {
-		border-color: rgba(179, 5, 5, 0.8);
+		border-color: rgb(255, 0, 0);
+		font-weight: 600;
 		background-color: rgba(120, 120, 120, 0.25);
 	}
 }
@@ -62,6 +80,8 @@ h3,
 h4 {
 	user-select: none;
 	cursor: default;
+	font-family: "Montserrat", sans-serif;
+	font-weight: 500;
 }
 
 p {
