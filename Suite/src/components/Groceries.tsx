@@ -45,7 +45,7 @@ const Groceries: React.FC = () => {
 	async function removeGrocery(item: Grocery) {
 		if (!is.removing) return
 
-		const confirmation = window.confirm(`Remove '${item.name}'?`);
+		const confirmation = window.confirm(`Remove "${item.name}" ?`);
 		if (confirmation) {
 			Api.RemoveGrocery(item).then(gl => setGroceryList(gl))
 		}

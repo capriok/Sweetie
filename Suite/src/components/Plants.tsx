@@ -27,6 +27,25 @@ const Plants: React.FC = () => {
 		set({ adding: false, removing: false })
 	})
 
+	function AddBtnClick() {
+		set({ ...is, adding: !is.adding })
+	}
+
+	async function RemoveBtnClick() {
+		console.log('hit');
+
+		set({ ...is, removing: !is.removing })
+	}
+
+	async function removePlant(plant: Plant) {
+		if (!is.removing) return
+
+		const confirmation = window.confirm(`Remove "${plant.name}" ?`);
+		if (confirmation) {
+			Api.RemovePlant(plant).then(pl => setPlantList(pl))
+		}
+	}
+
 	async function postPlant(e: any) {
 		e.preventyDefault()
 
@@ -55,7 +74,8 @@ const Plants: React.FC = () => {
 						<p>Last Water</p>
 					</div>
 					{plantList.map((plant: any, i: number) => (
-						<div key={i} className="plant">
+						<div key={i} className="plant"
+							onClick={() => removePlant(plant)}>
 							<p className="name">{plant.name}</p>
 							<div className="details">
 								<p>{plant.cycle} Days</p>
@@ -65,8 +85,8 @@ const Plants: React.FC = () => {
 					))}
 				</div>
 				<div className="action-btns">
-					<button onClick={() => set({ ...is, adding: !is.adding })}>Add</button>
-					<button onClick={() => set({ ...is, removing: !is.removing })}>Remove</button>
+					<button onClick={AddBtnClick} disabled={is.removing}>Add</button>
+					<button onClick={RemoveBtnClick}>{is.removing ? 'Done' : 'Remove'}</button>
 				</div>
 			</section>
 			{is.adding &&

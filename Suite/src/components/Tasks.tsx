@@ -48,7 +48,7 @@ const Tasks: React.FC = () => {
 	async function removeTask(task: Task) {
 		if (!is.removing) return
 
-		const confirmation = window.confirm(`Remove '${task.name}'?`);
+		const confirmation = window.confirm(`Remove "${task.name}" ?`);
 		if (confirmation) {
 			Api.RemoveTask(task).then(tl => setTaskList(tl))
 		}
@@ -66,14 +66,7 @@ const Tasks: React.FC = () => {
 	}
 
 	useEffect(() => {
-		(async () => Api.GetTaskList().then(tl => {
-			tl.map((t, i) => {
-				if (!t.pinned) return t
-				tl.splice(i, 1)
-				return tl.unshift(t)
-			})
-			setTaskList(tl)
-		}))();
+		(async () => Api.GetTaskList().then(tl => setTaskList(tl)))();
 
 		(async () => Api.GetStaticTasks().then(st => {
 			setStaticTasks(st)

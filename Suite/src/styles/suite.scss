@@ -10,15 +10,16 @@
 		text-align: center;
 		width: 100%;
 		h1 {
+			color: $section-h-color;
 			overflow: hidden;
 			font-size: 1.8em;
 			padding: 10px 0;
 			margin-bottom: 20px;
 			margin: 0 0 40px;
+			box-shadow: $drop-shadow;
 			border-bottom-left-radius: 10px;
 			border-bottom-right-radius: 10px;
 			background-color: $section-h-bg;
-			color: $section-h-color;
 		}
 	}
 	section {
