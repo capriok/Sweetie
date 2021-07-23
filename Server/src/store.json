@@ -1,4 +1,26 @@
 {
+	"calenderEvents": [
+		{
+			"name": "Anniversary",
+			"date": "2021-07-05T07:00:00.000Z",
+			"timed": false
+		},
+		{
+			"name": "My Birthday",
+			"date": "2021-07-11T07:07:11.000Z",
+			"timed": false
+		},
+		{
+			"name": "Vegaboitri",
+			"date": "2021-07-30T07:00:00.000Z",
+			"timed": false
+		},
+		{
+			"name": "Vegaboitri",
+			"date": "2021-07-31T07:00:00.000Z",
+			"timed": false
+		}
+	],
 	"groceryList": [
 		{
 			"name": "Milks",
