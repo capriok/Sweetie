@@ -2,7 +2,7 @@ import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
 import '../styles/datetime.scss'
 
-const TimeInformation: React.FC = () => {
+const DateTime: React.FC = () => {
 
 	const [currentTime, setCurrentTime] = useState(format(new Date(), "pp"))
 	const [currentDate] = useState(format(new Date(), "PPP"))
@@ -22,4 +22,4 @@ const TimeInformation: React.FC = () => {
 	)
 }
 
-export default TimeInformation
+export default DateTime

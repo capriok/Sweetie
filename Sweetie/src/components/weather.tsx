@@ -1,10 +1,13 @@
 import '../styles/weather.scss'
 import useWeather from '../hooks/useWeather';
+import { useEffect } from 'react';
 
 const Weather: React.FC = () => {
 	const stats = useWeather()
-	console.log(stats);
 
+	useEffect(() => {
+		console.log({ Weather: stats })
+	}, [])
 	return (
 		<div className="weather">
 			<div className="top">

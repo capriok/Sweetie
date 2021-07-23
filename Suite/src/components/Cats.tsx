@@ -1,24 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import SlideModal from './slide-modal'
+import SlideModal from './SlideModal'
 import Api from '../api'
 import '../styles/cats.scss'
 
-export interface CatOffsets {
-	food: {
-		offset: number
-	}
-	waste: {
-		offset: number
-	}
-}
-
 const Cats: React.FC = () => {
+
 	const [editing, toggleEdit] = useState(false)
-
 	const [schedule, setSchedule] = useState<any>([])
-
-	const [offsets, setOffsets] = useState({
+	const [offsets, setOffsets] = useState<CatOffsets>({
 		food: 0,
 		waste: 0
 	})
@@ -33,28 +23,27 @@ const Cats: React.FC = () => {
 		e.preventyDefault()
 	}
 
-	const date = new Date()
-
-	const priorTwo = date.getDate() - 2
-	const priorOne = date.getDate() - 1
-	const today = date.getDate()
-	const postOne = date.getDate() + 1
-	const postTwo = date.getDate() + 2
-
 	useEffect(() => {
 
 		(async () => Api.GetCatOffsets().then(os => {
 			setOffsets({
-				food: os.food.offset,
-				waste: os.waste.offset
+				food: os.food,
+				waste: os.waste
 			})
 		}))()
 
 	}, [])
 
+	const date = new Date()
+
+	const minusTwo = date.getDate() - 2
+	const minusOne = date.getDate() - 1
+	const today = date.getDate()
+	const plusOne = date.getDate() + 1
+	const plusTwo = date.getDate() + 2
 
 	useEffect(() => {
-		const DAYS = [priorOne, priorTwo, today, postOne, postTwo]
+		const DAYS = [minusTwo, minusOne, today, plusOne, plusTwo]
 		const WASTE_INTERVAL = 3
 		const newSchedule: any = []
 		let wasteDay = offsets.waste
@@ -73,9 +62,6 @@ const Cats: React.FC = () => {
 			})
 		}
 		setSchedule(newSchedule);
-
-		console.log({ Offsets: offsets })
-
 	}, [offsets])
 
 	return (

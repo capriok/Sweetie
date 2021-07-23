@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Calender from './components/calender';
+import DateTime from './components/DateTime';
+import Weather from './components/Weather';
+import Calender from './components/Calender';
+import Groceries from './components/Groceries';
+import TodoList from './components/Tasks';
+import Cats from './components/Cats';
+import Plants from './components/Plants';
+
 import './styles/index.scss';
-import DateTime from './components/datetime';
-import Weather from './components/weather';
-import GroceryList from './components/grocerylist';
-import CatSchedule from './components/catschedule';
-import TodoList from './components/tasklist';
-import PlantSchedule from './components/plantschedule';
 
 function Index() {
 
@@ -25,16 +26,16 @@ function Index() {
             <Calender />
           </div>
           <div className="tile" id="grocerylist">
-            <GroceryList />
+            <Groceries />
           </div>
           <div className="tile" id="tasklist">
             <TodoList />
           </div>
           <div className="tile" id="cats">
-            <CatSchedule />
+            <Cats />
           </div>
           <div className="tile" id="plants">
-            <PlantSchedule />
+            <Plants />
           </div>
         </main>
       </div>

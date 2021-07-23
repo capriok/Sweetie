@@ -40,8 +40,8 @@ const Calender: React.FC = () => {
 						{ title: 'Vegaboitri', date: new Date(2021, 6, 31), timed: false },
 					]}>
 					<MonthlyDay
-						renderDay={(data: any) =>
-							data.map((item: any, i: number) => (
+						renderDay={(data) =>
+							data.map((item: any, i) => (
 								<p
 									key={i}
 									className="calender-event">

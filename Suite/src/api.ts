@@ -1,8 +1,4 @@
 import axios from 'axios'
-import { Grocery } from './components/Groceries'
-import { StaticTask, Task } from './components/Tasks'
-import { Plant } from './components/Plants'
-import { CatOffsets } from './components/Cats'
 
 const baseInstanceParams = {
 	baseURL: 'http://localhost:9000/swt/',

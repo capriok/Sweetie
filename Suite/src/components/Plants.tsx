@@ -1,14 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import SlideModal from './slide-modal'
+import SlideModal from './SlideModal'
 import Api from '../api'
 import '../styles/plants.scss'
-
-export interface Plant {
-	name: string
-	cycle: number
-	lastWater: string
-}
 
 const Plants: React.FC = () => {
 	const [is, set] = useState({
@@ -32,8 +26,6 @@ const Plants: React.FC = () => {
 	}
 
 	async function RemoveBtnClick() {
-		console.log('hit');
-
 		set({ ...is, removing: !is.removing })
 	}
 

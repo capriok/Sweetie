@@ -19,12 +19,8 @@ namespace SwtNameSpace {
 	}
 
 	type CatOffsets = {
-		food: {
-			offset: number
-		}
-		waste: {
-			offset: number
-		}
+		food: number
+		waste: number
 	}
 
 	type Plant = {
@@ -88,9 +84,9 @@ namespace SwtNameSpace {
 		getCatOffsets() {
 			return this.catOffsets
 		}
-		editCatOffsets(os) {
-			this.catOffsets.food.offset = os.food.offset
-			this.catOffsets.waste.offset = os.waste.offset
+		editCatOffsets(offsets) {
+			this.catOffsets.food = offsets.food
+			this.catOffsets.waste = offsets.waste
 		}
 
 		getPlantList() {
@@ -112,8 +108,6 @@ namespace SwtNameSpace {
 			tl.splice(i, 1)
 			tl.unshift(t)
 		})
-		console.log(tl);
-
 		return tl
 	}
 

@@ -1,16 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import SlideModal from './slide-modal'
+import SlideModal from './SlideModal'
 import Api from '../api'
-
-export type StaticTask = {
-	name: string
-	weekday: boolean
-}
-export type Task = {
-	name: string
-	pinned: boolean
-}
 
 const Tasks: React.FC = () => {
 	const [is, set] = useState({

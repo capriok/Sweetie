@@ -1,51 +1,55 @@
 import { useEffect, useState } from 'react'
-import '../styles/catschedule.scss'
-
 import { GiOpenedFoodCan, GiNuclearWaste } from 'react-icons/gi'
-import { getDaysInMonth } from 'date-fns'
+import Api from '../api'
 
-interface Items {
-	name: string;
-	date: number;
-	isFood: boolean;
-	isWaste: boolean;
-}
+import '../styles/cats.scss'
 
-const CatSchedule: React.FC = () => {
-	const [foodOffset, setFoodOffset] = useState(0)
-	const [wasteOffset, setWasteOffset] = useState(0)
+const Cats: React.FC = () => {
+
+	const [offsets, setOffsets] = useState<CatOffsets>({
+		food: 0,
+		waste: 0
+	})
+	const [schedule, setSchedule] = useState([])
 
 	const date = new Date()
 
-	const yesterday = date.getDate() - 1
+	const minusOne = date.getDate() - 1
 	const today = date.getDate()
-	const tomorrow = date.getDate() + 1
-
-	const [schedule, setSchedule] = useState<Array<Items>>([])
+	const plusTwo = date.getDate() + 1
 
 	useEffect(() => {
-
+		const DAYS = [minusOne, today, plusTwo]
+		const WASTE_INTERVAL = 3
 		const newSchedule: any = []
-
-		let wasteDay = wasteOffset
-		for (let i = 0; i < getDaysInMonth(new Date()); i++) {
+		let wasteDay = offsets.waste
+		for (let i = 0; i < DAYS.length; i++) {
 			const dayOfMonth = i + 1
-			const isFood = dayOfMonth % 2 !== foodOffset
+			let isFood = dayOfMonth % 2 !== offsets.food
 			let isWaste = false
-			if (dayOfMonth > wasteOffset) {
+			if (dayOfMonth > offsets.waste) {
 				isWaste = i === wasteDay
 			}
-			console.log(isFood, isWaste);
-
-			if (i === wasteDay) wasteDay = wasteDay + 3
+			if (i === wasteDay) wasteDay = wasteDay + WASTE_INTERVAL
 			newSchedule.push({
-				date: dayOfMonth,
+				date: DAYS[i],
 				isFood,
 				isWaste
 			})
 		}
 
-		setSchedule(newSchedule)
+		setSchedule(newSchedule);
+	}, [offsets])
+
+	useEffect(() => {
+		(async () => Api.GetCatOffsets().then(os => {
+			console.log({ Offsets: os })
+
+			setOffsets({
+				food: os.food,
+				waste: os.waste
+			})
+		}))()
 	}, [])
 
 	const isToday = (day: { date: number }, cl: string) => {
@@ -56,7 +60,7 @@ const CatSchedule: React.FC = () => {
 		<div className="cat-schedule">
 			<h1>Cats</h1>
 			<div className="schedule">
-				{schedule.slice(yesterday - 1, tomorrow).map((day, i) => (
+				{schedule.map((day: any, i) => (
 					<div className="item" key={i}>
 						<p className={isToday(day, 'day')}>{day.date}</p>
 						<div className="indicators">
@@ -70,4 +74,4 @@ const CatSchedule: React.FC = () => {
 	)
 }
 
-export default CatSchedule
+export default Cats

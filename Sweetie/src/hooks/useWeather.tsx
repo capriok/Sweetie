@@ -34,7 +34,6 @@ const useWeather = () => {
 				icon: `http://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png`
 			}
 			setWeather(results)
-			console.log('%cWeather Statistics', 'color: lightskyblue', { weather: res });
 		})
 	}, [])
 

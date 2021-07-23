@@ -1,22 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import SlideModal from './slide-modal'
+import SlideModal from './SlideModal'
 import Api from '../api'
 
-export type Grocery = {
-	name: string
-	qty: number
-	store: string
-}
-
 const Groceries: React.FC = () => {
+
 	const [is, set] = useState({
 		adding: false,
 		removing: false
 	})
-
 	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
-
 	const [name, setName] = useState('')
 	const [quantity, setQuantity] = useState(1)
 	const [store, setStore] = useState('wholefoods')

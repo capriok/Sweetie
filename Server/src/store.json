@@ -66,12 +66,8 @@
 		}
 	],
 	"catOffsets": {
-		"food": {
-			"offset": 0
-		},
-		"waste": {
-			"offset": 0
-		}
+		"food": 0,
+		"waste": 0
 	},
 	"plantList": [
 		{
