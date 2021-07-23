@@ -28,11 +28,15 @@ const Calender: React.FC = () => {
 	}, [])
 
 	useEffect(() => {
-		(async () => Api.GetCalenderEvents().then(ce => {
-			console.log(ce)
-			setCalenderEvents(ce)
-		}))();
+		(async () => Api.GetCalenderEvents().then(ce => setCalenderEvents(ce)))()
 	}, [])
+
+	useEffect(() => {
+		console.log({ CalenderEvents: calenderEvents })
+	}, [calenderEvents])
+
+	console.log(new Date("2021-07-05T07:00:00.000Z"));
+
 
 	return (
 		<div className="calender">
