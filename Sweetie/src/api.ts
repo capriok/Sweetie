@@ -14,6 +14,13 @@ const AxiosInstance = axios.create({
 
 class Api {
 
+	// CALENDER
+
+	public async GetCalenderEvents(): Promise<Array<any>> {
+		const res = await AxiosInstance.get('/ce')
+		return res.data.list
+	}
+
 	// GROCERIES
 
 	public async GetGroceryList(): Promise<Array<Grocery>> {

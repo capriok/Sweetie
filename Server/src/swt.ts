@@ -2,6 +2,12 @@ import * as SweetieStore from './store.json'
 
 namespace SwtNameSpace {
 
+	type CalEvent = {
+		name: string
+		date: string | Date
+		timed: boolean
+	}
+
 	type Grocery = {
 		name: string
 		qty: number
@@ -30,7 +36,7 @@ namespace SwtNameSpace {
 	}
 
 	export class Sweetie {
-
+		calenderEvents: Array<CalEvent>
 		groceryList: Array<Grocery>
 		staticTasks: Array<StaticTask>
 		taskList: Array<Task>
@@ -38,11 +44,16 @@ namespace SwtNameSpace {
 		plantList: Array<Plant>
 
 		constructor() {
+			this.calenderEvents = SweetieStore['calenderEvents']
 			this.groceryList = SweetieStore['groceryList']
 			this.staticTasks = SweetieStore['staticTasks']
 			this.taskList = SweetieStore['taskList']
 			this.catOffsets = SweetieStore['catOffsets']
 			this.plantList = SweetieStore['plantList']
+		}
+
+		getCalenderEvents() {
+			return this.calenderEvents
 		}
 
 		getGroceryList() {

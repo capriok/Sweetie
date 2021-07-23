@@ -16,3 +16,5 @@ server.use('/swt', swt.router)
 server.listen(port, () => console.log(`Server running on port ${port}`))
 
 module.exports = server
+
+// https://attacomsian.com/blog/nodejs-write-json-object-to-file

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { MonthlyBody, MonthlyDay, MonthlyCalendar } from '@zach.codes/react-calendar';
 import '@zach.codes/react-calendar/dist/calendar-tailwind.css';
 import { format, startOfMonth } from 'date-fns';
+import Api from '../api';
 
 import '../styles/calender.scss'
 
@@ -10,18 +11,27 @@ const Calender: React.FC = () => {
 		startOfMonth(new Date())
 	)
 
+	const [calenderEvents, setCalenderEvents] = useState<any>([])
+
 	const date = new Date();
 	const today = date.getDate()
 
 	useEffect(() => {
-		let calDay = document.querySelectorAll('.rc-font-bold')
-		if (calDay) {
-			calDay.forEach((d) => {
+		let calenderDay = document.querySelectorAll('.rc-font-bold')
+		if (calenderDay) {
+			calenderDay.forEach((d) => {
 				if (parseInt(d.textContent || '') === today) {
 					d.classList.add('today-indicator')
 				}
 			})
 		}
+	}, [])
+
+	useEffect(() => {
+		(async () => Api.GetCalenderEvents().then(ce => {
+			console.log(ce)
+			setCalenderEvents(ce)
+		}))();
 	}, [])
 
 	return (
@@ -30,23 +40,18 @@ const Calender: React.FC = () => {
 				currentMonth={currentMonth}
 				onCurrentMonthChange={(date: any) => setCurrentMonth(date)}>
 				<MonthlyBody
-					events={[
-						{ title: 'Anniversary', date: new Date(2021, 6, 5), timed: false },
-						{ title: 'My Birthday', date: new Date(2021, 6, 11), timed: false },
-						{ title: 'Chiro', date: new Date(2021, 6, 16, 9, 0, 0), timed: true },
-						{ title: 'Massage', date: new Date(2021, 6, 16, 9, 0, 0), timed: true },
-						{ title: 'Hair', date: new Date(2021, 6, 16, 9, 0, 0), timed: true },
-						{ title: 'Vegaboitri', date: new Date(2021, 6, 30), timed: false },
-						{ title: 'Vegaboitri', date: new Date(2021, 6, 31), timed: false },
-					]}>
+					events={calenderEvents.map((ce: any) => ({
+						...ce,
+						date: new Date(ce.date)
+					}))}>
 					<MonthlyDay
 						renderDay={(data) =>
-							data.map((item: any, i) => (
+							data.map((event: any, i) => (
 								<p
 									key={i}
 									className="calender-event">
-									<span>{item.title}</span>
-									<span>{item.timed ? format(item.date, 'k:mm') : ""}</span>
+									<span>{event.name}</span>
+									<span>{event.timed ? format(event.date, 'k:mm') : ""}</span>
 								</p>
 							))
 						} />

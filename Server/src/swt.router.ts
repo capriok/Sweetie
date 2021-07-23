@@ -1,6 +1,16 @@
 export const router = require('express').Router()
 import Swt from './swt'
 
+// CALENDER
+
+router.get('/ce', (req, res) => {
+	console.log('Request: Calender Events');
+
+	const calenderEvents = Swt.getCalenderEvents()
+
+	res.json({ list: calenderEvents })
+})
+
 // GROCERIES
 
 router.get('/gl', (req, res) => {
