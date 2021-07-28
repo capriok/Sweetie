@@ -8,20 +8,32 @@ const Weather: React.FC = () => {
 	useEffect(() => {
 		console.log({ Weather: stats })
 	}, [])
+
+	const ch = new Date().getHours()
+	const isAfternoon = ch >= 12
+	const isEvening = ch <= 18
+	const isNight = ch > 18
+
+	let tod = 'This Morning'
+
+	if (isAfternoon) tod = 'This Afternoon'
+	if (isEvening) tod = 'This Evening'
+	if (isNight) tod = 'Tonight'
+
 	return (
 		<div className="weather">
 			<div className="top">
-				<h3 className="description">Today has {stats.description}</h3>
+				<h1 className="description">{tod} has {stats.description}</h1>
 			</div>
 			<div className="bottom">
 				<div className="temperature">
 					<p>{stats.temperature}<span className="symbol">°</span></p>
-					<p>T</p>
+					<label><p>Temperature</p></label>
 				</div>
 				<div className="icon"><img src={stats.icon} draggable={false} alt="" /></div>
 				<div className="humidity">
 					<p>{stats.humidity}<span className="symbol">%</span></p>
-					<p>H</p>
+					<label><p>Humidity</p></label>
 				</div>
 			</div>
 		</div>

@@ -9,14 +9,11 @@
 		flex: 100%;
 	}
 	.top {
-		h3 {
-			font-size: 3rem;
-			font-weight: 400;
-		}
+		margin-top: 100px;
 	}
 	.description {
-		font-size: 3rem;
-		margin: 0px;
+		width: 100%;
+		text-align: center;
 	}
 	.temperature,
 	.humidity {
@@ -24,7 +21,12 @@
 		min-width: 200px;
 		p {
 			margin: 0px;
-			font-size: 1.75rem !important;
+			font-size: 4rem !important;
+		}
+		label {
+			p {
+				font-size: 3rem !important;
+			}
 		}
 
 		.loader {
@@ -34,8 +36,9 @@
 	}
 	.icon {
 		@include flex;
+		margin: 0 100px;
 		img {
-			width: 175px;
+			width: 300px;
 			min-height: 100px;
 			filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.3)) hue-rotate(180deg);
 		}

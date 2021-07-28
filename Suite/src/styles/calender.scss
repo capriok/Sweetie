@@ -1,0 +1,19 @@
+@import "./index.scss";
+
+.calender {
+	.event {
+		.name,
+		.date,
+		.time {
+			flex: 1;
+		}
+		.name {
+			text-align: left;
+		}
+		.time {
+			text-align: right;
+		}
+		.date {
+		}
+	}
+}

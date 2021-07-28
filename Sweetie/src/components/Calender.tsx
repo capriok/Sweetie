@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { MonthlyBody, MonthlyDay, MonthlyCalendar } from '@zach.codes/react-calendar';
-import '@zach.codes/react-calendar/dist/calendar-tailwind.css';
 import { format, startOfMonth } from 'date-fns';
 import Api from '../api';
 

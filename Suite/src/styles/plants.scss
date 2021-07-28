@@ -1,0 +1,19 @@
+@import "./index.scss";
+
+.plants {
+	.plant {
+		text-align: left;
+		.name {
+			font-weight: 600;
+			margin: 10px 0 $padgap;
+		}
+		.details {
+			width: 100%;
+			@include flex;
+			justify-content: space-between;
+			P {
+				margin: $padgap 0;
+			}
+		}
+	}
+}

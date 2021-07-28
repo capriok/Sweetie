@@ -1,0 +1,121 @@
+@import "./index.scss";
+
+.slidemodal {
+	input[type="number"] {
+		width: 45% !important;
+	}
+	.calender,
+	.groceries,
+	.tasks {
+		width: 100%;
+	}
+
+	input,
+	select,
+	button {
+		width: 100%;
+	}
+
+	.calender {
+		.name-timed,
+		.date,
+		.time {
+			@include flex;
+		}
+		.name-timed {
+			.timed {
+				@include flex;
+				flex-direction: column;
+				padding: 0px 20px;
+			}
+			input[name="name"] {
+				margin-right: $padgap;
+			}
+		}
+
+		.date,
+		.time {
+			justify-content: space-between;
+			margin-top: $padgap;
+			p {
+				white-space: nowrap;
+				margin-right: $padgap;
+			}
+		}
+	}
+
+	.groceries {
+		.name-quan,
+		.store {
+			@include flex;
+		}
+		.name-quan {
+			input[name="name"] {
+				margin-right: $padgap;
+			}
+			label {
+				span {
+					font-size: 0.8rem;
+					padding: 0 10px;
+				}
+				input {
+					margin: 0;
+				}
+			}
+		}
+		.store {
+			margin-top: $padgap;
+		}
+	}
+
+	.tasks {
+		@include flex;
+		input[name="name"] {
+			margin-right: $padgap;
+		}
+		.pinned {
+			@include flex;
+			flex-direction: column;
+			padding: 0px 20px;
+		}
+	}
+
+	.cats {
+		width: 100%;
+		.offsets {
+			@include flex;
+			width: 100%;
+			label {
+				input {
+					min-width: 100px;
+				}
+				&:first-child {
+					margin-right: $padgap;
+				}
+			}
+		}
+	}
+
+	.plants {
+		.name-cycle,
+		.lastwater {
+			@include flex;
+			width: 100%;
+		}
+		.name-cycle {
+			input {
+				&:first-child {
+					margin-right: $padgap;
+				}
+			}
+		}
+		.lastwater {
+			justify-content: space-between;
+			margin-top: $padgap;
+			p {
+				white-space: nowrap;
+				margin-right: $padgap;
+			}
+		}
+	}
+}
