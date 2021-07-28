@@ -34,9 +34,6 @@ const Calender: React.FC = () => {
 		console.log({ CalenderEvents: calenderEvents })
 	}, [calenderEvents])
 
-	console.log(new Date("2021-07-05T07:00:00.000Z"));
-
-
 	return (
 		<div className="calender">
 			<MonthlyCalendar

@@ -53,7 +53,6 @@ const Calender: React.FC = () => {
 		Api.PostCalenderEvent(event).then(ce => setEventList(ce))
 	}
 
-
 	useEffect(() => {
 		(async () => Api.GetCalenderEvents().then(ce => setEventList(ce)))()
 	}, [])

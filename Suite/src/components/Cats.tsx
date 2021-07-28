@@ -22,30 +22,15 @@ const Cats: React.FC = () => {
 		toggleEdit(false)
 	})
 
-	function FoodChange(e: any) {
+	function RollOverInputChange(e: any, max: number, setter: any) {
 		const min = 0
-		const max = 1
 		let value = parseInt(e.target.value)
 
 		if (value < min) value = max
 		if (value > max) value = min
 
-		console.log(value);
-
-		setFoodOffset(value)
+		setter(value)
 	}
-
-	function WasteChange(e: any) {
-		const min = 0
-		const max = 3
-		let value = parseInt(e.target.value)
-
-		if (value < min) value = max
-		if (value > max) value = min
-
-		setWasteOffset(value)
-	}
-
 
 	async function postOffsets(e: any) {
 		e.preventDefault()
@@ -138,14 +123,14 @@ const Cats: React.FC = () => {
 								<input
 									type="number"
 									value={foodOffset}
-									onChange={(e) => FoodChange(e)} />
+									onChange={(e) => RollOverInputChange(e, 1, setFoodOffset)} />
 							</label>
 							<label>
 								<p>Waste</p>
 								<input
 									type="number"
 									value={wastOffset}
-									onChange={(e) => WasteChange(e)} />
+									onChange={(e) => RollOverInputChange(e, 3, setWasteOffset)} />
 							</label>
 						</div>
 						<button className="submit" type="submit">Submit</button>
