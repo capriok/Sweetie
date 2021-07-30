@@ -1,4 +1,5 @@
 const fs = require('fs')
+import { startOfWeek, endOfWeek, startOfToday, isSameDay, compareAsc, addDays, subDays } from 'date-fns'
 import * as SweetieStore from './store.json'
 
 namespace SwtNameSpace {
@@ -28,9 +29,15 @@ namespace SwtNameSpace {
 		pinned: boolean
 	}
 
-	type CatOffsets = {
-		food: number
-		waste: number
+	type CatDays = {
+		lastFoodDay: string
+		lastWasteDay: string
+	}
+
+	type CatScheduleDay = {
+		date: Date
+		isFood: boolean
+		isWaste: boolean
 	}
 
 	type Plant = {
@@ -45,7 +52,8 @@ namespace SwtNameSpace {
 		groceryList: Array<Grocery>
 		staticTasks: Array<StaticTask>
 		taskList: Array<Task>
-		catOffsets: CatOffsets
+		catDays: CatDays
+		catSchedule: Array<CatScheduleDay>
 		plantList: Array<Plant>
 
 		constructor() {
@@ -53,7 +61,8 @@ namespace SwtNameSpace {
 			this.groceryList = SweetieStore['groceryList']
 			this.staticTasks = SweetieStore['staticTasks']
 			this.taskList = SweetieStore['taskList']
-			this.catOffsets = SweetieStore['catOffsets']
+			this.catDays = SweetieStore['catDays']
+			this.catSchedule = createCatSchedule(this.catDays)
 			this.plantList = SweetieStore['plantList']
 		}
 
@@ -112,14 +121,17 @@ namespace SwtNameSpace {
 			return this.getTaskList()
 		}
 
-		getCatOffsets() {
-			return this.catOffsets
+		getCatDays() {
+			return this.catDays
 		}
-		postCatOffsets(offsets) {
-			this.catOffsets.food = offsets.food
-			this.catOffsets.waste = offsets.waste
-			writeStorage('catOffsets', this.catOffsets)
-			return this.catOffsets
+		getCatSchedule() {
+			return this.catSchedule
+		}
+		postCatDays(days) {
+			this.catDays.lastFoodDay = days.lastFoodDay
+			this.catDays.lastWasteDay = days.lastWasteDay
+			writeStorage('catDays', this.catDays)
+			return this.catDays
 		}
 
 		getPlantList() {
@@ -162,6 +174,67 @@ namespace SwtNameSpace {
 			if (err) throw err
 			console.log("JSON data is saved.");
 		})
+	}
+
+	function createCatSchedule(cd: CatDays): Array<CatScheduleDay> {
+		const { lastFoodDay, lastWasteDay } = cd
+
+		const Food_Interval = 2
+		const Waste_Interval = 3
+		const date = new Date()
+		const today = startOfToday()
+
+		const lfd = new Date(lastFoodDay)
+		const lwd = new Date(lastWasteDay)
+
+		const foodDays = Find(lfd, Food_Interval)
+		const wasteDays = Find(lwd, Waste_Interval)
+
+		const thisWeek = GenerateWeek(startOfWeek(date))
+
+		const schedule = thisWeek.map(day => {
+			return ({
+				date: day,
+				isFood: foodDays.some(d => isSameDay(d, day)),
+				isWaste: wasteDays.some(d => isSameDay(d, day)),
+			})
+
+		})
+
+		console.log(schedule);
+
+		return schedule
+
+		function Find(last, Interval) {
+			let days = []
+
+			FindInPast(last, 3)
+			days.push(last)
+			FindInFuture(last, 3)
+
+			return days.sort(compareAsc)
+
+			function FindInPast(last, n) {
+				if (n === 0) return
+				let tempLast = subDays(last, Interval)
+				!isSameDay(last, today) && days.unshift(last)
+				FindInPast(tempLast, n - 1)
+			}
+			function FindInFuture(last, n) {
+				if (n === 0) return
+				let tempLast = addDays(last, Interval)
+				!isSameDay(last, today) && days.push(last)
+				FindInFuture(tempLast, n - 1)
+			}
+		}
+
+		function GenerateWeek(s: Date) {
+			let week = []
+			for (let i = 0; i < 7; i++) {
+				week.push(addDays(s, i))
+			}
+			return week
+		}
 	}
 
 }

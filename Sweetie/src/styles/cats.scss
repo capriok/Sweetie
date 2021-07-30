@@ -5,31 +5,60 @@
 	@include flex;
 	height: 100%;
 	.schedule {
-		@include flex;
-		justify-content: space-evenly;
 		width: 100%;
-		.item {
-			position: relative;
-			@include flex;
-			flex-direction: column;
-			height: 100px;
-
-			.day {
-				flex: 1;
+		@include flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		.labels {
+			margin-bottom: 40px;
+			p {
 				width: 100%;
-				height: 100%;
+				text-align: center;
 			}
-			.indicators {
-				position: absolute;
-				bottom: -100px;
-				.food-indicator,
-				.waste-indicator {
-					font-size: 2.5rem;
-				}
-			}
-			.today {
-				font-size: 3rem !important;
-			}
+		}
+		.labels,
+		.indicators {
+			width: 100%;
+			@include flex;
+		}
+
+		$shadow-prim: rgba(165, 165, 165, 0.3);
+		$shadow-light: rgba(165, 165, 165, 0.15);
+		$cont-size: 160px;
+		$after-size: 120px;
+		$after-margin: -60px;
+
+		#svg circle {
+			stroke-dashoffset: 0;
+			transition: stroke-dashoffset 1s linear;
+			stroke: transparent;
+			stroke-width: 0.75em;
+		}
+		#svg #bar {
+			stroke: rgb(20, 84, 136);
+		}
+		#cont {
+			position: relative;
+			display: block;
+			height: $cont-size;
+			width: $cont-size;
+			margin: 0 auto;
+			box-shadow: 0 0 1em $shadow-light;
+			border-radius: 100%;
+			transform: rotate(-90deg);
+		}
+		#cont:after {
+			position: absolute;
+			display: block;
+			content: "";
+			height: $after-size;
+			width: $after-size;
+			top: 50%;
+			left: 50%;
+			box-shadow: inset 0 0 0.5em $shadow-prim;
+			margin-top: $after-margin;
+			margin-left: $after-margin;
+			border-radius: 100%;
 		}
 	}
 }

@@ -19,6 +19,12 @@ interface CatOffsets {
 	waste: number
 }
 
+interface CatScheduleDay {
+	date: Date
+	isFood: boolean
+	isWaste: boolean
+}
+
 interface Plant {
 	name: string
 	cycle: number

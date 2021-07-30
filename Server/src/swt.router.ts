@@ -24,7 +24,6 @@ router.post('/ce-rem', (req, res) => {
 	console.log('Request: Remove Calender Event');
 
 	const { id } = req.body
-
 	const calenderEventList = Swt.removeCalenderEvent(id)
 
 	res.json({ list: calenderEventList })
@@ -53,7 +52,6 @@ router.post('/gl-rem', (req, res) => {
 	console.log('Request: Remove Grocery');
 
 	const { id } = req.body
-
 	const groceryList = Swt.removeGrocery(id)
 
 	res.json({ list: groceryList })
@@ -115,22 +113,29 @@ router.get('/tl-clr', (req, res) => {
 
 // CATS
 
-router.get('/co', (req, res) => {
+router.get('/cd', (req, res) => {
 	console.log('Request: Cats Offsets');
 
-	const catsOffsets = Swt.getCatOffsets()
+	const catDays = Swt.getCatDays()
 
-	res.json({ offsets: catsOffsets })
+	res.json({ offsets: catDays })
 })
 
-router.post('/co-post', (req, res) => {
-	console.log('Request: Post Offsets');
+router.get('/cs', (req, res) => {
+	console.log('Request: Cats Schedule');
 
-	const { offsets } = req.body
+	const catSchedule = Swt.getCatSchedule()
 
-	const catsOffsets = Swt.postCatOffsets(offsets)
+	res.json({ schedule: catSchedule })
+})
 
-	res.json({ offsets: catsOffsets })
+router.post('/cd-post', (req, res) => {
+	console.log('Request: Post Days');
+
+	const { days } = req.body
+	const catDays = Swt.postCatDays(days)
+
+	res.json({ offsets: catDays })
 })
 
 

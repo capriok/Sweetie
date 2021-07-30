@@ -31,7 +31,7 @@ const Calender: React.FC = () => {
 	}, [])
 
 	useEffect(() => {
-		console.log({ CalenderEvents: calenderEvents })
+		calenderEvents.length && console.log({ CalenderEvents: calenderEvents })
 	}, [calenderEvents])
 
 	return (

@@ -44,9 +44,9 @@ class Api {
 
 	// CATS
 
-	public async GetCatOffsets(): Promise<CatOffsets> {
-		const res = await AxiosInstance.get('/co')
-		return res.data.offsets
+	public async GetCatSchedule(): Promise<Array<CatScheduleDay>> {
+		const res = await AxiosInstance.get('/cs')
+		return res.data.schedule
 	}
 
 	// PLANTS

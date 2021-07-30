@@ -5,70 +5,61 @@ import Api from '../api'
 import '../styles/cats.scss'
 
 const Cats: React.FC = () => {
+	const [schedule, setSchedule] = useState<any>([])
 
-	const [offsets, setOffsets] = useState<CatOffsets>({
-		food: 0,
-		waste: 0
-	})
-	const [schedule, setSchedule] = useState([])
-
-	const date = new Date()
-
-	const minusOne = date.getDate() - 1
-	const today = date.getDate()
-	const plusTwo = date.getDate() + 1
+	const [foodProgress, setFoodProgress] = useState(50)
+	const [foodPercent, setFoodPercent] = useState(0)
+	const [wasteProgress, setWasteProgress] = useState(66)
+	const [wastePercent, setWastePercent] = useState(0)
 
 	useEffect(() => {
-		const DAYS = [minusOne, today, plusTwo]
-		const WASTE_INTERVAL = 3
-		const newSchedule: any = []
-		let wasteDay = offsets.waste
-		for (let i = 0; i < DAYS.length; i++) {
-			const dayOfMonth = i + 1
-			let isFood = dayOfMonth % 2 !== offsets.food
-			let isWaste = false
-			if (dayOfMonth > offsets.waste) {
-				isWaste = i === wasteDay
-			}
-			if (i === wasteDay) wasteDay = wasteDay + WASTE_INTERVAL
-			newSchedule.push({
-				date: DAYS[i],
-				isFood,
-				isWaste
-			})
-		}
+		(async () => Api.GetCatSchedule().then(cs => {
+			console.log({ CatSchedule: cs })
 
-		setSchedule(newSchedule);
-	}, [offsets])
-
-	useEffect(() => {
-		(async () => Api.GetCatOffsets().then(os => {
-			console.log({ Offsets: os })
-
-			setOffsets({
-				food: os.food,
-				waste: os.waste
-			})
+			setSchedule(cs)
 		}))()
+
+		calculateCircleProgress(circleProps.r, foodProgress, setFoodPercent)
+		calculateCircleProgress(circleProps.r, wasteProgress, setWastePercent)
 	}, [])
 
-	const isToday = (day: { date: number }, cl: string) => {
-		return day.date === today ? cl + ' today' : cl
+	function calculateCircleProgress(r: number, progress: number, setter: any) {
+		var c = Math.PI * (r * 2);
+		var pct = ((100 - progress) / 100) * c;
+		setter(pct)
+	}
+
+	const circleProps = {
+		r: 70,
+		cx: 80,
+		cy: 80,
+		fill: 'transparent',
+		strokeDasharray: '440',
+		strokeDashoffset: '0'
 	}
 
 	return (
 		<div className="cat-schedule">
 			<h1>Cats</h1>
 			<div className="schedule">
-				{schedule.map((day: any, i) => (
-					<div className="item" key={i}>
-						<p className={isToday(day, 'day')}>{day.date}</p>
-						<div className="indicators">
-							{day.isFood && <div className={isToday(day, 'food-indicator')}><GiOpenedFoodCan /></div>}
-							{day.isWaste && <div className={isToday(day, 'waste-indicator')}><GiNuclearWaste /></div>}
-						</div>
+				<div className="labels">
+					<p>Food</p>
+					<p>Litter</p>
+				</div>
+				<div className="indicators">
+					<div id="cont" data-pct={foodProgress}>
+						<svg id="svg" width="160" height="160">
+							<circle {...circleProps} />
+							<circle id="bar" style={{ strokeDashoffset: foodPercent }} {...circleProps} />
+						</svg>
 					</div>
-				))}
+					<div id="cont" data-pct={wasteProgress}>
+						<svg id="svg" width="160" height="160">
+							<circle {...circleProps} />
+							<circle id="bar" style={{ strokeDashoffset: wastePercent }} {...circleProps} />
+						</svg>
+					</div>
+				</div>
 			</div>
 		</div>
 	)
