@@ -3,18 +3,18 @@ import { useOutsideClick } from '../hooks/useOutsideClick'
 import SlideModal from './SlideModal'
 import Api from '../api'
 import '../styles/cats.scss'
+import { addDays, isSameDay, startOfDay } from 'date-fns'
 
 const Cats: React.FC = () => {
 
 	const [editing, toggleEdit] = useState(false)
 	const [schedule, setSchedule] = useState<any>([])
-	const [catOffsets, setCatOffsets] = useState<CatOffsets>({
-		food: 0,
-		waste: 0
+	const [catDays, setCatDays] = useState<CatDays>({
+		lastFoodDay: undefined,
+		lastWasteDay: undefined
 	})
-	const [foodOffset, setFoodOffset] = useState<number>(catOffsets.food)
-	const [wastOffset, setWasteOffset] = useState<number>(catOffsets.waste)
-
+	const [lfd, setLfd] = useState<any>(undefined)
+	const [lwd, setLwd] = useState<any>(undefined)
 
 	const modalRef = useRef()
 	useOutsideClick(modalRef, () => {
@@ -22,68 +22,38 @@ const Cats: React.FC = () => {
 		toggleEdit(false)
 	})
 
-	function RollOverInputChange(e: any, max: number, setter: any) {
-		const min = 0
-		let value = parseInt(e.target.value)
-
-		if (value < min) value = max
-		if (value > max) value = min
-
-		setter(value)
-	}
-
-	async function postOffsets(e: any) {
+	async function postDays(e: any) {
 		e.preventDefault()
 
-		const foodSame = catOffsets.food === foodOffset
-		const wasteSame = catOffsets.waste === wastOffset
+		const foodSame = isSameDay(new Date(catDays.lastFoodDay!), new Date(lfd))
+		const wasteSame = isSameDay(new Date(catDays.lastWasteDay!), new Date(lwd))
+
 		if (foodSame && wasteSame) return
 
-		const offsets = { food: foodOffset, waste: wastOffset }
+		const lastFoodDay = startOfDay(new Date(lfd)).toJSON()
+		const lastWasteDay = startOfDay(new Date(lwd)).toJSON()
 
-		Api.PostOffsets(offsets).then(co => setCatOffsets(co))
+		const days = { lastFoodDay, lastWasteDay }
+		console.log(days);
+		Api.PostCatDays(days).then(cd => setCatDays(cd))
 	}
 
 	useEffect(() => {
-
-		(async () => Api.GetCatOffsets().then(os => {
-			setCatOffsets({
-				food: os.food,
-				waste: os.waste
-			})
+		(async () => Api.GetCatDays().then(cd => {
+			setLfd(cd.lastFoodDay)
+			setLwd(cd.lastWasteDay)
+			console.log({ CatDays: cd })
+			setCatDays(cd)
 		}))()
-
 	}, [])
 
-	const date = new Date()
-
-	const minusTwo = date.getDate() - 2
-	const minusOne = date.getDate() - 1
-	const today = date.getDate()
-	const plusOne = date.getDate() + 1
-	const plusTwo = date.getDate() + 2
-
 	useEffect(() => {
-		const DAYS = [minusTwo, minusOne, today, plusOne, plusTwo]
-		const WASTE_INTERVAL = 3
-		const newSchedule: any = []
-		let wasteDay = catOffsets.waste
-		for (let i = 0; i < DAYS.length; i++) {
-			const dayOfMonth = i + 1
-			let isFood = dayOfMonth % 2 !== catOffsets.food
-			let isWaste = false
-			if (dayOfMonth > catOffsets.waste) {
-				isWaste = i === wasteDay
-			}
-			if (i === wasteDay) wasteDay = wasteDay + WASTE_INTERVAL
-			newSchedule.push({
-				date: DAYS[i],
-				isFood,
-				isWaste
-			})
-		}
-		setSchedule(newSchedule);
-	}, [catOffsets])
+		if (!catDays.lastFoodDay || !catDays.lastWasteDay) return
+		(async () => Api.GetCatSchedule().then(cs => {
+			console.log({ Schedule: cs })
+			setSchedule(cs)
+		}))()
+	}, [catDays])
 
 	return (
 		<>
@@ -98,7 +68,8 @@ const Cats: React.FC = () => {
 					{schedule.map((day: any, i: number) => (
 						<div className="item" key={i}>
 							<div className="day">
-								<p>{day.date}</p>
+								<p>{new Date(day.date).toLocaleDateString('en-us',
+									{ weekday: 'short', month: 'short', day: 'numeric' })}</p>
 							</div>
 							<div className="food">
 								<input readOnly type="radio" checked={day.isFood} />
@@ -115,22 +86,20 @@ const Cats: React.FC = () => {
 				</div>
 			</section>
 			{editing &&
-				<SlideModal smref={modalRef} close={() => toggleEdit(!editing)} title="Offsets">
-					<form onSubmit={(e) => postOffsets(e)} className="cats">
-						<div className="offsets">
+				<SlideModal smref={modalRef} close={() => toggleEdit(!editing)} title="Cat Days">
+					<form onSubmit={(e) => postDays(e)} className="cats">
+						<div className="days">
 							<label>
-								<p>Food</p>
+								<p>Last Food Day</p>
 								<input
-									type="number"
-									value={foodOffset}
-									onChange={(e) => RollOverInputChange(e, 1, setFoodOffset)} />
+									type="date"
+									onChange={(e) => setLfd(e.target.value)} />
 							</label>
 							<label>
-								<p>Waste</p>
+								<p>Last Waste Day</p>
 								<input
-									type="number"
-									value={wastOffset}
-									onChange={(e) => RollOverInputChange(e, 3, setWasteOffset)} />
+									type="date"
+									onChange={(e) => setLwd(e.target.value)} />
 							</label>
 						</div>
 						<button className="submit" type="submit">Submit</button>

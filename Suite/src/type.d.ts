@@ -1,7 +1,7 @@
 interface CalenderEvent {
 	id: string
 	name: string
-	date: Date
+	date: string | Date
 	timed: boolean
 }
 
@@ -23,9 +23,15 @@ interface Task {
 	pinned: boolean
 }
 
-interface CatOffsets {
-	food: number
-	waste: number
+type CatDays = {
+	lastFoodDay: string | Date | undefined
+	lastWasteDay: string | Date | undefined
+}
+
+type CatScheduleDay = {
+	date: string | Date
+	isFood: boolean
+	isWaste: boolean
 }
 
 interface Plant {

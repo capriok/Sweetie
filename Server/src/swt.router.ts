@@ -113,14 +113,6 @@ router.get('/tl-clr', (req, res) => {
 
 // CATS
 
-router.get('/cd', (req, res) => {
-	console.log('Request: Cats Offsets');
-
-	const catDays = Swt.getCatDays()
-
-	res.json({ offsets: catDays })
-})
-
 router.get('/cs', (req, res) => {
 	console.log('Request: Cats Schedule');
 
@@ -129,13 +121,21 @@ router.get('/cs', (req, res) => {
 	res.json({ schedule: catSchedule })
 })
 
+router.get('/cd', (req, res) => {
+	console.log('Request: Cat Days');
+
+	const catDays = Swt.getCatDays()
+
+	res.json({ days: catDays })
+})
+
 router.post('/cd-post', (req, res) => {
 	console.log('Request: Post Days');
 
 	const { days } = req.body
 	const catDays = Swt.postCatDays(days)
 
-	res.json({ offsets: catDays })
+	res.json({ days: catDays })
 })
 
 

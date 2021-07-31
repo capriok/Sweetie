@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import { format } from 'date-fns'
+import { compareAsc, format } from 'date-fns'
 import SlideModal from './SlideModal'
 import Api from '../api'
 import short from 'short-uuid'
@@ -45,21 +45,20 @@ const Calender: React.FC = () => {
 		e.preventDefault()
 
 		const invalidDate = !isNaN(Date.parse(date))
-
 		if (!is.adding || !name || !invalidDate) return
 
-		let event = { id: short.generate(), name: name, date: date, timed: timed }
+		const evDate = new Date(date).toISOString()
+		let event = { id: short.generate(), name, date: evDate, timed }
 
 		Api.PostCalenderEvent(event).then(ce => setEventList(ce))
 	}
 
-	useEffect(() => {
-		(async () => Api.GetCalenderEvents().then(ce => setEventList(ce)))()
+	useMemo(() => {
+		(async () => Api.GetCalenderEvents().then(ce => {
+			console.log({ CalenderEvents: ce })
+			setEventList(ce)
+		}))()
 	}, [])
-
-	useEffect(() => {
-		eventList.length && console.log({ CalenderEvents: eventList })
-	}, [eventList])
 
 	return (
 		<>

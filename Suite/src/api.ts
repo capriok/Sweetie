@@ -85,14 +85,19 @@ class Api {
 
 	// CATS
 
-	public async GetCatOffsets(): Promise<CatOffsets> {
-		const res = await AxiosInstance.get('/co')
-		return res.data.offsets
+	public async GetCatSchedule(): Promise<Array<CatScheduleDay>> {
+		const res = await AxiosInstance.get('/cs')
+		return res.data.schedule
 	}
 
-	public async PostOffsets(offsets: CatOffsets): Promise<CatOffsets> {
-		const res = await AxiosInstance.post('/co-post', { offsets: offsets })
-		return res.data.offsets
+	public async GetCatDays(): Promise<CatDays> {
+		const res = await AxiosInstance.get('/cd')
+		return res.data.days
+	}
+
+	public async PostCatDays(days: CatDays): Promise<CatDays> {
+		const res = await AxiosInstance.post('/cd-post', { days: days })
+		return res.data.days
 	}
 
 	// PLANTS

@@ -56,12 +56,11 @@ const Groceries: React.FC = () => {
 	}
 
 	useEffect(() => {
-		(async () => Api.GetGroceryList().then(gl => setGroceryList(gl)))()
+		(async () => Api.GetGroceryList().then(gl => {
+			console.log({ Groceries: gl })
+			setGroceryList(gl)
+		}))()
 	}, [])
-
-	useEffect(() => {
-		groceryList.length && console.log({ GroceryList: groceryList })
-	}, [groceryList])
 
 	return (
 		<>

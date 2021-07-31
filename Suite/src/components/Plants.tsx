@@ -51,12 +51,11 @@ const Plants: React.FC = () => {
 	}
 
 	useEffect(() => {
-		(async () => Api.GetPlantList().then(pl => setPlantList(pl)))()
+		(async () => Api.GetPlantList().then(pl => {
+			console.log({ PlantList: plantList })
+			setPlantList(pl)
+		}))()
 	}, [])
-
-	useEffect(() => {
-		plantList.length && console.log({ PlantList: plantList })
-	}, [plantList])
 
 	return (
 		<>

@@ -57,21 +57,19 @@ const Tasks: React.FC = () => {
 	}
 
 	useEffect(() => {
-		(async () => Api.GetTaskList().then(tl => setTaskList(tl)))();
-
-		(async () => Api.GetStaticTasks().then(st => {
-			setStaticTasks(st)
-		}))();
-
+		(async () => Api.GetTaskList().then(tl => {
+			console.log({ TaskList: tl })
+			setTaskList(tl)
+		}))()
 	}, [])
 
 	useEffect(() => {
-		staticTasks.length && console.log({ StaticTasks: staticTasks })
-	}, [staticTasks])
+		(async () => Api.GetStaticTasks().then(st => {
+			console.log({ StaticTasks: st })
+			setStaticTasks(st)
+		}))()
+	}, [])
 
-	useEffect(() => {
-		taskList.length && console.log({ TaskList: taskList })
-	}, [taskList])
 
 	return (
 		<>

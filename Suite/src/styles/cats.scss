@@ -6,6 +6,20 @@
 			margin: 0;
 		}
 	}
+	.day,
+	.food,
+	.waste {
+		flex: 1;
+	}
+	.day {
+		text-align: left;
+	}
+	.food {
+		text-align: center;
+	}
+	.waste {
+		text-align: right;
+	}
 	.indicators {
 		padding-top: 40px;
 	}

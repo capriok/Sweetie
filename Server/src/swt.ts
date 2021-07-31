@@ -150,8 +150,9 @@ namespace SwtNameSpace {
 				if (isSameDay(new Date(this.catDays.lastWasteDay), today)) return
 				this.postCatDays({ ...this.catDays, lastWasteDay: today })
 			}
+			console.log(this.catSchedule);
 
-			return this.catSchedule
+			return sortByDate(this.catSchedule)
 		}
 		postCatDays(days) {
 			this.catDays.lastFoodDay = days.lastFoodDay
@@ -177,19 +178,6 @@ namespace SwtNameSpace {
 		}
 	}
 
-	function sortByPinned(tl: Array<Task>) {
-		tl.map((t, i) => {
-			if (!t.pinned) return t
-			tl.splice(i, 1)
-			tl.unshift(t)
-		})
-		return tl
-	}
-
-	function sortByName(pl: Array<Plant>) {
-		return pl.sort((a, b) => a.name.localeCompare(b.name))
-	}
-
 	function writeStorage(prop, data) {
 		const isDev = process.env.NODE_ENV === 'development'
 		const PATH = isDev ? 'src/store.json' : 'dist/store.json'
@@ -203,6 +191,25 @@ namespace SwtNameSpace {
 			if (err) throw err
 			console.log("JSON data is saved.");
 		})
+	}
+
+	function sortByPinned(tl: Array<Task>) {
+		tl.map((t, i) => {
+			if (!t.pinned) return t
+			tl.splice(i, 1)
+			tl.unshift(t)
+		})
+		return tl
+	}
+
+	function sortByName(pl: Array<Plant>) {
+		return pl.sort((a, b) => a.name.localeCompare(b.name))
+	}
+
+	function sortByDate(arr: Array<CatScheduleDay>) {
+		console.log(arr.sort((a, b) => compareAsc(a.date, b.date)));
+
+		return arr.sort((a, b) => compareAsc(a.date, b.date))
 	}
 
 	function createCatSchedule(cd: CatDays): Array<CatScheduleDay> {
@@ -258,7 +265,7 @@ namespace SwtNameSpace {
 		}
 	}
 
-	console.log(new Sweetie().getCatSchedule())
+	// console.log(new Sweetie().getCatSchedule())
 
 }
 
