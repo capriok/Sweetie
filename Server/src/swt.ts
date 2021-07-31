@@ -1,5 +1,6 @@
 const fs = require('fs')
 import { startOfWeek, endOfWeek, startOfToday, isSameDay, compareAsc, addDays, subDays } from 'date-fns'
+import { start } from 'repl'
 import * as SweetieStore from './store.json'
 
 namespace SwtNameSpace {
@@ -62,9 +63,11 @@ namespace SwtNameSpace {
 			this.staticTasks = SweetieStore['staticTasks']
 			this.taskList = SweetieStore['taskList']
 			this.catDays = SweetieStore['catDays']
-			this.catSchedule = createCatSchedule(this.catDays)
+			this.catSchedule = []
 			this.plantList = SweetieStore['plantList']
 		}
+
+		// CALENDER EVENTS
 
 		getCalenderEvents() {
 			return this.calenderEventsList
@@ -79,6 +82,8 @@ namespace SwtNameSpace {
 			writeStorage('calenderEvents', this.calenderEventsList)
 			return this.calenderEventsList
 		}
+
+		// GROCERIES
 
 		getGroceryList() {
 			return this.groceryList
@@ -102,6 +107,8 @@ namespace SwtNameSpace {
 			return this.staticTasks
 		}
 
+		// TASKS
+
 		getTaskList() {
 			return sortByPinned(this.taskList)
 		}
@@ -121,10 +128,29 @@ namespace SwtNameSpace {
 			return this.getTaskList()
 		}
 
+		// CATS
+
 		getCatDays() {
 			return this.catDays
 		}
 		getCatSchedule() {
+			this.catSchedule = createCatSchedule(this.catDays)
+
+			const today = startOfToday()
+			const day = this.catSchedule.find(d => isSameDay(d.date, today))
+
+			if (day.isFood && day.isWaste) {
+				if (isSameDay(new Date(this.catDays.lastFoodDay), today) &&
+					isSameDay(new Date(this.catDays.lastWasteDay), today)) return
+				this.postCatDays({ lastFoodDay: today, lastWasteDay: today })
+			} else if (day.isFood) {
+				if (isSameDay(new Date(this.catDays.lastFoodDay), today)) return
+				this.postCatDays({ ...this.catDays, lastFoodDay: today })
+			} else if (day.isWaste) {
+				if (isSameDay(new Date(this.catDays.lastWasteDay), today)) return
+				this.postCatDays({ ...this.catDays, lastWasteDay: today })
+			}
+
 			return this.catSchedule
 		}
 		postCatDays(days) {
@@ -133,6 +159,8 @@ namespace SwtNameSpace {
 			writeStorage('catDays', this.catDays)
 			return this.catDays
 		}
+
+		// PLANTS
 
 		getPlantList() {
 			return sortByName(this.plantList)
@@ -162,11 +190,12 @@ namespace SwtNameSpace {
 		return pl.sort((a, b) => a.name.localeCompare(b.name))
 	}
 
-	const isDev = process.env.NODE_ENV === 'development'
-	const PATH = isDev ? 'src/store.json' : 'dist/store.json'
-
 	function writeStorage(prop, data) {
+		const isDev = process.env.NODE_ENV === 'development'
+		const PATH = isDev ? 'src/store.json' : 'dist/store.json'
+
 		if (!Object.keys(SweetieStore).length) return
+		if (!SweetieStore[prop]) return
 
 		let writeData = { ...SweetieStore, [prop]: data }
 
@@ -181,63 +210,56 @@ namespace SwtNameSpace {
 
 		const Food_Interval = 2
 		const Waste_Interval = 3
-		const date = new Date()
-		const today = startOfToday()
-
 		const lfd = new Date(lastFoodDay)
 		const lwd = new Date(lastWasteDay)
+		const today = startOfToday()
 
-		const foodDays = Find(lfd, Food_Interval)
-		const wasteDays = Find(lwd, Waste_Interval)
+		const foodDays = FindDays(lfd, Food_Interval)
+		const wasteDays = FindDays(lwd, Waste_Interval)
 
-		const thisWeek = GenerateWeek(startOfWeek(date))
-
-		const schedule = thisWeek.map(day => {
-			return ({
-				date: day,
-				isFood: foodDays.some(d => isSameDay(d, day)),
-				isWaste: wasteDays.some(d => isSameDay(d, day)),
-			})
-
-		})
-
-		console.log(schedule);
+		const thisWeek = GenerateWeek(startOfWeek(today))
+		const schedule: Array<CatScheduleDay> = thisWeek.map(day => ({
+			date: day,
+			isFood: foodDays.some(d => isSameDay(d, day)),
+			isWaste: wasteDays.some(d => isSameDay(d, day))
+		}))
 
 		return schedule
+	}
 
-		function Find(last, Interval) {
-			let days = []
+	function GenerateWeek(s: Date) {
+		let week = []
+		Populate(s, 1)
+		return week
 
-			FindInPast(last, 3)
-			days.push(last)
-			FindInFuture(last, 3)
-
-			return days.sort(compareAsc)
-
-			function FindInPast(last, n) {
-				if (n === 0) return
-				let tempLast = subDays(last, Interval)
-				!isSameDay(last, today) && days.unshift(last)
-				FindInPast(tempLast, n - 1)
-			}
-			function FindInFuture(last, n) {
-				if (n === 0) return
-				let tempLast = addDays(last, Interval)
-				!isSameDay(last, today) && days.push(last)
-				FindInFuture(tempLast, n - 1)
-			}
+		function Populate(s, n) {
+			if (n > 7) return
+			week.push(s)
+			Populate(addDays(s, 1), n + 1)
 		}
+	}
+	function FindDays(last: Date, intv: number): Array<Date> {
+		let days = []
+		Find('-', last, 3)
+		days.push(last)
+		Find('+', last, 3)
 
-		function GenerateWeek(s: Date) {
-			let week = []
-			for (let i = 0; i < 7; i++) {
-				week.push(addDays(s, i))
-			}
-			return week
+		return [...new Map(days.map(d => [d, d])).values()].sort(compareAsc)
+
+		function Find(d, l, n) {
+			if (n === 0) return
+			Find(d, nLast(d, l, intv), n - 1)
+			days.push(l)
+		}
+		function nLast(d, l, i) {
+			return d === '-'
+				? subDays(l, i)
+				: addDays(l, i)
 		}
 	}
 
-}
+	console.log(new Sweetie().getCatSchedule())
 
+}
 
 export default new SwtNameSpace.Sweetie()

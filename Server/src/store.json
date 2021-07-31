@@ -1,4 +1,8 @@
 {
+	"catDays": {
+		"lastFoodDay": "2021-07-29T07:00:00.000Z",
+		"lastWasteDay": "2021-07-29T07:00:00.000Z"
+	},
 	"calenderEvents": [
 		{
 			"id": "sfFtMBtB7txMkWQZYYf1uLN",
@@ -116,10 +120,6 @@
 			"pinned": false
 		}
 	],
-	"catDays": {
-		"lastFoodDay": "2021-07-28T07:00:00.000Z",
-		"lastWasteDay": "2021-07-29T07:00:00.000Z"
-	},
 	"plantList": [
 		{
 			"id": "sfFjws6tMsBtB7tMkWQjrZYYf1ujLN",
