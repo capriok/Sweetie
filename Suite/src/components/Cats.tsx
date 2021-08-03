@@ -3,12 +3,12 @@ import { useOutsideClick } from '../hooks/useOutsideClick'
 import SlideModal from './SlideModal'
 import Api from '../api'
 import '../styles/cats.scss'
-import { addDays, isSameDay, startOfDay } from 'date-fns'
+import { isSameDay, startOfDay } from 'date-fns'
 
 const Cats: React.FC = () => {
 
 	const [editing, toggleEdit] = useState(false)
-	const [schedule, setSchedule] = useState<any>([])
+	const [schedule, setSchedule] = useState<Array<CatScheduleDay>>([])
 	const [catDays, setCatDays] = useState<CatDays>({
 		lastFoodDay: undefined,
 		lastWasteDay: undefined
@@ -34,7 +34,6 @@ const Cats: React.FC = () => {
 		const lastWasteDay = startOfDay(new Date(lwd)).toJSON()
 
 		const days = { lastFoodDay, lastWasteDay }
-		console.log(days);
 		Api.PostCatDays(days).then(cd => setCatDays(cd))
 	}
 
@@ -65,17 +64,17 @@ const Cats: React.FC = () => {
 						<p>Food</p>
 						<p>Waste</p>
 					</div>
-					{schedule.map((day: any, i: number) => (
+					{schedule.map((day, i) => (
 						<div className="item" key={i}>
 							<div className="day">
 								<p>{new Date(day.date).toLocaleDateString('en-us',
 									{ weekday: 'short', month: 'short', day: 'numeric' })}</p>
 							</div>
 							<div className="food">
-								<input readOnly type="radio" checked={day.isFood} />
+								<input readOnly type="radio" checked={day.food.is} />
 							</div>
 							<div className="waste">
-								<input readOnly type="radio" checked={day.isWaste} />
+								<input readOnly type="radio" checked={day.waste.is} />
 							</div>
 						</div>
 					))}

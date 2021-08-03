@@ -51,9 +51,9 @@ class Api {
 
 	// PLANTS
 
-	public async GetPlantList(): Promise<Array<Plant>> {
-		const res = await AxiosInstance.get('/pl')
-		return res.data.list
+	public async GetPlantSchedule(): Promise<Array<PlantScheduleDay>> {
+		const res = await AxiosInstance.get('/ps')
+		return res.data.schedule
 	}
 
 }

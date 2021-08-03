@@ -115,6 +115,7 @@ const Tasks: React.FC = () => {
 							name="name"
 							type="text"
 							placeholder="Task"
+							autoComplete="off"
 							onChange={(e) => setName(e.target.value)} />
 						<label className="pinned">
 							<span>Pinned</span>

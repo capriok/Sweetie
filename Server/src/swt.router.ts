@@ -141,6 +141,14 @@ router.post('/cd-post', (req, res) => {
 
 // PLANTS
 
+router.get('/ps', (req, res) => {
+	console.log('Request: Plants Schedule');
+
+	const plantSchedule = Swt.getPlantSchedule()
+
+	res.json({ schedule: plantSchedule })
+})
+
 router.get('/pl', (req, res) => {
 	console.log('Request: Plant List');
 

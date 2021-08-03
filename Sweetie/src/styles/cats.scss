@@ -22,6 +22,7 @@
 			@include flex;
 		}
 
+		$stroke-color: rgba(220, 220, 220, 0.8);
 		$shadow-prim: rgba(165, 165, 165, 0.3);
 		$shadow-light: rgba(165, 165, 165, 0.15);
 		$cont-size: 160px;
@@ -35,7 +36,7 @@
 			stroke-width: 0.75em;
 		}
 		#svg #bar {
-			stroke: rgb(20, 84, 136);
+			stroke: $stroke-color;
 		}
 		#cont {
 			position: relative;
@@ -59,6 +60,21 @@
 			margin-top: $after-margin;
 			margin-left: $after-margin;
 			border-radius: 100%;
+		}
+
+		@keyframes glow {
+			20% {
+				// stroke: rgb(20, 84, 136);
+				box-shadow: 0 0 1em $shadow-light;
+			}
+			50% {
+				// stroke: rgba(199, 17, 17, 6);
+				box-shadow: 0 0 1.5em crimson;
+			}
+			80% {
+				// stroke: rgb(20, 84, 136);
+				box-shadow: 0 0 1em $shadow-light;
+			}
 		}
 	}
 }

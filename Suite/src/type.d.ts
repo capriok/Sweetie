@@ -30,8 +30,14 @@ type CatDays = {
 
 type CatScheduleDay = {
 	date: string | Date
-	isFood: boolean
-	isWaste: boolean
+	food: {
+		is: boolean
+		progress: number
+	}
+	waste: {
+		is: boolean
+		progress: number
+	}
 }
 
 interface Plant {

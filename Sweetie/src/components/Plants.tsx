@@ -1,38 +1,31 @@
-import { getDaysInMonth } from 'date-fns';
+import { isSameDay, startOfToday } from 'date-fns';
 import { useEffect, useState } from 'react'
+import Api from '../api';
+
+import '../styles/plants.scss'
 
 const Plants: React.FC = () => {
-
-	const [plantList, setPlantList] = useState<Array<Plant>>([])
-	const [schedule, setSchedule] = useState<any>([])
-
-	const ex = [
-		{
-			date: 1,
-			plantsToWater: [
-				{ name: 'Snake Plant' }
-			]
-		}
-	]
+	const [today, setToday] = useState<any>({ date: '', plants: [] })
 
 	useEffect(() => {
-		const newSchedule: any = []
-
-		for (let i = 0; i < getDaysInMonth(new Date()); i++) {
-			let dayOfMonth = i + 1
-			for (let p = 0; p < plantList.length - 1; p++) {
-
-			}
-		}
-
-		setSchedule(newSchedule)
+		(async () => Api.GetPlantSchedule().then(ps => {
+			console.log({ PlantSchedule: ps })
+			const today = ps.find(d => isSameDay(new Date(d.date), new Date(startOfToday())))
+			setToday(today)
+		}))()
 	}, [])
 
 	return (
-		<div>
+		<div className="plants">
 			<h1>Plants</h1>
-
-			WIP
+			<div className="plantlist">
+				{today.plants.length
+					? today.plants.map((plant: any) =>
+						<p className="plant">{plant.name}</p>
+					)
+					: <p>No plants to water.</p>
+				}
+			</div>
 		</div>
 	)
 }

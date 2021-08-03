@@ -113,6 +113,7 @@ const Groceries: React.FC = () => {
 								name="name"
 								type="text"
 								placeholder="Name"
+								autoComplete="off"
 								onChange={(e) => setName(e.target.value)} />
 							<input
 								type="number"

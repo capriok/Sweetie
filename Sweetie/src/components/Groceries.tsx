@@ -38,7 +38,7 @@ const Groceries: React.FC = () => {
 						})}
 					</div>
 				</>}
-			{!groceryList.length && <div>All good here.</div>}
+			{!groceryList.length && <div className="center"><p>All good here.</p></div>}
 		</div>
 	)
 }

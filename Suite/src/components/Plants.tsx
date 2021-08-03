@@ -66,7 +66,7 @@ const Plants: React.FC = () => {
 						<p>Water Cycle</p>
 						<p>Last Water</p>
 					</div>
-					{plantList.slice(0, is.viewing ? plantList.length : 5).map((plant: any, i: number) => (
+					{plantList.slice(0, is.viewing ? plantList.length : 7).map((plant: any, i: number) => (
 						<div key={i} className="plant"
 							onClick={() => removePlant(plant)}>
 							<p className="name">{plant.name}</p>
@@ -96,6 +96,7 @@ const Plants: React.FC = () => {
 								<input
 									type="text"
 									placeholder="Name"
+									autoComplete="off"
 									onChange={(e) => setName(e.target.value)} />
 								<input
 									type="number"

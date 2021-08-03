@@ -1,25 +1,24 @@
 @import "./index.scss";
 
-.grocerylist {
+.plants {
 	width: 100%;
 	align-self: flex-start;
 	padding: 0 20px;
-	padding-top: 200px;
+	padding-top: 150px;
 	h3 {
 		margin-bottom: 20px;
 		border-bottom: 2px solid grey;
 	}
-	.store {
+	.plantList {
 		width: 100%;
-		margin: 0 auto;
-		margin-bottom: 40px;
+		@include flex;
 	}
-	.item {
+	.plant {
 		font-size: 1.4rem;
 		padding-bottom: 10px;
 		margin-bottom: 5px;
 	}
-	.center {
-		@include flex;
+	p {
+		text-align: center;
 	}
 }

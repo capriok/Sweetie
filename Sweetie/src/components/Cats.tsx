@@ -1,27 +1,28 @@
 import { useEffect, useState } from 'react'
-import { GiOpenedFoodCan, GiNuclearWaste } from 'react-icons/gi'
+import { isSameDay, startOfToday } from 'date-fns'
 import Api from '../api'
 
 import '../styles/cats.scss'
 
 const Cats: React.FC = () => {
-	const [schedule, setSchedule] = useState<any>([])
-
-	const [foodProgress, setFoodProgress] = useState(50)
+	const [foodProgress, setFoodProgress] = useState(100)
 	const [foodPercent, setFoodPercent] = useState(0)
-	const [wasteProgress, setWasteProgress] = useState(66)
+	const [wasteProgress, setWasteProgress] = useState(100)
 	const [wastePercent, setWastePercent] = useState(0)
 
 	useEffect(() => {
 		(async () => Api.GetCatSchedule().then(cs => {
 			console.log({ CatSchedule: cs })
-
-			setSchedule(cs)
+			const today = cs.find(d => isSameDay(new Date(d.date), startOfToday()))
+			setFoodProgress(today!.food.progress)
+			setWasteProgress(today!.waste.progress)
 		}))()
+	}, [])
 
+	useEffect(() => {
 		calculateCircleProgress(circleProps.r, foodProgress, setFoodPercent)
 		calculateCircleProgress(circleProps.r, wasteProgress, setWastePercent)
-	}, [])
+	}, [foodProgress, wasteProgress])
 
 	function calculateCircleProgress(r: number, progress: number, setter: any) {
 		var c = Math.PI * (r * 2);
@@ -38,6 +39,12 @@ const Cats: React.FC = () => {
 		strokeDashoffset: '0'
 	}
 
+	function animate(prop: number) {
+		return prop === 100
+			? 'ease-in-out 5s infinite alternate glow'
+			: 'unset'
+	}
+
 	return (
 		<div className="cat-schedule">
 			<h1>Cats</h1>
@@ -47,16 +54,22 @@ const Cats: React.FC = () => {
 					<p>Litter</p>
 				</div>
 				<div className="indicators">
-					<div id="cont" data-pct={foodProgress}>
+					<div id="cont" style={{ animation: animate(foodProgress) }}>
 						<svg id="svg" width="160" height="160">
 							<circle {...circleProps} />
-							<circle id="bar" style={{ strokeDashoffset: foodPercent }} {...circleProps} />
+							<circle
+								id="bar"
+								{...circleProps}
+								style={{ strokeDashoffset: foodPercent }} />
 						</svg>
 					</div>
-					<div id="cont" data-pct={wasteProgress}>
+					<div id="cont" style={{ animation: animate(wasteProgress) }}>
 						<svg id="svg" width="160" height="160">
 							<circle {...circleProps} />
-							<circle id="bar" style={{ strokeDashoffset: wastePercent }} {...circleProps} />
+							<circle
+								id="bar"
+								{...circleProps}
+								style={{ strokeDashoffset: wastePercent }} />
 						</svg>
 					</div>
 				</div>

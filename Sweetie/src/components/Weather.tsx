@@ -11,13 +11,13 @@ const Weather: React.FC = () => {
 
 	const ch = new Date().getHours()
 	const isAfternoon = ch >= 12
-	const isEvening = ch <= 18
-	const isNight = ch > 18
+	const isEvening = ch >= 14
+	const isNight = ch > 22
 
 	let tod = 'This Morning'
 
-	if (isAfternoon) tod = 'This Afternoon'
-	if (isEvening) tod = 'This Evening'
+	if (isAfternoon) tod = 'This afternoon'
+	if (isEvening) tod = 'This evening'
 	if (isNight) tod = 'Tonight'
 
 	return (

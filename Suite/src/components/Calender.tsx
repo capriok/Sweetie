@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react'
+import React, { useState, useRef, useMemo } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import { compareAsc, format } from 'date-fns'
+import { addDays, format, startOfDay } from 'date-fns'
 import SlideModal from './SlideModal'
 import Api from '../api'
 import short from 'short-uuid'
@@ -47,8 +47,9 @@ const Calender: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(date))
 		if (!is.adding || !name || !invalidDate) return
 
-		const evDate = new Date(date).toISOString()
+		let evDate = addDays(new Date(date), 1).toJSON()
 		let event = { id: short.generate(), name, date: evDate, timed }
+		console.log(startOfDay(addDays(new Date(date), 1)).toJSON());
 
 		Api.PostCalenderEvent(event).then(ce => setEventList(ce))
 	}
@@ -66,11 +67,11 @@ const Calender: React.FC = () => {
 				<h1 className="title">Calender</h1>
 				<div className="content calender">
 					<div className="head">
-						<p>Name</p>
+						<p>Event</p>
 						<p>Date</p>
 						<p>Time</p>
 					</div>
-					{eventList.slice(0, is.viewing ? eventList.length : 5).map((event, i) =>
+					{eventList.slice(0, is.viewing ? eventList.length : 7).map((event, i) =>
 						<div className="event" key={i} onClick={() => removeEvent(event)}>
 							<div className="name">
 								<p>{event.name}</p>
@@ -103,6 +104,7 @@ const Calender: React.FC = () => {
 								name="name"
 								type="text"
 								placeholder="Event name"
+								autoComplete="off"
 								onChange={(e) => setName(e.target.value)} />
 							<label className="timed">
 								<span>Timed</span>
