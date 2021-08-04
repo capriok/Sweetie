@@ -4,6 +4,8 @@ import SlideModal from './SlideModal'
 import Api from '../api'
 import short from 'short-uuid'
 
+import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
+
 const Tasks: React.FC = () => {
 	const [is, set] = useState({
 		adding: false,
@@ -15,10 +17,20 @@ const Tasks: React.FC = () => {
 	const [name, setName] = useState('')
 	const [pinned, setPinned] = useState(false)
 
+	function ResetSetState() {
+		set({ adding: false, removing: false })
+	}
+
+	function ResetAddFormState() {
+		setName('')
+		setPinned(false)
+	}
+
 	const outClickRef: any = useRef()
 	useOutsideClick(outClickRef, () => {
 		if (!is.adding && !is.removing) return
-		set({ adding: false, removing: false })
+		ResetSetState()
+		ResetAddFormState()
 	})
 
 	function AddBtnClick() {
@@ -30,8 +42,11 @@ const Tasks: React.FC = () => {
 	}
 
 	function ClearBtnClick() {
-		const confirmation = window.confirm('Are You Sure?');
-		if (confirmation) {
+		const confirmation = window.prompt(
+			'Did you complete everything?\n\n' +
+			'Type \'confirm\' to clear Tasks.'
+		);
+		if (confirmation === 'confirm') {
 			Api.ClearTaskList().then(tl => setTaskList(tl))
 		}
 	}
@@ -39,7 +54,7 @@ const Tasks: React.FC = () => {
 	async function removeTask(task: Task) {
 		if (!is.removing) return
 
-		const confirmation = window.confirm(`Remove "${task.name}" ?`);
+		const confirmation = window.confirm(`Remove '${task.name}' ?`);
 		if (confirmation) {
 			Api.RemoveTask(task).then(tl => setTaskList(tl))
 		}
@@ -47,29 +62,26 @@ const Tasks: React.FC = () => {
 
 	async function postTask(e: any) {
 		e.preventDefault()
-		if (!is.adding || !name) return
+		if (!name) return
 
 		let task = { id: short.generate(), name: name, pinned: pinned }
 
-		console.log(task);
-
-		Api.PostTask(task).then(tl => setTaskList(tl))
+		Api.PostTask(task).then(tl => {
+			ResetAddFormState()
+			setTaskList(tl)
+		})
 	}
 
 	useEffect(() => {
 		(async () => Api.GetTaskList().then(tl => {
 			console.log({ TaskList: tl })
 			setTaskList(tl)
-		}))()
-	}, [])
-
-	useEffect(() => {
+		}))();
 		(async () => Api.GetStaticTasks().then(st => {
 			console.log({ StaticTasks: st })
 			setStaticTasks(st)
-		}))()
+		}))();
 	}, [])
-
 
 	return (
 		<>
@@ -102,20 +114,34 @@ const Tasks: React.FC = () => {
 						</div>
 					))}
 				</div>
-				<div className="action-btns">
-					<button onClick={AddBtnClick} disabled={is.removing}>Add</button>
-					<button onClick={RemoveBtnClick}>{is.removing ? 'Done' : 'Remove'}</button>
-					<button onClick={ClearBtnClick} disabled={is.removing}>Clear</button>
-				</div>
+				{
+					is.adding
+						? <div className="action-btns">
+							<button onClick={AddBtnClick}><VscDebugStop /></button>
+						</div>
+						: is.removing
+							? <div className="action-btns">
+								<button onClick={RemoveBtnClick}><VscDebugStop /></button>
+							</div>
+							: <div className="action-btns">
+								<button onClick={AddBtnClick}><VscDiffAdded /></button>
+								<button onClick={RemoveBtnClick}><VscDiffRemoved /></button>
+								<button onClick={ClearBtnClick}><VscDebugStop /></button>
+							</div>
+				}
 			</section>
 			{is.adding &&
-				<SlideModal smref={outClickRef} close={() => set({ ...is, adding: false })} title="Add Task">
+				<SlideModal
+					title="Add Task"
+					smref={outClickRef}
+					close={() => ResetAddFormState()} >
 					<form onSubmit={(e) => postTask(e)} className="tasks">
 						<input
 							name="name"
 							type="text"
 							placeholder="Task"
 							autoComplete="off"
+							value={name}
 							onChange={(e) => setName(e.target.value)} />
 						<label className="pinned">
 							<span>Pinned</span>

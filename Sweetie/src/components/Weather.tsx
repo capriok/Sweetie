@@ -6,8 +6,8 @@ const Weather: React.FC = () => {
 	const stats = useWeather()
 
 	useEffect(() => {
-		console.log({ Weather: stats })
-	}, [])
+		!stats.loading && console.log({ Weather: stats })
+	}, [stats])
 
 	const ch = new Date().getHours()
 	const isAfternoon = ch >= 12

@@ -26,6 +26,10 @@ class Api {
 		return res.data.list
 	}
 
+	public async UpdateCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {
+		const res = await AxiosInstance.post('/ce-update', { event: event })
+		return res.data.list
+	}
 
 	public async RemoveCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.post('/ce-rem', { id: event.id })
@@ -108,12 +112,17 @@ class Api {
 	}
 
 	public async RemovePlant(plant: Plant): Promise<Array<Plant>> {
-		const res = await AxiosInstance.post('/pl-rem', { plant: plant })
+		const res = await AxiosInstance.post('/pl-rem', { id: plant.id })
 		return res.data.list
 	}
 
 	public async PostPlant(plant: Plant): Promise<Array<Plant>> {
-		const res = await AxiosInstance.post('/pl-post', { id: plant.id })
+		const res = await AxiosInstance.post('/pl-post', { plant: plant })
+		return res.data.list
+	}
+
+	public async UpdatePlant(plant: Plant): Promise<Array<Plant>> {
+		const res = await AxiosInstance.post('/pl-update', { plant: plant })
 		return res.data.list
 	}
 

@@ -5,15 +5,21 @@
 	},
 	"calenderEvents": [
 		{
-			"id": "3mL2SJwV9yAGUrNTA1dVui",
-			"name": "Kris Bday",
-			"date": "2021-08-18T07:00:00.000Z",
-			"timed": false
+			"id": "j1vXHtpGWpwLvKERXd3VsP",
+			"name": "Work",
+			"date": "2021-08-08T01:00:00.000Z",
+			"timed": true
 		},
 		{
 			"id": "3mL2SJwVasdwq1UrNTA1dVui",
 			"name": "Wes Bday",
 			"date": "2021-08-17T07:00:00.000Z",
+			"timed": false
+		},
+		{
+			"id": "3mL2SJwV9yAGUrNTA1dVui",
+			"name": "Kris Bday",
+			"date": "2021-08-18T07:00:00.000Z",
 			"timed": false
 		},
 		{
@@ -87,19 +93,14 @@
 	],
 	"taskList": [
 		{
-			"id": "sfFtghmMBltB7tMkWQZYghlYf1uLN",
-			"name": "Litter Box",
+			"id": "vrLkfauoWXhu4MmPTdqDPm",
+			"name": "Pull Weeds",
 			"pinned": true
 		},
 		{
-			"id": "sfFwetMBtB7tM6kghmWQZYYff1uLN",
-			"name": "Wipe Counters",
-			"pinned": false
-		},
-		{
-			"id": "sfFtMBtlhmB7tMklQZYYf1muLN",
-			"name": "Pull Weeds",
-			"pinned": false
+			"id": "qjYRvapDi4XSmSwtN45KQN",
+			"name": "Fold Clothes",
+			"pinned": true
 		}
 	],
 	"plantList": [
@@ -203,7 +204,7 @@
 			"id": "sfFtMBtB7tMkWQZd56YYf1uLN",
 			"name": "Spikey SuccBoi",
 			"cycle": 14,
-			"last": "2021-07-20T07:00:00.000Z"
+			"last": "2021-08-03T07:00:00.000Z"
 		},
 		{
 			"id": "sfFtMk8kBtB7tMkWQZYYf1ufLN",
@@ -215,7 +216,7 @@
 			"id": "sfFtMBtB7k9tMkWQZafYYf1uLN",
 			"name": "Taco Plant",
 			"cycle": 14,
-			"last": "2021-07-20T07:00:00.000Z"
+			"last": "2021-08-03T07:00:00.000Z"
 		},
 		{
 			"id": "sfFtMBtB7tMkWQ8ym90ZYYf1uLN",
@@ -233,7 +234,7 @@
 			"id": "sfFtM6BtB7tMkWQZcg5YYf1nj6uLN",
 			"name": "Zebra Plant",
 			"cycle": 14,
-			"last": "2021-07-20T07:00:00.000Z"
+			"last": "2021-08-03T07:00:00.000Z"
 		},
 		{
 			"id": "sfFjws6tMsBtB7tMkWQjrZYYf1ujLN",

@@ -87,6 +87,12 @@ namespace SwtNameSpace {
 			writeStorage('calenderEvents', this.getCalenderEvents())
 			return this.getCalenderEvents()
 		}
+		updateCalenderEvent(event) {
+			this.calenderEventsList = this.calenderEventsList.filter(ev => ev.id !== event.id)
+			this.calenderEventsList.push(event)
+			writeStorage('calenderEvents', this.getCalenderEvents())
+			return this.getCalenderEvents()
+		}
 		removeCalenderEvent(id) {
 			this.calenderEventsList = this.calenderEventsList.filter(e => e.id !== id)
 			writeStorage('calenderEvents', this.calenderEventsList)
@@ -166,6 +172,7 @@ namespace SwtNameSpace {
 		postCatDays(days) {
 			this.catDays.lastFoodDay = days.lastFoodDay
 			this.catDays.lastWasteDay = days.lastWasteDay
+			console.log(days);
 			writeStorage('catDays', this.catDays)
 			return this.getCatDays()
 		}
@@ -202,14 +209,18 @@ namespace SwtNameSpace {
 			writeStorage('plantList', this.getPlantList())
 			return this.getPlantList()
 		}
+		updatePlant(plant) {
+			this.plantList = this.plantList.filter(p => p.id !== plant.id)
+			this.plantList.push(plant)
+			writeStorage('plantList', this.getPlantList())
+			return this.getPlantList()
+		}
 		removePlant(id) {
 			this.plantList = this.plantList.filter(p => p.id !== id)
 			writeStorage('plantList', this.plantList)
 			return this.getPlantList()
 		}
 	}
-
-	new Sweetie().getPlantSchedule()
 
 	function sortByPinned(tl: Array<Task>) {
 		tl.map((t, i) => {
@@ -332,7 +343,12 @@ namespace SwtNameSpace {
 			pl.forEach(plant => {
 				const plantLast = new Date(plant.last)
 				const plantNext = addDays(plantLast, plant.cycle)
-				if (isSameDay(day, plantNext) || isSameDay(plantLast, today)) plants.push(plant)
+
+				if (isSameDay(day, plantNext)
+					|| isSameDay(plantLast, today)
+					// push plant if plantNext is after today
+					// || isAfter(plantNext, today)
+				) plants.push(plant)
 			})
 
 			return {

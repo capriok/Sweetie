@@ -95,20 +95,25 @@
 				}
 			}
 		}
+		.viewing-btn {
+			font-size: 1.05rem !important;
+		}
 		.action-btns {
 			user-select: none;
 			position: absolute;
 			bottom: 0px;
-			@include flex;
-			width: 100%;
 			margin: 0 -40px;
-
-			@media (max-width: 500px) {
-				margin: 0 -20px;
-			}
-
+			width: 100%;
+			@include flex;
 			button {
 				flex: 1;
+				@include flex;
+				* {
+					font-size: 1.05rem !important;
+				}
+			}
+			@media (max-width: 500px) {
+				margin: 0 -20px;
 			}
 		}
 	}

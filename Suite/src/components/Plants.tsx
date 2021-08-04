@@ -1,30 +1,64 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import SlideModal from './SlideModal'
-import Api from '../api'
-import '../styles/plants.scss'
+import { addDays } from 'date-fns'
 import short from 'short-uuid'
+
+import Api from '../api'
+import SlideModal from './SlideModal'
+import '../styles/plants.scss'
+
+import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
+import { CgMaximize, CgMinimize } from 'react-icons/cg'
+import { MdSystemUpdateAlt } from 'react-icons/md'
 
 const Plants: React.FC = () => {
 	const [is, set] = useState({
 		viewing: false,
 		adding: false,
-		removing: false
+		removing: false,
+		updating: false
 	})
 	const [plantList, setPlantList] = useState<Array<Plant>>([])
 
 	const [name, setName] = useState('')
 	const [cycle, setCycle] = useState(0)
-	const [lastWater, setLastWater] = useState(new Date().toLocaleDateString())
+	const [lastWater, setLastWater] = useState('')
+
+	const [updatePlantItem, setUpdatePlantItem] = useState<Plant | undefined>(undefined)
+	const [updateLastWater, setUpdateLastWater] = useState('')
+
+	function ResetSetState() {
+		set({ viewing: false, adding: false, removing: false, updating: false })
+	}
+
+	function ResetAddFormState() {
+		setName('')
+		setCycle(0)
+		setLastWater('')
+		set({ ...is, adding: false })
+	}
+
+	function ResetUpdateFormState() {
+		setUpdatePlantItem(undefined)
+		setUpdateLastWater('')
+		set({ ...is, updating: false })
+	}
 
 	const outClickRef: any = useRef()
 	useOutsideClick(outClickRef, () => {
-		if (!is.adding && !is.removing) return
-		set({ viewing: false, adding: false, removing: false })
+		if (!is.adding && !is.removing && !is.updating) return
+		if (is.updating && !updatePlantItem) return
+		ResetSetState()
+		ResetAddFormState()
+		ResetUpdateFormState()
 	})
 
 	function AddBtnClick() {
 		set({ ...is, adding: !is.adding })
+	}
+
+	async function UpdateBtnClick() {
+		set({ ...is, updating: !is.updating })
 	}
 
 	async function RemoveBtnClick() {
@@ -34,7 +68,7 @@ const Plants: React.FC = () => {
 	async function removePlant(plant: Plant) {
 		if (!is.removing) return
 
-		const confirmation = window.confirm(`Remove "${plant.name}" ?`);
+		const confirmation = window.confirm(`Remove '${plant.name}' ?`);
 		if (confirmation) {
 			Api.RemovePlant(plant).then(pl => setPlantList(pl))
 		}
@@ -42,12 +76,36 @@ const Plants: React.FC = () => {
 
 	async function postPlant(e: any) {
 		e.preventDefault()
+		const invalidDate = !isNaN(Date.parse(lastWater))
+		if (!name || !invalidDate) return
 
-		console.log(lastWater);
+		// const last = addDays(startOfDay(new Date(lastWater)), 1).toJSON()
+		const last = addDays(new Date(lastWater), 1).toJSON()
+		console.log(last);
 
-		const plant = { id: short.generate(), name, cycle, lastWater }
+		const plant = { id: short.generate(), name, cycle, last: last }
 
 		Api.PostPlant(plant).then(pl => setPlantList(pl))
+	}
+
+	async function updatePlant(e: any) {
+		e.preventDefault()
+
+		const invalidDate = !isNaN(Date.parse(updateLastWater))
+		if (!updateLastWater || !invalidDate) return
+
+		// const last = addDays(startOfDay(new Date(lastWater)), 1).toJSON()
+		const last = addDays(new Date(updateLastWater), 1).toJSON()
+		const plant = {
+			id: updatePlantItem!.id,
+			name: updatePlantItem!.name,
+			cycle: updatePlantItem!.cycle,
+			last: last
+		}
+		console.log(updatePlantItem);
+		console.log(plant);
+
+		Api.UpdatePlant(plant).then(pl => setPlantList(pl))
 	}
 
 	useEffect(() => {
@@ -68,7 +126,13 @@ const Plants: React.FC = () => {
 					</div>
 					{plantList.slice(0, is.viewing ? plantList.length : 7).map((plant: any, i: number) => (
 						<div key={i} className="plant"
-							onClick={() => removePlant(plant)}>
+							onClick={() => {
+								return is.removing
+									? removePlant(plant)
+									: is.updating && !updatePlantItem
+										? setUpdatePlantItem(plant)
+										: null
+							}}>
 							<p className="name">{plant.name}</p>
 							<div className="details">
 								<p>{plant.cycle} Days</p>
@@ -80,16 +144,35 @@ const Plants: React.FC = () => {
 						</div>
 					))}
 				</div>
-				<div className="action-btns">
-					<button onClick={AddBtnClick} disabled={is.removing}>Add</button>
-					<button onClick={() => set({ ...is, viewing: !is.viewing })}>
-						{is.viewing ? 'Minimize' : 'View All Plants'}
-					</button>
-					<button onClick={RemoveBtnClick}>{is.removing ? 'Done' : 'Remove'}</button>
-				</div>
+				{plantList.length > 7 &&
+					<p className="viewing-btn" onClick={() => set({ ...is, viewing: !is.viewing })}>
+						{is.viewing ? <CgMinimize /> : <CgMaximize />}
+					</p>
+				}
+				{is.adding
+					? <div className="action-btns">
+						<button onClick={AddBtnClick}><VscDebugStop /></button>
+					</div>
+					: is.removing
+						? <div className="action-btns">
+							<button onClick={RemoveBtnClick}><VscDebugStop /></button>
+						</div>
+						: is.updating
+							? <div className="action-btns">
+								<button onClick={UpdateBtnClick}><VscDebugStop /></button>
+							</div>
+							: <div className="action-btns">
+								<button onClick={AddBtnClick}><VscDiffAdded /></button>
+								<button onClick={UpdateBtnClick}><MdSystemUpdateAlt /></button>
+								<button onClick={RemoveBtnClick}><VscDiffRemoved /></button>
+							</div>
+				}
 			</section>
 			{is.adding &&
-				<SlideModal smref={outClickRef} close={() => set({ ...is, adding: !is.adding })} title="Add Plant">
+				<SlideModal
+					title="Add Plant"
+					smref={outClickRef}
+					close={() => ResetAddFormState()}>
 					<form onSubmit={(e) => postPlant(e)}>
 						<div className="plants">
 							<div className="name-cycle">
@@ -108,6 +191,23 @@ const Plants: React.FC = () => {
 								<div><p>Last Water</p></div>
 								<input type="date"
 									onChange={(e) => setLastWater(e.target.value)} />
+							</div>
+							<button className="submit" type="submit">Submit</button>
+						</div>
+					</form>
+				</SlideModal>
+			}
+			{(is.updating && updatePlantItem) &&
+				<SlideModal
+					title={`Update ${updatePlantItem.name}`}
+					smref={outClickRef}
+					close={() => ResetUpdateFormState()}>
+					<form onSubmit={(e) => updatePlant(e)}>
+						<div className="plants">
+							<div className="lastwater">
+								<div><p>Last Water</p></div>
+								<input type="date"
+									onChange={(e) => setUpdateLastWater(e.target.value)} />
 							</div>
 							<button className="submit" type="submit">Submit</button>
 						</div>

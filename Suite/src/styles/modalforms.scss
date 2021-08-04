@@ -1,6 +1,9 @@
 @import "./index.scss";
 
 .slidemodal {
+	.closer {
+		cursor: pointer;
+	}
 	input[type="number"] {
 		width: 45% !important;
 	}

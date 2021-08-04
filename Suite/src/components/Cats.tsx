@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import SlideModal from './SlideModal'
-import Api from '../api'
-import '../styles/cats.scss'
 import { isSameDay, startOfDay } from 'date-fns'
 
-const Cats: React.FC = () => {
+import Api from '../api'
+import SlideModal from './SlideModal'
+import '../styles/cats.scss'
 
-	const [editing, toggleEdit] = useState(false)
+import { MdSystemUpdateAlt } from 'react-icons/md'
+import { addDays } from 'date-fns/esm'
+
+const Cats: React.FC = () => {
+	const [updating, setUpdating] = useState(false)
 	const [schedule, setSchedule] = useState<Array<CatScheduleDay>>([])
 	const [catDays, setCatDays] = useState<CatDays>({
 		lastFoodDay: undefined,
@@ -16,10 +19,16 @@ const Cats: React.FC = () => {
 	const [lfd, setLfd] = useState<any>(undefined)
 	const [lwd, setLwd] = useState<any>(undefined)
 
-	const modalRef = useRef()
-	useOutsideClick(modalRef, () => {
-		if (!editing) return
-		toggleEdit(false)
+	function ResetUpdateFormState() {
+		setLfd(undefined)
+		setLwd(undefined)
+		setUpdating(false)
+	}
+
+	const outClickRef = useRef()
+	useOutsideClick(outClickRef, () => {
+		if (!updating) return
+		ResetUpdateFormState()
 	})
 
 	async function postDays(e: any) {
@@ -30,11 +39,14 @@ const Cats: React.FC = () => {
 
 		if (foodSame && wasteSame) return
 
-		const lastFoodDay = startOfDay(new Date(lfd)).toJSON()
-		const lastWasteDay = startOfDay(new Date(lwd)).toJSON()
+		const lastFoodDay = startOfDay(addDays(new Date(lfd), 1)).toJSON()
+		const lastWasteDay = startOfDay(addDays(new Date(lwd), 1)).toJSON()
 
 		const days = { lastFoodDay, lastWasteDay }
-		Api.PostCatDays(days).then(cd => setCatDays(cd))
+		Api.PostCatDays(days).then(cd => {
+			ResetUpdateFormState()
+			setCatDays(cd)
+		})
 	}
 
 	useEffect(() => {
@@ -81,23 +93,28 @@ const Cats: React.FC = () => {
 
 				</div>
 				<div className="action-btns">
-					<button onClick={() => toggleEdit(!editing)}>Edit</button>
+					<button onClick={() => setUpdating(!updating)}><MdSystemUpdateAlt /></button>
 				</div>
 			</section>
-			{editing &&
-				<SlideModal smref={modalRef} close={() => toggleEdit(!editing)} title="Cat Days">
+			{updating &&
+				<SlideModal
+					title="Cat Days"
+					smref={outClickRef}
+					close={() => ResetUpdateFormState()}>
 					<form onSubmit={(e) => postDays(e)} className="cats">
 						<div className="days">
 							<label>
 								<p>Last Food Day</p>
 								<input
 									type="date"
+									value={lfd}
 									onChange={(e) => setLfd(e.target.value)} />
 							</label>
 							<label>
 								<p>Last Waste Day</p>
 								<input
 									type="date"
+									value={lwd}
 									onChange={(e) => setLwd(e.target.value)} />
 							</label>
 						</div>

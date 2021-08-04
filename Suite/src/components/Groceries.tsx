@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import SlideModal from './SlideModal'
-import Api from '../api'
 import short from 'short-uuid'
 
-const Groceries: React.FC = () => {
+import Api from '../api'
+import SlideModal from './SlideModal'
 
+import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
+
+const Groceries: React.FC = () => {
 	const [is, set] = useState({
 		adding: false,
 		removing: false
@@ -16,10 +18,22 @@ const Groceries: React.FC = () => {
 	const [quantity, setQuantity] = useState(1)
 	const [store, setStore] = useState('wholefoods')
 
+
+	function ResetSetState() {
+		set({ adding: false, removing: false })
+	}
+
+	function ResetAddFormState() {
+		setName('')
+		setQuantity(1)
+		setStore('wholefoods')
+	}
+
 	const outClickRef: any = useRef()
 	useOutsideClick(outClickRef, () => {
 		if (!is.adding && !is.removing) return
-		set({ adding: false, removing: false })
+		ResetSetState()
+		ResetAddFormState()
 	})
 
 	function AddBtnClick() {
@@ -31,8 +45,11 @@ const Groceries: React.FC = () => {
 	}
 
 	function ClearBtnClick() {
-		const confirmation = window.confirm('Are You Sure?');
-		if (confirmation) {
+		const confirmation = window.prompt(
+			'Are you sure you got everything?\n\n' +
+			'Type \'confirm\' to clear Groceries.'
+		);
+		if (confirmation === 'confirm') {
 			Api.ClearGroceryList().then(gl => setGroceryList(gl))
 		}
 	}
@@ -40,7 +57,7 @@ const Groceries: React.FC = () => {
 	async function removeGrocery(item: Grocery) {
 		if (!is.removing) return
 
-		const confirmation = window.confirm(`Remove "${item.name}" ?`);
+		const confirmation = window.confirm(`Remove '${item.name}' ?`);
 		if (confirmation) {
 			Api.RemoveGrocery(item).then(gl => setGroceryList(gl))
 		}
@@ -52,7 +69,10 @@ const Groceries: React.FC = () => {
 
 		let item = { id: short.generate(), name: name, qty: quantity, store: store }
 
-		Api.PostGrocery(item).then(gl => setGroceryList(gl))
+		Api.PostGrocery(item).then(gl => {
+			ResetAddFormState()
+			setGroceryList(gl)
+		})
 	}
 
 	useEffect(() => {
@@ -99,14 +119,27 @@ const Groceries: React.FC = () => {
 						}
 					</div>
 				}
-				<div className="action-btns">
-					<button onClick={AddBtnClick} disabled={is.removing}>Add</button>
-					<button onClick={RemoveBtnClick}>{is.removing ? 'Done' : 'Remove'}</button>
-					<button onClick={ClearBtnClick} disabled={is.removing}>Clear</button>
-				</div>
+				{
+					is.adding
+						? <div className="action-btns">
+							<button onClick={AddBtnClick}><VscDebugStop /></button>
+						</div>
+						: is.removing
+							? <div className="action-btns">
+								<button onClick={RemoveBtnClick}><VscDebugStop /></button>
+							</div>
+							: <div className="action-btns">
+								<button onClick={AddBtnClick}><VscDiffAdded /></button>
+								<button onClick={RemoveBtnClick}><VscDiffRemoved /></button>
+								<button onClick={ClearBtnClick}><VscDebugStop /></button>
+							</div>
+				}
 			</section>
 			{is.adding &&
-				<SlideModal smref={outClickRef} close={() => set({ ...is, adding: false })} title="Add Grocery">
+				<SlideModal
+					title="Add Grocery"
+					smref={outClickRef}
+					close={() => ResetAddFormState()}>
 					<form onSubmit={(e) => postGrocery(e)} className="groceries">
 						<div className="name-quan">
 							<input

@@ -20,6 +20,15 @@ router.post('/ce-post', (req, res) => {
 	res.json({ list: calenderEventList })
 })
 
+router.post('/ce-update', (req, res) => {
+	console.log('Request: Update Calender Event');
+
+	const { event } = req.body
+	const calenderEventList = Swt.updateCalenderEvent(event)
+
+	res.json({ list: calenderEventList })
+})
+
 router.post('/ce-rem', (req, res) => {
 	console.log('Request: Remove Calender Event');
 
@@ -162,6 +171,15 @@ router.post('/pl-post', (req, res) => {
 
 	const { plant } = req.body
 	const plantList = Swt.postPlant(plant)
+
+	res.json({ list: plantList })
+})
+
+router.post('/pl-update', (req, res) => {
+	console.log('Request: Update Plant');
+
+	const { plant } = req.body
+	const plantList = Swt.updatePlant(plant)
 
 	res.json({ list: plantList })
 })

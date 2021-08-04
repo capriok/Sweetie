@@ -44,5 +44,5 @@ interface Plant {
 	id: string
 	name: string
 	cycle: number
-	lastWater: string
+	last: string
 }
