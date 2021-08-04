@@ -4,7 +4,8 @@
   "description": "sweetie suite",
   "private": true,
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "dependencies": {
     "@types/node": "^12.20.16",
