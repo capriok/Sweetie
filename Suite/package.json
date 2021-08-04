@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "tsc"
   },
   "dependencies": {
     "@types/node": "^12.20.16",
