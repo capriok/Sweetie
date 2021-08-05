@@ -5,9 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node-dev ./src/server.ts",
-    "start": "cross-env NODE_ENV=production node dist/server.js",
-    "postinstall": "tsc",
-    "deploy": "git push origin master && git push heroku master"
+    "start": "cross-env NODE_ENV=production node dist/server.js"
   },
   "engines": {
     "node": "14.17.1"
