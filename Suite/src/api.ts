@@ -1,7 +1,7 @@
 import axios from 'axios'
-
+const ENDPOINT = process.env.REACT_APP_SERVER
 const baseInstanceParams = {
-	baseURL: 'http://localhost:9000/swt/',
+	baseURL: ENDPOINT + '/swt/',
 	timeout: 5000
 }
 
