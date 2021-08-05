@@ -5,7 +5,7 @@ import { corsOptions, corsMiddleware } from './cors/cors'
 
 const server = express()
 const port = process.env.PORT || 9000
-const origins = ['10.0.0.122:9000', 'http://localhost:3000']
+const origins = ['http://10.0.0.122:9000', 'http://localhost:3000']
 
 server.use(express.json())
 
