@@ -1,5 +1,4 @@
 export const corsOptions = (whitelist: string[]): { origin: any, credentials: Boolean } => {
-	console.log(origin);
 	return {
 		origin: (origin: string, callback: (arg0: Error | null, arg1?: Boolean) => any) => {
 			if (whitelist.indexOf(origin) !== -1) {
