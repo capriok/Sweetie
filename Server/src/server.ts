@@ -1,5 +1,6 @@
 require('dotenv').config();
 import * as express from "express"
+import * as serverless from 'serverless-http'
 import * as cors from 'cors'
 import * as swt from './swt.router'
 import { corsOptions, corsMiddleware } from './cors/cors'
@@ -19,3 +20,4 @@ app.use('/swt', swt.router)
 app.listen(port, () => console.log(`Server running on port ${port}`))
 
 module.exports = app
+module.exports.handler = serverless(app)
