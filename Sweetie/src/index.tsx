@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import DateTime from './components/DateTime';
 import Weather from './components/Weather';
@@ -11,6 +11,12 @@ import Plants from './components/Plants';
 import './styles/index.scss';
 
 function Index() {
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.location.reload()
+    }, 300000)
+  }, [])
 
   return (
     <div>
@@ -44,4 +50,4 @@ function Index() {
   )
 }
 
-ReactDOM.render(<React.StrictMode><Index /></React.StrictMode>, document.getElementById('root'));
+ReactDOM.render(<React.StrictMode><Index /></React.StrictMode>, document.getElementById('root'))

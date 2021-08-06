@@ -4,17 +4,18 @@ import * as cors from 'cors'
 import * as swt from './swt.router'
 import { corsOptions, corsMiddleware } from './cors/cors'
 
-const server = express()
+const app = express()
+
 const port = process.env.PORT || 9000
 
-server.use(express.json())
-server.use(cors())
+app.use(express.json())
+app.use(cors())
 
-const origins = [process.env.APP_ORIGIN, 'http://localhost:3000']
-server.use(cors(corsOptions(origins)), corsMiddleware)
+const origins = ['http://localhost:3000', process.env.APP_ORIGIN]
+app.use(cors(corsOptions(origins)), corsMiddleware)
 
-server.use('/swt', swt.router)
+app.use('/swt', swt.router)
 
-server.listen(port, () => console.log(`Server running on port ${port}`))
+app.listen(port, () => console.log(`Server running on port ${port}`))
 
-module.exports = server
+module.exports = app

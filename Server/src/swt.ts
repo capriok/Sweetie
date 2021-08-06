@@ -72,6 +72,10 @@ namespace SwtNameSpace {
 			this.plantSchedule = []
 		}
 
+		test() {
+			console.log('Sweetie Engaged');
+		}
+
 		// CALENDER EVENTS
 
 		getCalenderEvents() {
@@ -275,9 +279,7 @@ namespace SwtNameSpace {
 		const thisWeek = generateWeek(today)
 
 		const foodDays = FindDays(lfd, Food_Intv)
-		// console.log(foodDays);
 		const wasteDays = FindDays(lwd, Waste_Intv)
-		// console.log(wasteDays);
 
 		const schedule: any = thisWeek.map(day => {
 			const foodDayMatch = foodDays.find((d) => isSameDay(d.date, day))
@@ -295,7 +297,8 @@ namespace SwtNameSpace {
 				}
 			}
 		})
-		// console.log(schedule);
+
+		console.log(schedule);
 		return schedule
 
 		function FindDays(last: Date, intv: number): Array<any> {

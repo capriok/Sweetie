@@ -1,6 +1,6 @@
-export const corsOptions = (whitelist: string[]): { origin: any, credentials: Boolean } => {
+export const corsOptions = (whitelist: string[]): { origin: any, credentials: boolean } => {
 	return {
-		origin: (origin: string, callback: (arg0: Error | null, arg1?: Boolean) => any) => {
+		origin: (origin: string, callback: (arg0: Error | null, arg1?: boolean) => any) => {
 			if (whitelist.indexOf(origin) !== -1) {
 				callback(null, true)
 			} else {
