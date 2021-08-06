@@ -5,7 +5,7 @@ import short from 'short-uuid'
 
 import Api from '../api'
 import SlideModal from './SlideModal'
-import './styles/calender.scss'
+import '../styles/calender.scss'
 
 import { CgMaximize, CgMinimize } from 'react-icons/cg'
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
