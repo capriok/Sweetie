@@ -15,7 +15,7 @@ function Index() {
   useEffect(() => {
     setTimeout(() => {
       window.location.reload()
-    }, 300000)
+    }, 1800000)
   }, [])
 
   return (

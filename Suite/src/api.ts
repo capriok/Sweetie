@@ -96,12 +96,12 @@ class Api {
 	}
 
 	public async GetCatDays(): Promise<CatDays> {
-		const res = await AxiosInstance.get('/cd')
+		const res = await AxiosInstance.get('/cc')
 		return res.data.days
 	}
 
 	public async PostCatDays(days: CatDays): Promise<CatDays> {
-		const res = await AxiosInstance.post('/cd-post', { days: days })
+		const res = await AxiosInstance.post('/cc-post', { days: days })
 		return res.data.days
 	}
 
@@ -112,11 +112,6 @@ class Api {
 		return res.data.list
 	}
 
-	public async RemovePlant(plant: Plant): Promise<Array<Plant>> {
-		const res = await AxiosInstance.post('/pl-rem', { id: plant.id })
-		return res.data.list
-	}
-
 	public async PostPlant(plant: Plant): Promise<Array<Plant>> {
 		const res = await AxiosInstance.post('/pl-post', { plant: plant })
 		return res.data.list
@@ -124,6 +119,11 @@ class Api {
 
 	public async UpdatePlant(plant: Plant): Promise<Array<Plant>> {
 		const res = await AxiosInstance.post('/pl-update', { plant: plant })
+		return res.data.list
+	}
+
+	public async RemovePlant(plant: Plant): Promise<Array<Plant>> {
+		const res = await AxiosInstance.post('/pl-rem', { id: plant.id })
 		return res.data.list
 	}
 
