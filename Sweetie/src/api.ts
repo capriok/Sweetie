@@ -44,7 +44,7 @@ class Api {
 
 	// CATS
 
-	public async GetCatSchedule(): Promise<Array<CatScheduleDay>> {
+	public async GetCatSchedule(): Promise<CatSchedule> {
 		const res = await AxiosInstance.get('/cs')
 		return res.data.schedule
 	}

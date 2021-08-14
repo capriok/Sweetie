@@ -13,9 +13,10 @@ const Cats: React.FC = () => {
 	useEffect(() => {
 		(async () => Api.GetCatSchedule().then(cs => {
 			console.log({ CatSchedule: cs })
-			const today = cs.find(d => isSameDay(new Date(d.date), startOfToday()))
-			setFoodProgress(today!.food.progress)
-			setWasteProgress(today!.waste.progress)
+			const todaysFood = cs.food.find(d => isSameDay(new Date(d.date), startOfToday()))
+			const todaysWaste = cs.waste.find(d => isSameDay(new Date(d.date), startOfToday()))
+			setFoodProgress(todaysFood!.progress)
+			setWasteProgress(todaysWaste!.progress)
 		}))()
 	}, [])
 

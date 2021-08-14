@@ -14,21 +14,20 @@ interface Task {
 	pinned: boolean
 }
 
-type CatDays = {
+type CatConfig = {
 	lastFoodDay: string | Date | undefined
 	lastWasteDay: string | Date | undefined
 }
 
+type CatSchedule = {
+	food: Array<CatScheduleDay>
+	waste: Array<CatScheduleDay>
+}
+
 type CatScheduleDay = {
 	date: string | Date
-	food: {
-		is: boolean
-		progress: number
-	}
-	waste: {
-		is: boolean
-		progress: number
-	}
+	is: boolean
+	progress: number
 }
 
 type Plant = {
