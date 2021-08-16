@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import { addDays } from 'date-fns'
-import short from 'short-uuid'
+import { addDays, startOfToday } from 'date-fns'
 
 import Api from '../api'
 import SlideModal from './SlideModal'
@@ -10,6 +9,7 @@ import '../styles/plants.scss'
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 import { CgMaximize, CgMinimize } from 'react-icons/cg'
 import { MdSystemUpdateAlt } from 'react-icons/md'
+import { startOfDay } from 'date-fns/esm'
 
 const Plants: React.FC = () => {
 	const [is, set] = useState({
@@ -22,26 +22,26 @@ const Plants: React.FC = () => {
 
 	const [name, setName] = useState('')
 	const [cycle, setCycle] = useState(0)
-	const [lastWater, setLastWater] = useState('')
+	const [lastWater, setLastWater] = useState<any>(startOfToday())
 
 	const [updatePlantItem, setUpdatePlantItem] = useState<Plant | undefined>(undefined)
-	const [updateLastWater, setUpdateLastWater] = useState('')
+	const [updateLastWater, setUpdateLastWater] = useState<any>(startOfToday())
 
 	function ResetSetState() {
-		set({ viewing: false, adding: false, removing: false, updating: false })
+		set(() => ({ viewing: false, adding: false, removing: false, updating: false }))
 	}
 
 	function ResetAddFormState() {
 		setName('')
 		setCycle(0)
-		setLastWater('')
-		set({ ...is, adding: false })
+		setLastWater(startOfToday())
+		set(is => ({ ...is, adding: false }))
 	}
 
 	function ResetUpdateFormState() {
 		setUpdatePlantItem(undefined)
-		setUpdateLastWater('')
-		set({ ...is, updating: false })
+		setUpdateLastWater(startOfToday())
+		set(is => ({ ...is, updating: false }))
 	}
 
 	const outClickRef: any = useRef()
@@ -54,15 +54,15 @@ const Plants: React.FC = () => {
 	})
 
 	function AddBtnClick() {
-		set({ ...is, adding: !is.adding })
+		set(is => ({ ...is, adding: !is.adding }))
 	}
 
 	async function UpdateBtnClick() {
-		set({ ...is, updating: !is.updating })
+		set(is => ({ ...is, updating: !is.updating }))
 	}
 
 	async function RemoveBtnClick() {
-		set({ ...is, removing: !is.removing })
+		set(is => ({ ...is, removing: !is.removing }))
 	}
 
 	async function removePlant(plant: Plant) {
@@ -79,13 +79,14 @@ const Plants: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(lastWater))
 		if (!name || !invalidDate) return
 
-		// const last = addDays(startOfDay(new Date(lastWater)), 1).toJSON()
-		const last = addDays(new Date(lastWater), 1).toJSON()
-		console.log(last);
+		const last = addDays(startOfDay(new Date(lastWater)), 1).toJSON()
 
-		const plant = { id: short.generate(), name, cycle, last: last }
+		const plant = { name, cycle, last }
 
-		Api.PostPlant(plant).then(pl => setPlantList(pl))
+		Api.PostPlant(plant).then(pl => {
+			ResetAddFormState()
+			setPlantList(pl)
+		})
 	}
 
 	async function updatePlant(e: any) {
@@ -94,18 +95,18 @@ const Plants: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(updateLastWater))
 		if (!updateLastWater || !invalidDate) return
 
-		// const last = addDays(startOfDay(new Date(lastWater)), 1).toJSON()
-		const last = addDays(new Date(updateLastWater), 1).toJSON()
+		const upLast = addDays(startOfDay(new Date(updateLastWater)), 1).toJSON()
 		const plant = {
-			id: updatePlantItem!.id,
-			name: updatePlantItem!.name,
-			cycle: updatePlantItem!.cycle,
-			last: last
+			id: updatePlantItem?._id,
+			last: upLast
 		}
-		console.log(updatePlantItem);
-		console.log(plant);
 
-		Api.UpdatePlant(plant).then(pl => setPlantList(pl))
+		console.log(plant)
+
+		Api.UpdatePlant(plant).then(pl => {
+			ResetUpdateFormState()
+			setPlantList(pl)
+		})
 	}
 
 	useEffect(() => {
@@ -189,7 +190,9 @@ const Plants: React.FC = () => {
 							</div>
 							<div className="lastwater">
 								<div><p>Last Water</p></div>
-								<input type="date"
+								<input
+									type="date"
+									max={new Date(startOfToday()).toISOString().split('T')[0]}
 									onChange={(e) => setLastWater(e.target.value)} />
 							</div>
 							<button className="submit" type="submit">Submit</button>
@@ -206,7 +209,10 @@ const Plants: React.FC = () => {
 						<div className="plants">
 							<div className="lastwater">
 								<div><p>Last Water</p></div>
-								<input type="date"
+								<input
+									type="date"
+									max={new Date(startOfToday()).toISOString().split('T')[0]}
+									value={new Date(updateLastWater).toISOString().split('T')[0]}
 									onChange={(e) => setUpdateLastWater(e.target.value)} />
 							</div>
 							<button className="submit" type="submit">Submit</button>

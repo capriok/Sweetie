@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { MonthlyBody, MonthlyDay, MonthlyCalendar } from '@zach.codes/react-calendar';
-import { format, startOfMonth } from 'date-fns';
-import Api from '../api';
+import { MonthlyBody, MonthlyDay, MonthlyCalendar } from '@zach.codes/react-calendar'
+import { format, startOfMonth } from 'date-fns'
+import Api from '../api'
 
 import '../styles/calender.scss'
 

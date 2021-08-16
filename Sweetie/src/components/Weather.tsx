@@ -1,6 +1,6 @@
 import '../styles/weather.scss'
-import useWeather from '../hooks/useWeather';
-import { useEffect } from 'react';
+import useWeather from '../hooks/useWeather'
+import { useEffect } from 'react'
 
 const Weather: React.FC = () => {
 	const stats = useWeather()
@@ -11,7 +11,7 @@ const Weather: React.FC = () => {
 
 	const ch = new Date().getHours()
 	const isAfternoon = ch >= 12
-	const isEvening = ch >= 14
+	const isEvening = ch >= 17
 	const isNight = ch > 22
 
 	let tod = 'This Morning'

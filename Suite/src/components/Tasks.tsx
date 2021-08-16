@@ -18,7 +18,7 @@ const Tasks: React.FC = () => {
 	const [pinned, setPinned] = useState(false)
 
 	function ResetSetState() {
-		set({ adding: false, removing: false })
+		set(() => ({ adding: false, removing: false }))
 	}
 
 	function ResetAddFormState() {
@@ -34,11 +34,11 @@ const Tasks: React.FC = () => {
 	})
 
 	function AddBtnClick() {
-		set({ ...is, adding: !is.adding })
+		set(is => ({ ...is, adding: !is.adding }))
 	}
 
 	async function RemoveBtnClick() {
-		set({ ...is, removing: !is.removing })
+		set(is => ({ ...is, removing: !is.removing }))
 	}
 
 	function ClearBtnClick() {

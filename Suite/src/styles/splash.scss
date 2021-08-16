@@ -1,0 +1,57 @@
+@import "./index.scss";
+
+.splash {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	@include flex;
+	flex-direction: column;
+	input {
+		padding: 0 !important;
+		max-width: 90%;
+		text-align: center;
+		letter-spacing: 10px;
+		font-size: 2rem;
+		font-weight: bold;
+	}
+	.welcome {
+		animation: shrink 1.2s linear;
+	}
+	.incorrect {
+		animation: shake 1.2s ease;
+	}
+}
+
+@keyframes shrink {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(0.1);
+	}
+}
+
+@keyframes shake {
+	10%,
+	90% {
+		transform: translate3d(-0.5px, 0, 0);
+	}
+
+	20%,
+	80% {
+		transform: translate3d(1.5px, 0, 0);
+	}
+
+	30%,
+	50%,
+	70% {
+		transform: translate3d(-3px, 0, 0);
+	}
+
+	40%,
+	60% {
+		transform: translate3d(3px, 0, 0);
+	}
+}

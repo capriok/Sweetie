@@ -23,17 +23,17 @@ class Api {
 	}
 
 	public async PostCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {
-		const res = await AxiosInstance.post('/ce-post', { event: event })
+		const res = await AxiosInstance.post('/ce', { event: event })
 		return res.data.list
 	}
 
-	public async UpdateCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {
-		const res = await AxiosInstance.post('/ce-update', { event: event })
+	public async UpdateCalenderEvent(event: Partial<CalenderEvent>): Promise<Array<CalenderEvent>> {
+		const res = await AxiosInstance.put('/ce', { event: event })
 		return res.data.list
 	}
 
 	public async RemoveCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {
-		const res = await AxiosInstance.post('/ce-rem', { id: event.id })
+		const res = await AxiosInstance.delete('/ce', { data: { id: event._id } })
 		return res.data.list
 	}
 
@@ -45,17 +45,17 @@ class Api {
 	}
 
 	public async PostGrocery(item: Grocery): Promise<Array<Grocery>> {
-		const res = await AxiosInstance.post('/gl-post', { item: item })
+		const res = await AxiosInstance.post('/gl', { item: item })
 		return res.data.list
 	}
 
 	public async RemoveGrocery(item: Grocery): Promise<Array<Grocery>> {
-		const res = await AxiosInstance.post('/gl-rem', { id: item.id })
+		const res = await AxiosInstance.delete('/gl', { data: { id: item._id } })
 		return res.data.list
 	}
 
 	public async ClearGroceryList(): Promise<Array<Grocery>> {
-		const res = await AxiosInstance.get('/gl-clr')
+		const res = await AxiosInstance.post('/gl-clear')
 		return res.data.list
 	}
 
@@ -74,17 +74,17 @@ class Api {
 	}
 
 	public async PostTask(task: Task): Promise<Array<Task>> {
-		const res = await AxiosInstance.post('/tl-post', { task: task })
+		const res = await AxiosInstance.post('/tl', { task: task })
 		return res.data.list
 	}
 
 	public async RemoveTask(task: Task): Promise<Array<Task>> {
-		const res = await AxiosInstance.post('/tl-rem', { id: task.id })
+		const res = await AxiosInstance.delete('/tl', { data: { id: task._id } })
 		return res.data.list
 	}
 
 	public async ClearTaskList(): Promise<Array<Task>> {
-		const res = await AxiosInstance.get('/tl-clr')
+		const res = await AxiosInstance.post('/tl-clear')
 		return res.data.list
 	}
 
@@ -95,14 +95,14 @@ class Api {
 		return res.data.schedule
 	}
 
-	public async GetCatDays(): Promise<CatDays> {
+	public async GetCatConfig(): Promise<CatConfig> {
 		const res = await AxiosInstance.get('/cc')
 		return res.data.days
 	}
 
-	public async PostCatDays(days: CatDays): Promise<CatDays> {
-		const res = await AxiosInstance.post('/cc-post', { days: days })
-		return res.data.days
+	public async UpdateCatConfig(config: Partial<CatConfig>): Promise<CatConfig> {
+		const res = await AxiosInstance.put('/cc', { config: config })
+		return res.data.config
 	}
 
 	// PLANTS
@@ -113,17 +113,17 @@ class Api {
 	}
 
 	public async PostPlant(plant: Plant): Promise<Array<Plant>> {
-		const res = await AxiosInstance.post('/pl-post', { plant: plant })
+		const res = await AxiosInstance.post('/pl', { plant: plant })
 		return res.data.list
 	}
 
-	public async UpdatePlant(plant: Plant): Promise<Array<Plant>> {
-		const res = await AxiosInstance.post('/pl-update', { plant: plant })
+	public async UpdatePlant(plant: Partial<Plant>): Promise<Array<Plant>> {
+		const res = await AxiosInstance.put('/pl', { plant: plant })
 		return res.data.list
 	}
 
 	public async RemovePlant(plant: Plant): Promise<Array<Plant>> {
-		const res = await AxiosInstance.post('/pl-rem', { id: plant.id })
+		const res = await AxiosInstance.delete('/pl', { data: { id: plant._id } })
 		return res.data.list
 	}
 

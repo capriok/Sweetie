@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import { isSameDay, startOfDay } from 'date-fns'
+import { isAfter, isSameDay, startOfDay, startOfToday } from 'date-fns'
 
 import Api from '../api'
 import SlideModal from './SlideModal'
@@ -12,17 +12,17 @@ import { addDays } from 'date-fns/esm'
 const Cats: React.FC = () => {
 	const [updating, setUpdating] = useState(false)
 	const [schedule, setSchedule] = useState<Array<CatScheduleDay>>([])
-	const [catDays, setCatDays] = useState<CatDays>({
+	const [catConfig, setCatConfig] = useState<CatConfig>({
 		lastFoodDay: undefined,
 		lastWasteDay: undefined
 	})
-	const [lfd, setLfd] = useState<any>(undefined)
-	const [lwd, setLwd] = useState<any>(undefined)
+	const [lfd, setLfd] = useState<any>()
+	const [lwd, setLwd] = useState<any>()
 
 	function ResetUpdateFormState() {
-		setLfd(undefined)
-		setLwd(undefined)
 		setUpdating(false)
+		setLfd(lfd)
+		setLwd(lwd)
 	}
 
 	const outClickRef = useRef()
@@ -31,40 +31,55 @@ const Cats: React.FC = () => {
 		ResetUpdateFormState()
 	})
 
-	async function postDays(e: any) {
+	async function updateConfig(e: any) {
 		e.preventDefault()
 
-		const foodSame = isSameDay(new Date(catDays.lastFoodDay!), new Date(lfd))
-		const wasteSame = isSameDay(new Date(catDays.lastWasteDay!), new Date(lwd))
+		const foodSame = isSameDay(
+			new Date(catConfig.lastFoodDay!),
+			new Date(lfd)
+		)
+		const wasteSame = isSameDay(
+			new Date(catConfig.lastWasteDay!),
+			new Date(lwd)
+		)
+		const foodInFuture = isAfter(new Date(lfd), startOfToday())
+		const wasteInFuture = isAfter(new Date(lwd), startOfToday())
 
 		if (foodSame && wasteSame) return
 
-		const lastFoodDay = startOfDay(addDays(new Date(lfd), 1)).toJSON()
-		const lastWasteDay = startOfDay(addDays(new Date(lwd), 1)).toJSON()
+		const lastFoodDay = new Date(lfd).toJSON()
+		const lastWasteDay = new Date(lwd).toJSON()
+		console.log(catConfig);
 
-		const days = { lastFoodDay, lastWasteDay }
-		Api.PostCatDays(days).then(cd => {
+
+		let config: any = {}
+		if (!foodSame && !foodInFuture) config.lastFoodDay = lastFoodDay
+		if (!wasteSame && !wasteInFuture) config.lastWasteDay = lastWasteDay
+
+		console.log(config)
+
+		Api.UpdateCatConfig(config).then(cd => {
+			setCatConfig(cd)
 			ResetUpdateFormState()
-			setCatDays(cd)
 		})
 	}
 
 	useEffect(() => {
-		(async () => Api.GetCatDays().then(cd => {
-			setLfd(cd.lastFoodDay)
-			setLwd(cd.lastWasteDay)
-			console.log({ CatDays: cd })
-			setCatDays(cd)
+		(async () => Api.GetCatConfig().then(cc => {
+			setLfd(cc.lastFoodDay)
+			setLwd(cc.lastWasteDay)
+			console.log({ CatConfig: cc })
+			setCatConfig(cc)
 		}))()
 	}, [])
 
 	useEffect(() => {
-		if (!catDays.lastFoodDay || !catDays.lastWasteDay) return
+		if (!catConfig.lastFoodDay || !catConfig.lastWasteDay) return
 		(async () => Api.GetCatSchedule().then(cs => {
-			console.log({ Schedule: cs })
+			console.log({ CatSchedule: cs })
 			setSchedule(cs)
 		}))()
-	}, [catDays])
+	}, [catConfig])
 
 	return (
 		<>
@@ -98,24 +113,26 @@ const Cats: React.FC = () => {
 			</section>
 			{updating &&
 				<SlideModal
-					title="Cat Days"
+					title="Cat Config"
 					smref={outClickRef}
 					close={() => ResetUpdateFormState()}>
-					<form onSubmit={(e) => postDays(e)} className="cats">
-						<div className="days">
+					<form onSubmit={(e) => updateConfig(e)} className="cats">
+						<div className="config">
 							<label>
 								<p>Last Food Day</p>
 								<input
 									type="date"
-									value={lfd}
-									onChange={(e) => setLfd(e.target.value)} />
+									max={new Date(startOfToday()).toISOString().split('T')[0]}
+									value={new Date(lfd).toISOString().split('T')[0]}
+									onChange={(e) => setLfd(addDays(startOfDay(new Date(e.target.value)), 1))} />
 							</label>
 							<label>
 								<p>Last Waste Day</p>
 								<input
 									type="date"
-									value={lwd}
-									onChange={(e) => setLwd(e.target.value)} />
+									max={new Date(startOfToday()).toISOString().split('T')[0]}
+									value={new Date(lwd).toISOString().split('T')[0]}
+									onChange={(e) => setLwd(addDays(startOfDay(new Date(e.target.value)), 1))} />
 							</label>
 						</div>
 						<button className="submit" type="submit">Submit</button>

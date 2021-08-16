@@ -16,7 +16,7 @@ class Api {
 
 	// CALENDER
 
-	public async GetCalenderEvents(): Promise<Array<any>> {
+	public async GetCalenderEvents(): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.get('/ce')
 		return res.data.list
 	}
@@ -44,7 +44,7 @@ class Api {
 
 	// CATS
 
-	public async GetCatSchedule(): Promise<CatSchedule> {
+	public async GetCatSchedule(): Promise<Array<CatScheduleDay>> {
 		const res = await AxiosInstance.get('/cs')
 		return res.data.schedule
 	}

@@ -1,4 +1,4 @@
-import { isSameDay, startOfToday } from 'date-fns';
+import { isSameDay, startOfToday } from 'date-fns'
 import { useEffect, useState } from 'react'
 import Api from '../api';
 

@@ -1,37 +1,49 @@
+interface CalenderEvent {
+	_id?: string
+	name: string
+	date: string | Date
+	timed: boolean
+}
+
 interface Grocery {
+	_id?: string
 	name: string
 	qty: number
 	store: string
 }
 
 interface StaticTask {
+	_id?: string
 	name: string
 	weekday: boolean
 }
 
 interface Task {
+	_id?: string
 	name: string
 	pinned: boolean
 }
 
 type CatConfig = {
+	_id?: string
 	lastFoodDay: string | Date | undefined
 	lastWasteDay: string | Date | undefined
 }
 
-type CatSchedule = {
-	food: Array<CatScheduleDay>
-	waste: Array<CatScheduleDay>
-}
-
 type CatScheduleDay = {
 	date: string | Date
-	is: boolean
-	progress: number
+	food: {
+		is: boolean
+		progress: number
+	}
+	waste: {
+		is: boolean
+		progress: number
+	}
 }
 
 type Plant = {
-	id: string
+	_id?: string
 	name: string
 	cycle: number
 	last: string

@@ -1,7 +1,6 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import { addDays, format, startOfDay } from 'date-fns'
-import short from 'short-uuid'
+import { addDays, format, startOfDay, startOfToday } from 'date-fns'
 
 import Api from '../api'
 import SlideModal from './SlideModal'
@@ -21,28 +20,28 @@ const Calender: React.FC = () => {
 	const [eventList, setEventList] = useState<Array<CalenderEvent>>([])
 	const [name, setName] = useState('')
 	const [timed, setTimed] = useState(false)
-	const [date, setDate] = useState<any>(undefined)
+	const [date, setDate] = useState<any>(startOfToday())
 
-	const [updateCalenderEventItem, setUpdateCalenderEventItem] = useState<CalenderEvent | undefined>(undefined)
-	const [updateDate, setUpdateDate] = useState<any>(undefined)
+	const [updateCalenderEventItem, setUpdateCalenderEventItem] = useState<any>(undefined)
+	const [updateDate, setUpdateDate] = useState<any>(startOfToday())
 	const [updateTimed, setUpdateTimed] = useState(false)
 
 	function ResetSetState() {
-		set({ viewing: false, adding: false, removing: false, updating: false })
+		set(() => ({ viewing: false, adding: false, removing: false, updating: false }))
 	}
 
 	function ResetAddFormState() {
 		setName('')
 		setTimed(false)
-		setDate(undefined)
-		set({ ...is, adding: false })
+		setDate(startOfToday())
+		set(is => ({ ...is, adding: false }))
 	}
 
 	function ResetUpdateFormState() {
 		setUpdateCalenderEventItem(undefined)
-		setUpdateDate(undefined)
+		setUpdateDate(startOfToday())
 		setUpdateTimed(false)
-		set({ ...is, updating: false })
+		set(is => ({ ...is, updating: false }))
 	}
 
 	const outClickRef: any = useRef()
@@ -55,15 +54,15 @@ const Calender: React.FC = () => {
 	})
 
 	function AddBtnClick() {
-		set({ ...is, adding: !is.adding })
+		set(is => ({ ...is, adding: !is.adding }))
 	}
 
 	async function UpdateBtnClick() {
-		set({ ...is, updating: !is.updating })
+		set(is => ({ ...is, updating: !is.updating }))
 	}
 
 	function RemoveBtnClick() {
-		set({ ...is, removing: !is.removing })
+		set(is => ({ ...is, removing: !is.removing }))
 	}
 
 	async function removeEvent(event: CalenderEvent) {
@@ -81,9 +80,8 @@ const Calender: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(date))
 		if (!is.adding || !name || !invalidDate) return
 
-		let evDate = addDays(new Date(date), 1).toJSON()
-		let event = { id: short.generate(), name, date: evDate, timed }
-		console.log(startOfDay(addDays(new Date(date), 1)).toJSON());
+		const evDate = FormatInputDate(date, timed)
+		let event = { name, date: evDate, timed }
 
 		Api.PostCalenderEvent(event).then(ce => {
 			ResetAddFormState()
@@ -95,22 +93,26 @@ const Calender: React.FC = () => {
 		e.preventDefault()
 
 		const invalidDate = !isNaN(Date.parse(updateDate))
-		if (!updateDate || !updateTimed || !invalidDate) return
+		if (!updateDate || !invalidDate) return
 
-		const upDate = addDays(new Date(updateDate), 1).toJSON()
+		const upDate = FormatInputDate(updateDate, updateTimed)
 		const calenderEv = {
-			id: updateCalenderEventItem!.id,
-			name: updateCalenderEventItem!.name,
+			id: updateCalenderEventItem?._id,
 			date: upDate,
-			timed: updateCalenderEventItem!.timed
+			timed: updateTimed
 		}
-		console.log(updateCalenderEventItem);
-		console.log(calenderEv);
 
-		Api.UpdateCalenderEvent(calenderEv).then(ce => setEventList(ce))
+		Api.UpdateCalenderEvent(calenderEv).then(ce => {
+			ResetUpdateFormState()
+			setEventList(ce)
+		})
 	}
 
-	useMemo(() => {
+	function FormatInputDate(date: string, timed: boolean) {
+		return timed ? new Date(date).toJSON() : addDays(startOfDay(new Date(date)), 1).toJSON()
+	}
+
+	useEffect(() => {
 		(async () => Api.GetCalenderEvents().then(ce => {
 			console.log({ CalenderEvents: ce })
 			setEventList(ce)
@@ -199,11 +201,17 @@ const Calender: React.FC = () => {
 						{timed ?
 							<div className="time">
 								<div><p>Event Date + Time</p></div>
-								<input type="datetime-local" onChange={(e) => setDate(e.target.value)} />
+								<input
+									type="datetime-local"
+									min={new Date(startOfToday()).toISOString()}
+									onChange={(e) => setDate(e.target.value)} />
 							</div>
 							: <div className="date">
 								<div><p>Event Date</p></div>
-								<input type="date" onChange={(e) => setDate(e.target.value)} />
+								<input
+									type="date"
+									min={new Date(startOfToday()).toISOString().split('T')[0]}
+									onChange={(e) => setDate(e.target.value)} />
 							</div>
 						}
 						<button className="submit" type="submit">Submit</button>
@@ -228,11 +236,19 @@ const Calender: React.FC = () => {
 						{updateTimed ?
 							<div className="time">
 								<div><p>Event Date + Time</p></div>
-								<input type="datetime-local" onChange={(e) => setUpdateDate(e.target.value)} />
+								<input
+									type="datetime-local"
+									min={new Date(startOfToday()).toISOString()}
+									value={new Date(updateDate).toISOString()}
+									onChange={(e) => setUpdateDate(e.target.value)} />
 							</div>
 							: <div className="date">
 								<div><p>Event Date</p></div>
-								<input type="date" onChange={(e) => setUpdateDate(e.target.value)} />
+								<input
+									type="date"
+									min={new Date(startOfToday()).toISOString().split('T')[0]}
+									value={new Date(updateDate).toISOString().split('T')[0]}
+									onChange={(e) => setUpdateDate(e.target.value)} />
 							</div>
 						}
 						<button className="submit" type="submit">Submit</button>

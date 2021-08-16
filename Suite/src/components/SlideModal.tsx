@@ -8,7 +8,7 @@ const SlideModal: React.FC<any> = ({ smref, close, title, children }) => {
 			<div className="modal">
 				<div className="closer" onClick={() => close()}>X</div>
 				<div className="modal">
-					<h2 className="title">{title}</h2>
+					<p className="title">{title}</p>
 					<div className="content">{children}</div>
 				</div>
 			</div>

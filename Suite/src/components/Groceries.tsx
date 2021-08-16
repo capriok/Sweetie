@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
-import short from 'short-uuid'
 
 import Api from '../api'
 import SlideModal from './SlideModal'
@@ -20,7 +19,7 @@ const Groceries: React.FC = () => {
 
 
 	function ResetSetState() {
-		set({ adding: false, removing: false })
+		set(() => ({ adding: false, removing: false }))
 	}
 
 	function ResetAddFormState() {
@@ -37,11 +36,11 @@ const Groceries: React.FC = () => {
 	})
 
 	function AddBtnClick() {
-		set({ ...is, adding: !is.adding })
+		set(is => ({ ...is, adding: !is.adding }))
 	}
 
 	function RemoveBtnClick() {
-		set({ ...is, removing: !is.removing })
+		set(is => ({ ...is, removing: !is.removing }))
 	}
 
 	function ClearBtnClick() {
@@ -67,7 +66,7 @@ const Groceries: React.FC = () => {
 		e.preventDefault()
 		if (!is.adding || !name) return
 
-		let item = { id: short.generate(), name: name, qty: quantity, store: store }
+		let item = { name: name, qty: quantity, store: store }
 
 		Api.PostGrocery(item).then(gl => {
 			ResetAddFormState()

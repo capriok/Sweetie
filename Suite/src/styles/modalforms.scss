@@ -1,6 +1,10 @@
 @import "./index.scss";
 
 .slidemodal {
+	.title {
+		font-weight: bold;
+		font-size: 1.2rem;
+	}
 	.closer {
 		cursor: pointer;
 	}
@@ -85,7 +89,7 @@
 
 	.cats {
 		width: 100%;
-		.days {
+		.config {
 			@include flex;
 			width: 100%;
 			label {
