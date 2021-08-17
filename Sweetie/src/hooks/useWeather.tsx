@@ -13,24 +13,26 @@ const useWeather = () => {
 	})
 
 	useEffect(() => {
-		const API = `https://api.openweathermap.org/data/2.5/`
-		const LOCATION = `lat=32.301210&lon=-110.827220`
-		const EXCLUDE = `minutely,hourly,daily`
-		const KEY = process.env.REACT_APP_WEATHER_KEY
-		const ENDPOINT = `${API}onecall?${LOCATION}&units=imperial&exclude=${EXCLUDE}&appid=${KEY}`
+		(async () => {
+			const API = `https://api.openweathermap.org/data/2.5/`
+			const LOCATION = `lat=32.301210&lon=-110.827220`
+			const EXCLUDE = `minutely,hourly,daily`
+			const KEY = process.env.REACT_APP_WEATHER_KEY
+			const ENDPOINT = `${API}onecall?${LOCATION}&units=imperial&exclude=${EXCLUDE}&appid=${KEY}`
 
-		const response = await fetch(ENDPOINT)
-		const res = await response.json()
+			const response = await fetch(ENDPOINT)
+			const res = await response.json()
 
-		const results = {
-			loading: false,
-			timezone: res.timezone.split('/')[1],
-			temperature: Math.ceil(res.current.temp),
-			humidity: res.current.humidity,
-			description: res.current.weather[0].description,
-			icon: `http://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png`
-		}
-		setWeather(results)
+			const results = {
+				loading: false,
+				timezone: res.timezone.split('/')[1],
+				temperature: Math.ceil(res.current.temp),
+				humidity: res.current.humidity,
+				description: res.current.weather[0].description,
+				icon: `http://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png`
+			}
+			setWeather(results)
+		})()
 	}, [])
 
 	return weather
