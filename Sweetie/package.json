@@ -24,7 +24,7 @@
     "node-sass": "^6.0.1"
   },
   "optionalDependencies": {
-    "fsevents": "2.3.2"
+    "fsevents": "1.2.13"
   },
   "eslintConfig": {
     "extends": [
