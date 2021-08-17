@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { differenceInCalendarDays, subDays } from 'date-fns'
+import { differenceInCalendarDays } from 'date-fns'
 
 import Splash from './components/Splash'
 import Calender from './components/Calender'
