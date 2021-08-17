@@ -29,7 +29,7 @@ const useWeather = () => {
 				temperature: Math.ceil(res.current.temp),
 				humidity: res.current.humidity,
 				description: res.current.weather[0].description,
-				icon: `http://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png`
+				icon: `https://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png`
 			}
 			setWeather(results)
 		})()
