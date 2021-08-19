@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useOutsideClick } from '../hooks/useOutsideClick'
+import { useOutsideClick } from '../../hooks/useOutsideClick'
 
-import Api from '../api'
-import SlideModal from './SlideModal'
+import Api from '../../api'
+import Modal from '../Modal'
+import GroceryAdding from '../modals/Grocery-Adding'
+import Actionbar, { ActionBarButton } from '../ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
+
+import '../../styles/sections/groceries.scss'
 
 const Groceries: React.FC = () => {
 	const [is, set] = useState({
@@ -16,7 +20,6 @@ const Groceries: React.FC = () => {
 	const [name, setName] = useState('')
 	const [quantity, setQuantity] = useState(1)
 	const [store, setStore] = useState('wholefoods')
-
 
 	function ResetSetState() {
 		set(() => ({ adding: false, removing: false }))
@@ -48,7 +51,7 @@ const Groceries: React.FC = () => {
 			'Are you sure you got everything?\n\n' +
 			'Type \'confirm\' to clear Groceries.'
 		);
-		if (confirmation === 'confirm') {
+		if (confirmation?.toLocaleLowerCase() === 'confirm') {
 			Api.ClearGroceryList().then(gl => setGroceryList(gl))
 		}
 	}
@@ -83,21 +86,20 @@ const Groceries: React.FC = () => {
 
 	return (
 		<>
-			<section ref={outClickRef}>
-				<h1 className="title">Groceries</h1>
+			<div className="section-wrap" ref={outClickRef}>
 				{!groceryList.length
-					? <div>Nothing here.</div>
-					: <div className="content">
+					? <div className="content-empty" >Nothing here.</div>
+					: <div className="groceries content">
 						{groceryList.some(g => g.store === 'wholefoods') &&
 							<>
 								<h3>Whole Foods</h3>
 								{groceryList.filter(i => i.store === 'wholefoods').map((item, i) => (
 									<div
 										key={i}
-										className="item"
+										className="content-line with-border"
 										onClick={() => removeGrocery(item)}>
-										<p>{item.name}</p>
-										<p>{item.qty}</p>
+										<p className="name">{item.name}</p>
+										<p className="quantity">{item.qty}</p>
 									</div>
 								))}
 							</>
@@ -108,61 +110,37 @@ const Groceries: React.FC = () => {
 								{groceryList.filter(i => i.store === 'bashas').map((item, i) => (
 									<div
 										key={i}
-										className="item"
+										className="content-line with-border"
 										onClick={() => removeGrocery(item)}>
-										<p>{item.name}</p>
-										<p>{item.qty}</p>
+										<p className="name">{item.name}</p>
+										<p className="quantity">{item.qty}</p>
 									</div>
 								))}
 							</>
 						}
 					</div>
 				}
-				{
-					is.adding
-						? <div className="action-btns">
-							<button onClick={AddBtnClick}><VscDebugStop /></button>
-						</div>
-						: is.removing
-							? <div className="action-btns">
-								<button onClick={RemoveBtnClick}><VscDebugStop /></button>
-							</div>
-							: <div className="action-btns">
-								<button onClick={AddBtnClick}><VscDiffAdded /></button>
-								<button onClick={RemoveBtnClick}><VscDiffRemoved /></button>
-								<button onClick={ClearBtnClick}><VscDebugStop /></button>
-							</div>
-				}
-			</section>
+			</div>
+
+			<Actionbar actives={[
+				[is.adding, AddBtnClick],
+				[is.removing, RemoveBtnClick]
+			]}>
+				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
+				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
+				<ActionBarButton click={ClearBtnClick} render={<VscDebugStop />} />
+			</Actionbar>
+
 			{is.adding &&
-				<SlideModal
+				<Modal
 					title="Add Grocery"
-					smref={outClickRef}
-					close={() => ResetAddFormState()}>
-					<form onSubmit={(e) => postGrocery(e)} className="groceries">
-						<div className="name-quan">
-							<input
-								name="name"
-								type="text"
-								placeholder="Name"
-								autoComplete="off"
-								onChange={(e) => setName(e.target.value)} />
-							<input
-								type="number"
-								min={1}
-								placeholder="Quantity"
-								onChange={(e) => setQuantity(parseInt(e.target.value))} />
-						</div>
-						<div className="store">
-							<select
-								onChange={(e) => setStore(e.target.value)}>
-								<option value="wholefoods">Whole Foods</option>
-								<option value="bashas">Bashas</option>
-							</select>
-						</div>
-						<button className="submit" type="submit">Submit</button>
-					</form>
-				</SlideModal>
+					smref={outClickRef}>
+					<GroceryAdding
+						submit={postGrocery}
+						setName={setName}
+						setQuanity={setQuantity}
+						setStore={setStore} />
+				</Modal>
 			}
 		</>
 	)

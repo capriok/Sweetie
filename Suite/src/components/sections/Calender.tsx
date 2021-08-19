@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useOutsideClick } from '../hooks/useOutsideClick'
+import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { addDays, format, startOfDay, startOfToday } from 'date-fns'
 
-import Api from '../api'
-import SlideModal from './SlideModal'
-import '../styles/calender.scss'
+import Api from '../../api'
+import Modal from '../Modal'
+import CalenderAdding from '../modals/Calender-Adding'
+import CalenderUpdating from '../modals/Calender-Updating'
+import Actionbar, { ActionBarButton } from '../ActionBar'
 
 import { CgMaximize, CgMinimize } from 'react-icons/cg'
-import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
+import { VscDiffAdded, VscDiffRemoved } from 'react-icons/vsc'
 import { MdSystemUpdateAlt } from 'react-icons/md'
+
+import '../../styles/sections/calender.scss'
 
 const Calender: React.FC = () => {
 	const [is, set] = useState({
@@ -121,16 +125,15 @@ const Calender: React.FC = () => {
 
 	return (
 		<>
-			<section ref={outClickRef}>
-				<h1 className="title">Calender</h1>
-				<div className="content calender">
-					<div className="head">
+			<div className="section-wrap" ref={outClickRef}>
+				<div className="calender content">
+					<div className="content-head">
 						<p>Event</p>
 						<p>Date</p>
 						<p>Time</p>
 					</div>
 					{eventList.slice(0, is.viewing ? eventList.length : 7).map((event, i) =>
-						<div className="event" key={i}
+						<div className="content-line with-border" key={i}
 							onClick={() => {
 								return is.removing
 									? removeEvent(event)
@@ -153,107 +156,47 @@ const Calender: React.FC = () => {
 						</div>
 					)}
 				</div>
-				{eventList.length > 7 &&
-					<p className="viewing-btn" onClick={() => set({ ...is, viewing: !is.viewing })}>
-						{is.viewing ? <CgMinimize /> : <CgMaximize />}
-					</p>
-				}
-				{is.adding
-					? <div className="action-btns">
-						<button onClick={AddBtnClick}><VscDebugStop /></button>
-					</div>
-					: is.removing
-						? <div className="action-btns">
-							<button onClick={RemoveBtnClick}><VscDebugStop /></button>
-						</div>
-						: is.updating
-							? <div className="action-btns">
-								<button onClick={UpdateBtnClick}><VscDebugStop /></button>
-							</div>
-							: <div className="action-btns">
-								<button onClick={AddBtnClick}><VscDiffAdded /></button>
-								<button onClick={UpdateBtnClick}><MdSystemUpdateAlt /></button>
-								<button onClick={RemoveBtnClick}><VscDiffRemoved /></button>
-							</div>
-				}
-			</section>
-			{is.adding &&
-				<SlideModal
-					title="Add Event"
-					smref={outClickRef}
-					close={() => ResetAddFormState()}>
-					<form onSubmit={(e) => postEvent(e)} className="calender">
-						<div className="name-timed">
-							<input
-								name="name"
-								type="text"
-								placeholder="Event name"
-								autoComplete="off"
-								onChange={(e) => setName(e.target.value)} />
-							<label className="timed">
-								<span>Timed</span>
-								<input
-									type="checkbox"
-									checked={timed}
-									onChange={(e) => setTimed(e.target.checked)} />
-							</label>
-						</div>
-						{timed ?
-							<div className="time">
-								<div><p>Event Date + Time</p></div>
-								<input
-									type="datetime-local"
-									min={new Date(startOfToday()).toISOString()}
-									onChange={(e) => setDate(e.target.value)} />
-							</div>
-							: <div className="date">
-								<div><p>Event Date</p></div>
-								<input
-									type="date"
-									min={new Date(startOfToday()).toISOString().split('T')[0]}
-									onChange={(e) => setDate(e.target.value)} />
-							</div>
-						}
-						<button className="submit" type="submit">Submit</button>
-					</form>
-				</SlideModal>
+			</div>
+			{eventList.length > 7 &&
+				<p className="content-view-all" onClick={() => set({ ...is, viewing: !is.viewing })}>
+					{is.viewing ? <CgMinimize /> : <CgMaximize />}
+				</p>
 			}
+
+			<Actionbar actives={[
+				[is.adding, AddBtnClick],
+				[is.updating, UpdateBtnClick],
+				[is.removing, RemoveBtnClick]
+			]}>
+				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
+				<ActionBarButton click={UpdateBtnClick} render={<MdSystemUpdateAlt />} />
+				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
+			</Actionbar>
+
+			{is.adding &&
+				<Modal
+					title="Add Event"
+					mref={outClickRef}>
+					<CalenderAdding
+						submit={postEvent}
+						timed={timed}
+						setName={setName}
+						setTimed={setTimed}
+						setDate={setDate} />
+				</Modal>
+			}
+
 			{(is.updating && updateCalenderEventItem) &&
-				<SlideModal
+				<Modal
 					title={`Update ${updateCalenderEventItem.name}`}
-					smref={outClickRef}
-					close={() => ResetUpdateFormState()}>
-					<form onSubmit={(e) => updateCalenderEvent(e)} className="calender">
-						<div className="name-timed">
-							<label className="timed">
-								<span>Timed</span>
-								<input
-									type="checkbox"
-									checked={updateTimed}
-									onChange={(e) => setUpdateTimed(e.target.checked)} />
-							</label>
-						</div>
-						{updateTimed ?
-							<div className="time">
-								<div><p>Event Date + Time</p></div>
-								<input
-									type="datetime-local"
-									min={new Date(startOfToday()).toISOString()}
-									value={new Date(updateDate).toISOString()}
-									onChange={(e) => setUpdateDate(e.target.value)} />
-							</div>
-							: <div className="date">
-								<div><p>Event Date</p></div>
-								<input
-									type="date"
-									min={new Date(startOfToday()).toISOString().split('T')[0]}
-									value={new Date(updateDate).toISOString().split('T')[0]}
-									onChange={(e) => setUpdateDate(e.target.value)} />
-							</div>
-						}
-						<button className="submit" type="submit">Submit</button>
-					</form>
-				</SlideModal>
+					mref={outClickRef}>
+					<CalenderUpdating
+						submit={updateCalenderEvent}
+						updateTimed={updateTimed}
+						setUpdateTimed={setUpdateTimed}
+						updateDate={updateDate}
+						setUpdateDate={setUpdateDate} />
+				</Modal>
 			}
 		</>
 	)

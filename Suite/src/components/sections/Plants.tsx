@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useOutsideClick } from '../hooks/useOutsideClick'
+import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { addDays, startOfToday } from 'date-fns'
 
-import Api from '../api'
-import SlideModal from './SlideModal'
-import '../styles/plants.scss'
+import Api from '../../api'
+import Modal from '../Modal'
+import '../../styles/sections/plants.scss'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 import { CgMaximize, CgMinimize } from 'react-icons/cg'
@@ -119,7 +119,6 @@ const Plants: React.FC = () => {
 	return (
 		<>
 			<section ref={outClickRef}>
-				<h1>Plants</h1>
 				<div className="content plants">
 					<div className="head">
 						<p>Water Cycle</p>
@@ -170,7 +169,7 @@ const Plants: React.FC = () => {
 				}
 			</section>
 			{is.adding &&
-				<SlideModal
+				<Modal
 					title="Add Plant"
 					smref={outClickRef}
 					close={() => ResetAddFormState()}>
@@ -198,10 +197,10 @@ const Plants: React.FC = () => {
 							<button className="submit" type="submit">Submit</button>
 						</div>
 					</form>
-				</SlideModal>
+				</Modal>
 			}
 			{(is.updating && updatePlantItem) &&
-				<SlideModal
+				<Modal
 					title={`Update ${updatePlantItem.name}`}
 					smref={outClickRef}
 					close={() => ResetUpdateFormState()}>
@@ -218,7 +217,7 @@ const Plants: React.FC = () => {
 							<button className="submit" type="submit">Submit</button>
 						</div>
 					</form>
-				</SlideModal>
+				</Modal>
 			}
 		</>
 	)

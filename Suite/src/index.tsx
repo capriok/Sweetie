@@ -3,16 +3,9 @@ import ReactDOM from 'react-dom'
 import { differenceInCalendarDays } from 'date-fns'
 
 import Splash from './components/Splash'
-import Calender from './components/Calender'
-import Cats from './components/Cats'
-import Groceries from './components/Groceries'
-import Plants from './components/Plants'
-import Tasks from './components/Tasks'
+import Suite from './components/Suite'
 
 import './styles/index.scss'
-import './styles/suite.scss'
-import './styles/slidemodal.scss'
-import './styles/modalforms.scss'
 
 function Index() {
 
@@ -31,21 +24,10 @@ function Index() {
     }
   }, [])
 
-  return (
-    <>
-      {!auth
-        ? <Splash pass={pass} setPass={setPass} setAuth={setAuth} />
-        : <main className="suite">
-          <header><h1>Sweetie Suite</h1></header>
-          <Calender />
-          <Groceries />
-          <Tasks />
-          <Cats />
-          <Plants />
-        </main>
-      }
-    </>
-  )
+  if (auth)
+    return <Suite />
+  else
+    return <Splash pass={pass} setPass={setPass} setAuth={setAuth} />
 }
 
 ReactDOM.render(<React.StrictMode><Index /></React.StrictMode>, document.getElementById('root'));

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useOutsideClick } from '../hooks/useOutsideClick'
-import SlideModal from './SlideModal'
-import Api from '../api'
-import short from 'short-uuid'
+import { useOutsideClick } from '../../hooks/useOutsideClick'
+import Modal from '../Modal'
+
+import Api from '../../api'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 
@@ -46,7 +46,7 @@ const Tasks: React.FC = () => {
 			'Did you complete everything?\n\n' +
 			'Type \'confirm\' to clear Tasks.'
 		);
-		if (confirmation === 'confirm') {
+		if (confirmation?.toLocaleLowerCase() === 'confirm') {
 			Api.ClearTaskList().then(tl => setTaskList(tl))
 		}
 	}
@@ -64,7 +64,7 @@ const Tasks: React.FC = () => {
 		e.preventDefault()
 		if (!name) return
 
-		let task = { id: short.generate(), name: name, pinned: pinned }
+		let task = { name: name, pinned: pinned }
 
 		Api.PostTask(task).then(tl => {
 			ResetAddFormState()
@@ -86,7 +86,6 @@ const Tasks: React.FC = () => {
 	return (
 		<>
 			<section ref={outClickRef}>
-				<h1>Tasks</h1>
 				<div className="content">
 					{!taskList.length
 						? <div>Nothing here.</div>
@@ -131,7 +130,7 @@ const Tasks: React.FC = () => {
 				}
 			</section>
 			{is.adding &&
-				<SlideModal
+				<Modal
 					title="Add Task"
 					smref={outClickRef}
 					close={() => ResetAddFormState()} >
@@ -152,7 +151,7 @@ const Tasks: React.FC = () => {
 						</label>
 						<button className="submit" type="submit">Submit</button>
 					</form>
-				</SlideModal>
+				</Modal>
 			}
 		</>
 	)

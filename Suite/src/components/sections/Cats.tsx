@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useOutsideClick } from '../hooks/useOutsideClick'
+import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { isAfter, isSameDay, startOfDay, startOfToday } from 'date-fns'
 
-import Api from '../api'
-import SlideModal from './SlideModal'
-import '../styles/cats.scss'
+import Api from '../../api'
+import Modal from '../Modal'
+import '../../styles/sections/cats.scss'
 
 import { MdSystemUpdateAlt } from 'react-icons/md'
 import { addDays } from 'date-fns/esm'
@@ -84,7 +84,6 @@ const Cats: React.FC = () => {
 	return (
 		<>
 			<section>
-				<h1>Cats</h1>
 				<div className="content cats">
 					<div className="head">
 						<p>Day</p>
@@ -112,7 +111,7 @@ const Cats: React.FC = () => {
 				</div>
 			</section>
 			{updating &&
-				<SlideModal
+				<Modal
 					title="Cat Config"
 					smref={outClickRef}
 					close={() => ResetUpdateFormState()}>
@@ -137,7 +136,7 @@ const Cats: React.FC = () => {
 						</div>
 						<button className="submit" type="submit">Submit</button>
 					</form>
-				</SlideModal>
+				</Modal>
 			}
 		</>
 	)

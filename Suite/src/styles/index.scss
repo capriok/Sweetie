@@ -6,7 +6,7 @@
 	right: 0px;
 	top: 100px;
 	height: 0;
-	width: 8px;
+	width: 0.1px;
 }
 ::-webkit-scrollbar-track {
 	background-color: darken(white, 25%);
@@ -43,19 +43,6 @@ body {
 	font-size: 14px;
 }
 
-.bg {
-	top: 0;
-	position: fixed;
-	height: 100vh;
-	width: 100vw;
-	// background-image: url("../assets/bg.jpg");
-	// background-size: cover;
-	// @media (min-width: 500px) {
-	// 	background-image: unset;
-	// 	background-color: rgb(245, 245, 245);
-	// }
-}
-
 input,
 select {
 	padding: 7px 10px;
@@ -70,8 +57,8 @@ button {
 	cursor: pointer;
 	outline: none;
 	border: none;
-	padding: 10px;
-	border-top: 2px solid $accent-color;
+	padding: 10px 20px;
+	border-radius: 5px;
 	background-color: $section-h-bg;
 	transition: 0.2s;
 	&:active {
@@ -95,4 +82,10 @@ p {
 	cursor: default;
 	font-weight: 400;
 	font-size: 0.9rem;
+}
+
+@media (max-width: 500px) {
+	input {
+		font-size: 16px;
+	}
 }

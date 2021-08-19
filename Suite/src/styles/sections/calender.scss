@@ -1,7 +1,7 @@
-@import "./index.scss";
+@import "../index.scss";
 
 .calender {
-	.event {
+	.content-line {
 		.name,
 		.date,
 		.time {
@@ -14,6 +14,7 @@
 			text-align: right;
 		}
 		.date {
+			text-align: center;
 		}
 	}
 }
