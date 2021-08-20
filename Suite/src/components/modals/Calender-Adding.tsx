@@ -1,7 +1,7 @@
 import React from 'react'
 import { startOfToday } from 'date-fns'
 
-const CalenderAdding: React.FC<any> = ({ submit, timed, setName, setTimed, setDate }) => {
+const CalenderAdding: React.FC<any> = ({ submit, name, setName, timed, setTimed, setDate }) => {
 	return (
 		<form onSubmit={(e) => submit(e)} >
 			<div className="form-line name">
@@ -11,6 +11,7 @@ const CalenderAdding: React.FC<any> = ({ submit, timed, setName, setTimed, setDa
 					type="text"
 					placeholder="Event name"
 					autoComplete="off"
+					value={name}
 					onChange={(e) => setName(e.target.value)} />
 			</div>
 			<div className="form-line timed">
@@ -19,14 +20,17 @@ const CalenderAdding: React.FC<any> = ({ submit, timed, setName, setTimed, setDa
 					name="timed"
 					type="checkbox"
 					checked={timed}
-					onChange={(e) => setTimed(e.target.checked)} />
+					onChange={(e) => {
+						setDate(undefined)
+						setTimed(e.target.checked)
+					}} />
 			</div>
 			<div className="form-line date">
 				<label htmlFor="date">Date</label>
 				<input
 					name="date"
 					type={timed ? "datetime-local" : "date"}
-					min={new Date(startOfToday()).toISOString()}
+					min={new Date(startOfToday()).toISOString().split('T')[0]}
 					onChange={(e) => setDate(e.target.value)} />
 			</div>
 			<div className="form-submit">

@@ -1,14 +1,15 @@
 @import "./index.scss";
 
 #Suite {
-	display: flex;
-	overflow-x: scroll;
-
 	scroll-snap-type: x mandatory;
 
+	display: flex;
+	overflow-x: scroll;
 	.section-title {
 		width: 100%;
 		@include flex;
+		background-color: $suite-title;
+		border-bottom: 2px solid $light-grey;
 	}
 	section {
 		scroll-snap-align: center;

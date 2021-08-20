@@ -22,8 +22,9 @@
 	align-items: center;
 }
 
+$MAX: 800px;
 $suite-bg: rgb(0, 0, 0);
-$suite-title: rgb(255, 255, 255);
+$suite-title: rgb(230, 230, 230);
 $accent-color: rgba(0, 100, 200, 0.8);
 $section-h-bg: rgb(228, 228, 228);
 $section-h-color: rgb(0, 0, 0);
@@ -85,7 +86,8 @@ p {
 }
 
 @media (max-width: 500px) {
-	input {
+	input,
+	select {
 		font-size: 16px;
 	}
 }

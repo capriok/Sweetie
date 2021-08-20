@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { isAfter, isSameDay, startOfDay, startOfToday } from 'date-fns'
+import { isAfter, isSameDay, startOfToday } from 'date-fns'
 
 import Api from '../../api'
 import Modal from '../Modal'
-import '../../styles/sections/cats.scss'
+import CatsUpdating from '../modals/Cats-Updating'
+import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { MdSystemUpdateAlt } from 'react-icons/md'
-import { addDays } from 'date-fns/esm'
+
+import '../../styles/sections/cats.scss'
 
 const Cats: React.FC = () => {
 	const [updating, setUpdating] = useState(false)
@@ -83,15 +85,15 @@ const Cats: React.FC = () => {
 
 	return (
 		<>
-			<section>
+			<div className="section-scroll">
 				<div className="content cats">
-					<div className="head">
+					<div className="content-head">
 						<p>Day</p>
 						<p>Food</p>
 						<p>Waste</p>
 					</div>
 					{schedule.map((day, i) => (
-						<div className="item" key={i}>
+						<div className="content-line with-border" key={i}>
 							<div className="day">
 								<p>{new Date(day.date).toLocaleDateString('en-us',
 									{ weekday: 'short', month: 'short', day: 'numeric' })}</p>
@@ -104,38 +106,24 @@ const Cats: React.FC = () => {
 							</div>
 						</div>
 					))}
+				</div>
+			</div>
 
-				</div>
-				<div className="action-btns">
-					<button onClick={() => setUpdating(!updating)}><MdSystemUpdateAlt /></button>
-				</div>
-			</section>
+			<ActionBar actives={[[updating, () => setUpdating(!updating)]]}>
+				<ActionBarButton click={() => setUpdating(!updating)} render={<MdSystemUpdateAlt />} />
+			</ActionBar>
+
 			{updating &&
 				<Modal
 					title="Cat Config"
-					smref={outClickRef}
-					close={() => ResetUpdateFormState()}>
-					<form onSubmit={(e) => updateConfig(e)} className="cats">
-						<div className="config">
-							<label>
-								<p>Last Food Day</p>
-								<input
-									type="date"
-									max={new Date(startOfToday()).toISOString().split('T')[0]}
-									value={new Date(lfd).toISOString().split('T')[0]}
-									onChange={(e) => setLfd(addDays(startOfDay(new Date(e.target.value)), 1))} />
-							</label>
-							<label>
-								<p>Last Waste Day</p>
-								<input
-									type="date"
-									max={new Date(startOfToday()).toISOString().split('T')[0]}
-									value={new Date(lwd).toISOString().split('T')[0]}
-									onChange={(e) => setLwd(addDays(startOfDay(new Date(e.target.value)), 1))} />
-							</label>
-						</div>
-						<button className="submit" type="submit">Submit</button>
-					</form>
+					mref={outClickRef}>
+					<CatsUpdating
+						submit={updateConfig}
+						lfd={lfd}
+						setLfd={setLfd}
+						lwd={lwd}
+						setLwd={setLwd}
+					/>
 				</Modal>
 			}
 		</>

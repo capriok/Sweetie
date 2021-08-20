@@ -4,22 +4,26 @@
 	@include flex;
 	justify-content: flex-start;
 	flex-direction: column;
+	width: 100vw;
 
-	.section-wrap {
+	.section-scroll {
+		overflow-y: scroll;
 		height: 100%;
-		overflow: scroll;
 	}
 	.content {
+		overflow-y: scroll;
 		@include flex;
 		flex-direction: column;
 		justify-content: space-between;
 		width: 100vw;
-		max-height: 100%;
-		padding: 0 20px;
-		overflow-y: scroll;
+		padding: 0 40px;
+		padding-top: 20px;
+
+		margin: 0 auto;
 
 		.content-head {
 			width: 100%;
+			max-width: $MAX;
 			@include flex;
 			justify-content: space-between;
 			margin-bottom: 20px;
@@ -29,11 +33,9 @@
 		}
 		.content-line {
 			width: 100%;
+			max-width: $MAX;
 			@include flex;
 			justify-content: space-between;
-			* {
-				flex: 1;
-			}
 		}
 		.with-border {
 			&:not(:last-child) {

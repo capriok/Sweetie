@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { addDays, format, startOfDay, startOfToday } from 'date-fns'
+import { addDays, format, startOfDay } from 'date-fns'
 
 import Api from '../../api'
 import Modal from '../Modal'
 import CalenderAdding from '../modals/Calender-Adding'
 import CalenderUpdating from '../modals/Calender-Updating'
-import Actionbar, { ActionBarButton } from '../ActionBar'
+import ActionBar, { ActionBarButton } from '../ActionBar'
 
-import { CgMaximize, CgMinimize } from 'react-icons/cg'
 import { VscDiffAdded, VscDiffRemoved } from 'react-icons/vsc'
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
@@ -16,7 +15,6 @@ import '../../styles/sections/calender.scss'
 
 const Calender: React.FC = () => {
 	const [is, set] = useState({
-		viewing: false,
 		adding: false,
 		removing: false,
 		updating: false
@@ -24,26 +22,26 @@ const Calender: React.FC = () => {
 	const [eventList, setEventList] = useState<Array<CalenderEvent>>([])
 	const [name, setName] = useState('')
 	const [timed, setTimed] = useState(false)
-	const [date, setDate] = useState<any>(startOfToday())
+	const [date, setDate] = useState<any>()
 
 	const [updateCalenderEventItem, setUpdateCalenderEventItem] = useState<any>(undefined)
-	const [updateDate, setUpdateDate] = useState<any>(startOfToday())
+	const [updateDate, setUpdateDate] = useState<any>()
 	const [updateTimed, setUpdateTimed] = useState(false)
 
 	function ResetSetState() {
-		set(() => ({ viewing: false, adding: false, removing: false, updating: false }))
+		set(() => ({ adding: false, removing: false, updating: false }))
 	}
 
 	function ResetAddFormState() {
 		setName('')
 		setTimed(false)
-		setDate(startOfToday())
+		setDate(undefined)
 		set(is => ({ ...is, adding: false }))
 	}
 
 	function ResetUpdateFormState() {
 		setUpdateCalenderEventItem(undefined)
-		setUpdateDate(startOfToday())
+		setUpdateDate(undefined)
 		setUpdateTimed(false)
 		set(is => ({ ...is, updating: false }))
 	}
@@ -125,15 +123,17 @@ const Calender: React.FC = () => {
 
 	return (
 		<>
-			<div className="section-wrap" ref={outClickRef}>
+			<div className="section-scroll" ref={outClickRef}>
 				<div className="calender content">
 					<div className="content-head">
 						<p>Event</p>
 						<p>Date</p>
 						<p>Time</p>
 					</div>
-					{eventList.slice(0, is.viewing ? eventList.length : 7).map((event, i) =>
-						<div className="content-line with-border" key={i}
+					{eventList.map((event, i) =>
+						<div
+							key={i}
+							className="content-line with-border"
 							onClick={() => {
 								return is.removing
 									? removeEvent(event)
@@ -157,13 +157,8 @@ const Calender: React.FC = () => {
 					)}
 				</div>
 			</div>
-			{eventList.length > 7 &&
-				<p className="content-view-all" onClick={() => set({ ...is, viewing: !is.viewing })}>
-					{is.viewing ? <CgMinimize /> : <CgMaximize />}
-				</p>
-			}
 
-			<Actionbar actives={[
+			<ActionBar actives={[
 				[is.adding, AddBtnClick],
 				[is.updating, UpdateBtnClick],
 				[is.removing, RemoveBtnClick]
@@ -171,7 +166,7 @@ const Calender: React.FC = () => {
 				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
 				<ActionBarButton click={UpdateBtnClick} render={<MdSystemUpdateAlt />} />
 				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
-			</Actionbar>
+			</ActionBar>
 
 			{is.adding &&
 				<Modal
@@ -179,8 +174,9 @@ const Calender: React.FC = () => {
 					mref={outClickRef}>
 					<CalenderAdding
 						submit={postEvent}
-						timed={timed}
+						name={name}
 						setName={setName}
+						timed={timed}
 						setTimed={setTimed}
 						setDate={setDate} />
 				</Modal>

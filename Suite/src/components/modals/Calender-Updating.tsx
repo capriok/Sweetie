@@ -10,18 +10,17 @@ const CalenderUpdating: React.FC<any> = ({ submit, updateTimed, setUpdateTimed, 
 					name="timed"
 					type="checkbox"
 					checked={updateTimed}
-					onChange={(e) => setUpdateTimed(e.target.checked)} />
+					onChange={(e) => {
+						setUpdateDate(undefined)
+						setUpdateTimed(e.target.checked)
+					}} />
 			</div>
 			<div className="form-line date">
 				<label htmlFor="date">Date</label>
 				<input
 					name="date"
 					type={updateTimed ? "datetime-local" : "date"}
-					value={updateTimed ?
-						new Date(updateDate).toISOString()
-						: new Date(updateDate).toISOString().split('T')[0]
-					}
-					min={new Date(startOfToday()).toISOString()}
+					min={new Date(startOfToday()).toISOString().split('T')[0]}
 					onChange={(e) => setUpdateDate(e.target.value)} />
 			</div>
 			<div className="form-submit">

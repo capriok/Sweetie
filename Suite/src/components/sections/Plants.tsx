@@ -1,19 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { addDays, startOfToday } from 'date-fns'
+import { addDays, startOfDay } from 'date-fns'
 
 import Api from '../../api'
 import Modal from '../Modal'
-import '../../styles/sections/plants.scss'
+import PlantAdding from '../modals/Plant-Adding'
+import PlantUpdating from '../modals/Plant-Updating'
+import ActionBar, { ActionBarButton } from '../ActionBar'
 
-import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
-import { CgMaximize, CgMinimize } from 'react-icons/cg'
+import { VscDiffAdded, VscDiffRemoved } from 'react-icons/vsc'
 import { MdSystemUpdateAlt } from 'react-icons/md'
-import { startOfDay } from 'date-fns/esm'
+
+import '../../styles/sections/plants.scss'
 
 const Plants: React.FC = () => {
 	const [is, set] = useState({
-		viewing: false,
 		adding: false,
 		removing: false,
 		updating: false
@@ -22,25 +23,25 @@ const Plants: React.FC = () => {
 
 	const [name, setName] = useState('')
 	const [cycle, setCycle] = useState(0)
-	const [lastWater, setLastWater] = useState<any>(startOfToday())
+	const [lastWater, setLastWater] = useState<any>()
 
 	const [updatePlantItem, setUpdatePlantItem] = useState<Plant | undefined>(undefined)
-	const [updateLastWater, setUpdateLastWater] = useState<any>(startOfToday())
+	const [updateLastWater, setUpdateLastWater] = useState<any>()
 
 	function ResetSetState() {
-		set(() => ({ viewing: false, adding: false, removing: false, updating: false }))
+		set(() => ({ adding: false, removing: false, updating: false }))
 	}
 
 	function ResetAddFormState() {
 		setName('')
 		setCycle(0)
-		setLastWater(startOfToday())
+		setLastWater(undefined)
 		set(is => ({ ...is, adding: false }))
 	}
 
 	function ResetUpdateFormState() {
 		setUpdatePlantItem(undefined)
-		setUpdateLastWater(startOfToday())
+		setUpdateLastWater(undefined)
 		set(is => ({ ...is, updating: false }))
 	}
 
@@ -76,7 +77,9 @@ const Plants: React.FC = () => {
 
 	async function postPlant(e: any) {
 		e.preventDefault()
+
 		const invalidDate = !isNaN(Date.parse(lastWater))
+
 		if (!name || !invalidDate) return
 
 		const last = addDays(startOfDay(new Date(lastWater)), 1).toJSON()
@@ -118,14 +121,16 @@ const Plants: React.FC = () => {
 
 	return (
 		<>
-			<section ref={outClickRef}>
+			<div className="section-scroll" ref={outClickRef}>
 				<div className="content plants">
-					<div className="head">
-						<p>Water Cycle</p>
-						<p>Last Water</p>
+					<div className="content-head">
+						<p>Name</p>
+						<p>Cycle / Last Waster</p>
 					</div>
-					{plantList.slice(0, is.viewing ? plantList.length : 7).map((plant: any, i: number) => (
-						<div key={i} className="plant"
+					{plantList.map((plant: any, i: number) => (
+						<div
+							key={i}
+							className="content-line with-border"
 							onClick={() => {
 								return is.removing
 									? removePlant(plant)
@@ -134,89 +139,48 @@ const Plants: React.FC = () => {
 										: null
 							}}>
 							<p className="name">{plant.name}</p>
-							<div className="details">
-								<p>{plant.cycle} Days</p>
-								<p>
-									{new Date(plant.last).toLocaleDateString('en-us',
-										{ weekday: 'short', month: 'short', day: 'numeric' })}
-								</p>
-							</div>
+							<p className="cycle">{plant.cycle}</p>
+							<p className="lastwater">
+								{new Date(plant.last).toLocaleDateString('en-us',
+									{ weekday: 'short', month: 'short', day: 'numeric' })}
+							</p>
 						</div>
 					))}
 				</div>
-				{plantList.length > 7 &&
-					<p className="viewing-btn" onClick={() => set({ ...is, viewing: !is.viewing })}>
-						{is.viewing ? <CgMinimize /> : <CgMaximize />}
-					</p>
-				}
-				{is.adding
-					? <div className="action-btns">
-						<button onClick={AddBtnClick}><VscDebugStop /></button>
-					</div>
-					: is.removing
-						? <div className="action-btns">
-							<button onClick={RemoveBtnClick}><VscDebugStop /></button>
-						</div>
-						: is.updating
-							? <div className="action-btns">
-								<button onClick={UpdateBtnClick}><VscDebugStop /></button>
-							</div>
-							: <div className="action-btns">
-								<button onClick={AddBtnClick}><VscDiffAdded /></button>
-								<button onClick={UpdateBtnClick}><MdSystemUpdateAlt /></button>
-								<button onClick={RemoveBtnClick}><VscDiffRemoved /></button>
-							</div>
-				}
-			</section>
+			</div>
+
+			<ActionBar actives={[
+				[is.adding, AddBtnClick],
+				[is.updating, UpdateBtnClick],
+				[is.removing, RemoveBtnClick]
+			]}>
+				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
+				<ActionBarButton click={UpdateBtnClick} render={<MdSystemUpdateAlt />} />
+				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
+			</ActionBar>
+
 			{is.adding &&
 				<Modal
 					title="Add Plant"
-					smref={outClickRef}
-					close={() => ResetAddFormState()}>
-					<form onSubmit={(e) => postPlant(e)}>
-						<div className="plants">
-							<div className="name-cycle">
-								<input
-									type="text"
-									placeholder="Name"
-									autoComplete="off"
-									onChange={(e) => setName(e.target.value)} />
-								<input
-									type="number"
-									min={3}
-									placeholder="Cycle"
-									onChange={(e) => setCycle(parseInt(e.target.value))} />
-							</div>
-							<div className="lastwater">
-								<div><p>Last Water</p></div>
-								<input
-									type="date"
-									max={new Date(startOfToday()).toISOString().split('T')[0]}
-									onChange={(e) => setLastWater(e.target.value)} />
-							</div>
-							<button className="submit" type="submit">Submit</button>
-						</div>
-					</form>
+					mref={outClickRef}>
+					<PlantAdding
+						submit={postPlant}
+						setName={setName}
+						setCycle={setCycle}
+						setLastWater={setLastWater}
+					/>
 				</Modal>
 			}
+
 			{(is.updating && updatePlantItem) &&
 				<Modal
 					title={`Update ${updatePlantItem.name}`}
-					smref={outClickRef}
-					close={() => ResetUpdateFormState()}>
-					<form onSubmit={(e) => updatePlant(e)}>
-						<div className="plants">
-							<div className="lastwater">
-								<div><p>Last Water</p></div>
-								<input
-									type="date"
-									max={new Date(startOfToday()).toISOString().split('T')[0]}
-									value={new Date(updateLastWater).toISOString().split('T')[0]}
-									onChange={(e) => setUpdateLastWater(e.target.value)} />
-							</div>
-							<button className="submit" type="submit">Submit</button>
-						</div>
-					</form>
+					mref={outClickRef}>
+					<PlantUpdating
+						submit={updatePlant}
+						updateLastWater={updateLastWater}
+						setUpdateLastWater={setUpdateLastWater}
+					/>
 				</Modal>
 			}
 		</>

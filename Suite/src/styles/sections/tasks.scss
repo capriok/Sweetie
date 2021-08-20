@@ -1,26 +1,25 @@
 @import "../index.scss";
 
 .tasks {
-	.item {
-		input {
-			margin: 0;
+	.task {
+		* {
+			flex: 1;
+			text-align: center;
 		}
 	}
-	.day,
-	.food,
-	.waste {
-		flex: 1;
+	.pin {
+		text-align: center;
+		font-weight: bold;
 	}
-	.day {
+	.weekday {
+		flex: 1;
 		text-align: left;
 	}
-	.food {
-		text-align: center;
-	}
-	.waste {
+	.name {
+		flex: 1;
 		text-align: right;
 	}
-	.indicators {
-		padding-top: 40px;
-	}
+}
+.static-tasks {
+	padding-top: 20px !important;
 }

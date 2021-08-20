@@ -2,8 +2,8 @@
 
 .groceries {
 	.content-line {
-		.name,
-		.quantity {
+		.name {
+			flex: 2;
 		}
 		.quantity {
 			text-align: right;

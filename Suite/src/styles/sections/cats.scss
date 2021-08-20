@@ -1,26 +1,16 @@
 @import "../index.scss";
 
 .cats {
-	.item {
-		input {
-			margin: 0;
-		}
-	}
-	.day,
-	.food,
-	.waste {
-		flex: 1;
-	}
 	.day {
+		flex: 1;
 		text-align: left;
 	}
 	.food {
+		flex: 1;
 		text-align: center;
 	}
 	.waste {
+		flex: 1;
 		text-align: right;
-	}
-	.indicators {
-		padding-top: 40px;
 	}
 }

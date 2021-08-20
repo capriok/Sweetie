@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import Modal from '../Modal'
 
 import Api from '../../api'
+import Modal from '../Modal'
+import TaskAdding from '../modals/Task-Adding'
+import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
+
+import '../../styles/sections/tasks.scss'
 
 const Tasks: React.FC = () => {
 	const [is, set] = useState({
@@ -85,72 +89,52 @@ const Tasks: React.FC = () => {
 
 	return (
 		<>
-			<section ref={outClickRef}>
-				<div className="content">
-					{!taskList.length
-						? <div>Nothing here.</div>
-						: <>
-							{taskList.length &&
-								<>
-									{taskList.map((task, i) => (
-										<p
-											key={i}
-											className="task"
-											onClick={() => removeTask(task)}>
-											{task.pinned ? <strong>{task.name}</strong> : task.name}
-										</p>
-									))}
-								</>
-							}
-						</>
-					}
-					<br />
+			<div className="section-scroll" ref={outClickRef}>
+				{!taskList.length
+					? <div className="content-empty" ><p>Nothing here.</p></div>
+					: <div className="tasks content">
+						{taskList.length &&
+							taskList.map((task, i) => (
+								<div
+									className="content-line task"
+									onClick={() => removeTask(task)}>
+									<p key={i}
+										className={task.pinned ? 'pin' : ''}>{task.name}</p>
+								</div>
+							))
+						}
+					</div>
+				}
+				<div className="static-tasks content">
 					<h3>Weekly</h3>
 					{staticTasks.map((task, i: number) => (
-						<div key={i} className="static-task">
-							<p>{task.weekday}</p>
-							<p>{task.name}</p>
+						<div key={i} className="content-line with-border">
+							<p className="weekday">{task.weekday}</p>
+							<p className="name">{task.name}</p>
 						</div>
 					))}
 				</div>
-				{
-					is.adding
-						? <div className="action-btns">
-							<button onClick={AddBtnClick}><VscDebugStop /></button>
-						</div>
-						: is.removing
-							? <div className="action-btns">
-								<button onClick={RemoveBtnClick}><VscDebugStop /></button>
-							</div>
-							: <div className="action-btns">
-								<button onClick={AddBtnClick}><VscDiffAdded /></button>
-								<button onClick={RemoveBtnClick}><VscDiffRemoved /></button>
-								<button onClick={ClearBtnClick}><VscDebugStop /></button>
-							</div>
-				}
-			</section>
+			</div>
+
+			<ActionBar actives={[
+				[is.adding, AddBtnClick],
+				[is.removing, RemoveBtnClick]
+			]}>
+				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
+				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
+				<ActionBarButton click={ClearBtnClick} render={<VscDebugStop />} />
+			</ActionBar>
+
 			{is.adding &&
 				<Modal
 					title="Add Task"
-					smref={outClickRef}
-					close={() => ResetAddFormState()} >
-					<form onSubmit={(e) => postTask(e)} className="tasks">
-						<input
-							name="name"
-							type="text"
-							placeholder="Task"
-							autoComplete="off"
-							value={name}
-							onChange={(e) => setName(e.target.value)} />
-						<label className="pinned">
-							<span>Pinned</span>
-							<input
-								type="checkbox"
-								checked={pinned}
-								onChange={(e) => setPinned(e.target.checked)} />
-						</label>
-						<button className="submit" type="submit">Submit</button>
-					</form>
+					mref={outClickRef}>
+					<TaskAdding
+						submit={postTask}
+						name={name}
+						setName={setName}
+						pinned={pinned}
+						setPinned={setPinned} />
 				</Modal>
 			}
 		</>

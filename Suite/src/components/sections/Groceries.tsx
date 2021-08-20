@@ -4,7 +4,7 @@ import { useOutsideClick } from '../../hooks/useOutsideClick'
 import Api from '../../api'
 import Modal from '../Modal'
 import GroceryAdding from '../modals/Grocery-Adding'
-import Actionbar, { ActionBarButton } from '../ActionBar'
+import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 
@@ -86,7 +86,7 @@ const Groceries: React.FC = () => {
 
 	return (
 		<>
-			<div className="section-wrap" ref={outClickRef}>
+			<div className="section-scroll" ref={outClickRef}>
 				{!groceryList.length
 					? <div className="content-empty" >Nothing here.</div>
 					: <div className="groceries content">
@@ -122,23 +122,24 @@ const Groceries: React.FC = () => {
 				}
 			</div>
 
-			<Actionbar actives={[
+			<ActionBar actives={[
 				[is.adding, AddBtnClick],
 				[is.removing, RemoveBtnClick]
 			]}>
 				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
 				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
 				<ActionBarButton click={ClearBtnClick} render={<VscDebugStop />} />
-			</Actionbar>
+			</ActionBar>
 
 			{is.adding &&
 				<Modal
 					title="Add Grocery"
-					smref={outClickRef}>
+					mref={outClickRef}>
 					<GroceryAdding
 						submit={postGrocery}
 						setName={setName}
-						setQuanity={setQuantity}
+						quantity={quantity}
+						setQuantity={setQuantity}
 						setStore={setStore} />
 				</Modal>
 			}

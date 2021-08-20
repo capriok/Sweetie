@@ -3,6 +3,7 @@
 .modal-cont {
 	z-index: 100;
 	position: fixed;
+	left: 0;
 	bottom: 0px;
 	width: 100vw;
 	border-radius: 20px;
@@ -40,7 +41,8 @@
 						flex: 1;
 						text-align: left;
 					}
-					input {
+					input,
+					select {
 						flex: 2;
 					}
 				}
