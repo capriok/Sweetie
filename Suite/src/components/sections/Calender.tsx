@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { addDays, format, startOfDay } from 'date-fns'
+import { addDays, format, isSameDay } from 'date-fns'
 
 import Api from '../../api'
 import Modal from '../Modal'
@@ -82,9 +82,10 @@ const Calender: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(date))
 		if (!is.adding || !name || !invalidDate) return
 
-		const evDate = FormatInputDate(date, timed)
-		let event = { name, date: evDate, timed }
+		const evDate = FormatInputDate(new Date(date), timed)
+		let event = { name, date: evDate.toJSON(), timed }
 
+		console.log(event);
 		Api.PostCalenderEvent(event).then(ce => {
 			ResetAddFormState()
 			setEventList(ce)
@@ -97,21 +98,26 @@ const Calender: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(updateDate))
 		if (!updateDate || !invalidDate) return
 
-		const upDate = FormatInputDate(updateDate, updateTimed)
+		const upDate = FormatInputDate(new Date(updateDate), updateTimed)
+
+		if (isSameDay(upDate, new Date(updateCalenderEventItem.date))) return
+
 		const calenderEv = {
 			id: updateCalenderEventItem?._id,
-			date: upDate,
+			date: upDate.toJSON(),
 			timed: updateTimed
 		}
 
+		console.log(calenderEv);
 		Api.UpdateCalenderEvent(calenderEv).then(ce => {
 			ResetUpdateFormState()
 			setEventList(ce)
 		})
 	}
 
-	function FormatInputDate(date: string, timed: boolean) {
-		return timed ? new Date(date).toJSON() : addDays(startOfDay(new Date(date)), 1).toJSON()
+	function FormatInputDate(date: Date, timed: boolean) {
+		!timed && date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
+		return date
 	}
 
 	useEffect(() => {
@@ -159,9 +165,9 @@ const Calender: React.FC = () => {
 			</div>
 
 			<ActionBar actives={[
-				[is.adding, AddBtnClick],
-				[is.updating, UpdateBtnClick],
-				[is.removing, RemoveBtnClick]
+				{ is: is.adding, cb: AddBtnClick },
+				{ is: is.updating, cb: UpdateBtnClick },
+				{ is: is.removing, cb: RemoveBtnClick },
 			]}>
 				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
 				<ActionBarButton click={UpdateBtnClick} render={<MdSystemUpdateAlt />} />
@@ -190,7 +196,6 @@ const Calender: React.FC = () => {
 						submit={updateCalenderEvent}
 						updateTimed={updateTimed}
 						setUpdateTimed={setUpdateTimed}
-						updateDate={updateDate}
 						setUpdateDate={setUpdateDate} />
 				</Modal>
 			}

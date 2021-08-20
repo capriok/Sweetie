@@ -4,8 +4,8 @@ import '../styles/modal.scss'
 
 const Modal: React.FC<any> = ({ mref, title, children }) => {
 	return (
-		<div className="modal-cont" ref={mref}>
-			<div className="modal">
+		<div id="modal" ref={mref}>
+			<div className="modal-cont">
 				<div className="modal">
 					<p className="title">{title}</p>
 					<div className="content">{children}</div>

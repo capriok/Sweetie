@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { addDays, startOfDay } from 'date-fns'
+import { addDays, isSameDay, startOfDay } from 'date-fns'
 
 import Api from '../../api'
 import Modal from '../Modal'
@@ -22,7 +22,7 @@ const Plants: React.FC = () => {
 	const [plantList, setPlantList] = useState<Array<Plant>>([])
 
 	const [name, setName] = useState('')
-	const [cycle, setCycle] = useState(0)
+	const [cycle, setCycle] = useState(3)
 	const [lastWater, setLastWater] = useState<any>()
 
 	const [updatePlantItem, setUpdatePlantItem] = useState<Plant | undefined>(undefined)
@@ -79,13 +79,12 @@ const Plants: React.FC = () => {
 		e.preventDefault()
 
 		const invalidDate = !isNaN(Date.parse(lastWater))
-
 		if (!name || !invalidDate) return
 
-		const last = addDays(startOfDay(new Date(lastWater)), 1).toJSON()
+		const last = FormatInputDate(new Date(lastWater))
+		const plant = { name, cycle, last: last.toJSON() }
 
-		const plant = { name, cycle, last }
-
+		console.log(plant);
 		Api.PostPlant(plant).then(pl => {
 			ResetAddFormState()
 			setPlantList(pl)
@@ -98,18 +97,26 @@ const Plants: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(updateLastWater))
 		if (!updateLastWater || !invalidDate) return
 
-		const upLast = addDays(startOfDay(new Date(updateLastWater)), 1).toJSON()
+		const upLast = FormatInputDate(new Date(updateLastWater))
+
+		const lastSame = isSameDay(new Date(updatePlantItem?.last!), upLast)
+		if (lastSame) return
+
 		const plant = {
 			id: updatePlantItem?._id,
-			last: upLast
+			last: upLast.toJSON()
 		}
 
 		console.log(plant)
-
 		Api.UpdatePlant(plant).then(pl => {
 			ResetUpdateFormState()
 			setPlantList(pl)
 		})
+	}
+
+	function FormatInputDate(date: Date) {
+		date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
+		return date
 	}
 
 	useEffect(() => {
@@ -150,9 +157,9 @@ const Plants: React.FC = () => {
 			</div>
 
 			<ActionBar actives={[
-				[is.adding, AddBtnClick],
-				[is.updating, UpdateBtnClick],
-				[is.removing, RemoveBtnClick]
+				{ is: is.adding, cb: AddBtnClick },
+				{ is: is.updating, cb: UpdateBtnClick },
+				{ is: is.removing, cb: RemoveBtnClick },
 			]}>
 				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
 				<ActionBarButton click={UpdateBtnClick} render={<MdSystemUpdateAlt />} />
@@ -165,7 +172,9 @@ const Plants: React.FC = () => {
 					mref={outClickRef}>
 					<PlantAdding
 						submit={postPlant}
+						name={name}
 						setName={setName}
+						cycle={cycle}
 						setCycle={setCycle}
 						setLastWater={setLastWater}
 					/>
@@ -178,7 +187,6 @@ const Plants: React.FC = () => {
 					mref={outClickRef}>
 					<PlantUpdating
 						submit={updatePlant}
-						updateLastWater={updateLastWater}
 						setUpdateLastWater={setUpdateLastWater}
 					/>
 				</Modal>

@@ -70,6 +70,7 @@ const Tasks: React.FC = () => {
 
 		let task = { name: name, pinned: pinned }
 
+		console.log(task);
 		Api.PostTask(task).then(tl => {
 			ResetAddFormState()
 			setTaskList(tl)
@@ -96,9 +97,10 @@ const Tasks: React.FC = () => {
 						{taskList.length &&
 							taskList.map((task, i) => (
 								<div
+									key={i}
 									className="content-line task"
 									onClick={() => removeTask(task)}>
-									<p key={i}
+									<p
 										className={task.pinned ? 'pin' : ''}>{task.name}</p>
 								</div>
 							))
@@ -117,8 +119,8 @@ const Tasks: React.FC = () => {
 			</div>
 
 			<ActionBar actives={[
-				[is.adding, AddBtnClick],
-				[is.removing, RemoveBtnClick]
+				{ is: is.adding, cb: AddBtnClick },
+				{ is: is.removing, cb: RemoveBtnClick },
 			]}>
 				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
 				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />

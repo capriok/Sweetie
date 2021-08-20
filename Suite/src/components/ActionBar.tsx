@@ -5,11 +5,11 @@ import '../styles/actionbar.scss'
 import { VscDebugStop } from 'react-icons/vsc'
 
 const ActionBar: React.FC<any> = ({ actives, children }) => {
-	const [cb, setCb] = useState<any>([])
+	const [active, setActive] = useState<any>({ cb: () => { } })
 
 	useEffect(() => {
 		actives.some((a: any) => {
-			if (a[0]) return setCb(a)
+			if (a.is) return setActive({ cb: a.cb })
 			else return false
 		})
 	}, [actives])
@@ -17,8 +17,8 @@ const ActionBar: React.FC<any> = ({ actives, children }) => {
 	return (
 		<div className="action-bar">
 			<div className="actionbar-wrap">
-				{actives.some((a: any) => a[0])
-					? <ActionBarButton click={cb[1]} render={<VscDebugStop />} />
+				{actives.some((a: any) => a.is)
+					? <ActionBarButton click={active.cb} render={<VscDebugStop />} />
 					: children
 				}
 			</div>

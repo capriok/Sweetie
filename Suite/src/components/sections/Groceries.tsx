@@ -71,6 +71,7 @@ const Groceries: React.FC = () => {
 
 		let item = { name: name, qty: quantity, store: store }
 
+		console.log(item);
 		Api.PostGrocery(item).then(gl => {
 			ResetAddFormState()
 			setGroceryList(gl)
@@ -123,8 +124,8 @@ const Groceries: React.FC = () => {
 			</div>
 
 			<ActionBar actives={[
-				[is.adding, AddBtnClick],
-				[is.removing, RemoveBtnClick]
+				{ is: is.adding, cb: AddBtnClick },
+				{ is: is.removing, cb: RemoveBtnClick }
 			]}>
 				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
 				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
@@ -137,9 +138,11 @@ const Groceries: React.FC = () => {
 					mref={outClickRef}>
 					<GroceryAdding
 						submit={postGrocery}
+						name={name}
 						setName={setName}
 						quantity={quantity}
 						setQuantity={setQuantity}
+						store={store}
 						setStore={setStore} />
 				</Modal>
 			}

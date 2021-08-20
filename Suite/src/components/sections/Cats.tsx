@@ -36,34 +36,28 @@ const Cats: React.FC = () => {
 	async function updateConfig(e: any) {
 		e.preventDefault()
 
-		const foodSame = isSameDay(
-			new Date(catConfig.lastFoodDay!),
-			new Date(lfd)
-		)
-		const wasteSame = isSameDay(
-			new Date(catConfig.lastWasteDay!),
-			new Date(lwd)
-		)
-		const foodInFuture = isAfter(new Date(lfd), startOfToday())
-		const wasteInFuture = isAfter(new Date(lwd), startOfToday())
+		const lastFoodDay = FormatInputDate(new Date(lfd))
+		const lastWasteDay = FormatInputDate(new Date(lwd))
+
+		const foodSame = isSameDay(new Date(catConfig.lastFoodDay!), lastFoodDay)
+		const wasteSame = isSameDay(new Date(catConfig.lastWasteDay!), lastWasteDay)
 
 		if (foodSame && wasteSame) return
 
-		const lastFoodDay = new Date(lfd).toJSON()
-		const lastWasteDay = new Date(lwd).toJSON()
-		console.log(catConfig);
-
-
 		let config: any = {}
-		if (!foodSame && !foodInFuture) config.lastFoodDay = lastFoodDay
-		if (!wasteSame && !wasteInFuture) config.lastWasteDay = lastWasteDay
+		if (!foodSame) config.lastFoodDay = lastFoodDay.toJSON()
+		if (!wasteSame) config.lastWasteDay = lastWasteDay.toJSON()
 
 		console.log(config)
-
 		Api.UpdateCatConfig(config).then(cd => {
-			setCatConfig(cd)
 			ResetUpdateFormState()
+			setCatConfig(cd)
 		})
+	}
+
+	function FormatInputDate(date: Date) {
+		date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
+		return date
 	}
 
 	useEffect(() => {
@@ -109,7 +103,9 @@ const Cats: React.FC = () => {
 				</div>
 			</div>
 
-			<ActionBar actives={[[updating, () => setUpdating(!updating)]]}>
+			<ActionBar actives={[
+				{ is: updating, cb: () => setUpdating(!updating) }
+			]}>
 				<ActionBarButton click={() => setUpdating(!updating)} render={<MdSystemUpdateAlt />} />
 			</ActionBar>
 

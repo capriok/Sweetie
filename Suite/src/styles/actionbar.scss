@@ -3,8 +3,9 @@
 .action-bar {
 	user-select: none;
 	position: sticky;
-	width: 100%;
 	bottom: 0;
+	@include flex;
+	width: 100%;
 	min-height: 50px;
 	border-top: 2px solid $light-grey;
 	background-color: $suite-title;

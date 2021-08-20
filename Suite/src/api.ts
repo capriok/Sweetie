@@ -3,7 +3,7 @@ const ENDPOINT = process.env.REACT_APP_SERVER
 
 const baseInstanceParams = {
 	baseURL: ENDPOINT + '/swt/',
-	timeout: 5000
+	timeout: 15000
 }
 
 const AxiosInstance = axios.create({

@@ -1,7 +1,11 @@
-import { startOfToday } from 'date-fns'
 import React from 'react'
+import { startOfToday } from 'date-fns/esm'
 
-const PlantUpdating: React.FC<any> = ({ submit, updateLastWater, setUpdateLastWater }) => {
+const PlantUpdating: React.FC<any> = ({ submit, setUpdateLastWater }) => {
+	const date = startOfToday()
+	date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
+	const maxDate = new Date(date).toISOString().split('T')[0]
+
 	return (
 		<>
 			<form onSubmit={(e) => submit(e)}>
@@ -9,7 +13,7 @@ const PlantUpdating: React.FC<any> = ({ submit, updateLastWater, setUpdateLastWa
 					<label htmlFor="date">Last Water</label><input
 						name="date"
 						type="date"
-						max={new Date(startOfToday()).toISOString().split('T')[0]}
+						max={maxDate}
 						onChange={(e) => setUpdateLastWater(e.target.value)} />
 				</div>
 				<div className="form-submit">

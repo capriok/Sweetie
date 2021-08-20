@@ -1,6 +1,6 @@
 import React from 'react'
 
-const GroceryAdding: React.FC<any> = ({ submit, setName, quantity, setQuantity, setStore }) => {
+const GroceryAdding: React.FC<any> = ({ submit, name, setName, quantity, setQuantity, store, setStore }) => {
 	return (
 		<form onSubmit={(e) => submit(e)}>
 			<div className="form-line name">
@@ -8,6 +8,7 @@ const GroceryAdding: React.FC<any> = ({ submit, setName, quantity, setQuantity, 
 				<input
 					name="name"
 					type="text"
+					value={name}
 					placeholder="Name"
 					autoComplete="off"
 					onChange={(e) => setName(e.target.value)} />
@@ -25,6 +26,7 @@ const GroceryAdding: React.FC<any> = ({ submit, setName, quantity, setQuantity, 
 			<div className="form-line store">
 				<label htmlFor="store">Store</label>
 				<select
+					value={store}
 					onChange={(e) => setStore(e.target.value)}>
 					<option value="wholefoods">Whole Foods</option>
 					<option value="bashas">Bashas</option>

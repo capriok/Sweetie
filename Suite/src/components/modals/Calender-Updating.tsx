@@ -1,7 +1,11 @@
 import React from 'react'
-import { startOfToday } from 'date-fns'
+import { addDays, startOfToday } from 'date-fns'
 
-const CalenderUpdating: React.FC<any> = ({ submit, updateTimed, setUpdateTimed, updateDate, setUpdateDate }) => {
+const CalenderUpdating: React.FC<any> = ({ submit, updateTimed, setUpdateTimed, setUpdateDate }) => {
+	const date = startOfToday()
+	date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
+	const minDate = addDays(new Date(date), 1).toISOString().split('T')[0]
+
 	return (
 		<form onSubmit={(e) => submit(e)} >
 			<div className="form-line timed">
@@ -20,7 +24,7 @@ const CalenderUpdating: React.FC<any> = ({ submit, updateTimed, setUpdateTimed, 
 				<input
 					name="date"
 					type={updateTimed ? "datetime-local" : "date"}
-					min={new Date(startOfToday()).toISOString().split('T')[0]}
+					min={minDate}
 					onChange={(e) => setUpdateDate(e.target.value)} />
 			</div>
 			<div className="form-submit">

@@ -1,16 +1,18 @@
 @import "./index.scss";
 
-.modal-cont {
+#modal {
 	z-index: 100;
 	position: fixed;
 	left: 0;
 	bottom: 0px;
 	width: 100vw;
-	border-radius: 20px;
-	border-top: 2px solid $accent-color;
+	border-radius: 5px;
+
+	overflow: hidden;
+	border-top: 3px solid $accent-color;
 	background-color: rgb(255, 255, 255);
 
-	.modal {
+	.modal-cont {
 		text-align: center;
 		@include flex;
 		flex-direction: column;
@@ -37,17 +39,19 @@
 					justify-content: space-between;
 					width: 100%;
 					height: 40px;
+					margin: 5px 0;
 					label {
 						flex: 1;
 						text-align: left;
 					}
 					input,
 					select {
+						width: 100%;
 						flex: 2;
 					}
 				}
 				.form-submit {
-					margin-top: 40px;
+					display: none;
 				}
 			}
 		}

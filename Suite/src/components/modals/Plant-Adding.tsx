@@ -1,7 +1,11 @@
 import React from 'react'
-import { startOfToday } from 'date-fns'
+import { startOfToday } from 'date-fns/esm'
 
-const PlantAdding: React.FC<any> = ({ submit, setName, setCycle, setLastWater }) => {
+const PlantAdding: React.FC<any> = ({ submit, name, setName, cycle, setCycle, setLastWater }) => {
+	const date = startOfToday()
+	date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
+	const maxDate = new Date(date).toISOString().split('T')[0]
+
 	return (
 		<>
 			<form onSubmit={(e) => submit(e)}>
@@ -10,6 +14,7 @@ const PlantAdding: React.FC<any> = ({ submit, setName, setCycle, setLastWater })
 					<input
 						name="name"
 						type="text"
+						value={name}
 						placeholder="Name"
 						autoComplete="off"
 						onChange={(e) => setName(e.target.value)} />
@@ -20,6 +25,7 @@ const PlantAdding: React.FC<any> = ({ submit, setName, setCycle, setLastWater })
 						name="cycle"
 						type="number"
 						min={3}
+						value={cycle}
 						placeholder="Cycle"
 						onChange={(e) => setCycle(parseInt(e.target.value))} />
 				</div>
@@ -28,7 +34,7 @@ const PlantAdding: React.FC<any> = ({ submit, setName, setCycle, setLastWater })
 					<input
 						name="date"
 						type="date"
-						max={new Date(startOfToday()).toISOString().split('T')[0]}
+						max={maxDate}
 						onChange={(e) => setLastWater(e.target.value)} />
 				</div>
 				<div className="form-submit">
