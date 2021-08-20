@@ -5,7 +5,7 @@ const CatsUpdating: React.FC<any> = ({ submit, lfd, setLfd, lwd, setLwd }) => {
 	return (
 		<form onSubmit={(e) => submit(e)} className="cats">
 			<div className="form-line food">
-				<label htmlFor="food">Food</label>
+				<label htmlFor="food">Food Day</label>
 				<input
 					type="date"
 					max={new Date(startOfToday()).toISOString().split('T')[0]}
@@ -13,7 +13,7 @@ const CatsUpdating: React.FC<any> = ({ submit, lfd, setLfd, lwd, setLwd }) => {
 					onChange={(e) => setLfd(addDays(startOfDay(new Date(e.target.value)), 1))} />
 			</div>
 			<div className="form-line waste">
-				<label htmlFor="waste">Waste</label>
+				<label htmlFor="waste">Litter Change</label>
 				<input
 					type="date"
 					max={new Date(startOfToday()).toISOString().split('T')[0]}

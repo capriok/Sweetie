@@ -115,7 +115,7 @@ const Cats: React.FC = () => {
 
 			{updating &&
 				<Modal
-					title="Cat Config"
+					title="Cats"
 					mref={outClickRef}>
 					<CatsUpdating
 						submit={updateConfig}
