@@ -14,8 +14,6 @@ const Cats: React.FC = () => {
 		(async () => Api.GetCatSchedule().then(cs => {
 			console.log({ CatSchedule: cs })
 			const today = cs.find(d => isSameDay(new Date(d.date), startOfToday()))
-			console.log(today);
-
 			if (today) {
 				setFoodProgress(today.food.progress)
 				setWasteProgress(today.waste.progress)
