@@ -6,10 +6,8 @@ const Modal: React.FC<any> = ({ mref, title, children }) => {
 	return (
 		<div id="modal" ref={mref}>
 			<div className="modal-cont">
-				<div className="modal">
-					<p className="title">{title}</p>
-					<div className="content">{children}</div>
-				</div>
+				<p className="title">{title}</p>
+				<div className="content">{children}</div>
 			</div>
 		</div>
 	)

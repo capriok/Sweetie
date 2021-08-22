@@ -36,8 +36,8 @@ const Cats: React.FC = () => {
 	async function updateConfig(e: any) {
 		e.preventDefault()
 
-		const lastFoodDay = FormatInputDate(new Date(lfd))
-		const lastWasteDay = FormatInputDate(new Date(lwd))
+		const lastFoodDay = new Date(lfd)
+		const lastWasteDay = new Date(lwd)
 
 		const foodSame = isSameDay(new Date(catConfig.lastFoodDay!), lastFoodDay)
 		const wasteSame = isSameDay(new Date(catConfig.lastWasteDay!), lastWasteDay)
@@ -53,11 +53,6 @@ const Cats: React.FC = () => {
 			ResetUpdateFormState()
 			setCatConfig(cd)
 		})
-	}
-
-	function FormatInputDate(date: Date) {
-		date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
-		return date
 	}
 
 	useEffect(() => {
@@ -90,7 +85,8 @@ const Cats: React.FC = () => {
 						<div className="content-line with-border" key={i}>
 							<div className="day">
 								<p>{new Date(day.date).toLocaleDateString('en-us',
-									{ weekday: 'short', month: 'short', day: 'numeric' })}</p>
+									{ weekday: 'short', month: 'short', day: 'numeric' })}
+								</p>
 							</div>
 							<div className="food">
 								<input readOnly type="radio" checked={day.food.is} />

@@ -82,7 +82,7 @@ const Calender: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(date))
 		if (!is.adding || !name || !invalidDate) return
 
-		const evDate = FormatInputDate(new Date(date), timed)
+		const evDate = new Date(date)
 		let event = { name, date: evDate.toJSON(), timed }
 
 		console.log(event);
@@ -98,7 +98,7 @@ const Calender: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(updateDate))
 		if (!updateDate || !invalidDate) return
 
-		const upDate = FormatInputDate(new Date(updateDate), updateTimed)
+		const upDate = new Date(updateDate)
 
 		if (isSameDay(upDate, new Date(updateCalenderEventItem.date))) return
 
@@ -113,11 +113,6 @@ const Calender: React.FC = () => {
 			ResetUpdateFormState()
 			setEventList(ce)
 		})
-	}
-
-	function FormatInputDate(date: Date, timed: boolean) {
-		!timed && date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
-		return date
 	}
 
 	useEffect(() => {
@@ -136,7 +131,7 @@ const Calender: React.FC = () => {
 						<p>Date</p>
 						<p>Time</p>
 					</div>
-					{eventList.map((event, i) =>
+					{eventList.map((event, i) => (
 						<div
 							key={i}
 							className="content-line with-border"
@@ -160,7 +155,7 @@ const Calender: React.FC = () => {
 								<p>{event.timed ? format(new Date(event.date), 'p') : ''}</p>
 							</div>
 						</div>
-					)}
+					))}
 				</div>
 			</div>
 

@@ -10,7 +10,9 @@ const Plants: React.FC = () => {
 	useEffect(() => {
 		(async () => Api.GetPlantSchedule().then(ps => {
 			console.log({ PlantSchedule: ps })
-			const today = ps.find(d => isSameDay(new Date(d.date), new Date(startOfToday())))
+			const T = startOfToday()
+			T.setMinutes(T.getMinutes() - T.getTimezoneOffset())
+			const today = ps.find(d => isSameDay(new Date(d.date), T))
 			setToday(today)
 		}))()
 	}, [])

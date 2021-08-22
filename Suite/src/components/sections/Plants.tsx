@@ -81,7 +81,7 @@ const Plants: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(lastWater))
 		if (!name || !invalidDate) return
 
-		const last = FormatInputDate(new Date(lastWater))
+		const last = new Date(lastWater)
 		const plant = { name, cycle, last: last.toJSON() }
 
 		console.log(plant);
@@ -97,7 +97,7 @@ const Plants: React.FC = () => {
 		const invalidDate = !isNaN(Date.parse(updateLastWater))
 		if (!updateLastWater || !invalidDate) return
 
-		const upLast = FormatInputDate(new Date(updateLastWater))
+		const upLast = new Date(updateLastWater)
 
 		const lastSame = isSameDay(new Date(updatePlantItem?.last!), upLast)
 		if (lastSame) return
@@ -114,14 +114,9 @@ const Plants: React.FC = () => {
 		})
 	}
 
-	function FormatInputDate(date: Date) {
-		date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
-		return date
-	}
-
 	useEffect(() => {
 		(async () => Api.GetPlantList().then(pl => {
-			console.log({ PlantList: plantList })
+			console.log({ PlantList: pl })
 			setPlantList(pl)
 		}))()
 	}, [])
@@ -131,8 +126,9 @@ const Plants: React.FC = () => {
 			<div className="section-scroll" ref={outClickRef}>
 				<div className="content plants">
 					<div className="content-head">
-						<p>Name</p>
-						<p>Cycle / Last Waster</p>
+						<p className="name">Name</p>
+						<p className="cycle">Cycle</p>
+						<p className="lastwater">Last Water</p>
 					</div>
 					{plantList.map((plant: any, i: number) => (
 						<div
