@@ -19,30 +19,34 @@ function Index() {
   }, [])
 
   return (
-    <div id="view">
-      <main>
-        <div className="tile" id="time">
-          <DateTime />
-        </div>
-        <div className="tile" id="weather">
-          <Weather />
-        </div>
-        <div className="tile" id="calender">
-          <Calender />
-        </div>
-        <div className="tile" id="grocerylist">
-          <Groceries />
-        </div>
-        <div className="tile" id="tasklist">
-          <TodoList />
-        </div>
-        <div className="tile" id="cats">
-          <Cats />
-        </div>
-        <div className="tile" id="plants">
-          <Plants />
-        </div>
-      </main>
+    <div>
+
+      <div id="view">
+        <main>
+          <div className="tile" id="time">
+            <DateTime />
+          </div>
+          <div className="tile" id="weather">
+            <Weather />
+          </div>
+          <div className="tile" id="calender">
+            <Calender />
+          </div>
+          <div className="tile" id="grocerylist">
+            <Groceries />
+          </div>
+          <div className="tile" id="tasklist">
+            <TodoList />
+          </div>
+          <div className="tile" id="cats">
+            <Cats />
+          </div>
+          <div className="tile" id="plants">
+            <Plants />
+          </div>
+        </main>
+      </div>
+      <div id="bg"></div>
     </div>
   )
 }
