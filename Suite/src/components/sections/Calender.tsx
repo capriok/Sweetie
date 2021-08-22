@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { addDays, format, isSameDay } from 'date-fns'
+import { format, isSameDay } from 'date-fns'
 
 import Api from '../../api'
 import Modal from '../Modal'
@@ -118,9 +118,18 @@ const Calender: React.FC = () => {
 	useEffect(() => {
 		(async () => Api.GetCalenderEvents().then(ce => {
 			console.log({ CalenderEvents: ce })
-			setEventList(ce)
+			setEventList(ce.map(d => {
+				if (!d.timed) d.date = tzFormat(d.date)
+				return d
+			}))
 		}))()
 	}, [])
+
+	function tzFormat(date: string) {
+		const tzDate = new Date(date)
+		tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
+		return tzDate.toJSON()
+	}
 
 	return (
 		<>
@@ -131,31 +140,33 @@ const Calender: React.FC = () => {
 						<p>Date</p>
 						<p>Time</p>
 					</div>
-					{eventList.map((event, i) => (
-						<div
-							key={i}
-							className="content-line with-border"
-							onClick={() => {
-								return is.removing
-									? removeEvent(event)
-									: is.updating && !updateCalenderEventItem
-										? setUpdateCalenderEventItem(event)
-										: null
-							}}>
-							<div className="name">
-								<p>{event.name}</p>
+					{eventList.map((event, i) => {
+						return (
+							<div
+								key={i}
+								className="content-line with-border"
+								onClick={() => {
+									return is.removing
+										? removeEvent(event)
+										: is.updating && !updateCalenderEventItem
+											? setUpdateCalenderEventItem(event)
+											: null
+								}}>
+								<div className="name">
+									<p>{event.name}</p>
+								</div>
+								<div className="date">
+									<p>
+										{new Date(event.date).toLocaleDateString('en-us',
+											{ weekday: 'short', month: 'short', day: 'numeric' })}
+									</p>
+								</div>
+								<div className="time">
+									<p>{event.timed ? format(new Date(event.date), 'p') : ''}</p>
+								</div>
 							</div>
-							<div className="date">
-								<p>
-									{new Date(event.date).toLocaleDateString('en-us',
-										{ weekday: 'short', month: 'short', day: 'numeric' })}
-								</p>
-							</div>
-							<div className="time">
-								<p>{event.timed ? format(new Date(event.date), 'p') : ''}</p>
-							</div>
-						</div>
-					))}
+						)
+					})}
 				</div>
 			</div>
 

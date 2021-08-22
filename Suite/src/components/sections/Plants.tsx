@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { addDays, isSameDay, startOfDay } from 'date-fns'
+import { isSameDay, startOfToday } from 'date-fns'
 
 import Api from '../../api'
 import Modal from '../Modal'
@@ -18,6 +18,10 @@ const Plants: React.FC = () => {
 		adding: false,
 		removing: false,
 		updating: false
+	})
+	const [schedule, setSchedule] = useState<PlantScheduleDay>({
+		date: '',
+		plants: []
 	})
 	const [plantList, setPlantList] = useState<Array<Plant>>([])
 
@@ -117,18 +121,55 @@ const Plants: React.FC = () => {
 	useEffect(() => {
 		(async () => Api.GetPlantList().then(pl => {
 			console.log({ PlantList: pl })
-			setPlantList(pl)
-		}))()
+			setPlantList(pl.map(p => {
+				p.last = tzFormat(p.last)
+				return p
+			}))
+		}))();
+		(async () => Api.GetPlantSchedule().then(ps => {
+			console.log({ PlantSchedule: ps })
+			const T = startOfToday()
+			T.setMinutes(T.getMinutes() - T.getTimezoneOffset())
+			// const today = ps.find(d => isSameDay(new Date(d.date), T))
+			const today = ps[1]
+			if (today) {
+				today.date = tzFormat(today.date)
+				setSchedule(today)
+			}
+		}))();
 	}, [])
+
+	function tzFormat(date: string) {
+		const tzDate = new Date(date)
+		tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
+		return tzDate.toJSON()
+	}
 
 	return (
 		<>
 			<div className="section-scroll" ref={outClickRef}>
+
+				<div className="content to-water">
+					<h3>Water Today</h3>
+					{!schedule.plants.length
+						? <div className="content-empty"><p>Nothing here.</p></div>
+						: <>
+							{schedule.plants.map((plant, i) => (
+								<div
+									key={i}
+									className="content-line with-border">
+									<p className="plant">{plant.name}</p>
+								</div>
+							))}
+							<br />
+						</>
+					}
+				</div>
 				<div className="content plants">
 					<div className="content-head">
 						<p className="name">Name</p>
 						<p className="cycle">Cycle</p>
-						<p className="lastwater">Last Water</p>
+						<p className="last">Last Water</p>
 					</div>
 					{plantList.map((plant: any, i: number) => (
 						<div
@@ -143,7 +184,7 @@ const Plants: React.FC = () => {
 							}}>
 							<p className="name">{plant.name}</p>
 							<p className="cycle">{plant.cycle}</p>
-							<p className="lastwater">
+							<p className="last">
 								{new Date(plant.last).toLocaleDateString('en-us',
 									{ weekday: 'short', month: 'short', day: 'numeric' })}
 							</p>

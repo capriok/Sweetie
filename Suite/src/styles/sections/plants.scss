@@ -1,5 +1,14 @@
 @import "../index.scss";
 
+.to-water {
+	padding-bottom: 0 !important;
+	.content-line {
+		.plant {
+			width: 100%;
+			text-align: center;
+		}
+	}
+}
 .plants {
 	.content-head,
 	.content-line {
@@ -11,7 +20,7 @@
 			flex: 1;
 			text-align: center;
 		}
-		.lastwater {
+		.last {
 			flex: 1;
 			text-align: right;
 			white-space: nowrap;

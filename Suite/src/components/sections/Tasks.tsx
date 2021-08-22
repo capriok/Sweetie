@@ -98,7 +98,7 @@ const Tasks: React.FC = () => {
 							taskList.map((task, i) => (
 								<div
 									key={i}
-									className="content-line task"
+									className="content-line with-border task"
 									onClick={() => removeTask(task)}>
 									<p
 										className={task.pinned ? 'pin' : ''}>{task.name}</p>

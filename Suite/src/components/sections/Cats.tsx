@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { isAfter, isSameDay, startOfToday } from 'date-fns'
+import { isSameDay } from 'date-fns'
 
 import Api from '../../api'
 import Modal from '../Modal'
@@ -15,8 +15,8 @@ const Cats: React.FC = () => {
 	const [updating, setUpdating] = useState(false)
 	const [schedule, setSchedule] = useState<Array<CatScheduleDay>>([])
 	const [catConfig, setCatConfig] = useState<CatConfig>({
-		lastFoodDay: undefined,
-		lastWasteDay: undefined
+		lastFoodDay: '',
+		lastWasteDay: ''
 	})
 	const [lfd, setLfd] = useState<any>()
 	const [lwd, setLwd] = useState<any>()
@@ -68,13 +68,18 @@ const Cats: React.FC = () => {
 		if (!catConfig.lastFoodDay || !catConfig.lastWasteDay) return
 		(async () => Api.GetCatSchedule().then(cs => {
 			console.log({ CatSchedule: cs })
-			setSchedule(cs)
+			setSchedule(cs.map(d => {
+				d.date = tzFormat(d.date)
+				return d
+			}))
 		}))()
 	}, [catConfig])
 
-	useEffect(() => {
-		console.log(schedule);
-	}, [schedule])
+	function tzFormat(date: string) {
+		const tzDate = new Date(date)
+		tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
+		return tzDate.toJSON()
+	}
 
 	return (
 		<>

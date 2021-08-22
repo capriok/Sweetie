@@ -9,7 +9,7 @@ const PlantUpdating: React.FC<any> = ({ submit, setUpdateLastWater }) => {
 	return (
 		<>
 			<form onSubmit={(e) => submit(e)}>
-				<div className="form-line lastwater">
+				<div className="form-line last">
 					<label htmlFor="date">Last Water</label><input
 						name="date"
 						type="date"

@@ -1,6 +1,7 @@
 @import "../index.scss";
 
 .tasks {
+	padding-bottom: 0 !important;
 	.task {
 		* {
 			flex: 1;

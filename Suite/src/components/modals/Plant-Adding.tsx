@@ -29,7 +29,7 @@ const PlantAdding: React.FC<any> = ({ submit, name, setName, cycle, setCycle, se
 						placeholder="Cycle"
 						onChange={(e) => setCycle(parseInt(e.target.value))} />
 				</div>
-				<div className="form-line lastwater">
+				<div className="form-line last">
 					<label htmlFor="date">Last Water</label>
 					<input
 						name="date"
