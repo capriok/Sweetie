@@ -11,8 +11,6 @@
 		height: 100%;
 	}
 	.content {
-		overflow-y: scroll;
-
 		@include flex;
 		flex-direction: column;
 		justify-content: space-between;

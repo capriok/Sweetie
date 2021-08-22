@@ -130,8 +130,7 @@ const Plants: React.FC = () => {
 			console.log({ PlantSchedule: ps })
 			const T = startOfToday()
 			T.setMinutes(T.getMinutes() - T.getTimezoneOffset())
-			// const today = ps.find(d => isSameDay(new Date(d.date), T))
-			const today = ps[1]
+			const today = ps.find(d => isSameDay(new Date(d.date), T))
 			if (today) {
 				today.date = tzFormat(today.date)
 				setSchedule(today)
@@ -148,7 +147,6 @@ const Plants: React.FC = () => {
 	return (
 		<>
 			<div className="section-scroll" ref={outClickRef}>
-
 				<div className="content to-water">
 					<h3>Water Today</h3>
 					{!schedule.plants.length
