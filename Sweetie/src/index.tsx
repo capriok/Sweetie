@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+
 import DateTime from './components/DateTime';
 import Weather from './components/Weather';
 import Calender from './components/Calender';
 import Groceries from './components/Groceries';
-import TodoList from './components/Tasks';
+import TaskList from './components/Tasks';
 import Cats from './components/Cats';
 import Plants from './components/Plants';
 
@@ -20,7 +21,6 @@ function Index() {
 
   return (
     <div>
-
       <div id="view">
         <main>
           <div className="tile" id="time">
@@ -36,7 +36,7 @@ function Index() {
             <Groceries />
           </div>
           <div className="tile" id="tasklist">
-            <TodoList />
+            <TaskList />
           </div>
           <div className="tile" id="cats">
             <Cats />

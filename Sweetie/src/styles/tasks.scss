@@ -1,8 +1,9 @@
 @import "./index.scss";
 
 .tasklist {
-	width: 100%;
+	@include flex;
 	align-self: flex-start;
+	width: 100%;
 	padding: 0 20px;
 	padding-top: 200px;
 	h3 {

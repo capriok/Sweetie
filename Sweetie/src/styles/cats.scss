@@ -63,15 +63,15 @@
 		}
 
 		@keyframes glow {
-			20% {
+			10% {
 				// stroke: rgb(20, 84, 136);
 				box-shadow: 0 0 1em $shadow-light;
 			}
 			50% {
 				// stroke: rgba(199, 17, 17, 6);
-				box-shadow: 0 0 1.5em crimson;
+				box-shadow: 0 0 2em crimson;
 			}
-			80% {
+			90% {
 				// stroke: rgb(20, 84, 136);
 				box-shadow: 0 0 1em $shadow-light;
 			}

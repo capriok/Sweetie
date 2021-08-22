@@ -13,7 +13,9 @@ const Plants: React.FC = () => {
 			const T = startOfToday()
 			T.setMinutes(T.getMinutes() - T.getTimezoneOffset())
 			const today = ps.find(d => isSameDay(new Date(d.date), T))
-			setToday(today)
+			if (today) {
+				setToday(today)
+			}
 		}))()
 	}, [])
 

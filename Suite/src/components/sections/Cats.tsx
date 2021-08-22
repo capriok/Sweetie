@@ -72,6 +72,10 @@ const Cats: React.FC = () => {
 		}))()
 	}, [catConfig])
 
+	useEffect(() => {
+		console.log(schedule);
+	}, [schedule])
+
 	return (
 		<>
 			<div className="section-scroll">

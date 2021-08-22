@@ -16,8 +16,6 @@ const Cats: React.FC = () => {
 			const T = startOfToday()
 			T.setMinutes(T.getMinutes() - T.getTimezoneOffset())
 			const today = cs.find(d => isSameDay(new Date(d.date), T))
-			console.log(today);
-
 			if (today) {
 				setFoodProgress(today.food.progress)
 				setWasteProgress(today.waste.progress)

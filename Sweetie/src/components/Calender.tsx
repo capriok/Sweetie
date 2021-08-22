@@ -19,7 +19,7 @@ const Calender: React.FC = () => {
 		let calenderDay = document.querySelectorAll('.rc-font-bold')
 		if (calenderDay) {
 			calenderDay.forEach((d) => {
-				if (parseInt(d.textContent || '') === today) {
+				if (parseInt(d.textContent!) === today) {
 					d.classList.add('today-indicator')
 				}
 			})
