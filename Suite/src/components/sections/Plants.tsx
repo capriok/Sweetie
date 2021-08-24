@@ -13,7 +13,7 @@ import { MdSystemUpdateAlt } from 'react-icons/md'
 
 import '../../styles/sections/plants.scss'
 
-const Plants: React.FC = () => {
+const Plants: React.FC<any> = ({ readOnly }) => {
 	const [is, set] = useState({
 		adding: false,
 		removing: false,
@@ -75,6 +75,7 @@ const Plants: React.FC = () => {
 
 		const confirmation = window.confirm(`Remove '${plant.name}' ?`);
 		if (confirmation) {
+			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.RemovePlant(plant).then(pl => setPlantList(pl))
 		}
 	}
@@ -88,6 +89,7 @@ const Plants: React.FC = () => {
 		const last = new Date(lastWater)
 		const plant = { name, cycle, last: last.toJSON() }
 
+		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(plant);
 		Api.PostPlant(plant).then(pl => {
 			ResetAddFormState()
@@ -111,6 +113,7 @@ const Plants: React.FC = () => {
 			last: upLast.toJSON()
 		}
 
+		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(plant)
 		Api.UpdatePlant(plant).then(pl => {
 			ResetUpdateFormState()

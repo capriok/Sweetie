@@ -11,7 +11,7 @@ import { MdSystemUpdateAlt } from 'react-icons/md'
 
 import '../../styles/sections/cats.scss'
 
-const Cats: React.FC = () => {
+const Cats: React.FC<any> = ({ readOnly }) => {
 	const [updating, setUpdating] = useState(false)
 	const [schedule, setSchedule] = useState<Array<CatScheduleDay>>([])
 	const [catConfig, setCatConfig] = useState<CatConfig>({
@@ -48,6 +48,7 @@ const Cats: React.FC = () => {
 		if (!foodSame) config.lastFoodDay = lastFoodDay.toJSON()
 		if (!wasteSame) config.lastWasteDay = lastWasteDay.toJSON()
 
+		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(config)
 		Api.UpdateCatConfig(config).then(cd => {
 			ResetUpdateFormState()

@@ -10,7 +10,7 @@ import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 
 import '../../styles/sections/groceries.scss'
 
-const Groceries: React.FC = () => {
+const Groceries: React.FC<any> = ({ readOnly }) => {
 	const [is, set] = useState({
 		adding: false,
 		removing: false
@@ -52,6 +52,7 @@ const Groceries: React.FC = () => {
 			'Type \'confirm\' to clear Groceries.'
 		);
 		if (confirmation?.toLocaleLowerCase() === 'confirm') {
+			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.ClearGroceryList().then(gl => setGroceryList(gl))
 		}
 	}
@@ -61,6 +62,7 @@ const Groceries: React.FC = () => {
 
 		const confirmation = window.confirm(`Remove '${item.name}' ?`);
 		if (confirmation) {
+			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.RemoveGrocery(item).then(gl => setGroceryList(gl))
 		}
 	}
@@ -71,6 +73,7 @@ const Groceries: React.FC = () => {
 
 		let item = { name: name, qty: quantity, store: store }
 
+		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(item);
 		Api.PostGrocery(item).then(gl => {
 			ResetAddFormState()

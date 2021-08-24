@@ -13,7 +13,7 @@ import { MdSystemUpdateAlt } from 'react-icons/md'
 
 import '../../styles/sections/calender.scss'
 
-const Calender: React.FC = () => {
+const Calender: React.FC<any> = ({ readOnly }) => {
 	const [is, set] = useState({
 		adding: false,
 		removing: false,
@@ -72,6 +72,7 @@ const Calender: React.FC = () => {
 
 		const confirmation = window.confirm(`Remove '${event.name}' ?`);
 		if (confirmation) {
+			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.RemoveCalenderEvent(event).then(ce => setEventList(ce))
 		}
 	}
@@ -85,6 +86,7 @@ const Calender: React.FC = () => {
 		const evDate = new Date(date)
 		let event = { name, date: evDate.toJSON(), timed }
 
+		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(event);
 		Api.PostCalenderEvent(event).then(ce => {
 			ResetAddFormState()
@@ -102,14 +104,15 @@ const Calender: React.FC = () => {
 
 		if (isSameDay(upDate, new Date(updateCalenderEventItem.date))) return
 
-		const calenderEv = {
+		const event = {
 			id: updateCalenderEventItem?._id,
 			date: upDate.toJSON(),
 			timed: updateTimed
 		}
 
-		console.log(calenderEv);
-		Api.UpdateCalenderEvent(calenderEv).then(ce => {
+		if (readOnly) return alert('Not allowed in Read Only mode.')
+		console.log(event);
+		Api.UpdateCalenderEvent(event).then(ce => {
 			ResetUpdateFormState()
 			setEventList(ce)
 		})

@@ -10,7 +10,7 @@ import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 
 import '../../styles/sections/tasks.scss'
 
-const Tasks: React.FC = () => {
+const Tasks: React.FC<any> = ({ readOnly }) => {
 	const [is, set] = useState({
 		adding: false,
 		removing: false
@@ -51,6 +51,7 @@ const Tasks: React.FC = () => {
 			'Type \'confirm\' to clear Tasks.'
 		);
 		if (confirmation?.toLocaleLowerCase() === 'confirm') {
+			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.ClearTaskList().then(tl => setTaskList(tl))
 		}
 	}
@@ -60,6 +61,7 @@ const Tasks: React.FC = () => {
 
 		const confirmation = window.confirm(`Remove '${task.name}' ?`);
 		if (confirmation) {
+			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.RemoveTask(task).then(tl => setTaskList(tl))
 		}
 	}
@@ -70,6 +72,7 @@ const Tasks: React.FC = () => {
 
 		let task = { name: name, pinned: pinned }
 
+		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(task);
 		Api.PostTask(task).then(tl => {
 			ResetAddFormState()

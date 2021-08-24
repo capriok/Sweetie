@@ -10,6 +10,7 @@ interface props {
 
 const Splash: React.FC<props> = ({ pass, setPass, setAuth }) => {
 	const passcode = process.env.REACT_APP_PASSCODE
+	const democode = '0000'
 
 	const [title, setTitle] = useState('Passcode')
 
@@ -32,7 +33,7 @@ const Splash: React.FC<props> = ({ pass, setPass, setAuth }) => {
 	}, [pass])
 
 	function submitPass() {
-		if (passcode === pass) {
+		if (pass === passcode || pass === democode) {
 			welcomeAnimation()
 			localStorage.setItem(
 				'Swt-Auth',
