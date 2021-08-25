@@ -15,6 +15,12 @@ const AxiosInstance = axios.create({
 
 class Api {
 
+	public async ServerPing(): Promise<{ status: number }> {
+		const res = await AxiosInstance.get('/ping')
+		return res.data.status
+	}
+
+
 	// CALENDER 
 
 	public async GetCalenderEvents(): Promise<Array<CalenderEvent>> {
