@@ -8,9 +8,10 @@ const TaskAdding: React.FC<any> = ({ submit, name, setName, pinned, setPinned })
 				<input
 					name="name"
 					type="text"
-					placeholder="Task"
-					autoComplete="off"
 					value={name}
+					placeholder="Task"
+					autoFocus={true}
+					autoComplete="off"
 					onChange={(e) => setName(e.target.value)} />
 			</div>
 			<div className="form-line pinned">

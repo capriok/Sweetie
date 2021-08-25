@@ -14,11 +14,10 @@ import { MdSystemUpdateAlt } from 'react-icons/md'
 import '../../styles/sections/plants.scss'
 
 const Plants: React.FC<any> = ({ readOnly }) => {
-	const [is, set] = useState({
-		adding: false,
-		removing: false,
-		updating: false
-	})
+	const [isAdding, setAddingState] = useState(false)
+	const [isUpdating, setUpdatingState] = useState(false)
+	const [isRemoving, setRemovingState] = useState(false)
+
 	const [schedule, setSchedule] = useState<PlantScheduleDay>({
 		date: '',
 		plants: []
@@ -32,46 +31,39 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 	const [updatePlantItem, setUpdatePlantItem] = useState<Plant | undefined>(undefined)
 	const [updateLastWater, setUpdateLastWater] = useState<any>()
 
-	function ResetSetState() {
-		set(() => ({ adding: false, removing: false, updating: false }))
+	function ResetStates() {
+		setAddingState(false)
+		setUpdatingState(false)
+		setRemovingState(false)
 	}
+	const ToggleAdding = () => setAddingState(s => !s)
+	const ToggleUpdating = () => setUpdatingState(s => !s)
+	const ToggleRemoving = () => setRemovingState(s => !s)
 
 	function ResetAddFormState() {
 		setName('')
 		setCycle(0)
 		setLastWater(undefined)
-		set(is => ({ ...is, adding: false }))
+		setAddingState(false)
 	}
 
 	function ResetUpdateFormState() {
 		setUpdatePlantItem(undefined)
 		setUpdateLastWater(undefined)
-		set(is => ({ ...is, updating: false }))
+		setUpdatingState(false)
 	}
 
 	const outClickRef: any = useRef()
 	useOutsideClick(outClickRef, () => {
-		if (!is.adding && !is.removing && !is.updating) return
-		if (is.updating && !updatePlantItem) return
-		ResetSetState()
+		if (!isAdding && !isRemoving && !isUpdating) return
+		if (isUpdating && !updatePlantItem) return
+		ResetStates()
 		ResetAddFormState()
 		ResetUpdateFormState()
 	})
 
-	function AddBtnClick() {
-		set(is => ({ ...is, adding: !is.adding }))
-	}
-
-	async function UpdateBtnClick() {
-		set(is => ({ ...is, updating: !is.updating }))
-	}
-
-	async function RemoveBtnClick() {
-		set(is => ({ ...is, removing: !is.removing }))
-	}
-
 	async function removePlant(plant: Plant) {
-		if (!is.removing) return
+		if (!isRemoving) return
 
 		const confirmation = window.confirm(`Remove '${plant.name}' ?`);
 		if (confirmation) {
@@ -177,9 +169,9 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 							key={i}
 							className="content-line with-border"
 							onClick={() => {
-								return is.removing
+								return isRemoving
 									? removePlant(plant)
-									: is.updating && !updatePlantItem
+									: isUpdating && !updatePlantItem
 										? setUpdatePlantItem(plant)
 										: null
 							}}>
@@ -195,16 +187,16 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 			</div>
 
 			<ActionBar actives={[
-				{ is: is.adding, cb: AddBtnClick },
-				{ is: is.updating, cb: UpdateBtnClick },
-				{ is: is.removing, cb: RemoveBtnClick },
+				{ is: isAdding, cb: ToggleAdding },
+				{ is: isUpdating, cb: ToggleUpdating },
+				{ is: isRemoving, cb: ToggleRemoving },
 			]}>
-				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
-				<ActionBarButton click={UpdateBtnClick} render={<MdSystemUpdateAlt />} />
-				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
+				<ActionBarButton click={ToggleAdding} render={<VscDiffAdded />} />
+				<ActionBarButton click={ToggleUpdating} render={<MdSystemUpdateAlt />} />
+				<ActionBarButton click={ToggleRemoving} render={<VscDiffRemoved />} />
 			</ActionBar>
 
-			{is.adding &&
+			{isAdding &&
 				<Modal
 					title="Add Plant"
 					mref={outClickRef}>
@@ -219,7 +211,7 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 				</Modal>
 			}
 
-			{(is.updating && updatePlantItem) &&
+			{(isUpdating && updatePlantItem) &&
 				<Modal
 					title={`Update ${updatePlantItem.name}`}
 					mref={outClickRef}>

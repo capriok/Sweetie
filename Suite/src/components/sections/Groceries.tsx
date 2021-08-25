@@ -11,42 +11,36 @@ import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 import '../../styles/sections/groceries.scss'
 
 const Groceries: React.FC<any> = ({ readOnly }) => {
-	const [is, set] = useState({
-		adding: false,
-		removing: false
-	})
+	const [isAdding, setAddingState] = useState(false)
+	const [isRemoving, setRemovingState] = useState(false)
 
 	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
+
 	const [name, setName] = useState('')
 	const [quantity, setQuantity] = useState(1)
 	const [store, setStore] = useState('wholefoods')
 
-	function ResetSetState() {
-		set(() => ({ adding: false, removing: false }))
+	function ResetStates() {
+		setAddingState(false)
+		setRemovingState(false)
 	}
+	const ToggleAdding = () => setAddingState(s => !s)
+	const ToggleRemoving = () => setRemovingState(s => !s)
 
 	function ResetAddFormState() {
 		setName('')
 		setQuantity(1)
-		setStore('wholefoods')
+		setAddingState(false)
 	}
 
 	const outClickRef: any = useRef()
 	useOutsideClick(outClickRef, () => {
-		if (!is.adding && !is.removing) return
-		ResetSetState()
+		if (!isAdding && !isRemoving) return
+		ResetStates()
 		ResetAddFormState()
 	})
 
-	function AddBtnClick() {
-		set(is => ({ ...is, adding: !is.adding }))
-	}
-
-	function RemoveBtnClick() {
-		set(is => ({ ...is, removing: !is.removing }))
-	}
-
-	function ClearBtnClick() {
+	function ToggleClear() {
 		const confirmation = window.prompt(
 			'Are you sure you got everything?\n\n' +
 			'Type \'confirm\' to clear Groceries.'
@@ -58,7 +52,7 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 	}
 
 	async function removeGrocery(item: Grocery) {
-		if (!is.removing) return
+		if (!isRemoving) return
 
 		const confirmation = window.confirm(`Remove '${item.name}' ?`);
 		if (confirmation) {
@@ -69,7 +63,7 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 
 	async function postGrocery(e: any) {
 		e.preventDefault()
-		if (!is.adding || !name) return
+		if (!isAdding || !name) return
 
 		let item = { name: name, qty: quantity, store: store }
 
@@ -127,15 +121,15 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 			</div>
 
 			<ActionBar actives={[
-				{ is: is.adding, cb: AddBtnClick },
-				{ is: is.removing, cb: RemoveBtnClick }
+				{ is: isAdding, cb: ToggleAdding },
+				{ is: isRemoving, cb: ToggleRemoving }
 			]}>
-				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
-				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
-				<ActionBarButton click={ClearBtnClick} render={<VscDebugStop />} />
+				<ActionBarButton click={ToggleAdding} render={<VscDiffAdded />} />
+				<ActionBarButton click={ToggleRemoving} render={<VscDiffRemoved />} />
+				<ActionBarButton click={ToggleClear} render={<VscDebugStop />} />
 			</ActionBar>
 
-			{is.adding &&
+			{isAdding &&
 				<Modal
 					title="Add Grocery"
 					mref={outClickRef}>

@@ -16,6 +16,7 @@ const PlantAdding: React.FC<any> = ({ submit, name, setName, cycle, setCycle, se
 						type="text"
 						value={name}
 						placeholder="Name"
+						autoFocus={true}
 						autoComplete="off"
 						onChange={(e) => setName(e.target.value)} />
 				</div>

@@ -10,6 +10,7 @@ const GroceryAdding: React.FC<any> = ({ submit, name, setName, quantity, setQuan
 					type="text"
 					value={name}
 					placeholder="Name"
+					autoFocus={true}
 					autoComplete="off"
 					onChange={(e) => setName(e.target.value)} />
 			</div>

@@ -14,9 +14,10 @@ const CalenderAdding: React.FC<any> = ({ submit, name, setName, timed, setTimed,
 				<input
 					name="name"
 					type="text"
-					placeholder="Event name"
-					autoComplete="off"
 					value={name}
+					placeholder="name"
+					autoFocus={true}
+					autoComplete="off"
 					onChange={(e) => setName(e.target.value)} />
 			</div>
 			<div className="form-line timed">

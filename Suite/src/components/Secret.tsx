@@ -58,7 +58,7 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 				})
 			}
 			if (pass === passcode) {
-				animate('Success', () => {
+				animate('Hello', () => {
 					setAuth(true)
 					setReadOnly(false)
 				})

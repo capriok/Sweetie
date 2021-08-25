@@ -12,14 +12,18 @@ import { MdSystemUpdateAlt } from 'react-icons/md'
 import '../../styles/sections/cats.scss'
 
 const Cats: React.FC<any> = ({ readOnly }) => {
-	const [updating, setUpdating] = useState(false)
+	const [isUpdating, setUpdating] = useState(false)
+
 	const [schedule, setSchedule] = useState<Array<CatScheduleDay>>([])
 	const [catConfig, setCatConfig] = useState<CatConfig>({
 		lastFoodDay: '',
 		lastWasteDay: ''
 	})
+
 	const [lfd, setLfd] = useState<any>()
 	const [lwd, setLwd] = useState<any>()
+
+	const ToggleUpdating = () => setUpdating(s => !s)
 
 	function ResetUpdateFormState() {
 		setUpdating(false)
@@ -29,7 +33,7 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 
 	const outClickRef = useRef()
 	useOutsideClick(outClickRef, () => {
-		if (!updating) return
+		if (!isUpdating) return
 		ResetUpdateFormState()
 	})
 
@@ -99,10 +103,10 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 								</p>
 							</div>
 							<div className="food">
-								<input readOnly type="radio" checked={day.food.is} />
+								<input tabIndex={-1} readOnly type="radio" checked={day.food.is} />
 							</div>
 							<div className="waste">
-								<input readOnly type="radio" checked={day.waste.is} />
+								<input tabIndex={-1} readOnly type="radio" checked={day.waste.is} />
 							</div>
 						</div>
 					))}
@@ -110,12 +114,12 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 			</div>
 
 			<ActionBar actives={[
-				{ is: updating, cb: () => setUpdating(!updating) }
+				{ is: isUpdating, cb: ToggleUpdating }
 			]}>
-				<ActionBarButton click={() => setUpdating(!updating)} render={<MdSystemUpdateAlt />} />
+				<ActionBarButton click={() => ToggleUpdating()} render={<MdSystemUpdateAlt />} />
 			</ActionBar>
 
-			{updating &&
+			{isUpdating &&
 				<Modal
 					title="Cats"
 					mref={outClickRef}>

@@ -14,11 +14,10 @@ import { MdSystemUpdateAlt } from 'react-icons/md'
 import '../../styles/sections/calender.scss'
 
 const Calender: React.FC<any> = ({ readOnly }) => {
-	const [is, set] = useState({
-		adding: false,
-		removing: false,
-		updating: false
-	})
+	const [isAdding, setAddingState] = useState(false)
+	const [isUpdating, setUpdatingState] = useState(false)
+	const [isRemoving, setRemovingState] = useState(false)
+
 	const [eventList, setEventList] = useState<Array<CalenderEvent>>([])
 	const [name, setName] = useState('')
 	const [timed, setTimed] = useState(false)
@@ -28,47 +27,39 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 	const [updateDate, setUpdateDate] = useState<any>()
 	const [updateTimed, setUpdateTimed] = useState(false)
 
-	function ResetSetState() {
-		set(() => ({ adding: false, removing: false, updating: false }))
+	function ResetStates() {
+		setAddingState(false)
+		setUpdatingState(false)
+		setRemovingState(false)
 	}
-
+	const ToggleAdding = () => setAddingState(s => !s)
+	const ToggleUpdating = () => setUpdatingState(s => !s)
+	const ToggleRemoving = () => setRemovingState(s => !s)
 	function ResetAddFormState() {
 		setName('')
 		setTimed(false)
 		setDate(undefined)
-		set(is => ({ ...is, adding: false }))
+		setAddingState(false)
 	}
 
 	function ResetUpdateFormState() {
 		setUpdateCalenderEventItem(undefined)
 		setUpdateDate(undefined)
 		setUpdateTimed(false)
-		set(is => ({ ...is, updating: false }))
+		setUpdatingState(false)
 	}
 
 	const outClickRef: any = useRef()
 	useOutsideClick(outClickRef, () => {
-		if (!is.adding && !is.removing && !is.updating) return
-		if (is.updating && !updateCalenderEventItem) return
-		ResetSetState()
+		if (!isAdding && !isRemoving && !isUpdating) return
+		if (isUpdating && !updateCalenderEventItem) return
+		ResetStates()
 		ResetAddFormState()
 		ResetUpdateFormState()
 	})
 
-	function AddBtnClick() {
-		set(is => ({ ...is, adding: !is.adding }))
-	}
-
-	async function UpdateBtnClick() {
-		set(is => ({ ...is, updating: !is.updating }))
-	}
-
-	function RemoveBtnClick() {
-		set(is => ({ ...is, removing: !is.removing }))
-	}
-
 	async function removeEvent(event: CalenderEvent) {
-		if (!is.removing) return
+		if (!isRemoving) return
 
 		const confirmation = window.confirm(`Remove '${event.name}' ?`);
 		if (confirmation) {
@@ -81,7 +72,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		e.preventDefault()
 
 		const invalidDate = !isNaN(Date.parse(date))
-		if (!is.adding || !name || !invalidDate) return
+		if (!isAdding || !name || !invalidDate) return
 
 		const evDate = new Date(date)
 		let event = { name, date: evDate.toJSON(), timed }
@@ -149,9 +140,9 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 								key={i}
 								className="content-line with-border"
 								onClick={() => {
-									return is.removing
+									return isRemoving
 										? removeEvent(event)
-										: is.updating && !updateCalenderEventItem
+										: isUpdating && !updateCalenderEventItem
 											? setUpdateCalenderEventItem(event)
 											: null
 								}}>
@@ -174,16 +165,16 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 			</div>
 
 			<ActionBar actives={[
-				{ is: is.adding, cb: AddBtnClick },
-				{ is: is.updating, cb: UpdateBtnClick },
-				{ is: is.removing, cb: RemoveBtnClick },
+				{ is: isAdding, cb: ToggleAdding },
+				{ is: isUpdating, cb: ToggleUpdating },
+				{ is: isRemoving, cb: ToggleRemoving },
 			]}>
-				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
-				<ActionBarButton click={UpdateBtnClick} render={<MdSystemUpdateAlt />} />
-				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
+				<ActionBarButton click={ToggleAdding} render={<VscDiffAdded />} />
+				<ActionBarButton click={ToggleUpdating} render={<MdSystemUpdateAlt />} />
+				<ActionBarButton click={ToggleRemoving} render={<VscDiffRemoved />} />
 			</ActionBar>
 
-			{is.adding &&
+			{isAdding &&
 				<Modal
 					title="Add Event"
 					mref={outClickRef}>
@@ -197,7 +188,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 				</Modal>
 			}
 
-			{(is.updating && updateCalenderEventItem) &&
+			{(isUpdating && updateCalenderEventItem) &&
 				<Modal
 					title={`Update ${updateCalenderEventItem.name}`}
 					mref={outClickRef}>

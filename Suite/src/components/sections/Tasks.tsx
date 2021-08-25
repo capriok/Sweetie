@@ -11,19 +11,21 @@ import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 import '../../styles/sections/tasks.scss'
 
 const Tasks: React.FC<any> = ({ readOnly }) => {
-	const [is, set] = useState({
-		adding: false,
-		removing: false
-	})
+	const [isAdding, setAddingState] = useState(false)
+	const [isRemoving, setRemovingState] = useState(false)
 
 	const [staticTasks, setStaticTasks] = useState<Array<StaticTask>>([])
 	const [taskList, setTaskList] = useState<Array<Task>>([])
+
 	const [name, setName] = useState('')
 	const [pinned, setPinned] = useState(false)
 
-	function ResetSetState() {
-		set(() => ({ adding: false, removing: false }))
+	function ResetStates() {
+		setAddingState(false)
+		setRemovingState(false)
 	}
+	const ToggleAdding = () => setAddingState(s => !s)
+	const ToggleRemoving = () => setRemovingState(s => !s)
 
 	function ResetAddFormState() {
 		setName('')
@@ -32,18 +34,10 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 
 	const outClickRef: any = useRef()
 	useOutsideClick(outClickRef, () => {
-		if (!is.adding && !is.removing) return
-		ResetSetState()
+		if (!isAdding && !isRemoving) return
+		ResetStates()
 		ResetAddFormState()
 	})
-
-	function AddBtnClick() {
-		set(is => ({ ...is, adding: !is.adding }))
-	}
-
-	async function RemoveBtnClick() {
-		set(is => ({ ...is, removing: !is.removing }))
-	}
 
 	function ClearBtnClick() {
 		const confirmation = window.prompt(
@@ -57,7 +51,7 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 	}
 
 	async function removeTask(task: Task) {
-		if (!is.removing) return
+		if (!isRemoving) return
 
 		const confirmation = window.confirm(`Remove '${task.name}' ?`);
 		if (confirmation) {
@@ -122,15 +116,15 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 			</div>
 
 			<ActionBar actives={[
-				{ is: is.adding, cb: AddBtnClick },
-				{ is: is.removing, cb: RemoveBtnClick },
+				{ is: isAdding, cb: ToggleAdding },
+				{ is: isRemoving, cb: ToggleRemoving },
 			]}>
-				<ActionBarButton click={AddBtnClick} render={<VscDiffAdded />} />
-				<ActionBarButton click={RemoveBtnClick} render={<VscDiffRemoved />} />
+				<ActionBarButton click={ToggleAdding} render={<VscDiffAdded />} />
+				<ActionBarButton click={ToggleRemoving} render={<VscDiffRemoved />} />
 				<ActionBarButton click={ClearBtnClick} render={<VscDebugStop />} />
 			</ActionBar>
 
-			{is.adding &&
+			{isAdding &&
 				<Modal
 					title="Add Task"
 					mref={outClickRef}>

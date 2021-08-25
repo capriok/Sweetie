@@ -5,14 +5,9 @@ const Options: React.FC<any> = ({ props }) => {
 	const { auth, setAuth, readOnly } = props
 
 	function LogoutClick() {
-		localStorage.removeItem('Swt-Auth')
-		window.location.reload()
-	}
-	function AuthenticateClick() {
 		setAuth(false)
 		localStorage.removeItem('Swt-Auth')
 	}
-
 	function BoolToString(bool: boolean) {
 		return bool.toString()[0].toUpperCase() + bool.toString().substring(1)
 	}
@@ -42,16 +37,11 @@ const Options: React.FC<any> = ({ props }) => {
 					<p>{BoolToString(auth)}</p>
 				</div>
 				<div className="content-line read-only">
-					<label>Read Only</label>
+					<label>Read only</label>
 					<p>{BoolToString(readOnly)}</p>
 				</div>
-				{readOnly &&
-					<div className="authenticate">
-						<button onClick={AuthenticateClick}>Disable Read Only</button>
-					</div>
-				}
 				<div className="logout">
-					<button onClick={LogoutClick}>Logout</button>
+					<button tabIndex={-1} onClick={LogoutClick}>Logout</button>
 				</div>
 			</div>
 		</div>
