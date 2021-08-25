@@ -7,86 +7,114 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 	const passcode = process.env.REACT_APP_PASSCODE
 	const democode = '0000'
 
+	const [success, setSuccess] = useState(false)
+	const [laoding, setloading] = useState(true)
 	const [title, setTitle] = useState('Secret')
 	const [pass, setPass] = useState<string>('')
+
+	function resetForm() {
+		setTitle('Secret')
+		document.getElementById('secret-title')?.classList.remove('incorrect')
+	}
+
+	function validate(val: string) {
+		const exp = new RegExp(/^[0-9]+$/)
+		return !exp.test(val)
+			? false
+			: true
+	}
 
 	function handlePasscodeChange(e: any) {
 		const val: string = e.target.value
 
+		if (success) return
 		if (!val) return setPass('')
 
-		setTitle('Secret')
-		document.getElementById('secret-title')?.classList.remove('incorrect')
+		resetForm()
 
-		const exp = new RegExp(/^[0-9]+$/)
-		if (!exp.test(val)) return
+		if (!validate(val)) return
 
-		if (val.length > 4) {
-			setPass(val.substring(4))
-		} else {
-			setPass(val)
-		}
+		val.length > 4
+			? setPass(val.substring(4))
+			: setPass(val)
 	}
 
 	useEffect(() => {
 		if (pass.length === 4) submitPass()
 	}, [pass])
 
+	function submitPass() {
+		if (pass === democode || pass === passcode) {
+			setSuccess(true)
+			localStorage.setItem('Swt-Auth', JSON.stringify({
+				pass,
+				auth: true,
+				last: new Date().toJSON()
+			}))
+			if (pass === democode) {
+				animate('Guest', () => {
+					setAuth(true)
+					setReadOnly(true)
+				})
+			}
+			if (pass === passcode) {
+				animate('Success', () => {
+					setAuth(true)
+					setReadOnly(false)
+				})
+			}
+		} else {
+			animate('Incorrect')
+		}
+	}
+
+	function animate(title: string, cb = () => { }) {
+		setTitle(title)
+		const el = document.getElementById('secret-title')
+		if (el) {
+			setTimeout(() => {
+				el.classList.add(title)
+				setTimeout(() => {
+					cb()
+					el.classList.remove(title)
+				}, 1000)
+			}, 500)
+		}
+	}
+
 	useEffect(() => {
 		const ls = localStorage.getItem('Swt-Auth')
 		if (ls) {
 			const lsPass: { pass: string, auth: boolean, last: string } = JSON.parse(ls)
-			const dif = Math.abs(differenceInCalendarDays(new Date(lsPass.last), new Date()))
-
+			const shouldRefresh = Math.abs(differenceInCalendarDays(new Date(lsPass.last), new Date())) > 6
 			if (lsPass.pass !== democode && lsPass.pass !== passcode) return
 			if (lsPass.pass !== democode && lsPass.pass === passcode) setReadOnly(false)
-			if (lsPass.auth && dif <= 6) return setAuth(true)
+			if (lsPass.auth && !shouldRefresh) setAuth(true)
 		}
+		return setloading(false)
 	}, [auth])
-
-
-	function submitPass() {
-		if (pass === passcode || pass === democode) {
-			welcomeAnimation()
-			localStorage.setItem(
-				'Swt-Auth',
-				JSON.stringify({ pass, auth: true, last: new Date().toJSON() })
-			)
-		} else {
-			incorrectAnimation()
-		}
-	}
-
-	function welcomeAnimation() {
-		setTitle('Success')
-		const title = document.getElementById('secret-title')
-		if (title) title.classList.add('welcome')
-		return setTimeout(() => {
-			setAuth(true)
-		}, 1000)
-	}
-
-	function incorrectAnimation() {
-		setTitle('Incorrect')
-		const title = document.getElementById('secret-title')
-		if (title) title.classList.add('incorrect')
-	}
 
 	return (
 		<div className="secret">
-			<h3 id="secret-title">{title}</h3>
-			<div
-				className="input"
-				onClick={() => document.querySelector('input')?.focus()}>
-				{passcode!.split('').map((_, i) => (
-					<div className={pass[i] ? 'mark val' : 'mark dot'} />
-				))}
-			</div>
-			<input
-				autoFocus={true}
-				type="password"
-				value={pass}
-				onChange={(e) => handlePasscodeChange(e)} />
+			{laoding
+				? <></>
+				: <>
+					<h3 id="secret-title">{title}</h3>
+					<div
+						className="input"
+						onClick={() => document.querySelector('input')?.focus()}>
+						{passcode!.split('').map((_, i) => (
+							<div key={i} className={pass[i] ? 'mark val' : 'mark dot'} />
+						))}
+					</div>
+					<input
+						autoFocus={true}
+						type="password"
+						value={pass}
+						onChange={(e) => handlePasscodeChange(e)} />
+				</>
+			}
+
 		</div>
 	)
 }

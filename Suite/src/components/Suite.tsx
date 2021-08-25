@@ -9,24 +9,28 @@ import Groceries from './sections/Groceries'
 import Plants from './sections/Plants'
 import Tasks from './sections/Tasks'
 import Section from './Section'
+import Options from './sections/Options'
 
-const Suite: React.FC<any> = ({ readOnly }) => {
+const Suite: React.FC<any> = (props) => {
 	return (
 		<main id="Suite" dir="ltr">
 			<Section title="Calender">
-				<Calender readOnly={readOnly} />
+				<Calender props={props} />
 			</Section>
 			<Section title="Groceries">
-				<Groceries readOnly={readOnly} />
+				<Groceries props={props} />
 			</Section>
 			<Section title="Tasks">
-				<Tasks readOnly={readOnly} />
+				<Tasks props={props} />
 			</Section>
 			<Section title="Cats">
-				<Cats readOnly={readOnly} />
+				<Cats props={props} />
 			</Section>
 			<Section title="Plants">
-				<Plants readOnly={readOnly} />
+				<Plants props={props} />
+			</Section>
+			<Section title="Options">
+				<Options props={props} />
 			</Section>
 		</main>
 	)

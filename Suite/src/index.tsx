@@ -29,10 +29,10 @@ function Index() {
       {(() => {
         if (serverIdle)
           return <Splash />
-        if (auth)
-          return <Suite readOnly={readOnly} />
-        else
+        if (!auth)
           return <Secret auth={auth} setAuth={setAuth} setReadOnly={setReadOnly} />
+        else
+          return <Suite auth={auth} setAuth={setAuth} readOnly={readOnly} setReadOnly={setReadOnly} />
       })()}
     </Div100vh>
   )
