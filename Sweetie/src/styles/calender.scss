@@ -10,14 +10,14 @@
 		border-color: grey;
 		background-color: unset;
 		.calender-event {
-			font-size: 1.7rem !important;
+			font-size: 1.8rem !important;
 			@include flex;
-			margin-top: 7px;
+			margin-top: 5px;
 			justify-content: space-between;
 			border-color: grey !important;
 		}
 		.today-indicator {
-			font-size: 1.9rem;
+			font-size: 2rem;
 			color: crimson !important;
 		}
 	}
@@ -216,6 +216,7 @@ body {
 }
 
 .rc-h-48 {
+	overflow: hidden;
 	min-height: 17rem;
 	max-height: 17rem;
 	min-width: 22rem;
@@ -240,11 +241,9 @@ body {
 }
 
 .rc-max-h-36 {
-	max-height: 7rem;
 }
 
 .rc-max-h-96 {
-	max-height: 24rem;
 }
 
 .rc-overflow-auto {

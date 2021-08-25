@@ -77,7 +77,7 @@ $secondary: rgba(17, 17, 17, 0.7);
 		height: 100vh;
 		grid-template:
 			"time weather cats plants"
-			"calender calender groceries tasks";
+			"calender calender tasks groceries";
 		.tile {
 			@include flex;
 			min-height: 200px;

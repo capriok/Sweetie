@@ -46,7 +46,7 @@ const Calender: React.FC = () => {
 					}))}>
 					<MonthlyDay
 						renderDay={(data) =>
-							data.map((event: any, i) => (
+							data.slice(0, 4).map((event: any, i) => (
 								<p
 									key={i}
 									className="calender-event">
