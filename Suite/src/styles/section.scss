@@ -4,7 +4,6 @@
 	@include flex;
 	justify-content: flex-start;
 	flex-direction: column;
-	width: 100vw;
 
 	.section-scroll {
 		overflow-y: scroll;
@@ -44,6 +43,9 @@
 	.content-empty {
 		@include flex;
 		width: 100vw;
+		p {
+			margin-top: 40px;
+		}
 	}
 
 	.content-view-all {

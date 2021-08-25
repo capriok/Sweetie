@@ -20,15 +20,15 @@ function Index() {
       document.getElementById('splash-swt')?.classList.add('shrink')
       setTimeout(() => {
         setServerIdle(false)
-      }, 1000)
+      }, 500)
     })
   }, [])
 
   return (
     <Div100vh>
       {(() => {
-        if (serverIdle) return <Splash />
-
+        if (serverIdle)
+          return <Splash />
         if (auth)
           return <Suite readOnly={readOnly} />
         else

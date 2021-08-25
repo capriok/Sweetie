@@ -153,7 +153,7 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 				<div className="content to-water">
 					<h3>Water Today</h3>
 					{!schedule.plants.length
-						? <div className="content-empty"><p>Nothing here.</p></div>
+						? <div className="content-empty">Nothing here.</div>
 						: <>
 							{schedule.plants.map((plant, i) => (
 								<div

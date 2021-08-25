@@ -95,7 +95,7 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 		<>
 			<div className="section-scroll" ref={outClickRef}>
 				{!taskList.length
-					? <div className="content-empty" ><p>Nothing here.</p></div>
+					? <div className="content-empty"><p>Nothing here.</p></div>
 					: <div className="tasks content">
 						{taskList.length &&
 							taskList.map((task, i) => (

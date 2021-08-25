@@ -92,7 +92,7 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 		<>
 			<div className="section-scroll" ref={outClickRef}>
 				{!groceryList.length
-					? <div className="content-empty" >Nothing here.</div>
+					? <div className="content-empty"><p>Nothing here.</p></div>
 					: <div className="groceries content">
 						{groceryList.some(g => g.store === 'wholefoods') &&
 							<>
