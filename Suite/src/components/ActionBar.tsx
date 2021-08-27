@@ -4,20 +4,22 @@ import '../styles/actionbar.scss'
 
 import { VscDebugStop } from 'react-icons/vsc'
 
-const ActionBar: React.FC<any> = ({ actives, children }) => {
+const ActionBar: React.FC<any> = ({ children }) => {
+	if (children.length === undefined) children = [children]
+
 	const [active, setActive] = useState<any>({ cb: () => { } })
 
 	useEffect(() => {
-		actives.some((a: any) => {
-			if (a.is) return setActive({ cb: a.cb })
+		children.some((c: any) => {
+			if (c.props.is) return setActive({ cb: c.props.click })
 			else return false
 		})
-	}, [actives])
+	}, [children])
 
 	return (
 		<div className="action-bar">
 			<div className="actionbar-wrap">
-				{actives.some((a: any) => a.is)
+				{children.some((c: any) => c.props.is)
 					? <ActionBarButton click={active.cb} render={<VscDebugStop />} />
 					: children
 				}

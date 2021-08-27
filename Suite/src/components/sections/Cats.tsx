@@ -113,10 +113,8 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 				</div>
 			</div>
 
-			<ActionBar actives={[
-				{ is: isUpdating, cb: ToggleUpdating }
-			]}>
-				<ActionBarButton click={() => ToggleUpdating()} render={<MdSystemUpdateAlt />} />
+			<ActionBar>
+				<ActionBarButton is={isUpdating} click={ToggleUpdating} render={<MdSystemUpdateAlt />} />
 			</ActionBar>
 
 			{isUpdating &&

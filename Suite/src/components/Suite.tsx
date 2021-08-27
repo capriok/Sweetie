@@ -23,11 +23,11 @@ const Suite: React.FC<any> = (props) => {
 			<Section title="Tasks">
 				<Tasks props={props} />
 			</Section>
-			<Section title="Cats">
-				<Cats props={props} />
-			</Section>
 			<Section title="Plants">
 				<Plants props={props} />
+			</Section>
+			<Section title="Cats">
+				<Cats props={props} />
 			</Section>
 			<Section title="Options">
 				<Options props={props} />

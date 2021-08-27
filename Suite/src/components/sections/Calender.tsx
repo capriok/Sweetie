@@ -164,14 +164,10 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 				</div>
 			</div>
 
-			<ActionBar actives={[
-				{ is: isAdding, cb: ToggleAdding },
-				{ is: isUpdating, cb: ToggleUpdating },
-				{ is: isRemoving, cb: ToggleRemoving },
-			]}>
-				<ActionBarButton click={ToggleAdding} render={<VscDiffAdded />} />
-				<ActionBarButton click={ToggleUpdating} render={<MdSystemUpdateAlt />} />
-				<ActionBarButton click={ToggleRemoving} render={<VscDiffRemoved />} />
+			<ActionBar>
+				<ActionBarButton is={isAdding} click={ToggleAdding} render={<VscDiffAdded />} />
+				<ActionBarButton is={isUpdating} click={ToggleUpdating} render={<MdSystemUpdateAlt />} />
+				<ActionBarButton is={isRemoving} click={ToggleRemoving} render={<VscDiffRemoved />} />
 			</ActionBar>
 
 			{isAdding &&

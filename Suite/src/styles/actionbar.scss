@@ -1,14 +1,15 @@
 @import "./index.scss";
 
 .action-bar {
+	color: $primary-font;
 	user-select: none;
 	position: sticky;
 	bottom: 0;
 	@include flex;
 	width: 100%;
 	min-height: 50px;
-	border-top: 2px solid $light-grey;
-	background-color: $suite-title;
+	border-top: 3px solid $primlight;
+	background-color: $primary;
 	.actionbar-wrap {
 		@include flex;
 		margin: 0 auto;

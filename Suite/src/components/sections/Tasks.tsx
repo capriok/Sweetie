@@ -115,12 +115,9 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 				</div>
 			</div>
 
-			<ActionBar actives={[
-				{ is: isAdding, cb: ToggleAdding },
-				{ is: isRemoving, cb: ToggleRemoving },
-			]}>
-				<ActionBarButton click={ToggleAdding} render={<VscDiffAdded />} />
-				<ActionBarButton click={ToggleRemoving} render={<VscDiffRemoved />} />
+			<ActionBar>
+				<ActionBarButton is={isAdding} click={ToggleAdding} render={<VscDiffAdded />} />
+				<ActionBarButton is={isRemoving} click={ToggleRemoving} render={<VscDiffRemoved />} />
 				<ActionBarButton click={ClearBtnClick} render={<VscDebugStop />} />
 			</ActionBar>
 

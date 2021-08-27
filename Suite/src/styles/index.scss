@@ -22,15 +22,27 @@
 	align-items: center;
 }
 
+:root {
+	--primary-h: 0;
+	--primary-s: 0%;
+	--primary-l: 85%;
+	--primary-font: hsl(
+		var(--primary-h),
+		var(--primary-s),
+		calc((25% - var(--primary-l) * 0.5) * 100)
+	);
+}
+
+$primary-h: var(--primary-h);
+$primary-s: var(--primary-s);
+$primary-l: var(--primary-l);
+$primary: hsl($primary-h, $primary-s, $primary-l);
+$primlight: hsl($primary-h, $primary-s, calc(var(--primary-l) + 10%));
+$primary-font: var(--primary-font);
+
 $MAX: 800px;
 $suite-bg: rgb(0, 0, 0);
-$suite-title: rgb(230, 230, 230);
-$accent-color: rgba(0, 100, 200, 0.8);
-$section-h-bg: rgb(228, 228, 228);
-$section-h-color: rgb(0, 0, 0);
 $light-grey: rgba(120, 120, 120, 0.1);
-$drop-shadow: 0px 0px 5px 2px rgba(255, 255, 255, 0.8);
-$padgap: 7px;
 
 * {
 	box-sizing: border-box;
@@ -48,19 +60,22 @@ input,
 select {
 	padding: 7px 10px;
 	border-radius: 5px;
+	outline-color: $primlight;
 	border: none;
-	outline-color: $accent-color;
 	background-color: rgba(120, 120, 120, 0.1);
 	border: 1px solid rgb(219, 219, 219);
 }
 
 button {
+	font-size: 0.9rem;
+	user-select: none;
+	color: $primary-font;
 	cursor: pointer;
 	outline: none;
 	border: none;
 	padding: 10px 20px;
 	border-radius: 5px;
-	background-color: $section-h-bg;
+	background-color: $primlight;
 	transition: 0.2s;
 	&:active {
 		font-weight: 600;
@@ -76,7 +91,7 @@ h4 {
 	user-select: none;
 	cursor: default;
 	font-family: "Montserrat", sans-serif;
-	font-weight: 500;
+	font-weight: 400;
 }
 
 p {

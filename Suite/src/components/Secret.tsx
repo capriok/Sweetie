@@ -8,7 +8,7 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 	const democode = '0000'
 
 	const [success, setSuccess] = useState(false)
-	const [laoding, setloading] = useState(true)
+	const [loading, setloading] = useState(true)
 	const [title, setTitle] = useState('Secret')
 	const [pass, setPass] = useState<string>('')
 
@@ -96,7 +96,7 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 
 	return (
 		<div className="secret">
-			{laoding
+			{loading
 				? <></>
 				: <>
 					<h3 id="secret-title">{title}</h3>

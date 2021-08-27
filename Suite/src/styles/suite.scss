@@ -9,10 +9,11 @@
 	height: 100%;
 
 	.section-title {
+		color: $primary-font;
 		width: 100vw;
 		@include flex;
-		background-color: $suite-title;
-		border-bottom: 2px solid $light-grey;
+		background-color: $primary;
+		border-bottom: 3px solid $primlight;
 	}
 	section {
 		scroll-snap-align: center;
