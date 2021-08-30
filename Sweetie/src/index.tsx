@@ -1,54 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import DateTime from './components/DateTime';
-import Weather from './components/Weather';
-import Calender from './components/Calender';
-import Groceries from './components/Groceries';
-import TaskList from './components/Tasks';
-import Cats from './components/Cats';
-import Plants from './components/Plants';
+import Api from './api'
+import Splash from './components/Splash';
+import Sweetie from './components/Sweetie';
 
 import './styles/index.scss';
 
 function Index() {
+  const [serverIdle, setServerIdle] = useState<boolean>(true)
 
   useEffect(() => {
+    Api.ServerPing().then(() => {
+      document.getElementById('splash-swt')?.classList.add('shrink')
+      setTimeout(() => {
+        setServerIdle(false)
+      }, 500)
+    })
     setTimeout(() => {
       window.location.reload()
     }, 300000)
   }, [])
 
+
   return (
-    <div>
-      <div id="view">
-        <main>
-          <div className="tile" id="time">
-            <DateTime />
-          </div>
-          <div className="tile" id="weather">
-            <Weather />
-          </div>
-          <div className="tile" id="calender">
-            <Calender />
-          </div>
-          <div className="tile" id="grocerylist">
-            <Groceries />
-          </div>
-          <div className="tile" id="tasklist">
-            <TaskList />
-          </div>
-          <div className="tile" id="cats">
-            <Cats />
-          </div>
-          <div className="tile" id="plants">
-            <Plants />
-          </div>
-        </main>
-      </div>
-      <div id="bg"></div>
-    </div>
+    <>
+      {(() => {
+        if (serverIdle)
+          return <Splash />
+        else
+          return <Sweetie />
+      })()}
+      <div id="Background" />
+    </>
   )
+
 }
 
 ReactDOM.render(<React.StrictMode><Index /></React.StrictMode>, document.getElementById('root'))

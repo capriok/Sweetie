@@ -1,4 +1,4 @@
-@import "./index.scss";
+@import "../index.scss";
 
 .calender {
 	text-align: center;
@@ -15,6 +15,15 @@
 			margin-top: 5px;
 			justify-content: space-between;
 			border-color: grey !important;
+			.name {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			.timed {
+				margin-left: 5px;
+				min-width: fit-content;
+			}
 		}
 		.today-indicator {
 			font-size: 2rem;

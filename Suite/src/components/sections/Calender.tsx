@@ -112,18 +112,9 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 	useEffect(() => {
 		(async () => Api.GetCalenderEvents().then(ce => {
 			console.log({ CalenderEvents: ce })
-			setEventList(ce.map(d => {
-				if (!d.timed) d.date = tzFormat(d.date)
-				return d
-			}))
+			setEventList(ce)
 		}))()
 	}, [])
-
-	function tzFormat(date: string) {
-		const tzDate = new Date(date)
-		tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
-		return tzDate.toJSON()
-	}
 
 	return (
 		<>

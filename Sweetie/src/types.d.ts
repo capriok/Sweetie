@@ -1,7 +1,7 @@
 interface CalenderEvent {
 	_id?: string
 	name: string
-	date: string | Date
+	date: string
 	timed: boolean
 }
 
@@ -26,12 +26,12 @@ interface Task {
 
 type CatConfig = {
 	_id?: string
-	lastFoodDay: string | Date | undefined
-	lastWasteDay: string | Date | undefined
+	lastFoodDay: string | undefined
+	lastWasteDay: string | undefined
 }
 
 type CatScheduleDay = {
-	date: string | Date
+	date: string
 	food: {
 		is: boolean
 		progress: number
@@ -50,6 +50,6 @@ type Plant = {
 }
 
 type PlantScheduleDay = {
-	date: Date
+	date: string
 	plants: Array<Plant>
 }

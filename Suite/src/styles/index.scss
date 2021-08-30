@@ -23,22 +23,18 @@
 }
 
 :root {
-	--primary-h: 0;
-	--primary-s: 0%;
-	--primary-l: 85%;
-	--primary-font: hsl(
-		var(--primary-h),
-		var(--primary-s),
-		calc((25% - var(--primary-l) * 0.5) * 100)
-	);
+	--ph: 0;
+	--ps: 0%;
+	--pl: 85%;
+	--pfont: hsl(var(--ph), var(--ps), calc((25% - var(--pl) * 0.5) * 100));
 }
 
-$primary-h: var(--primary-h);
-$primary-s: var(--primary-s);
-$primary-l: var(--primary-l);
+$primary-h: var(--ph);
+$primary-s: var(--ps);
+$primary-l: var(--pl);
 $primary: hsl($primary-h, $primary-s, $primary-l);
-$primlight: hsl($primary-h, $primary-s, calc(var(--primary-l) + 10%));
-$primary-font: var(--primary-font);
+$primlight: hsl($primary-h, $primary-s, calc(var(--pl) + 10%));
+$primary-font: var(--pfont);
 
 $MAX: 800px;
 $suite-bg: rgb(0, 0, 0);

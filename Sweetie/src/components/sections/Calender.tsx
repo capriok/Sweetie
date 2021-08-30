@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { MonthlyBody, MonthlyDay, MonthlyCalendar } from '@zach.codes/react-calendar'
 import { format, startOfMonth } from 'date-fns'
-import Api from '../api'
+import Api from '../../api'
 
-import '../styles/calender.scss'
+import '../../styles/sections/calender.scss'
 
 const Calender: React.FC = () => {
 	let [currentMonth, setCurrentMonth] = useState<Date>(
@@ -50,8 +50,8 @@ const Calender: React.FC = () => {
 								<p
 									key={i}
 									className="calender-event">
-									<span>{event.name}</span>
-									<span>{event.timed ? format(event.date, 'k:mm') : ""}</span>
+									<span className="name">{event.name}</span>
+									<span className="timed">{event.timed ? format(event.date, 'h:mm') : ""}</span>
 								</p>
 							))
 						} />

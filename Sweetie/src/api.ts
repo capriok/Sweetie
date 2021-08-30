@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { isSameDay, startOfToday } from 'date-fns'
+
 const ENDPOINT = process.env.REACT_APP_SERVER
 const baseInstanceParams = {
 	baseURL: ENDPOINT + '/swt/',
@@ -12,13 +14,51 @@ const AxiosInstance = axios.create({
 	}
 })
 
+const tzZero = () => {
+	const T = startOfToday()
+	T.setMinutes(T.getMinutes() - T.getTimezoneOffset())
+	return T
+}
+
+export function tzDate(date: any) {
+	const tzDate = new Date(date)
+	tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
+	return tzDate.toJSON()
+}
+
+const formatCalenderEventsDates = (ce: Array<CalenderEvent>) => {
+	return ce.map((d: CalenderEvent) => {
+		if (!d.timed) d.date = tzDate(d.date)
+		return d
+	})
+}
+
+const formatCatScheduleDates = (cs: Array<CatScheduleDay>) => {
+	return cs.map((d: CatScheduleDay) => {
+		d.date = tzDate(d.date)
+		return d
+	})
+}
+
+const formatPlantScheduleDates = (ps: Array<PlantScheduleDay>) => {
+	return ps.map((d: PlantScheduleDay) => {
+		d.date = tzDate(d.date)
+		return d
+	})
+}
+
 class Api {
+
+	public async ServerPing(): Promise<{ status: number }> {
+		const res = await AxiosInstance.get('/ping')
+		return res.data.status
+	}
 
 	// CALENDER
 
 	public async GetCalenderEvents(): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.get('/ce')
-		return res.data.list
+		return formatCalenderEventsDates(res.data.list)
 	}
 
 	// GROCERIES
@@ -44,19 +84,20 @@ class Api {
 
 	// CATS
 
-	public async GetCatSchedule(): Promise<Array<CatScheduleDay>> {
+	public async GetCatSchedule(): Promise<{ today: CatScheduleDay, cs: Array<CatScheduleDay> }> {
 		const res = await AxiosInstance.get('/cs')
-		return res.data.schedule
+		const today = res.data.schedule.find((d: CatScheduleDay) => isSameDay(new Date(d.date), tzZero()))
+		return { today, cs: formatCatScheduleDates(res.data.schedule) }
 	}
 
 	// PLANTS
 
-	public async GetPlantSchedule(): Promise<Array<PlantScheduleDay>> {
+	public async GetPlantSchedule(): Promise<{ today: PlantScheduleDay, ps: Array<PlantScheduleDay> }> {
 		const res = await AxiosInstance.get('/ps')
-		return res.data.schedule
+		const today = res.data.schedule.find((d: PlantScheduleDay) => isSameDay(new Date(d.date), tzZero()))
+		return { today, ps: formatPlantScheduleDates(res.data.schedule) }
 	}
 
 }
-
 
 export default new Api()

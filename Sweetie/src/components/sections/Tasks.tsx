@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import Api from '../api'
+import Api from '../../api'
 
-import '../styles/tasks.scss'
+import '../../styles/sections/tasks.scss'
 
 const Tasks: React.FC = () => {
 

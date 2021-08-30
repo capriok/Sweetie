@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import Api from '../api'
+import Api from '../../api'
 
-import '../styles/groceries.scss'
+import '../../styles/sections/groceries.scss'
 
 const Groceries: React.FC = () => {
 

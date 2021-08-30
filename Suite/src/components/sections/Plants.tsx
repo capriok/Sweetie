@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { isSameDay, startOfToday } from 'date-fns'
 
-import Api from '../../api'
+import Api, { tzDate } from '../../api'
 import Modal from '../Modal'
 import PlantAdding from '../modals/Plant-Adding'
 import PlantUpdating from '../modals/Plant-Updating'
@@ -116,28 +116,21 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 	useEffect(() => {
 		(async () => Api.GetPlantList().then(pl => {
 			console.log({ PlantList: pl })
-			setPlantList(pl.map(p => {
-				p.last = tzFormat(p.last)
-				return p
-			}))
-		}))();
-		(async () => Api.GetPlantSchedule().then(ps => {
-			console.log({ PlantSchedule: ps })
-			const T = startOfToday()
-			T.setMinutes(T.getMinutes() - T.getTimezoneOffset())
-			const today = ps.find(d => isSameDay(new Date(d.date), T))
-			if (today) {
-				today.date = tzFormat(today.date)
-				setSchedule(today)
-			}
-		}))();
+			setPlantList(pl)
+		}))()
 	}, [])
 
-	function tzFormat(date: string) {
-		const tzDate = new Date(date)
-		tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
-		return tzDate.toJSON()
-	}
+	useEffect(() => {
+		(async () => Api.GetPlantSchedule().then(ps => {
+			console.log({ PlantSchedule: ps })
+			const T = tzDate(startOfToday())
+			const today = ps.find(d => isSameDay(new Date(d.date), new Date(T)))
+			if (today) {
+				today.date = tzDate(today.date)
+				setSchedule(today)
+			}
+		}))()
+	}, [plantList])
 
 	return (
 		<>

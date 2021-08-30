@@ -19,36 +19,18 @@ const Options: React.FC<any> = ({ props }) => {
 
 	function SetPrimaryHSL(e: any) {
 		const hsl = HEXtoHSL(e.target.value)
-		setThemeValue('--primary-h', hsl[0])
-		setThemeValue('--primary-s', `${hsl[1]}%`)
-		setThemeValue('--primary-l', `${hsl[2]}%`)
+		setThemeValue('--ph', hsl[0])
+		setThemeValue('--ps', `${hsl[1]}%`)
+		setThemeValue('--pl', `${hsl[2]}%`)
 	}
-
-	function SetThemeInLocalStorage(prop: string, value: string) {
-		const lsTheme = localStorage.getItem('Swt-Theme')
-		if (lsTheme) {
-			const theme = JSON.parse(lsTheme)
-			theme[prop] = value
-			localStorage.setItem('Swt-Theme', JSON.stringify(theme))
-		} else {
-			localStorage.setItem('Swt-Theme', JSON.stringify({ [prop]: value }))
-		}
-	}
-
-	const theme: any = {
-		primaryH: getThemeValue('--primary-h'),
-		primaryS: getThemeValue('--primary-s'),
-		primaryL: getThemeValue('--primary-l'),
-	}
-	theme.primaryHSL = `hsl(${theme.primaryH}, ${theme.primaryS}, ${theme.primaryL})`
 
 	useEffect(() => {
 		const lsTheme = localStorage.getItem('Swt-Theme')
 		if (lsTheme) {
 			const theme = JSON.parse(lsTheme)
-			setThemeValue('--primary-h', theme['--primary-h'])
-			setThemeValue('--primary-s', theme['--primary-s'])
-			setThemeValue('--primary-l', theme['--primary-l'])
+			setThemeValue('--ph', theme['--ph'])
+			setThemeValue('--ps', theme['--ps'])
+			setThemeValue('--pl', theme['--pl'])
 		}
 	}, [])
 
@@ -62,15 +44,21 @@ const Options: React.FC<any> = ({ props }) => {
 		)
 	}
 
-	function getThemeValue(prop: string) {
-		return document.documentElement.style.getPropertyValue(prop)
-	}
-
 	function setThemeValue(prop: string, value: string) {
-		SetThemeInLocalStorage(prop, value)
+		setThemeInLocalStorage(prop, value)
 		return document.documentElement.style.setProperty(prop, value)
 	}
 
+	function setThemeInLocalStorage(prop: string, value: string) {
+		const lsTheme = localStorage.getItem('Swt-Theme')
+		if (lsTheme) {
+			const theme = JSON.parse(lsTheme)
+			theme[prop] = value
+			localStorage.setItem('Swt-Theme', JSON.stringify(theme))
+		} else {
+			localStorage.setItem('Swt-Theme', JSON.stringify({ [prop]: value }))
+		}
+	}
 
 	return (
 		<div className="section-scroll">
@@ -94,9 +82,11 @@ const Options: React.FC<any> = ({ props }) => {
 					className="theme"
 					label="Theme">
 					<input
+						tabIndex={-1}
 						type="color"
 						onChange={(e) => SetPrimaryHSL(e)} />
 				</ContentLine>
+				<input type="time" />
 				<div className="logout">
 					<button tabIndex={-1} onClick={LogoutClick}>Logout</button>
 				</div>

@@ -1,6 +1,7 @@
-import '../styles/weather.scss'
-import useWeather from '../hooks/useWeather'
 import { useEffect } from 'react'
+import useWeather from '../../hooks/useWeather'
+
+import '../../styles/sections/weather.scss'
 
 const Weather: React.FC = () => {
 	const stats = useWeather()

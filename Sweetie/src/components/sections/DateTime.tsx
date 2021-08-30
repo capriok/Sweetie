@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
-import '../styles/datetime.scss'
+import '../../styles/sections/datetime.scss'
 
 const DateTime: React.FC = () => {
 

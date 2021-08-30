@@ -13,6 +13,33 @@ const AxiosInstance = axios.create({
 	}
 })
 
+export function tzDate(date: any) {
+	const tzDate = new Date(date)
+	tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
+	return tzDate.toJSON()
+}
+
+const formatCalenderEventsDates = (ce: Array<CalenderEvent>) => {
+	return ce.map((d: CalenderEvent) => {
+		if (!d.timed) d.date = tzDate(d.date)
+		return d
+	})
+}
+
+const formatCatScheduleDates = (cs: Array<CatScheduleDay>) => {
+	return cs.map((d: CatScheduleDay) => {
+		d.date = tzDate(d.date)
+		return d
+	})
+}
+
+const formatPlantListDates = (pl: Array<Plant>) => {
+	return pl.map((p: Plant) => {
+		p.last = tzDate(p.last)
+		return p
+	})
+}
+
 class Api {
 
 	public async ServerPing(): Promise<{ status: number }> {
@@ -20,27 +47,27 @@ class Api {
 		return res.data.status
 	}
 
-
 	// CALENDER 
 
 	public async GetCalenderEvents(): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.get('/ce')
-		return res.data.list
+		return formatCalenderEventsDates(res.data.list)
+
 	}
 
 	public async PostCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.post('/ce', { event: event })
-		return res.data.list
+		return formatCalenderEventsDates(res.data.list)
 	}
 
 	public async UpdateCalenderEvent(event: Partial<CalenderEvent>): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.put('/ce', { event: event })
-		return res.data.list
+		return formatCalenderEventsDates(res.data.list)
 	}
 
 	public async RemoveCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.delete('/ce', { data: { id: event._id } })
-		return res.data.list
+		return formatCalenderEventsDates(res.data.list)
 	}
 
 	// GROCERIES
@@ -98,7 +125,7 @@ class Api {
 
 	public async GetCatSchedule(): Promise<Array<CatScheduleDay>> {
 		const res = await AxiosInstance.get('/cs')
-		return res.data.schedule
+		return formatCatScheduleDates(res.data.schedule)
 	}
 
 	public async GetCatConfig(): Promise<CatConfig> {
@@ -120,22 +147,22 @@ class Api {
 
 	public async GetPlantList(): Promise<Array<Plant>> {
 		const res = await AxiosInstance.get('/pl')
-		return res.data.list
+		return formatPlantListDates(res.data.list)
 	}
 
 	public async PostPlant(plant: Plant): Promise<Array<Plant>> {
 		const res = await AxiosInstance.post('/pl', { plant: plant })
-		return res.data.list
+		return formatPlantListDates(res.data.list)
 	}
 
 	public async UpdatePlant(plant: Partial<Plant>): Promise<Array<Plant>> {
 		const res = await AxiosInstance.put('/pl', { plant: plant })
-		return res.data.list
+		return formatPlantListDates(res.data.list)
 	}
 
 	public async RemovePlant(plant: Plant): Promise<Array<Plant>> {
 		const res = await AxiosInstance.delete('/pl', { data: { id: plant._id } })
-		return res.data.list
+		return formatPlantListDates(res.data.list)
 	}
 
 }

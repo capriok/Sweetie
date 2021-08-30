@@ -73,18 +73,9 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 		if (!catConfig.lastFoodDay || !catConfig.lastWasteDay) return
 		(async () => Api.GetCatSchedule().then(cs => {
 			console.log({ CatSchedule: cs })
-			setSchedule(cs.map(d => {
-				d.date = tzFormat(d.date)
-				return d
-			}))
+			setSchedule(cs)
 		}))()
 	}, [catConfig])
-
-	function tzFormat(date: string) {
-		const tzDate = new Date(date)
-		tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
-		return tzDate.toJSON()
-	}
 
 	return (
 		<>

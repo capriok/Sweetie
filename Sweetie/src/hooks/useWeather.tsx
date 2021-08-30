@@ -43,7 +43,6 @@ const useWeather = () => {
 			const HOME_LOCATION = `lat=32.301210&lon=-110.827220`
 			FetchWeather(HOME_LOCATION)
 		}
-
 	}, [])
 
 
