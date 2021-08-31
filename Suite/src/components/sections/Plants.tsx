@@ -1,17 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { isSameDay, startOfToday } from 'date-fns'
+import React, { useEffect, useState } from 'react'
 
-import Api, { tzDate } from '../../api'
-import Modal from '../Modal'
-import PlantAdding from '../modals/Plant-Adding'
-import PlantUpdating from '../modals/Plant-Updating'
+import Api from '../../api'
+import Form from '../Form'
+import PlantForm from '../forms/PlantForm'
 import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved } from 'react-icons/vsc'
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
 import '../../styles/sections/plants.scss'
+
+interface FormState {
+	name?: string
+	item?: Plant | undefined
+	cycle: number
+	last: string | undefined
+}
+
+const InitAddingForm: FormState = {
+	name: '',
+	cycle: 3,
+	last: undefined
+}
+
+const InitUpdatingForm: FormState = {
+	item: undefined,
+	cycle: 3,
+	last: undefined
+}
 
 const Plants: React.FC<any> = ({ readOnly }) => {
 	const [isAdding, setAddingState] = useState(false)
@@ -24,45 +40,24 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 	})
 	const [plantList, setPlantList] = useState<Array<Plant>>([])
 
-	const [name, setName] = useState('')
-	const [cycle, setCycle] = useState(3)
-	const [lastWater, setLastWater] = useState<any>()
+	const [addingForm, setAddingForm] = useState(InitAddingForm)
+	const [updatingForm, setUpdatingForm] = useState(InitUpdatingForm)
 
-	const [updatePlantItem, setUpdatePlantItem] = useState<Plant | undefined>(undefined)
-	const [updateLastWater, setUpdateLastWater] = useState<any>()
+	const toggleAdding = () => setAddingState(s => !s)
+	const toggleUpdating = () => setUpdatingState(s => !s)
+	const toggleRemoving = () => setRemovingState(s => !s)
 
-	function ResetStates() {
-		setAddingState(false)
-		setUpdatingState(false)
-		setRemovingState(false)
-	}
-	const ToggleAdding = () => setAddingState(s => !s)
-	const ToggleUpdating = () => setUpdatingState(s => !s)
-	const ToggleRemoving = () => setRemovingState(s => !s)
-
-	function ResetAddFormState() {
-		setName('')
-		setCycle(0)
-		setLastWater(undefined)
+	function resetAddingState() {
+		setAddingForm(InitAddingForm)
 		setAddingState(false)
 	}
 
-	function ResetUpdateFormState() {
-		setUpdatePlantItem(undefined)
-		setUpdateLastWater(undefined)
+	function resetUpdatingState() {
+		setUpdatingForm(InitUpdatingForm)
 		setUpdatingState(false)
 	}
 
-	const outClickRef: any = useRef()
-	useOutsideClick(outClickRef, () => {
-		if (!isAdding && !isRemoving && !isUpdating) return
-		if (isUpdating && !updatePlantItem) return
-		ResetStates()
-		ResetAddFormState()
-		ResetUpdateFormState()
-	})
-
-	async function removePlant(plant: Plant) {
+	async function RemovePlant(plant: Plant) {
 		if (!isRemoving) return
 
 		const confirmation = window.confirm(`Remove '${plant.name}' ?`);
@@ -72,43 +67,44 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 		}
 	}
 
-	async function postPlant(e: any) {
+	async function PostPlant(e: any) {
 		e.preventDefault()
 
-		const invalidDate = !isNaN(Date.parse(lastWater))
-		if (!name || !invalidDate) return
+		const invalidDate = !isNaN(Date.parse(addingForm.last!))
+		if (!addingForm.name || !invalidDate) return
 
-		const last = new Date(lastWater)
-		const plant = { name, cycle, last: last.toJSON() }
+		const last = new Date(addingForm.last!)
+		const plant = {
+			name: addingForm.name,
+			cycle: addingForm.cycle,
+			last: last.toJSON()
+		}
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(plant);
 		Api.PostPlant(plant).then(pl => {
-			ResetAddFormState()
+			resetAddingState()
 			setPlantList(pl)
 		})
 	}
 
-	async function updatePlant(e: any) {
+	async function UpdatePlant(e: any) {
 		e.preventDefault()
 
-		const invalidDate = !isNaN(Date.parse(updateLastWater))
-		if (!updateLastWater || !invalidDate) return
+		const invalidDate = !isNaN(Date.parse(updatingForm.last!))
+		if (!updatingForm.last || !invalidDate) return
 
-		const upLast = new Date(updateLastWater)
-
-		const lastSame = isSameDay(new Date(updatePlantItem?.last!), upLast)
-		if (lastSame) return
+		const upLast = new Date(updatingForm.last)
 
 		const plant = {
-			id: updatePlantItem?._id,
+			id: updatingForm.item?._id,
 			last: upLast.toJSON()
 		}
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(plant)
 		Api.UpdatePlant(plant).then(pl => {
-			ResetUpdateFormState()
+			resetUpdatingState()
 			setPlantList(pl)
 		})
 	}
@@ -121,12 +117,9 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 	}, [])
 
 	useEffect(() => {
-		(async () => Api.GetPlantSchedule().then(ps => {
+		(async () => Api.GetPlantSchedule().then(({ today, ps }) => {
 			console.log({ PlantSchedule: ps })
-			const T = tzDate(startOfToday())
-			const today = ps.find(d => isSameDay(new Date(d.date), new Date(T)))
 			if (today) {
-				today.date = tzDate(today.date)
 				setSchedule(today)
 			}
 		}))()
@@ -134,82 +127,93 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 
 	return (
 		<>
-			<div className="section-scroll" ref={outClickRef}>
-				<div className="content to-water">
-					<h3>Water Today</h3>
-					{!schedule.plants.length
-						? <div className="content-empty">Nothing here.</div>
-						: <>
-							{schedule.plants.map((plant, i) => (
-								<div
-									key={i}
-									className="content-line with-border">
-									<p className="plant">{plant.name}</p>
+			<div className="section-scroll">
+				{(() => {
+
+					if (isAdding) return (
+						<Form title="Add Plant">
+							<PlantForm
+								submit={PostPlant}
+								form={addingForm}
+								setform={setAddingForm} />
+						</Form>
+					)
+
+					if (isUpdating && updatingForm.item) return (
+						<Form title={`Update ${updatingForm.item.name}`}>
+							<PlantForm
+								submit={UpdatePlant}
+								form={updatingForm}
+								setform={setUpdatingForm} />
+						</Form>
+					)
+
+					return (
+						<>
+							<div className="content to-water">
+								<h3>Water Today</h3>
+								{!schedule.plants.length
+									? <div className="content-empty">Nothing here.</div>
+									: <>
+										{schedule.plants.map((plant, i) => (
+											<div
+												key={i}
+												className="content-line with-border">
+												<p className="plant">{plant.name}</p>
+											</div>
+										))}
+										<br />
+									</>
+								}
+							</div>
+							<div className="content plants">
+								<div className="content-head">
+									<p className="name">Name</p>
+									<p className="cycle">Cycle</p>
+									<p className="last">Last Water</p>
 								</div>
-							))}
-							<br />
+								{plantList.map((plant: any, i: number) => (
+									<div
+										key={i}
+										className="content-line with-border"
+										onClick={() => {
+											return isRemoving
+												? RemovePlant(plant)
+												: isUpdating && !updatingForm.item
+													? setUpdatingForm({ ...updatingForm, item: plant })
+													: null
+										}}>
+										<p className="name">{plant.name}</p>
+										<p className="cycle">{plant.cycle}</p>
+										<p className="last">
+											{new Date(plant.last).toLocaleDateString('en-us',
+												{ weekday: 'short', month: 'short', day: 'numeric' })}
+										</p>
+									</div>
+								))}
+							</div>
 						</>
-					}
-				</div>
-				<div className="content plants">
-					<div className="content-head">
-						<p className="name">Name</p>
-						<p className="cycle">Cycle</p>
-						<p className="last">Last Water</p>
-					</div>
-					{plantList.map((plant: any, i: number) => (
-						<div
-							key={i}
-							className="content-line with-border"
-							onClick={() => {
-								return isRemoving
-									? removePlant(plant)
-									: isUpdating && !updatePlantItem
-										? setUpdatePlantItem(plant)
-										: null
-							}}>
-							<p className="name">{plant.name}</p>
-							<p className="cycle">{plant.cycle}</p>
-							<p className="last">
-								{new Date(plant.last).toLocaleDateString('en-us',
-									{ weekday: 'short', month: 'short', day: 'numeric' })}
-							</p>
-						</div>
-					))}
-				</div>
+					)
+				})()}
 			</div>
 
 			<ActionBar>
-				<ActionBarButton is={isAdding} click={ToggleAdding} render={<VscDiffAdded />} />
-				<ActionBarButton is={isUpdating} click={ToggleUpdating} render={<MdSystemUpdateAlt />} />
-				<ActionBarButton is={isRemoving} click={ToggleRemoving} render={<VscDiffRemoved />} />
+				<ActionBarButton
+					is={isAdding}
+					click={toggleAdding}
+					cancel={resetAddingState}
+					render={<VscDiffAdded />} />
+				<ActionBarButton
+					is={isUpdating}
+					click={toggleUpdating}
+					cancel={resetUpdatingState}
+					render={<MdSystemUpdateAlt />} />
+				<ActionBarButton
+					is={isRemoving}
+					click={toggleRemoving}
+					cancel={toggleRemoving}
+					render={<VscDiffRemoved />} />
 			</ActionBar>
-
-			{isAdding &&
-				<Modal
-					title="Add Plant"
-					mref={outClickRef}>
-					<PlantAdding
-						submit={postPlant}
-						name={name}
-						setName={setName}
-						cycle={cycle}
-						setCycle={setCycle}
-						setLastWater={setLastWater}
-					/>
-				</Modal>
-			}
-
-			{(isUpdating && updatePlantItem) &&
-				<Modal
-					title={`Update ${updatePlantItem.name}`}
-					mref={outClickRef}>
-					<PlantUpdating
-						submit={updatePlant}
-						setUpdateLastWater={setUpdateLastWater}
-					/>
-				</Modal>
-			}
 		</>
 	)
 }

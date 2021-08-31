@@ -1,14 +1,25 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { useOutsideClick } from '../../hooks/useOutsideClick'
+import React, { useEffect, useState } from 'react'
 
 import Api from '../../api'
-import Modal from '../Modal'
-import GroceryAdding from '../modals/Grocery-Adding'
+import Form from '../Form'
+import Groceryform from '../forms/GroceryForm'
 import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 
 import '../../styles/sections/groceries.scss'
+
+interface FormState {
+	name: string
+	quantity: number
+	store: string
+}
+
+const InitAddingForm: FormState = {
+	name: '',
+	quantity: 1,
+	store: 'wholefoods',
+}
 
 const Groceries: React.FC<any> = ({ readOnly }) => {
 	const [isAdding, setAddingState] = useState(false)
@@ -16,31 +27,17 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 
 	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
 
-	const [name, setName] = useState('')
-	const [quantity, setQuantity] = useState(1)
-	const [store, setStore] = useState('wholefoods')
+	const [addingForm, setAddingForm] = useState(InitAddingForm)
 
-	function ResetStates() {
-		setAddingState(false)
-		setRemovingState(false)
-	}
-	const ToggleAdding = () => setAddingState(s => !s)
-	const ToggleRemoving = () => setRemovingState(s => !s)
+	const toggleAdding = () => setAddingState(s => !s)
+	const toggleRemoving = () => setRemovingState(s => !s)
 
-	function ResetAddFormState() {
-		setName('')
-		setQuantity(1)
+	function resetAddingState() {
+		setAddingForm({ ...InitAddingForm, store: addingForm.store })
 		setAddingState(false)
 	}
 
-	const outClickRef: any = useRef()
-	useOutsideClick(outClickRef, () => {
-		if (!isAdding && !isRemoving) return
-		ResetStates()
-		ResetAddFormState()
-	})
-
-	function ToggleClear() {
+	function toggleClear() {
 		const confirmation = window.prompt(
 			'Are you sure you got everything?\n\n' +
 			'Type \'confirm\' to clear Groceries.'
@@ -63,14 +60,18 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 
 	async function postGrocery(e: any) {
 		e.preventDefault()
-		if (!isAdding || !name) return
+		if (!isAdding || !addingForm.name) return
 
-		let item = { name: name, qty: quantity, store: store }
+		let item = {
+			name: addingForm.name,
+			qty: addingForm.quantity,
+			store: addingForm.store
+		}
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(item);
 		Api.PostGrocery(item).then(gl => {
-			ResetAddFormState()
+			resetAddingState()
 			setGroceryList(gl)
 		})
 	}
@@ -84,62 +85,72 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 
 	return (
 		<>
-			<div className="section-scroll" ref={outClickRef}>
-				{!groceryList.length
-					? <div className="content-empty"><p>Nothing here.</p></div>
-					: <div className="groceries content">
-						{groceryList.some(g => g.store === 'wholefoods') &&
-							<>
-								<h3>Whole Foods</h3>
-								{groceryList.filter(i => i.store === 'wholefoods').map((item, i) => (
-									<div
-										key={i}
-										className="content-line with-border"
-										onClick={() => removeGrocery(item)}>
-										<p className="name">{item.name}</p>
-										<p className="quantity">{item.qty}</p>
-									</div>
-								))}
-							</>
-						}
-						{groceryList.some(g => g.store === 'bashas') &&
-							<>
-								<h3>Bashas</h3>
-								{groceryList.filter(i => i.store === 'bashas').map((item, i) => (
-									<div
-										key={i}
-										className="content-line with-border"
-										onClick={() => removeGrocery(item)}>
-										<p className="name">{item.name}</p>
-										<p className="quantity">{item.qty}</p>
-									</div>
-								))}
-							</>
-						}
-					</div>
-				}
+			<div className="section-scroll">
+				{(() => {
+
+					if (isAdding) return (
+						<Form title="Add Grocery">
+							<Groceryform
+								submit={postGrocery}
+								form={addingForm}
+								setForm={addingForm} />
+						</Form>
+					)
+
+					if (!groceryList.length) return (
+						<div className="content-empty"><p>Nothing here.</p></div>
+					)
+
+					return (
+						<div className="groceries content">
+							{groceryList.some(g => g.store === 'wholefoods') &&
+								<>
+									<h3>Whole Foods</h3>
+									{groceryList.filter(i => i.store === 'wholefoods').map((item, i) => (
+										<div
+											key={i}
+											className="content-line with-border"
+											onClick={() => removeGrocery(item)}>
+											<p className="name">{item.name}</p>
+											<p className="quantity">{item.qty}</p>
+										</div>
+									))}
+								</>
+							}
+							{groceryList.some(g => g.store === 'bashas') &&
+								<>
+									<h3>Bashas</h3>
+									{groceryList.filter(i => i.store === 'bashas').map((item, i) => (
+										<div
+											key={i}
+											className="content-line with-border"
+											onClick={() => removeGrocery(item)}>
+											<p className="name">{item.name}</p>
+											<p className="quantity">{item.qty}</p>
+										</div>
+									))}
+								</>
+							}
+						</div>
+					)
+				})()}
 			</div>
 
 			<ActionBar>
-				<ActionBarButton is={isAdding} click={ToggleAdding} render={<VscDiffAdded />} />
-				<ActionBarButton is={isRemoving} click={ToggleRemoving} render={<VscDiffRemoved />} />
-				<ActionBarButton click={ToggleClear} render={<VscDebugStop />} />
+				<ActionBarButton
+					is={isAdding}
+					click={toggleAdding}
+					cancel={resetAddingState}
+					render={<VscDiffAdded />} />
+				<ActionBarButton
+					is={isRemoving}
+					click={toggleRemoving}
+					cancel={toggleRemoving}
+					render={<VscDiffRemoved />} />
+				<ActionBarButton
+					click={toggleClear}
+					render={<VscDebugStop />} />
 			</ActionBar>
-
-			{isAdding &&
-				<Modal
-					title="Add Grocery"
-					mref={outClickRef}>
-					<GroceryAdding
-						submit={postGrocery}
-						name={name}
-						setName={setName}
-						quantity={quantity}
-						setQuantity={setQuantity}
-						store={store}
-						setStore={setStore} />
-				</Modal>
-			}
 		</>
 	)
 }

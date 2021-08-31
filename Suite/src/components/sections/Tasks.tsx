@@ -1,14 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useOutsideClick } from '../../hooks/useOutsideClick'
+import React, { useEffect, useState } from 'react'
 
 import Api from '../../api'
-import Modal from '../Modal'
-import TaskAdding from '../modals/Task-Adding'
+import Form from '../Form'
+import TaskForm from '../forms/TaskForm'
 import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 
 import '../../styles/sections/tasks.scss'
+
+interface FormState {
+	name: string
+	pinned: boolean
+}
+
+const InitAddingForm: FormState = {
+	name: '',
+	pinned: false
+}
 
 const Tasks: React.FC<any> = ({ readOnly }) => {
 	const [isAdding, setAddingState] = useState(false)
@@ -17,29 +26,17 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 	const [staticTasks, setStaticTasks] = useState<Array<StaticTask>>([])
 	const [taskList, setTaskList] = useState<Array<Task>>([])
 
-	const [name, setName] = useState('')
-	const [pinned, setPinned] = useState(false)
+	const [addingForm, setAddingForm] = useState(InitAddingForm)
 
-	function ResetStates() {
+	const toggleAdding = () => setAddingState(s => !s)
+	const toggleRemoving = () => setRemovingState(s => !s)
+
+	function resetAddingState() {
+		setAddingForm(InitAddingForm)
 		setAddingState(false)
-		setRemovingState(false)
-	}
-	const ToggleAdding = () => setAddingState(s => !s)
-	const ToggleRemoving = () => setRemovingState(s => !s)
-
-	function ResetAddFormState() {
-		setName('')
-		setPinned(false)
 	}
 
-	const outClickRef: any = useRef()
-	useOutsideClick(outClickRef, () => {
-		if (!isAdding && !isRemoving) return
-		ResetStates()
-		ResetAddFormState()
-	})
-
-	function ClearBtnClick() {
+	function toggleClear() {
 		const confirmation = window.prompt(
 			'Did you complete everything?\n\n' +
 			'Type \'confirm\' to clear Tasks.'
@@ -50,7 +47,7 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 		}
 	}
 
-	async function removeTask(task: Task) {
+	async function RemoveTask(task: Task) {
 		if (!isRemoving) return
 
 		const confirmation = window.confirm(`Remove '${task.name}' ?`);
@@ -60,16 +57,19 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 		}
 	}
 
-	async function postTask(e: any) {
+	async function PostTask(e: any) {
 		e.preventDefault()
-		if (!name) return
+		if (!addingForm.name) return
 
-		let task = { name: name, pinned: pinned }
+		let task = {
+			name: addingForm.name,
+			pinned: addingForm.pinned
+		}
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(task);
 		Api.PostTask(task).then(tl => {
-			ResetAddFormState()
+			resetAddingState()
 			setTaskList(tl)
 		})
 	}
@@ -87,52 +87,66 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 
 	return (
 		<>
-			<div className="section-scroll" ref={outClickRef}>
-				{!taskList.length
-					? <div className="content-empty"><p>Nothing here.</p></div>
-					: <div className="tasks content">
-						{taskList.length &&
-							taskList.map((task, i) => (
-								<div
-									key={i}
-									className="content-line with-border task"
-									onClick={() => removeTask(task)}>
-									<p
-										className={task.pinned ? 'pin' : ''}>{task.name}</p>
-								</div>
-							))
-						}
-					</div>
-				}
-				<div className="static-tasks content">
-					<h3>Weekly</h3>
-					{staticTasks.map((task, i: number) => (
-						<div key={i} className="content-line with-border">
-							<p className="weekday">{task.weekday}</p>
-							<p className="name">{task.name}</p>
-						</div>
-					))}
-				</div>
+			<div className="section-scroll">
+				{(() => {
+
+					if (isAdding) return (
+						<Form title="Add Task">
+							<TaskForm
+								submit={PostTask}
+								form={addingForm}
+								setForm={setAddingForm} />
+						</Form>
+					)
+
+					if (!taskList.length) return (
+						<div className="content-empty"><p>Nothing here.</p></div>
+					)
+
+					return (
+						<>
+							<div className="tasks content">
+								{taskList.length &&
+									taskList.map((task, i) => (
+										<div
+											key={i}
+											className="content-line with-border task"
+											onClick={() => RemoveTask(task)}>
+											<p
+												className={task.pinned ? 'pin' : ''}>{task.name}</p>
+										</div>
+									))
+								}
+							</div>
+							< div className="static-tasks content">
+								<h3>Weekly</h3>
+								{staticTasks.map((task, i: number) => (
+									<div key={i} className="content-line with-border">
+										<p className="weekday">{task.weekday}</p>
+										<p className="name">{task.name}</p>
+									</div>
+								))}
+							</div>
+						</>
+					)
+				})()}
 			</div>
 
 			<ActionBar>
-				<ActionBarButton is={isAdding} click={ToggleAdding} render={<VscDiffAdded />} />
-				<ActionBarButton is={isRemoving} click={ToggleRemoving} render={<VscDiffRemoved />} />
-				<ActionBarButton click={ClearBtnClick} render={<VscDebugStop />} />
+				<ActionBarButton
+					is={isAdding}
+					click={toggleAdding}
+					cancel={resetAddingState}
+					render={<VscDiffAdded />} />
+				<ActionBarButton
+					is={isRemoving}
+					click={toggleRemoving}
+					cancel={toggleRemoving}
+					render={<VscDiffRemoved />} />
+				<ActionBarButton
+					click={toggleClear}
+					render={<VscDebugStop />} />
 			</ActionBar>
-
-			{isAdding &&
-				<Modal
-					title="Add Task"
-					mref={outClickRef}>
-					<TaskAdding
-						submit={postTask}
-						name={name}
-						setName={setName}
-						pinned={pinned}
-						setPinned={setPinned} />
-				</Modal>
-			}
 		</>
 	)
 }

@@ -87,7 +87,10 @@ class Api {
 	public async GetCatSchedule(): Promise<{ today: CatScheduleDay, cs: Array<CatScheduleDay> }> {
 		const res = await AxiosInstance.get('/cs')
 		const today = res.data.schedule.find((d: CatScheduleDay) => isSameDay(new Date(d.date), tzZero()))
-		return { today, cs: formatCatScheduleDates(res.data.schedule) }
+		return {
+			today,
+			cs: formatCatScheduleDates(res.data.schedule)
+		}
 	}
 
 	// PLANTS
@@ -95,7 +98,10 @@ class Api {
 	public async GetPlantSchedule(): Promise<{ today: PlantScheduleDay, ps: Array<PlantScheduleDay> }> {
 		const res = await AxiosInstance.get('/ps')
 		const today = res.data.schedule.find((d: PlantScheduleDay) => isSameDay(new Date(d.date), tzZero()))
-		return { today, ps: formatPlantScheduleDates(res.data.schedule) }
+		return {
+			today,
+			ps: formatPlantScheduleDates(res.data.schedule)
+		}
 	}
 
 }

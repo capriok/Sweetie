@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react'
 
 import '../../styles/sections/options.scss'
@@ -86,7 +87,6 @@ const Options: React.FC<any> = ({ props }) => {
 						type="color"
 						onChange={(e) => SetPrimaryHSL(e)} />
 				</ContentLine>
-				<input type="time" />
 				<div className="logout">
 					<button tabIndex={-1} onClick={LogoutClick}>Logout</button>
 				</div>

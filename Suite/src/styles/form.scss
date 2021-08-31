@@ -1,18 +1,11 @@
 @import "./index.scss";
 
-#modal {
-	z-index: 100;
-	position: fixed;
-	left: 0;
-	bottom: 0px;
+#form {
 	width: 100vw;
-	border-radius: 5px;
+	height: 100%;
+	background-color: rgb(235, 235, 235);
 
-	overflow: hidden;
-	border-top: 3px solid $primlight;
-	background-color: rgb(255, 255, 255);
-
-	.modal-cont {
+	.form-cont {
 		text-align: center;
 		@include flex;
 		flex-direction: column;
@@ -42,13 +35,25 @@
 					margin: 5px 0;
 					label {
 						flex: 1;
+						width: 100%;
 						text-align: left;
 						white-space: nowrap;
 					}
 					input,
 					select {
+						outline: none;
 						width: 100%;
 						flex: 2;
+					}
+					input[type="checkbox"] {
+						flex: 0.1;
+						width: 15px;
+						height: 15px;
+						@media (max-width: 500px) {
+							flex: unset;
+							width: 20px;
+							height: 20px;
+						}
 					}
 				}
 				.form-submit {

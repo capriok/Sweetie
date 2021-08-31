@@ -11,7 +11,7 @@ const ActionBar: React.FC<any> = ({ children }) => {
 
 	useEffect(() => {
 		children.some((c: any) => {
-			if (c.props.is) return setActive({ cb: c.props.click })
+			if (c.props.is) return setActive({ cb: c.props.cancel })
 			else return false
 		})
 	}, [children])
@@ -20,7 +20,9 @@ const ActionBar: React.FC<any> = ({ children }) => {
 		<div className="action-bar">
 			<div className="actionbar-wrap">
 				{children.some((c: any) => c.props.is)
-					? <ActionBarButton click={active.cb} render={<VscDebugStop />} />
+					? <ActionBarButton
+						click={active.cb}
+						render={<VscDebugStop />} />
 					: children
 				}
 			</div>

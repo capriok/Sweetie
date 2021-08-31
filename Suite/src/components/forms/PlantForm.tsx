@@ -1,7 +1,7 @@
 import React from 'react'
 import { startOfToday } from 'date-fns/esm'
 
-const PlantAdding: React.FC<any> = ({ submit, name, setName, cycle, setCycle, setLastWater }) => {
+const PlantForm: React.FC<any> = ({ submit, form, setForm }) => {
 	const date = startOfToday()
 	date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
 	const maxDate = new Date(date).toISOString().split('T')[0]
@@ -9,26 +9,28 @@ const PlantAdding: React.FC<any> = ({ submit, name, setName, cycle, setCycle, se
 	return (
 		<>
 			<form onSubmit={(e) => submit(e)}>
-				<div className="form-line name">
-					<label htmlFor="name">Name</label>
-					<input
-						name="name"
-						type="text"
-						value={name}
-						placeholder="Name"
-						autoFocus={true}
-						autoComplete="off"
-						onChange={(e) => setName(e.target.value)} />
-				</div>
+				{form.hasOwnProperty('name') &&
+					<div className="form-line name">
+						<label htmlFor="name">Name</label>
+						<input
+							name="name"
+							type="text"
+							value={form.name}
+							placeholder="Name"
+							autoFocus={true}
+							autoComplete="off"
+							onChange={(e) => setForm({ ...form, name: e.target.value })} />
+					</div>
+				}
 				<div className="form-line">
 					<label htmlFor="cycle">Cycle</label>
 					<input
 						name="cycle"
 						type="number"
 						min={3}
-						value={cycle}
+						value={form.cycle}
 						placeholder="Cycle"
-						onChange={(e) => setCycle(parseInt(e.target.value))} />
+						onChange={(e) => setForm({ ...form, cycle: parseInt(e.target.value) })} />
 				</div>
 				<div className="form-line last">
 					<label htmlFor="date">Last Water</label>
@@ -36,7 +38,7 @@ const PlantAdding: React.FC<any> = ({ submit, name, setName, cycle, setCycle, se
 						name="date"
 						type="date"
 						max={maxDate}
-						onChange={(e) => setLastWater(e.target.value)} />
+						onChange={(e) => setForm({ ...form, last: e.target.value })} />
 				</div>
 				<div className="form-submit">
 					<button className="submit" type="submit">Submit</button>
@@ -46,4 +48,4 @@ const PlantAdding: React.FC<any> = ({ submit, name, setName, cycle, setCycle, se
 	)
 }
 
-export default PlantAdding
+export default PlantForm

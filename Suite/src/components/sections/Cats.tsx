@@ -1,15 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useOutsideClick } from '../../hooks/useOutsideClick'
+import React, { useEffect, useState } from 'react'
 import { isSameDay } from 'date-fns'
 
 import Api from '../../api'
-import Modal from '../Modal'
-import CatsUpdating from '../modals/Cats-Updating'
+import Form from '../Form'
+import CatsForm from '../forms/CatsForm'
 import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
 import '../../styles/sections/cats.scss'
+
+interface FormState {
+	lfd: string | undefined
+	lwd: string | undefined
+}
+
+const InitUpdatingForm: FormState = {
+	lfd: undefined,
+	lwd: undefined
+}
+
 
 const Cats: React.FC<any> = ({ readOnly }) => {
 	const [isUpdating, setUpdating] = useState(false)
@@ -20,51 +30,37 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 		lastWasteDay: ''
 	})
 
-	const [lfd, setLfd] = useState<any>()
-	const [lwd, setLwd] = useState<any>()
+	const [updatingForm, setUpdatingForm] = useState(InitUpdatingForm)
 
-	const ToggleUpdating = () => setUpdating(s => !s)
+	const toggleUpdating = () => setUpdating(s => !s)
 
-	function ResetUpdateFormState() {
+	function resetUpdatingState() {
 		setUpdating(false)
-		setLfd(lfd)
-		setLwd(lwd)
 	}
 
-	const outClickRef = useRef()
-	useOutsideClick(outClickRef, () => {
-		if (!isUpdating) return
-		ResetUpdateFormState()
-	})
-
-	async function updateConfig(e: any) {
+	async function UpdateConfig(e: any) {
 		e.preventDefault()
 
-		const lastFoodDay = new Date(lfd)
-		const lastWasteDay = new Date(lwd)
+		const lastFoodDay = new Date(updatingForm.lfd!)
+		const lastWasteDay = new Date(updatingForm.lwd!)
 
-		const foodSame = isSameDay(new Date(catConfig.lastFoodDay!), lastFoodDay)
-		const wasteSame = isSameDay(new Date(catConfig.lastWasteDay!), lastWasteDay)
-
-		if (foodSame && wasteSame) return
-
-		let config: any = {}
-		if (!foodSame) config.lastFoodDay = lastFoodDay.toJSON()
-		if (!wasteSame) config.lastWasteDay = lastWasteDay.toJSON()
+		let config: any = {
+			lastFoodDay: lastFoodDay.toJSON(),
+			lastWasteDay: lastWasteDay.toJSON()
+		}
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(config)
-		Api.UpdateCatConfig(config).then(cd => {
-			ResetUpdateFormState()
-			setCatConfig(cd)
+		Api.UpdateCatConfig(config).then(cc => {
+			resetUpdatingState()
+			setCatConfig(cc)
 		})
 	}
 
 	useEffect(() => {
 		(async () => Api.GetCatConfig().then(cc => {
-			setLfd(cc.lastFoodDay)
-			setLwd(cc.lastWasteDay)
 			console.log({ CatConfig: cc })
+			setUpdatingForm({ lfd: cc.lastFoodDay, lwd: cc.lastWasteDay })
 			setCatConfig(cc)
 		}))()
 	}, [])
@@ -80,47 +76,52 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 	return (
 		<>
 			<div className="section-scroll">
-				<div className="content cats">
-					<div className="content-head">
-						<p>Day</p>
-						<p>Food</p>
-						<p>Waste</p>
-					</div>
-					{schedule.map((day, i) => (
-						<div className="content-line with-border" key={i}>
-							<div className="day">
-								<p>{new Date(day.date).toLocaleDateString('en-us',
-									{ weekday: 'short', month: 'short', day: 'numeric' })}
-								</p>
+				{(() => {
+
+					if (isUpdating) return (
+						<Form title="Cats">
+							<CatsForm
+								submit={UpdateConfig}
+								form={updatingForm}
+								setForm={setUpdatingForm}
+							/>
+						</Form>
+					)
+
+					return (
+						<div className="content cats">
+							<div className="content-head">
+								<p>Day</p>
+								<p>Food</p>
+								<p>Waste</p>
 							</div>
-							<div className="food">
-								<input tabIndex={-1} readOnly type="radio" checked={day.food.is} />
-							</div>
-							<div className="waste">
-								<input tabIndex={-1} readOnly type="radio" checked={day.waste.is} />
-							</div>
+							{schedule.map((day, i) => (
+								<div className="content-line with-border" key={i}>
+									<div className="day">
+										<p>{new Date(day.date).toLocaleDateString('en-us',
+											{ weekday: 'short', month: 'short', day: 'numeric' })}
+										</p>
+									</div>
+									<div className="food">
+										<input tabIndex={-1} readOnly type="radio" checked={day.food.is} />
+									</div>
+									<div className="waste">
+										<input tabIndex={-1} readOnly type="radio" checked={day.waste.is} />
+									</div>
+								</div>
+							))}
 						</div>
-					))}
-				</div>
+					)
+				})()}
 			</div>
 
 			<ActionBar>
-				<ActionBarButton is={isUpdating} click={ToggleUpdating} render={<MdSystemUpdateAlt />} />
+				<ActionBarButton
+					is={isUpdating}
+					click={toggleUpdating}
+					cancel={resetUpdatingState}
+					render={<MdSystemUpdateAlt />} />
 			</ActionBar>
-
-			{isUpdating &&
-				<Modal
-					title="Cats"
-					mref={outClickRef}>
-					<CatsUpdating
-						submit={updateConfig}
-						lfd={lfd}
-						setLfd={setLfd}
-						lwd={lwd}
-						setLwd={setLwd}
-					/>
-				</Modal>
-			}
 		</>
 	)
 }

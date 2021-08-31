@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { isSameDay, startOfToday } from 'date-fns'
 const ENDPOINT = process.env.REACT_APP_SERVER
 
 const baseInstanceParams = {
@@ -13,33 +14,6 @@ const AxiosInstance = axios.create({
 	}
 })
 
-export function tzDate(date: any) {
-	const tzDate = new Date(date)
-	tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
-	return tzDate.toJSON()
-}
-
-const formatCalenderEventsDates = (ce: Array<CalenderEvent>) => {
-	return ce.map((d: CalenderEvent) => {
-		if (!d.timed) d.date = tzDate(d.date)
-		return d
-	})
-}
-
-const formatCatScheduleDates = (cs: Array<CatScheduleDay>) => {
-	return cs.map((d: CatScheduleDay) => {
-		d.date = tzDate(d.date)
-		return d
-	})
-}
-
-const formatPlantListDates = (pl: Array<Plant>) => {
-	return pl.map((p: Plant) => {
-		p.last = tzDate(p.last)
-		return p
-	})
-}
-
 class Api {
 
 	public async ServerPing(): Promise<{ status: number }> {
@@ -51,23 +25,23 @@ class Api {
 
 	public async GetCalenderEvents(): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.get('/ce')
-		return formatCalenderEventsDates(res.data.list)
+		return formatDates(res.data.list, 'date')
 
 	}
 
 	public async PostCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.post('/ce', { event: event })
-		return formatCalenderEventsDates(res.data.list)
+		return formatDates(res.data.list, 'date')
 	}
 
 	public async UpdateCalenderEvent(event: Partial<CalenderEvent>): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.put('/ce', { event: event })
-		return formatCalenderEventsDates(res.data.list)
+		return formatDates(res.data.list, 'date')
 	}
 
 	public async RemoveCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.delete('/ce', { data: { id: event._id } })
-		return formatCalenderEventsDates(res.data.list)
+		return formatDates(res.data.list, 'date')
 	}
 
 	// GROCERIES
@@ -125,12 +99,12 @@ class Api {
 
 	public async GetCatSchedule(): Promise<Array<CatScheduleDay>> {
 		const res = await AxiosInstance.get('/cs')
-		return formatCatScheduleDates(res.data.schedule)
+		return formatDates(res.data.schedule, 'date')
 	}
 
 	public async GetCatConfig(): Promise<CatConfig> {
 		const res = await AxiosInstance.get('/cc')
-		return res.data.days
+		return res.data.config
 	}
 
 	public async UpdateCatConfig(config: Partial<CatConfig>): Promise<CatConfig> {
@@ -140,31 +114,54 @@ class Api {
 
 	// PLANTS
 
-	public async GetPlantSchedule(): Promise<Array<PlantScheduleDay>> {
+	public async GetPlantSchedule(): Promise<{ today: PlantScheduleDay, ps: Array<PlantScheduleDay> }> {
 		const res = await AxiosInstance.get('/ps')
-		return res.data.schedule
+		const today = res.data.schedule.find((d: PlantScheduleDay) => isSameDay(new Date(d.date), new Date(tzZero())))
+		return {
+			today,
+			ps: formatDates(res.data.schedule, 'date')
+		}
 	}
 
 	public async GetPlantList(): Promise<Array<Plant>> {
 		const res = await AxiosInstance.get('/pl')
-		return formatPlantListDates(res.data.list)
+		return formatDates(res.data.list, 'last')
 	}
 
 	public async PostPlant(plant: Plant): Promise<Array<Plant>> {
 		const res = await AxiosInstance.post('/pl', { plant: plant })
-		return formatPlantListDates(res.data.list)
+		return formatDates(res.data.list, 'last')
 	}
 
 	public async UpdatePlant(plant: Partial<Plant>): Promise<Array<Plant>> {
 		const res = await AxiosInstance.put('/pl', { plant: plant })
-		return formatPlantListDates(res.data.list)
+		return formatDates(res.data.list, 'last')
 	}
 
 	public async RemovePlant(plant: Plant): Promise<Array<Plant>> {
 		const res = await AxiosInstance.delete('/pl', { data: { id: plant._id } })
-		return formatPlantListDates(res.data.list)
+		return formatDates(res.data.list, 'last')
 	}
 
+}
+
+function tzZero() {
+	const T = startOfToday()
+	T.setMinutes(T.getMinutes() - T.getTimezoneOffset())
+	return T
+}
+
+function tzDate(date: any) {
+	const tzDate = new Date(date)
+	tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
+	return tzDate.toJSON()
+}
+
+const formatDates = (arr: Array<any>, prop: string) => {
+	return arr.map((x: any) => {
+		x[prop] = tzDate(x[prop])
+		return x
+	})
 }
 
 

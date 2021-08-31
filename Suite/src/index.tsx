@@ -38,4 +38,4 @@ function Index() {
   )
 }
 
-ReactDOM.render(<React.StrictMode><Index /></React.StrictMode>, document.getElementById('root'));
+ReactDOM.render(<React.StrictMode><Index /></React.StrictMode>, document.getElementById('root'))

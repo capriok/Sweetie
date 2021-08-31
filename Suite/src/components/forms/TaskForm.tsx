@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TaskAdding: React.FC<any> = ({ submit, name, setName, pinned, setPinned }) => {
+const TaskForm: React.FC<any> = ({ submit, name, setName, pinned, setPinned }) => {
 	return (
 		<form onSubmit={(e) => submit(e)}>
 			<div className="form-line name">
@@ -29,4 +29,4 @@ const TaskAdding: React.FC<any> = ({ submit, name, setName, pinned, setPinned })
 	)
 }
 
-export default TaskAdding
+export default TaskForm
