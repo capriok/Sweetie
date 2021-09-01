@@ -6,13 +6,10 @@ import Api from '../../api'
 import '../../styles/sections/calender.scss'
 
 const Calender: React.FC = () => {
-	let [currentMonth, setCurrentMonth] = useState<Date>(
-		startOfMonth(new Date())
-	)
-
+	let [currentMonth, setCurrentMonth] = useState<Date>(startOfMonth(new Date()))
 	const [calenderEvents, setCalenderEvents] = useState<any>([])
 
-	const date = new Date();
+	const date = new Date()
 	const today = date.getDate()
 
 	useEffect(() => {
@@ -27,12 +24,27 @@ const Calender: React.FC = () => {
 	}, [])
 
 	useEffect(() => {
-		(async () => Api.GetCalenderEvents().then(ce => setCalenderEvents(ce)))()
+		(async () => Api.GetCalenderEvents().then(ce => {
+			console.log({ CalenderEvents: ce })
+			setCalenderEvents(ce)
+		}))()
 	}, [])
 
-	useEffect(() => {
-		calenderEvents.length && console.log({ CalenderEvents: calenderEvents })
-	}, [calenderEvents])
+	function formatEventTimes(event: CalenderEvent) {
+		const { startTime, endTime } = event
+		const date = new Date(event.date).toJSON().split('T')[0]
+
+		const s = new Date(date + ' ' + startTime)
+		const start = format(s, 'h:mm')
+
+		let time = start
+		if (endTime) {
+			const e = new Date(date + ' ' + endTime)
+			const end = format(e, 'h:mm')
+			time = time + ' - ' + end
+		}
+		return time
+	}
 
 	return (
 		<div className="calender">
@@ -51,7 +63,10 @@ const Calender: React.FC = () => {
 									key={i}
 									className="calender-event">
 									<span className="name">{event.name}</span>
-									<span className="timed">{event.timed ? format(event.date, 'h:mm') : ""}</span>
+									<span className="timed">{
+										event.timed
+											? formatEventTimes(event)
+											: ''}</span>
 								</p>
 							))
 						} />

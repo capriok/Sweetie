@@ -3,10 +3,8 @@ import { useState, useEffect } from 'react'
 import '../../styles/sections/datetime.scss'
 
 const DateTime: React.FC = () => {
-
 	const [currentTime, setCurrentTime] = useState(format(new Date(), "pp"))
 	const [currentDate] = useState(format(new Date(), "PPP"))
-
 
 	useEffect(() => {
 		setTimeout(() => {

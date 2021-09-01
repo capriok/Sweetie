@@ -14,39 +14,6 @@ const AxiosInstance = axios.create({
 	}
 })
 
-const tzZero = () => {
-	const T = startOfToday()
-	T.setMinutes(T.getMinutes() - T.getTimezoneOffset())
-	return T
-}
-
-export function tzDate(date: any) {
-	const tzDate = new Date(date)
-	tzDate.setMinutes(tzDate.getMinutes() + tzDate.getTimezoneOffset())
-	return tzDate.toJSON()
-}
-
-const formatCalenderEventsDates = (ce: Array<CalenderEvent>) => {
-	return ce.map((d: CalenderEvent) => {
-		if (!d.timed) d.date = tzDate(d.date)
-		return d
-	})
-}
-
-const formatCatScheduleDates = (cs: Array<CatScheduleDay>) => {
-	return cs.map((d: CatScheduleDay) => {
-		d.date = tzDate(d.date)
-		return d
-	})
-}
-
-const formatPlantScheduleDates = (ps: Array<PlantScheduleDay>) => {
-	return ps.map((d: PlantScheduleDay) => {
-		d.date = tzDate(d.date)
-		return d
-	})
-}
-
 class Api {
 
 	public async ServerPing(): Promise<{ status: number }> {
@@ -58,7 +25,7 @@ class Api {
 
 	public async GetCalenderEvents(): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.get('/ce')
-		return formatCalenderEventsDates(res.data.list)
+		return formatDates(res.data.list, 'date')
 	}
 
 	// GROCERIES
@@ -89,7 +56,7 @@ class Api {
 		const today = res.data.schedule.find((d: CatScheduleDay) => isSameDay(new Date(d.date), tzZero()))
 		return {
 			today,
-			cs: formatCatScheduleDates(res.data.schedule)
+			cs: formatDates(res.data.schedule, 'date')
 		}
 	}
 
@@ -100,10 +67,29 @@ class Api {
 		const today = res.data.schedule.find((d: PlantScheduleDay) => isSameDay(new Date(d.date), tzZero()))
 		return {
 			today,
-			ps: formatPlantScheduleDates(res.data.schedule)
+			ps: formatDates(res.data.schedule, 'last')
 		}
 	}
 
+}
+
+function tzZero() {
+	const d = startOfToday()
+	d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+	return d
+}
+
+function tzDate(date: any) {
+	const d = new Date(date)
+	d.setMinutes(d.getMinutes() + d.getTimezoneOffset())
+	return d.toJSON()
+}
+
+const formatDates = (arr: Array<any>, prop: string) => {
+	return arr.map((x: any) => {
+		x[prop] = tzDate(x[prop])
+		return x
+	})
 }
 
 export default new Api()

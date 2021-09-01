@@ -4,16 +4,14 @@ import Api from '../../api'
 import '../../styles/sections/groceries.scss'
 
 const Groceries: React.FC = () => {
-
 	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
 
 	useEffect(() => {
-		(async () => Api.GetGroceryList().then(gl => setGroceryList(gl)))()
+		(async () => Api.GetGroceryList().then(gl => {
+			console.log({ GroceryList: gl })
+			setGroceryList(gl)
+		}))()
 	}, [])
-
-	useEffect(() => {
-		groceryList.length && console.log({ GroceryList: groceryList })
-	}, [groceryList])
 
 	return (
 		<div className="grocerylist">

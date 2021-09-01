@@ -1,8 +1,10 @@
 interface CalenderEvent {
 	_id?: string
 	name: string
-	date: string
 	timed: boolean
+	date: string
+	startTime: string
+	endTime: string
 }
 
 interface Grocery {

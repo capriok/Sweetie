@@ -4,22 +4,19 @@ import Api from '../../api'
 import '../../styles/sections/tasks.scss'
 
 const Tasks: React.FC = () => {
-
 	const [staticTasks, setStaticTasks] = useState<Array<StaticTask>>([])
 	const [taskList, setTaskList] = useState<Array<Task>>([])
 
 	useEffect(() => {
-		(async () => Api.GetTaskList().then(tl => setTaskList(tl)))();
-		(async () => Api.GetStaticTasks().then(st => setStaticTasks(st)))();
+		(async () => Api.GetTaskList().then(tl => {
+			console.log({ StaticTasks: tl })
+			setTaskList(tl)
+		}))();
+		(async () => Api.GetStaticTasks().then(st => {
+			console.log({ TaskList: st })
+			setStaticTasks(st)
+		}))();
 	}, [])
-
-	useEffect(() => {
-		staticTasks.length && console.log({ StaticTasks: staticTasks })
-	}, [staticTasks])
-
-	useEffect(() => {
-		taskList.length && console.log({ TaskList: taskList })
-	}, [taskList])
 
 	return (
 		<div className="tasklist">
