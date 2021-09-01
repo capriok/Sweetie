@@ -144,15 +144,18 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 
 	function formatEventTimes(event: CalenderEvent) {
 		const { startTime, endTime } = event
+
+		if (!event.timed || (event.timed && !startTime)) return
+
 		const date = new Date(event.date).toJSON().split('T')[0]
 
-		const s = new Date(date + ' ' + startTime)
-		const start = format(s, endTime ? 'h:mm' : 'p')
+		const sDate = new Date(date + 'T' + startTime)
+		const start = format(sDate, endTime ? 'h:mm' : 'p')
 
 		let time = start
 		if (endTime) {
-			const e = new Date(date + ' ' + endTime)
-			const end = format(e, 'p')
+			const eDate = new Date(date + 'T' + endTime)
+			const end = format(eDate, 'p')
 			time = time + ' - ' + end
 		}
 		return time
@@ -213,7 +216,8 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 											<p>
 												{event.timed
 													? formatEventTimes(event)
-													: ''}
+													: ''
+												}
 											</p>
 										</div>
 									</div>
