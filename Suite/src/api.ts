@@ -26,7 +26,6 @@ class Api {
 	public async GetCalenderEvents(): Promise<Array<CalenderEvent>> {
 		const res = await AxiosInstance.get('/ce')
 		return formatDates(res.data.list, 'date')
-
 	}
 
 	public async PostCalenderEvent(event: CalenderEvent): Promise<Array<CalenderEvent>> {

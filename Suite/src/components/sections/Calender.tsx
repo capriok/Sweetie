@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { format, isSameDay } from 'date-fns'
+import { format } from 'date-fns'
 
 import Api from '../../api'
 import Form from '../Form'
@@ -13,11 +13,11 @@ import '../../styles/sections/calender.scss'
 
 interface FormState {
 	name?: string
-	item?: CalenderEvent | undefined
+	item?: CalenderEvent
 	timed: boolean
-	date: string | undefined
-	startTime: string | undefined
-	endTime: string | undefined
+	date?: string
+	startTime?: string
+	endTime?: string
 }
 
 const InitAddingForm: FormState = {
@@ -59,6 +59,21 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		setUpdatingState(false)
 	}
 
+	function setUpdatingFormItem(event: CalenderEvent) {
+		const d = new Date(event.date)
+		d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+		const formattedDate = d.toISOString().split('T')[0]
+
+		setUpdatingForm({
+			...updatingForm,
+			item: event,
+			timed: event.timed,
+			date: formattedDate,
+			startTime: event.startTime,
+			endTime: event.endTime,
+		})
+	}
+
 	async function RemoveEvent(event: CalenderEvent) {
 		if (!isRemoving) return
 
@@ -74,12 +89,15 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 
 		const invalidDate = !isNaN(Date.parse(addingForm.date!))
 		if (!isAdding || !addingForm.name || !invalidDate) return
+		if (addingForm.timed && (!addingForm.startTime)) return
 
-		const evDate = new Date(addingForm.date!)
+		const date = new Date(addingForm.date!)
 		let event = {
 			name: addingForm.name,
-			date: evDate.toJSON(),
-			timed: addingForm.timed
+			date: date.toJSON(),
+			timed: addingForm.timed,
+			startTime: addingForm.startTime || '',
+			endTime: addingForm.endTime || ''
 		}
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
@@ -93,16 +111,20 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 	async function UpdateEvent(e: any) {
 		e.preventDefault()
 
-		const invalidDate = !isNaN(Date.parse(updatingForm.date!))
-		if (!updatingForm.date! || !invalidDate) return
+		if (updatingForm && !updatingForm.startTime) return
 
-		const upDate = new Date(updatingForm.date!)
-
+		const date = new Date(updatingForm.date!)
 		const event = {
 			id: updatingForm.item?._id,
-			date: upDate.toJSON(),
-			timed: updatingForm.timed
+			timed: updatingForm.timed,
+			date: updatingForm.item?.date,
+			startTime: updatingForm.item?.startTime,
+			endTime: updatingForm.item?.endTime,
 		}
+
+		if (updatingForm.date) event.date = date.toJSON()
+		if (updatingForm.startTime) event.startTime = updatingForm.startTime
+		if (updatingForm.endTime) event.endTime = updatingForm.endTime
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(event);
@@ -119,6 +141,23 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		}))()
 	}, [])
 
+
+	function formatEventTimes(event: CalenderEvent) {
+		const { startTime, endTime } = event
+		const date = new Date(event.date).toJSON().split('T')[0]
+
+		const s = new Date(date + ' ' + startTime)
+		const start = format(s, endTime ? 'h:mm' : 'p')
+
+		let time = start
+		if (endTime) {
+			const e = new Date(date + ' ' + endTime)
+			const end = format(e, 'p')
+			time = time + ' - ' + end
+		}
+		return time
+	}
+
 	return (
 		<>
 			<div className="section-scroll">
@@ -129,7 +168,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 							<CalenderForm
 								submit={PostEvent}
 								form={addingForm}
-								setform={setAddingForm} />
+								setForm={setAddingForm} />
 						</Form>
 					)
 
@@ -138,7 +177,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 							<CalenderForm
 								submit={UpdateEvent}
 								form={updatingForm}
-								setform={setUpdatingForm} />
+								setForm={setUpdatingForm} />
 						</Form>
 					)
 
@@ -158,7 +197,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 											return isRemoving
 												? RemoveEvent(event)
 												: isUpdating && !updatingForm.item
-													? setUpdatingForm({ ...updatingForm, item: event })
+													? setUpdatingFormItem(event)
 													: null
 										}}>
 										<div className="name">
@@ -171,7 +210,11 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 											</p>
 										</div>
 										<div className="time">
-											<p>{event.timed ? format(new Date(event.date), 'p') : ''}</p>
+											<p>
+												{event.timed
+													? formatEventTimes(event)
+													: ''}
+											</p>
 										</div>
 									</div>
 								)

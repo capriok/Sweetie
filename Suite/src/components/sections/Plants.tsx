@@ -12,9 +12,9 @@ import '../../styles/sections/plants.scss'
 
 interface FormState {
 	name?: string
-	item?: Plant | undefined
+	item?: Plant
 	cycle: number
-	last: string | undefined
+	last?: string
 }
 
 const InitAddingForm: FormState = {
@@ -57,6 +57,19 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 		setUpdatingState(false)
 	}
 
+	function setUpdatingFormItem(plant: Plant) {
+		const d = new Date(plant.last)
+		d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+		const formattedDate = d.toISOString().split('T')[0]
+
+		setUpdatingForm({
+			...updatingForm,
+			item: plant,
+			cycle: plant.cycle,
+			last: formattedDate,
+		})
+	}
+
 	async function RemovePlant(plant: Plant) {
 		if (!isRemoving) return
 
@@ -72,6 +85,7 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 
 		const invalidDate = !isNaN(Date.parse(addingForm.last!))
 		if (!addingForm.name || !invalidDate) return
+		if (addingForm.cycle < 1) return
 
 		const last = new Date(addingForm.last!)
 		const plant = {
@@ -93,12 +107,14 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 
 		const invalidDate = !isNaN(Date.parse(updatingForm.last!))
 		if (!updatingForm.last || !invalidDate) return
+		if (addingForm.cycle < 1) return
 
-		const upLast = new Date(updatingForm.last)
+		const last = new Date(updatingForm.last)
 
 		const plant = {
 			id: updatingForm.item?._id,
-			last: upLast.toJSON()
+			cycle: updatingForm.cycle,
+			last: last.toJSON()
 		}
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
@@ -135,7 +151,7 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 							<PlantForm
 								submit={PostPlant}
 								form={addingForm}
-								setform={setAddingForm} />
+								setForm={setAddingForm} />
 						</Form>
 					)
 
@@ -144,7 +160,7 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 							<PlantForm
 								submit={UpdatePlant}
 								form={updatingForm}
-								setform={setUpdatingForm} />
+								setForm={setUpdatingForm} />
 						</Form>
 					)
 
@@ -180,7 +196,7 @@ const Plants: React.FC<any> = ({ readOnly }) => {
 											return isRemoving
 												? RemovePlant(plant)
 												: isUpdating && !updatingForm.item
-													? setUpdatingForm({ ...updatingForm, item: plant })
+													? setUpdatingFormItem(plant)
 													: null
 										}}>
 										<p className="name">{plant.name}</p>

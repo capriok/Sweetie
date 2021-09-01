@@ -38,6 +38,7 @@ const PlantForm: React.FC<any> = ({ submit, form, setForm }) => {
 						name="date"
 						type="date"
 						max={maxDate}
+						value={form.last}
 						onChange={(e) => setForm({ ...form, last: e.target.value })} />
 				</div>
 				<div className="form-submit">

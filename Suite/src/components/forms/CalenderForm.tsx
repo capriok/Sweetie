@@ -1,12 +1,5 @@
 import React from 'react'
-import { addDays } from 'date-fns'
-import { startOfToday } from 'date-fns/esm'
-
-const CalenderForm: React.FC<any> = ({ submit, form, setform }) => {
-	const date = startOfToday()
-	date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
-	const minDate = addDays(new Date(date), 1).toISOString().split('T')[0]
-
+const CalenderForm: React.FC<any> = ({ submit, form, setForm }) => {
 	return (
 		<form onSubmit={(e) => submit(e)} >
 			{form.hasOwnProperty('name') &&
@@ -15,11 +8,11 @@ const CalenderForm: React.FC<any> = ({ submit, form, setform }) => {
 					<input
 						name="name"
 						type="text"
-						value={form.name}
-						placeholder="Name"
 						autoFocus={true}
 						autoComplete="off"
-						onChange={(e) => setform({ ...form, name: e.target.value })} />
+						placeholder="Name"
+						value={form.name}
+						onChange={(e) => setForm({ ...form, name: e.target.value })} />
 				</div>
 			}
 			<div className="form-line date">
@@ -27,8 +20,8 @@ const CalenderForm: React.FC<any> = ({ submit, form, setform }) => {
 				<input
 					name="date"
 					type="date"
-					min={minDate}
-					onChange={(e) => setform({ ...form, date: e.target.value })} />
+					value={form.date}
+					onChange={(e) => setForm({ ...form, date: e.target.value })} />
 			</div>
 			<div className="form-line timed">
 				<label htmlFor="timed">Timed</label>
@@ -36,22 +29,24 @@ const CalenderForm: React.FC<any> = ({ submit, form, setform }) => {
 					name="timed"
 					type="checkbox"
 					checked={form.timed}
-					onChange={(e) => setform({ ...form, timed: e.target.checked })} />
+					onChange={(e) => setForm({ ...form, timed: e.target.checked })} />
 			</div>
 			{form.timed && <>
-				<div className="form-line time">
-					<label htmlFor="date">Start</label>
+				<div className="form-line start-time">
+					<label htmlFor="start-time">Start</label>
 					<input
-						name="date"
+						name="start-time"
 						type="time"
-						onChange={(e) => setform({ ...form, startTime: e.target.value })} />
+						value={form.startTime}
+						onChange={(e) => setForm({ ...form, startTime: e.target.value })} />
 				</div>
-				<div className="form-line time">
-					<label htmlFor="date">End</label>
+				<div className="form-line end-time">
+					<label htmlFor="start-time">End</label>
 					<input
-						name="date"
+						name="end-time"
 						type="time"
-						onChange={(e) => setform({ ...form, endTime: e.target.value })} />
+						value={form.endTime}
+						onChange={(e) => setForm({ ...form, endTime: e.target.value })} />
 				</div>
 			</>}
 			<div className="form-submit">

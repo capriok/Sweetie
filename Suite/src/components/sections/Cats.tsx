@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { isSameDay } from 'date-fns'
 
 import Api from '../../api'
 import Form from '../Form'
@@ -11,8 +10,8 @@ import { MdSystemUpdateAlt } from 'react-icons/md'
 import '../../styles/sections/cats.scss'
 
 interface FormState {
-	lfd: string | undefined
-	lwd: string | undefined
+	lfd?: string
+	lwd?: string
 }
 
 const InitUpdatingForm: FormState = {
@@ -38,13 +37,20 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 		setUpdating(false)
 	}
 
+	function setUpdatingConfig(catConfig: CatConfig) {
+		setUpdatingForm({
+			lfd: catConfig.lastFoodDay,
+			lwd: catConfig.lastWasteDay
+		})
+	}
+
 	async function UpdateConfig(e: any) {
 		e.preventDefault()
 
 		const lastFoodDay = new Date(updatingForm.lfd!)
 		const lastWasteDay = new Date(updatingForm.lwd!)
 
-		let config: any = {
+		let config = {
 			lastFoodDay: lastFoodDay.toJSON(),
 			lastWasteDay: lastWasteDay.toJSON()
 		}
@@ -60,7 +66,6 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 	useEffect(() => {
 		(async () => Api.GetCatConfig().then(cc => {
 			console.log({ CatConfig: cc })
-			setUpdatingForm({ lfd: cc.lastFoodDay, lwd: cc.lastWasteDay })
 			setCatConfig(cc)
 		}))()
 	}, [])
@@ -71,6 +76,7 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 			console.log({ CatSchedule: cs })
 			setSchedule(cs)
 		}))()
+		setUpdatingConfig(catConfig)
 	}, [catConfig])
 
 	return (

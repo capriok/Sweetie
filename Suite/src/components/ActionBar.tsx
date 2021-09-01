@@ -11,8 +11,10 @@ const ActionBar: React.FC<any> = ({ children }) => {
 
 	useEffect(() => {
 		children.some((c: any) => {
-			if (c.props.is) return setActive({ cb: c.props.cancel })
-			else return false
+			if (c.props.is) {
+				if (active.cb !== c.props.cancel)
+					setActive({ cb: c.props.cancel })
+			}
 		})
 	}, [children])
 
