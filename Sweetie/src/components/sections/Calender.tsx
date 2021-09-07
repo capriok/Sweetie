@@ -15,6 +15,7 @@ const Calender: React.FC = () => {
 	useEffect(() => {
 		let calenderDay = document.querySelectorAll('.rc-font-bold')
 		if (calenderDay) {
+			console.log(calenderDay);
 			calenderDay.forEach((d) => {
 				if (parseInt(d.textContent!) === today) {
 					d.classList.add('today-indicator')
@@ -81,7 +82,7 @@ const Calender: React.FC = () => {
 							data.slice(0, 4).map((event: any, i) => (
 								<p
 									key={i}
-									className="calender-event">
+									className={event.name ? 'calender-event day-fill' : 'calender-event'}>
 									<span className="name">{event.name}</span>
 									<span className="timed">
 										{event.timed

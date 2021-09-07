@@ -12,7 +12,7 @@
 		.calender-event {
 			font-size: 1.8rem !important;
 			@include flex;
-			margin-top: 5px;
+			padding: 3px 10px;
 			justify-content: space-between;
 			border-color: grey !important;
 			.name {
@@ -25,8 +25,11 @@
 				min-width: fit-content;
 			}
 		}
+		.day-fill {
+			background-color: rgba(80, 80, 80, 0.2);
+		}
 		.today-indicator {
-			font-size: 2rem;
+			font-weight: bold;
 			color: crimson !important;
 		}
 	}
@@ -200,6 +203,7 @@ body {
 }
 
 .rc-hidden {
+	padding: 10px !important;
 	font-size: 1.5rem;
 	display: none;
 }
@@ -221,6 +225,7 @@ body {
 }
 
 .rc-font-bold {
+	padding: 10px;
 	font-weight: 700;
 }
 
@@ -268,7 +273,7 @@ body {
 }
 
 .rc-p-2 {
-	padding: 10px;
+	padding: 0px;
 }
 
 .rc-p-4 {
