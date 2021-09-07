@@ -27,8 +27,6 @@ const Tasks: React.FC = () => {
 						{task.name}
 					</p>
 				))}
-				<br />
-				<br />
 				<h3>Weekly</h3>
 				{staticTasks.map((task, i) => (
 					<div key={i} className="task static-task">

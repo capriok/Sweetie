@@ -150,16 +150,34 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		const date = new Date(event.date).toJSON().split('T')[0]
 
 		const sDate = new Date(date + 'T' + startTime)
-		const start = format(sDate, endTime ? 'h:mm' : 'p')
+		const start = trimTime(format(sDate, endTime ? 'h:mm' : 'p'))
 
 		let time = start
 		if (endTime) {
 			const eDate = new Date(date + 'T' + endTime)
-			const end = format(eDate, 'p')
+			const end = trimTime(format(eDate, 'p'))
 			time = time + ' - ' + end
 		}
 		return time
 	}
+
+	function trimTime(time: string) {
+		let slice = time.split(':')
+		const hour = slice[0]
+		const minute = slice[1].substring(0, 2)
+
+		const meridian = RegExp(/AM|PM/g).test(slice[1])
+			? slice[1].split(' ')[1]
+			: ''
+
+		time = hour + ':' + minute
+		if (slice[1].includes('00')) {
+			time = hour
+		}
+
+		return time + ' ' + meridian
+	}
+
 
 	return (
 		<>
