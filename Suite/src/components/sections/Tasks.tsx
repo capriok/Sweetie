@@ -104,32 +104,31 @@ const Tasks: React.FC<any> = ({ readOnly }) => {
 					)
 
 					return (
-						<>
-							<div className="tasks content">
-								{taskList.length &&
-									taskList.map((task, i) => (
-										<div
-											key={i}
-											className="content-line with-border task"
-											onClick={() => RemoveTask(task)}>
-											<p
-												className={task.pinned ? 'pin' : ''}>{task.name}</p>
-										</div>
-									))
-								}
-							</div>
-							< div className="static-tasks content">
-								<h3>Weekly</h3>
-								{staticTasks.map((task, i: number) => (
-									<div key={i} className="content-line with-border">
-										<p className="weekday">{task.weekday}</p>
-										<p className="name">{task.name}</p>
+						<div className="tasks content">
+							{taskList.length &&
+								taskList.map((task, i) => (
+									<div
+										key={i}
+										className="content-line with-border task"
+										onClick={() => RemoveTask(task)}>
+										<p
+											className={task.pinned ? 'pin' : ''}>{task.name}</p>
 									</div>
-								))}
-							</div>
-						</>
+								))
+							}
+						</div>
 					)
 				})()}
+
+				<div className="static-tasks content">
+					<h3>Weekly</h3>
+					{staticTasks.map((task, i: number) => (
+						<div key={i} className="content-line with-border">
+							<p className="weekday">{task.weekday}</p>
+							<p className="name">{task.name}</p>
+						</div>
+					))}
+				</div>
 			</div>
 
 			<ActionBar>

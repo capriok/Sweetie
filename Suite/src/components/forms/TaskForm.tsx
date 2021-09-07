@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TaskForm: React.FC<any> = ({ submit, name, setName, pinned, setPinned }) => {
+const TaskForm: React.FC<any> = ({ submit, form, setForm }) => {
 	return (
 		<form onSubmit={(e) => submit(e)}>
 			<div className="form-line name">
@@ -8,18 +8,18 @@ const TaskForm: React.FC<any> = ({ submit, name, setName, pinned, setPinned }) =
 				<input
 					name="name"
 					type="text"
-					value={name}
+					value={form.name}
 					placeholder="Task"
 					autoFocus={true}
 					autoComplete="off"
-					onChange={(e) => setName(e.target.value)} />
+					onChange={(e) => setForm({ ...form, name: e.target.value })} />
 			</div>
 			<div className="form-line pinned">
 				<label htmlFor="pinned">Pinned</label>
 				<input
 					type="checkbox"
-					checked={pinned}
-					onChange={(e) => setPinned(e.target.checked)} />
+					checked={form.pinned}
+					onChange={(e) => setForm({ ...form, pinned: e.target.checked })} />
 			</div>
 			<div className="form-submit">
 				<button className="submit" type="submit">Submit</button>

@@ -89,7 +89,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 
 		const invalidDate = !isNaN(Date.parse(addingForm.date!))
 		if (!isAdding || !addingForm.name || !invalidDate) return
-		if (addingForm.timed && (!addingForm.startTime)) return
+		if (addingForm.timed && !addingForm.startTime) return
 
 		const date = new Date(addingForm.date!)
 		let event = {
@@ -111,7 +111,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 	async function UpdateEvent(e: any) {
 		e.preventDefault()
 
-		if (updatingForm && !updatingForm.startTime) return
+		if (isUpdating && (updatingForm.timed && !updatingForm.startTime)) return
 
 		const date = new Date(updatingForm.date!)
 		const event = {

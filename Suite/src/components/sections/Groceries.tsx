@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Api from '../../api'
 import Form from '../Form'
-import Groceryform from '../forms/GroceryForm'
+import GroceryForm from '../forms/GroceryForm'
 import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
@@ -90,10 +90,10 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 
 					if (isAdding) return (
 						<Form title="Add Grocery">
-							<Groceryform
+							<GroceryForm
 								submit={postGrocery}
 								form={addingForm}
-								setForm={addingForm} />
+								setForm={setAddingForm} />
 						</Form>
 					)
 
