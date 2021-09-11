@@ -11,15 +11,19 @@ function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
 
   useEffect(() => {
-    Api.ServerPing().then(() => {
-      document.getElementById('splash-swt')?.classList.add('shrink')
+    if (process.env.NODE_ENV === 'production') {
+      Api.ServerPing().then(() => {
+        document.getElementById('splash-swt')?.classList.add('shrink')
+        setTimeout(() => {
+          setServerIdle(false)
+        }, 500)
+      })
       setTimeout(() => {
-        setServerIdle(false)
-      }, 500)
-    })
-    setTimeout(() => {
-      window.location.reload()
-    }, 300000)
+        window.location.reload()
+      }, 300000)
+    } else {
+      setServerIdle(false)
+    }
   }, [])
 
 
