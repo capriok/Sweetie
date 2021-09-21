@@ -27,7 +27,7 @@ const Tasks: React.FC = () => {
 						{task.name}
 					</p>
 				))}
-				<h3>Weekly</h3>
+				<h3 className={taskList.length ? "weekly" : ""}>Weekly</h3>
 				{staticTasks.map((task, i) => (
 					<div key={i} className="task static-task">
 						<p>{task.weekday}</p>

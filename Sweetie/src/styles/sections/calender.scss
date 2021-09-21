@@ -25,12 +25,19 @@
 				min-width: fit-content;
 			}
 		}
-		.day-fill {
-			background-color: rgba(80, 80, 80, 0.2);
-		}
-		.today-indicator {
+		.today-mark {
 			font-weight: bold;
 			color: crimson !important;
+		}
+
+		.line {
+			background-color: rgba(80, 80, 80, 0.2);
+			border-left: 5px solid rgb(2, 91, 226) !important;
+		}
+
+		.work {
+			border-left: 5px solid rgb(0, 128, 38) !important;
+			background-color: rgba(80, 80, 80, 0.1);
 		}
 	}
 }

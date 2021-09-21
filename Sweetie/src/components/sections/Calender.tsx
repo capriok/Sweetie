@@ -13,11 +13,11 @@ const Calender: React.FC = () => {
 	const today = date.getDate()
 
 	useEffect(() => {
-		let calenderDay = document.querySelectorAll('.rc-font-bold')
-		if (calenderDay) {
-			calenderDay.forEach((d) => {
+		let calenderDayTitle = document.querySelectorAll('.rc-font-bold')
+		if (calenderDayTitle) {
+			calenderDayTitle.forEach((d) => {
 				if (parseInt(d.textContent!) === today) {
-					d.classList.add('today-indicator')
+					d.classList.add('today-mark')
 				}
 			})
 		}
@@ -66,6 +66,15 @@ const Calender: React.FC = () => {
 		return time + ' ' + meridian
 	}
 
+	function CalenderEventClassName(event: CalenderEvent) {
+		let cn = 'calender-event '
+
+		if (event.name) cn = cn + 'line '
+		if (event.name === 'Work') cn = cn + 'work'
+
+		return cn
+	}
+
 	return (
 		<div className="calender">
 			<MonthlyCalendar
@@ -81,7 +90,7 @@ const Calender: React.FC = () => {
 							data.slice(0, 4).map((event: any, i) => (
 								<p
 									key={i}
-									className={event.name ? 'calender-event day-fill' : 'calender-event'}>
+									className={CalenderEventClassName(event)}>
 									<span className="name">{event.name}</span>
 									<span className="timed">
 										{event.timed

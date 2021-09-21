@@ -10,6 +10,9 @@
 		margin: 20px 0;
 		border-bottom: 2px solid grey;
 	}
+	.weekly {
+		margin-top: 40px;
+	}
 	.tasks {
 		max-width: 500px;
 		width: 100%;
@@ -23,6 +26,7 @@
 		}
 		.static-task {
 			width: 100%;
+			margin-top: 20px;
 			@include flex;
 			justify-content: space-between;
 		}
