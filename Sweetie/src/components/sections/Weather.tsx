@@ -23,26 +23,24 @@ const Weather: React.FC = () => {
 
 	return (
 		<div className="weather">
-			{
-				stats.loading
-					? <p>Fetching Weather</p>
-					: <>
-						<div className="top">
-							<h1 className="description">{tod} has {stats.description}</h1>
+			{stats.loading
+				? <p>Fetching Weather</p>
+				: <>
+					<div className="top">
+						<h1 className="description">{tod} has {stats.description}</h1>
+					</div>
+					<div className="bottom">
+						<div className="temperature">
+							<p>{stats.temperature}<span className="symbol">°</span></p>
+							<label><p>Temperature</p></label>
 						</div>
-						<div className="bottom">
-							<div className="temperature">
-								<p>{stats.temperature}<span className="symbol">°</span></p>
-								<label><p>Temperature</p></label>
-							</div>
-							<div className="icon"><img src={stats.icon} draggable={false} alt="" /></div>
-							<div className="humidity">
-								<p>{stats.humidity}<span className="symbol">%</span></p>
-								<label><p>Humidity</p></label>
-							</div>
+						<div className="icon"><img src={stats.icon} draggable={false} alt="" /></div>
+						<div className="humidity">
+							<p>{stats.humidity}<span className="symbol">%</span></p>
+							<label><p>Humidity</p></label>
 						</div>
-					</>
-			}
+					</div>
+				</>}
 		</div>
 	)
 }
