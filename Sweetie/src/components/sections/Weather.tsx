@@ -15,7 +15,7 @@ const Weather: React.FC = () => {
 	const isEvening = ch >= 17
 	const isNight = ch > 22
 
-	let tod = 'This Morning'
+	let tod = 'This morning'
 
 	if (isAfternoon) tod = 'This afternoon'
 	if (isEvening) tod = 'This evening'
