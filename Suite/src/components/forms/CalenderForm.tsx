@@ -1,4 +1,5 @@
 import React from 'react'
+
 const CalenderForm: React.FC<any> = ({ submit, form, setForm }) => {
 	return (
 		<form onSubmit={(e) => submit(e)} >
@@ -15,14 +16,62 @@ const CalenderForm: React.FC<any> = ({ submit, form, setForm }) => {
 						onChange={(e) => setForm({ ...form, name: e.target.value })} />
 				</div>
 			}
-			<div className="form-line date">
-				<label htmlFor="date">Date</label>
-				<input
-					name="date"
-					type="date"
-					value={form.date}
-					onChange={(e) => setForm({ ...form, date: e.target.value })} />
-			</div>
+			{form.hasOwnProperty('dates')
+				? <>
+					{form.dates.map((date: string, i: number) =>
+						<div key={i} className="form-line date">
+							<label htmlFor="date">Date</label>
+							<input
+								name="date"
+								type="date"
+								value={date}
+								onChange={(e) => setForm({
+									...form, dates: form.dates.map((d: string, index: number) => {
+										if (index === i) d = e.target.value
+										return d
+									})
+								})} />
+						</div>
+					)}
+					<div className="form-line date">
+						<label htmlFor="add-date">Actions</label>
+						<button
+							type="button"
+							name="add-date"
+							className="add-button"
+							tabIndex={-1}
+							onClick={() => {
+								if (form.dates[form.dates.length - 1] === undefined) return
+								setForm({
+									...form, dates: [...form.dates, undefined]
+								})
+							}}
+						>+</button>
+						{form.dates.length !== 1 &&
+							<button
+								type="button"
+								name="delete-date"
+								className="delete-button"
+								tabIndex={-1}
+								onClick={() => {
+									form.dates.pop()
+									setForm({
+										...form, dates: form.dates
+									})
+								}}
+							>-</button>
+						}
+					</div>
+				</>
+				: <div className="form-line date">
+					<label htmlFor="date">Date</label>
+					<input
+						name="date"
+						type="date"
+						value={form.date}
+						onChange={(e) => setForm({ ...form, date: e.target.value })} />
+				</div>
+			}
 			<div className="form-line timed">
 				<label htmlFor="timed">Timed</label>
 				<input

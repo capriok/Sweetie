@@ -15,6 +15,7 @@ interface FormState {
 	name?: string
 	item?: CalenderEvent
 	timed: boolean
+	dates?: Array<string | undefined>
 	date?: string
 	startTime?: string
 	endTime?: string
@@ -23,7 +24,7 @@ interface FormState {
 const InitAddingForm: FormState = {
 	name: '',
 	timed: false,
-	date: undefined,
+	dates: [undefined],
 	startTime: undefined,
 	endTime: undefined
 }
@@ -84,14 +85,24 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		}
 	}
 
-	async function PostEvent(e: any) {
+	function HandlePostForm(e: any) {
 		e.preventDefault()
+		console.log(addingForm);
+		addingForm!.dates?.forEach(async date => await PostEvent(date!))
+	}
 
-		const invalidDate = !isNaN(Date.parse(addingForm.date!))
+	async function PostEvent(dateString: string) {
+		console.log(dateString)
+
+		const invalidDate = !isNaN(Date.parse(dateString!))
+
+		console.log(isAdding, addingForm.name, !invalidDate)
 		if (!isAdding || !addingForm.name || !invalidDate) return
+
 		if (addingForm.timed && !addingForm.startTime) return
 
-		const date = new Date(addingForm.date!)
+		const date = new Date(dateString)
+
 		let event = {
 			name: addingForm.name,
 			date: date.toJSON(),
@@ -187,7 +198,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 					if (isAdding) return (
 						<Form title="Add Event">
 							<CalenderForm
-								submit={PostEvent}
+								submit={HandlePostForm}
 								form={addingForm}
 								setForm={setAddingForm} />
 						</Form>

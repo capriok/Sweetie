@@ -67,7 +67,7 @@ class Api {
 		const today = res.data.schedule.find((d: PlantScheduleDay) => isSameDay(new Date(d.date), tzZero()))
 		return {
 			today,
-			ps: formatDates(res.data.schedule, 'last')
+			ps: formatDates(res.data.schedule, 'date')
 		}
 	}
 

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { MonthlyBody, MonthlyDay, MonthlyCalendar } from '@zach.codes/react-calendar'
-import { format, startOfMonth } from 'date-fns'
+import { format } from 'date-fns'
 import Api from '../../api'
 
 import '../../styles/sections/calender.scss'
 
 const Calender: React.FC = () => {
-	let [currentMonth, setCurrentMonth] = useState<Date>(startOfMonth(new Date()))
 	const [calenderEvents, setCalenderEvents] = useState<any>([])
 
 	const date = new Date()
@@ -67,19 +66,20 @@ const Calender: React.FC = () => {
 	}
 
 	function CalenderEventClassName(event: CalenderEvent) {
-		let cn = 'calender-event '
+		const cns = ['calender-event']
+		const works = ['STJ', 'TMC', 'Work']
 
-		if (event.name) cn = cn + 'line '
-		if (event.name === 'Work') cn = cn + 'work'
+		if (event.name) cns.push('line')
+		if (works.includes(event.name)) cns.push('work')
 
-		return cn
+		return cns.join(' ')
 	}
 
 	return (
 		<div className="calender">
 			<MonthlyCalendar
-				currentMonth={currentMonth}
-				onCurrentMonthChange={(date: any) => setCurrentMonth(date)}>
+				currentMonth={new Date()}
+				onCurrentMonthChange={() => { }}>
 				<MonthlyBody
 					events={calenderEvents.map((ce: any) => ({
 						...ce,

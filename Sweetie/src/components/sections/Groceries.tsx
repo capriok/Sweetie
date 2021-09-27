@@ -16,27 +16,29 @@ const Groceries: React.FC = () => {
 	return (
 		<div className="grocerylist">
 			<h1>Groceries</h1>
-			{groceryList.some((g: any) => g.store === 'wholefoods') &&
-				<>
-					<h3>Whole Foods</h3>
-					<div className="store">
-						{groceryList.map((item: any, i) => {
-							return item.store === 'wholefoods' &&
-								<p key={i} className="item">{item.name}</p>
-						})}
-					</div>
-				</>}
-			{groceryList.some((g: any) => g.store === 'bashas') &&
-				<>
-					<h3>Bashas</h3>
-					<div className="store">
-						{groceryList.map((item: any, i) => {
-							return item.store === 'bashas' &&
-								<p key={i} className="item">{item.name}</p>
-						})}
-					</div>
-				</>}
-			{!groceryList.length && <div className="center"><p>All good here.</p></div>}
+			<div className="groceries">
+				{groceryList.some((g: any) => g.store === 'wholefoods') &&
+					<>
+						<h3>Whole Foods</h3>
+						<div className="store">
+							{groceryList.map((item: any, i) => {
+								return item.store === 'wholefoods' &&
+									<p key={i} className="item">{item.name}</p>
+							})}
+						</div>
+					</>}
+				{groceryList.some((g: any) => g.store === 'bashas') &&
+					<>
+						<h3>Bashas</h3>
+						<div className="store">
+							{groceryList.map((item: any, i) => {
+								return item.store === 'bashas' &&
+									<p key={i} className="item">{item.name}</p>
+							})}
+						</div>
+					</>}
+			</div>
+			{!groceryList.length && <div className="center"><p>All Stocked.</p></div>}
 		</div>
 	)
 }

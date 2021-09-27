@@ -22,8 +22,8 @@ const Plants: React.FC = () => {
 				{!today
 					? <p>Database Error</p>
 					: today.plants.length
-						? today.plants.map((plant: any) =>
-							<p className="plant">{plant.name}</p>
+						? today.plants.map((plant: any, i: number) =>
+							<p key={i} className="plant">{plant.name}</p>
 						)
 						: <p>No plants to water.</p>
 				}
