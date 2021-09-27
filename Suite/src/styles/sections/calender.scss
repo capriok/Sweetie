@@ -1,18 +1,37 @@
 @import "../index.scss";
 
 .calender {
-	.content-line {
-		.name {
-			flex: 1;
+	.content-head {
+		margin-bottom: 0 !important;
+	}
+
+	.content-cont {
+		@include flex;
+		flex-direction: column;
+		justify-content: space-between;
+		width: 100%;
+		.month-line {
+			width: 100%;
 			text-align: left;
+			p {
+				font-weight: bold;
+				margin-top: 20px;
+			}
 		}
-		.time {
-			flex: 1;
-			text-align: right;
-		}
-		.date {
-			flex: 1;
-			text-align: center;
+		.content-line {
+			border-bottom: 2px solid $light-grey;
+			.name {
+				flex: 1;
+				text-align: left;
+			}
+			.time {
+				flex: 1;
+				text-align: right;
+			}
+			.date {
+				flex: 1;
+				text-align: center;
+			}
 		}
 	}
 }

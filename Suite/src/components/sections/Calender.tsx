@@ -189,6 +189,24 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		return time + ' ' + meridian
 	}
 
+	function displayMonth(i: number) {
+
+		const currEv = eventList[i]
+		const currMonth = new Date(currEv.date).toLocaleString('default', { month: 'long' })
+
+		const monthName = <p>{currMonth}</p>
+
+		const prevEv = eventList[i - 1]
+		if (!prevEv) return monthName
+
+		const prevMonth = new Date(prevEv.date).toLocaleString('default', { month: 'long' })
+
+		if (prevMonth !== currMonth)
+			return monthName
+		else
+			return ''
+
+	}
 
 	return (
 		<>
@@ -222,32 +240,30 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 							</div>
 							{eventList.map((event, i) => {
 								return (
-									<div
-										key={i}
-										className="content-line with-border"
-										onClick={() => {
-											return isRemoving
-												? RemoveEvent(event)
-												: isUpdating && !updatingForm.item
-													? setUpdatingFormItem(event)
-													: null
-										}}>
-										<div className="name">
-											<p>{event.name}</p>
-										</div>
-										<div className="date">
-											<p>
-												{new Date(event.date).toLocaleDateString('en-us',
-													{ weekday: 'short', month: 'short', day: 'numeric' })}
-											</p>
-										</div>
-										<div className="time">
-											<p>
-												{event.timed
-													? formatEventTimes(event)
-													: ''
-												}
-											</p>
+									<div className="content-cont" key={i}>
+										<div className="month-line">{displayMonth(i)}</div>
+										<div className="content-line with-border"
+											onClick={() => {
+												return isRemoving
+													? RemoveEvent(event)
+													: isUpdating && !updatingForm.item
+														? setUpdatingFormItem(event)
+														: null
+											}}>
+											<div className="name">
+												<p>{event.name}</p>
+											</div>
+											<div className="date">
+												<p>
+													{new Date(event.date).toLocaleDateString('en-us',
+														{ weekday: 'short', month: 'short', day: 'numeric' })}
+												</p>
+											</div>
+											<div className="time">
+												<p>
+													{event.timed ? formatEventTimes(event) : ''}
+												</p>
+											</div>
 										</div>
 									</div>
 								)
