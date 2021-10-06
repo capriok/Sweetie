@@ -20,7 +20,7 @@ function Index() {
       })
       setTimeout(() => {
         window.location.reload()
-      }, 300000)
+      }, 900000)
     } else {
       setServerIdle(false)
     }
