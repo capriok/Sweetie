@@ -23,12 +23,18 @@
 }
 
 :root {
+	--modebg: white;
+	--modefont: black;
+	--modeswt: invert(0);
 	--ph: 0;
 	--ps: 0%;
 	--pl: 85%;
 	--pfont: hsl(var(--ph), var(--ps), calc((25% - var(--pl) * 0.5) * 100));
 }
 
+$modebg: var(--modebg);
+$modefont: var(--modefont);
+$modeswt: var(--modeswt);
 $primary-h: var(--ph);
 $primary-s: var(--ps);
 $primary-l: var(--pl);

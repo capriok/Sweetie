@@ -6,7 +6,7 @@ import '../../styles/sections/options.scss'
 const HEXtoHSL = require('hex-to-hsl');
 
 const Options: React.FC<any> = ({ props }) => {
-	const { auth, setAuth, readOnly } = props
+	const { auth, setAuth, readOnly, mode, setMode } = props
 
 	let lastAuth = localStorage.getItem('Swt-Auth')
 	lastAuth
@@ -16,6 +16,14 @@ const Options: React.FC<any> = ({ props }) => {
 	function LogoutClick() {
 		setAuth(false)
 		localStorage.removeItem('Swt-Auth')
+	}
+
+	function SetDarkMode(e: any) {
+		const mode = e.target.checked
+		setMode(mode)
+		setModeValue('--modebg', mode ? '#17191b' : 'white')
+		setModeValue('--modefont', mode ? 'white' : '#17191b')
+		setModeValue('--modeswt', mode ? 'invert(1)' : 'invert(0)')
 	}
 
 	function SetPrimaryHSL(e: any) {
@@ -45,19 +53,23 @@ const Options: React.FC<any> = ({ props }) => {
 		)
 	}
 
+	function setModeValue(prop: string, value: string) {
+		setInLocalStorage('Swt-Mode', prop, value)
+		return document.documentElement.style.setProperty(prop, value)
+	}
 	function setThemeValue(prop: string, value: string) {
-		setThemeInLocalStorage(prop, value)
+		setInLocalStorage('Swt-Theme', prop, value)
 		return document.documentElement.style.setProperty(prop, value)
 	}
 
-	function setThemeInLocalStorage(prop: string, value: string) {
-		const lsTheme = localStorage.getItem('Swt-Theme')
+	function setInLocalStorage(name: string, prop: string, value: string) {
+		const lsTheme = localStorage.getItem(name)
 		if (lsTheme) {
 			const theme = JSON.parse(lsTheme)
 			theme[prop] = value
-			localStorage.setItem('Swt-Theme', JSON.stringify(theme))
+			localStorage.setItem(name, JSON.stringify(theme))
 		} else {
-			localStorage.setItem('Swt-Theme', JSON.stringify({ [prop]: value }))
+			localStorage.setItem(name, JSON.stringify({ [prop]: value }))
 		}
 	}
 
@@ -86,6 +98,15 @@ const Options: React.FC<any> = ({ props }) => {
 						tabIndex={-1}
 						type="color"
 						onChange={(e) => SetPrimaryHSL(e)} />
+				</ContentLine>
+				<ContentLine
+					className="mode"
+					label="Dark mode">
+					<input
+						tabIndex={-1}
+						type="checkbox"
+						checked={mode}
+						onChange={(e) => { SetDarkMode(e) }} />
 				</ContentLine>
 				<div className="logout">
 					<button tabIndex={-1} onClick={LogoutClick}>Logout</button>

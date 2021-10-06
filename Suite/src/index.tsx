@@ -14,8 +14,18 @@ function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
   const [auth, setAuth] = useState<boolean>(false)
   const [readOnly, setReadOnly] = useState<boolean>(true)
+  const [mode, setMode] = useState<boolean>(false)
 
   useEffect(() => {
+    const lsMode = localStorage.getItem('Swt-Mode')
+    if (lsMode) {
+      const mode = JSON.parse(lsMode)
+      if (mode['--modebg'] !== 'white') setMode(true)
+      document.documentElement.style.setProperty('--modebg', mode['--modebg'])
+      document.documentElement.style.setProperty('--modefont', mode['--modefont'])
+      document.documentElement.style.setProperty('--modeswt', mode['--modeswt'])
+    }
+
     Api.ServerPing().then(() => {
       document.getElementById('splash-swt')?.classList.add('shrink')
       setTimeout(() => {
@@ -32,7 +42,7 @@ function Index() {
         if (!auth)
           return <Secret auth={auth} setAuth={setAuth} setReadOnly={setReadOnly} />
         else
-          return <Suite auth={auth} setAuth={setAuth} readOnly={readOnly} setReadOnly={setReadOnly} />
+          return <Suite auth={auth} setAuth={setAuth} readOnly={readOnly} setReadOnly={setReadOnly} mode={mode} setMode={setMode} />
       })()}
     </Div100vh>
   )
