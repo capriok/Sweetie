@@ -129,6 +129,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		const date = new Date(updatingForm.date!)
 		const event = {
 			id: updatingForm.item?._id,
+			name: updatingForm.name,
 			timed: updatingForm.timed,
 			date: updatingForm.item?.date,
 			startTime: updatingForm.item?.startTime,
