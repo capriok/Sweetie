@@ -3,19 +3,17 @@ import React from 'react'
 const CalenderForm: React.FC<any> = ({ submit, form, setForm }) => {
 	return (
 		<form onSubmit={(e) => submit(e)} >
-			{form.hasOwnProperty('name') &&
-				<div className="form-line name">
-					<label htmlFor="name">Name</label>
-					<input
-						name="name"
-						type="text"
-						autoFocus={true}
-						autoComplete="off"
-						placeholder="Name"
-						value={form.name}
-						onChange={(e) => setForm({ ...form, name: e.target.value })} />
-				</div>
-			}
+			<div className="form-line name">
+				<label htmlFor="name">Name</label>
+				<input
+					name="name"
+					type="text"
+					autoFocus={true}
+					autoComplete="off"
+					placeholder="Name"
+					value={form.name}
+					onChange={(e) => setForm({ ...form, name: e.target.value })} />
+			</div>
 			{form.hasOwnProperty('dates')
 				? <>
 					{form.dates.map((date: string, i: number) =>

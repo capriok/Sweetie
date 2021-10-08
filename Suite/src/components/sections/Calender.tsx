@@ -30,6 +30,7 @@ const InitAddingForm: FormState = {
 }
 
 const InitUpdatingForm: FormState = {
+	name: '',
 	item: undefined,
 	timed: false,
 	date: undefined,
@@ -68,6 +69,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		setUpdatingForm({
 			...updatingForm,
 			item: event,
+			name: event.name,
 			timed: event.timed,
 			date: formattedDate,
 			startTime: event.startTime,
