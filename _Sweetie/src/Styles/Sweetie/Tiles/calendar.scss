@@ -1,0 +1,79 @@
+@import "../index.scss";
+
+#Sweetie {
+	.calendar {
+		width: 100vw;
+		height: auto;
+		@include flex;
+		flex-direction: column;
+
+		.calendar-cont {
+			width: 95vw;
+			@include flex;
+			flex-direction: column;
+
+			.header {
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				.weekday {
+					flex: 1;
+					width: 100px;
+					margin: 20px 0;
+					text-align: center;
+				}
+			}
+			.content {
+				width: 100%;
+				@include flex;
+				flex-wrap: wrap;
+
+				.day {
+					overflow: hidden;
+					min-width: calc(100% / 7.1);
+					max-width: calc(100% / 7.1);
+					height: 150px;
+					border: 1px solid #6e6e6e;
+					display: flex;
+					flex-direction: column;
+
+					.number {
+						font-size: 1.4rem !important;
+						margin: 5px 10px;
+					}
+					.event {
+						font-size: 1.5rem !important;
+						padding: 3px 10px;
+						margin: 0;
+						@include flex;
+						justify-content: space-between;
+						background-color: rgba(80, 80, 80, 0.1);
+						.name {
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
+						}
+						.timed {
+							margin-left: 5px;
+							min-width: fit-content;
+						}
+					}
+					.today-mark {
+						font-weight: bold;
+						color: crimson !important;
+					}
+					.line {
+						border-left: 5px solid rgb(2, 91, 226) !important;
+					}
+					.work {
+						border-left: 5px solid rgb(0, 128, 38) !important;
+					}
+				}
+				.out-of-month {
+					color: grey;
+				}
+			}
+		}
+	}
+}

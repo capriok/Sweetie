@@ -1,0 +1,27 @@
+@import "./index.scss";
+
+#Sweetie {
+	* {
+		margin: 0;
+		padding: 0;
+		color: white;
+	}
+	overflow: hidden;
+	width: 100vw;
+	height: 100vh;
+	background-color: $primary;
+
+	#Tile {
+		@include flex;
+		align-items: flex-start;
+		flex: 1;
+		padding: 0 40px;
+		margin-bottom: 100px;
+	}
+	#Line {
+		@include flex;
+		align-items: stretch;
+		width: 95vw;
+		margin: 0 auto;
+	}
+}

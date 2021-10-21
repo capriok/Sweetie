@@ -1,0 +1,37 @@
+@import "../index.scss";
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+$primary: rgba(45, 45, 45, 0.7);
+$secondary: rgba(17, 17, 17, 0.7);
+
+body {
+	font-size: 1.8rem;
+	background-color: rgb(15, 15, 15);
+}
+
+#Background {
+	z-index: -1;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	background-image: url("../../Assets/vertical.jpg");
+	background-size: cover;
+	opacity: 0.4;
+}
+
+.tile-title {
+	font-size: 4rem;
+}
+.sub-title {
+	font-size: 2.5rem;
+}
+.w-line {
+	padding-bottom: 10px !important;
+	margin-bottom: 10px !important;
+	border-bottom: 2px solid grey;
+}

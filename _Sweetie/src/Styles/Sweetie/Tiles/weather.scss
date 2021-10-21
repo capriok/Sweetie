@@ -1,0 +1,64 @@
+@import "../index.scss";
+
+#Sweetie {
+	.weather {
+		width: 100vw;
+		min-height: 420px;
+		@include flex;
+		justify-content: space-around;
+
+		.description {
+			padding-top: 20px;
+		}
+
+		.stats,
+		.overview {
+			@include flex;
+			flex-direction: column;
+			width: 100%;
+			max-width: 600px;
+		}
+		.overview {
+			.visual {
+				@include flex;
+				justify-content: space-between;
+				.min-max {
+					@include flex;
+					flex-direction: column;
+					margin-left: 100px;
+				}
+				.max {
+					padding-left: 10px;
+					color: rgb(255, 90, 68);
+				}
+				.min {
+					padding-left: 10px;
+					color: rgb(160, 219, 255);
+				}
+			}
+			.temp {
+				font-size: 5rem;
+			}
+		}
+
+		.line {
+			width: 100%;
+			@include flex;
+			justify-content: space-between;
+		}
+		.description {
+			margin: 0;
+		}
+		.icon {
+			@include flex;
+			img {
+				width: 200px;
+				filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.3)) hue-rotate(180deg);
+			}
+		}
+		.cloudiness,
+		.windgust {
+			margin-bottom: 20px !important;
+		}
+	}
+}

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { format } from 'date-fns'
 
-import Api from '../../api'
+import Api from '../../../api'
 import Form from '../Form'
-import CalenderForm from '../forms/CalenderForm'
+import CalendarForm from '../Forms/CalendarForm'
 import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved } from 'react-icons/vsc'
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
-import '../../styles/sections/calender.scss'
+import '../../../Styles/Suite/Tabs/calendar.scss'
 
 interface FormState {
 	name?: string
-	item?: CalenderEvent
+	item?: CalendarEvent
 	timed: boolean
 	dates?: Array<string | undefined>
 	date?: string
@@ -38,12 +38,12 @@ const InitUpdatingForm: FormState = {
 	endTime: undefined
 }
 
-const Calender: React.FC<any> = ({ readOnly }) => {
+const Calendar: React.FC<any> = ({ readOnly }) => {
 	const [isAdding, setAddingState] = useState(false)
 	const [isUpdating, setUpdatingState] = useState(false)
 	const [isRemoving, setRemovingState] = useState(false)
 
-	const [eventList, setEventList] = useState<Array<CalenderEvent>>([])
+	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])
 	const [addingForm, setAddingForm] = useState(InitAddingForm)
 	const [updatingForm, setUpdatingForm] = useState(InitUpdatingForm)
 
@@ -61,7 +61,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		setUpdatingState(false)
 	}
 
-	function setUpdatingFormItem(event: CalenderEvent) {
+	function setUpdatingFormItem(event: CalendarEvent) {
 		const d = new Date(event.date)
 		d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
 		const formattedDate = d.toISOString().split('T')[0]
@@ -77,13 +77,13 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 		})
 	}
 
-	async function RemoveEvent(event: CalenderEvent) {
+	async function RemoveEvent(event: CalendarEvent) {
 		if (!isRemoving) return
 
 		const confirmation = window.confirm(`Remove '${event.name}' ?`);
 		if (confirmation) {
 			if (readOnly) return alert('Not allowed in Read Only mode.')
-			Api.RemoveCalenderEvent(event).then(ce => setEventList(ce))
+			Api.RemoveCalendarEvent(event).then(ce => setEventList(ce))
 		}
 	}
 
@@ -115,7 +115,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(event);
-		Api.PostCalenderEvent(event).then(ce => {
+		Api.PostCalendarEvent(event).then(ce => {
 			resetAddingState()
 			setEventList(ce)
 		})
@@ -142,21 +142,21 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(event);
-		Api.UpdateCalenderEvent(event).then(ce => {
+		Api.UpdateCalendarEvent(event).then(ce => {
 			resetUpdatingState()
 			setEventList(ce)
 		})
 	}
 
 	useEffect(() => {
-		(async () => Api.GetCalenderEvents().then(ce => {
-			console.log({ CalenderEvents: ce })
+		(async () => Api.GetCalendarEvents().then(ce => {
+			console.log({ CalendarEvents: ce })
 			setEventList(ce)
 		}))()
 	}, [])
 
 
-	function formatEventTimes(event: CalenderEvent) {
+	function formatEventTimes(event: CalendarEvent) {
 		const { startTime, endTime } = event
 
 		if (!event.timed || (event.timed && !startTime)) return
@@ -217,7 +217,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 
 					if (isAdding) return (
 						<Form title="Add Event">
-							<CalenderForm
+							<CalendarForm
 								submit={HandlePostForm}
 								form={addingForm}
 								setForm={setAddingForm} />
@@ -226,7 +226,7 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 
 					if (isUpdating && updatingForm.item) return (
 						<Form title={`Update ${updatingForm.item.name}`}>
-							<CalenderForm
+							<CalendarForm
 								submit={UpdateEvent}
 								form={updatingForm}
 								setForm={setUpdatingForm} />
@@ -296,4 +296,4 @@ const Calender: React.FC<any> = ({ readOnly }) => {
 	)
 }
 
-export default Calender
+export default Calendar

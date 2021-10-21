@@ -1,0 +1,18 @@
+@import "../index.scss";
+
+#Sweetie {
+	.date-time {
+		@include flex;
+		justify-content: space-between;
+		width: 100%;
+
+		.date,
+		.time {
+			font-size: 5rem;
+		}
+		.holiday {
+			margin-top: 40px;
+			font-size: 2.5rem;
+		}
+	}
+}

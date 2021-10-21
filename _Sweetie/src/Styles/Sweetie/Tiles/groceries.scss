@@ -1,0 +1,29 @@
+@import "../index.scss";
+
+#Sweetie {
+	.grocerylist {
+		@include flex;
+		align-items: stretch;
+		justify-content: space-evenly;
+		width: 100%;
+		margin-top: 50px;
+
+		.wholefoods,
+		.bashas {
+			width: 45%;
+		}
+
+		.store {
+			margin: 0 auto;
+			margin-bottom: 40px;
+		}
+		.item {
+			padding-bottom: 10px;
+			margin-bottom: 5px;
+		}
+		.center {
+			padding-top: 20px;
+			@include flex;
+		}
+	}
+}

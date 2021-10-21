@@ -1,0 +1,18 @@
+@import "../index.scss";
+
+#Suite {
+	.cats {
+		.day {
+			flex: 1;
+			text-align: left;
+		}
+		.food {
+			flex: 1;
+			text-align: center;
+		}
+		.waste {
+			flex: 1;
+			text-align: right;
+		}
+	}
+}
