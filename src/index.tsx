@@ -27,7 +27,7 @@ function Index() {
     }
 
     if (process.env.NODE_ENV === 'development') return setServerIdle(false)
-    if (process.env.NODE_ENV === 'production') return console.log = () => { }
+    if (process.env.NODE_ENV === 'production') console.log = () => { }
 
     Api.ServerPing().then(() => {
       document.getElementById('splash-swt')?.classList.add('shrink')
