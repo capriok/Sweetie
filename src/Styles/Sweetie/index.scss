@@ -15,15 +15,17 @@ body {
 #Sweetie,
 #Background {
 	transform: rotate(270deg);
+	position: fixed;
+	top: -560px;
+	left: 560px;
+	width: 1440px;
+	height: 2560px;
+	// width: 100vw;
+	// height: 100vh;
 }
 
 #Background {
 	z-index: -1;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	position: absolute;
 	background-image: url("../../Assets/vertical.jpg");
 	background-size: cover;
 	opacity: 0.4;

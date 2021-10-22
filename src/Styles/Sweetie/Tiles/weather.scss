@@ -2,7 +2,7 @@
 
 #Sweetie {
 	.weather {
-		width: 100vw;
+		width: 100%;
 		min-height: 420px;
 		@include flex;
 		justify-content: space-around;
