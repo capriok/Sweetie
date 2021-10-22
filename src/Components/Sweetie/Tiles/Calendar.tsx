@@ -142,7 +142,7 @@ const Calendar: React.FC = () => {
 					{calendarDays.map((day: CalendarDay, i: number) => (
 						<div key={i} className="day">
 							<p className={`number ${day.className}`}>{day.number}</p>
-							{day.events.slice(0, 3).map((event, i) =>
+							{day.events.slice(0, 4).map((event, i) =>
 								!day.className &&
 								<p key={i} className={calendarEventClassName(event)}>
 									<span className="name">{event.name}</span>

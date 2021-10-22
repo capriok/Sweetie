@@ -20,7 +20,6 @@ const useWeather = () => {
 
 		const response = await fetch(url)
 		const res = await response.json()
-		console.log(res);
 
 		const results = {
 			loading: false,

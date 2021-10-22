@@ -6,17 +6,18 @@
 		min-height: 420px;
 		@include flex;
 		justify-content: space-around;
+		margin-top: 100px;
 
 		.description {
 			padding-top: 20px;
 		}
 
-		.stats,
-		.overview {
+		.overview,
+		.stats {
 			@include flex;
 			flex-direction: column;
 			width: 100%;
-			max-width: 600px;
+			max-width: 800px;
 		}
 		.overview {
 			.visual {

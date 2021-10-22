@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
+import useHoliday from '../../../Hooks/useHoliday'
 
 import '../../../Styles/Sweetie/Tiles/datetime.scss'
-import useHoliday from '../../../Hooks/useHoliday'
 
 const DateTime: React.FC = () => {
 	const [currentTime, setCurrentTime] = useState(format(new Date(), 'pp'))
@@ -26,8 +26,10 @@ const DateTime: React.FC = () => {
 
 	return (
 		<div className="date-time">
-			<div className="date">{currentDate}</div>
-			<div className="time">{currentTime}</div>
+			<div className="line">
+				<div className="date">{currentDate}</div>
+				<div className="time">{currentTime}</div>
+			</div>
 			{holiday.loading &&
 				<div className="holiday sub-title">
 					{holiday.name && <>

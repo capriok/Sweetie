@@ -8,7 +8,7 @@
 		flex-direction: column;
 
 		.calendar-cont {
-			width: 95%;
+			width: 100%;
 			@include flex;
 			flex-direction: column;
 
@@ -19,7 +19,7 @@
 				justify-content: space-around;
 				.weekday {
 					flex: 1;
-					width: 100px;
+					width: 100%;
 					margin: 20px 0;
 					text-align: center;
 				}
@@ -31,20 +31,20 @@
 
 				.day {
 					overflow: hidden;
-					min-width: calc(100% / 7.1);
+					width: 100%;
 					max-width: calc(100% / 7.1);
-					height: 150px;
+					height: 250px;
 					border: 1px solid #6e6e6e;
 					display: flex;
 					flex-direction: column;
 
 					.number {
-						font-size: 1.4rem !important;
-						margin: 5px 10px;
+						font-size: 1.8rem !important;
+						margin: 10px;
 					}
 					.event {
-						font-size: 1.5rem !important;
-						padding: 3px 10px;
+						font-size: 2rem !important;
+						padding: 5px 10px;
 						margin: 0;
 						@include flex;
 						justify-content: space-between;
