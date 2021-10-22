@@ -15,9 +15,12 @@ body {
 #Sweetie,
 #Background {
 	transform: rotate(90deg);
-	position: fixed;
-	top: -560px;
-	left: 560px;
+	transform-origin: bottom left;
+
+	position: absolute;
+	top: -100vw;
+	left: 0;
+
 	width: 1440px;
 	height: 2560px;
 }
