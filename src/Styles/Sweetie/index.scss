@@ -12,6 +12,11 @@ body {
 	background-color: rgb(15, 15, 15);
 }
 
+#Sweetie,
+#Background {
+	transform: rotate(270deg);
+}
+
 #Background {
 	z-index: -1;
 	top: 0;
