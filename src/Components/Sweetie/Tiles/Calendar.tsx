@@ -16,7 +16,6 @@ interface CalendarDay {
 
 const Calendar: React.FC = () => {
 	const [calendarDays, setCalendarDays] = useState<CalendarDay[]>([])
-	const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([])
 
 	const date = new Date()
 	const today = date.getDate()
@@ -24,7 +23,6 @@ const Calendar: React.FC = () => {
 	useEffect(() => {
 		(async () => Api.GetCalendarEvents().then(ce => {
 			console.log({ calendarEvents: ce })
-			setCalendarEvents(ce)
 			setCalendarDays(CreateCalendarDays(ce))
 		}))()
 	}, [])

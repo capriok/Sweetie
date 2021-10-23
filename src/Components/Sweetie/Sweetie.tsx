@@ -12,9 +12,13 @@ import '../../Styles/Sweetie/sweetie.scss'
 const Sweetie: React.FC<any> = () => {
 
 	useEffect(() => {
+		if (process.env.NODE_ENV === 'production') {
+			document.getElementById('Sweetie')?.classList.add('Swt-vert')
+			document.getElementById('Background')?.classList.add('Bg-vert')
+		}
 		setTimeout(() => {
 			window.location.reload()
-		}, 300000)
+		}, 1200000)
 	}, [])
 
 	return (
