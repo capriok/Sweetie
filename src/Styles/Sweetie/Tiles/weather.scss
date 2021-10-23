@@ -6,7 +6,7 @@
 		min-height: 420px;
 		@include flex;
 		justify-content: space-around;
-		margin: 150px 0;
+		margin: 125px 0;
 
 		.description {
 			padding-top: 20px;
@@ -53,7 +53,7 @@
 		.icon {
 			@include flex;
 			img {
-				width: 200px;
+				width: 250px;
 				filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.3)) hue-rotate(180deg);
 			}
 		}

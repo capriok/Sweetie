@@ -3,15 +3,49 @@ import { useEffect, useState } from 'react'
 
 // https://openweathermap.org/api/one-call-api
 
+interface Stats {
+	loading: boolean
+	description?: string
+	temperature?: string
+	humidity?: string
+	rain?: string
+	clouds?: string
+	max?: string
+	min?: string
+	windSpeed?: string
+	windGust?: string
+	sunrise?: string
+	sunset?: string
+	icon?: string
+}
+
 const useWeather = () => {
-	const [weather, setWeather] = useState<any>({
+	const [weather, setWeather] = useState<Stats>({
 		loading: true,
-		timezone: 0,
-		temperature: 0,
-		humidity: 0,
-		description: '',
-		icon: ``
+		description: '--',
+		temperature: '--',
+		humidity: '--',
+		rain: '--',
+		clouds: '--',
+		max: '--',
+		min: '--',
+		windSpeed: '--',
+		windGust: '--',
+		sunrise: '--',
+		sunset: '--',
+		icon: 'https://openweathermap.org/img/wn/01n@2x.png',
 	})
+
+	const ch = new Date().getHours()
+	const isAfternoon = ch >= 12
+	const isEvening = ch >= 17
+	const isNight = ch > 22
+
+	let tod = 'This morning'
+
+	if (isAfternoon) tod = 'This afternoon'
+	if (isEvening) tod = 'This evening'
+	if (isNight) tod = 'Tonight'
 
 	const FetchWeather = async (location: string) => {
 		const API = `https://api.openweathermap.org/data/2.5/`
@@ -21,21 +55,22 @@ const useWeather = () => {
 		const response = await fetch(url)
 		const res = await response.json()
 
-		const results = {
+		const stats = {
 			loading: false,
-			description: res.current.weather[0].description,
-			temperature: Math.floor(res.current.feels_like),
-			humidity: res.current.humidity,
-			rain: res.current.rain ? Math.ceil(res.current.rain) : 0,
-			clouds: Math.ceil(res.current.clouds),
-			max: Math.ceil(res.daily[res.daily.length - 1].temp.max),
-			min: Math.floor(res.daily[res.daily.length - 1].temp.min),
-			windSpeed: res.current.wind_speed.toFixed(1),
-			windGust: res.current.wind_gust.toFixed(1),
-			sunrise: format(new Date(res.current.sunrise * 1000), 'p'),
-			sunset: format(new Date(res.current.sunset * 1000), 'p'), icon: `https://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png`
+			description: tod + ' has ' + res.current.weather[0].description.toString(),
+			temperature: Math.floor(res.current.feels_like).toString() + '°',
+			humidity: res.current.humidity.toString() + ' %',
+			rain: res.current.rain ? Math.ceil(res.current.rain).toString() : (0).toString() + ' %',
+			clouds: Math.ceil(res.current.clouds).toString() + ' %',
+			max: Math.ceil(res.daily[res.daily.length - 1].temp.max).toString() + '°',
+			min: Math.floor(res.daily[res.daily.length - 1].temp.min).toString() + '°',
+			windSpeed: res.current.wind_speed.toFixed(1).toString() + ' mph',
+			windGust: res.current.wind_gust.toFixed(1).toString() + ' mph',
+			sunrise: format(new Date(res.current.sunrise * 1000), 'p').toString(),
+			sunset: format(new Date(res.current.sunset * 1000), 'p').toString(),
+			icon: `https://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png`
 		}
-		setWeather(results)
+		setWeather(stats)
 	}
 
 	useEffect(() => {

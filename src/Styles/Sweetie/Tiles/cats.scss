@@ -5,7 +5,7 @@
 		width: 100%;
 		@include flex;
 		flex-direction: column;
-		margin: 150px 0;
+		margin: 125px 0;
 
 		.schedule {
 			width: 100%;
@@ -13,7 +13,7 @@
 			flex-direction: column;
 			justify-content: space-evenly;
 			.labels {
-				margin-bottom: 40px;
+				margin-bottom: 60px;
 				p {
 					width: 100%;
 					text-align: center;
@@ -28,15 +28,15 @@
 			$stroke-color: rgba(220, 220, 220, 0.8);
 			$shadow-prim: rgba(165, 165, 165, 0.3);
 			$shadow-light: rgba(165, 165, 165, 0.15);
-			$cont-size: 160px;
-			$after-size: 120px;
-			$after-margin: -60px;
+			$cont-size: 200px;
+			$after-size: 140px;
+			$after-margin: -70px;
 
 			#svg circle {
 				stroke-dashoffset: 0;
 				transition: stroke-dashoffset 1s linear;
 				stroke: transparent;
-				stroke-width: 15px;
+				stroke-width: 20px;
 			}
 			#svg #bar {
 				stroke: $stroke-color;
@@ -47,7 +47,7 @@
 				height: $cont-size;
 				width: $cont-size;
 				margin: 0 auto;
-				box-shadow: 0 0 15px $shadow-light;
+				box-shadow: 0 0 25px $shadow-light;
 				border-radius: 100%;
 				transform: rotate(-90deg);
 			}
@@ -59,7 +59,7 @@
 				width: $after-size;
 				top: 50%;
 				left: 50%;
-				box-shadow: inset 0 0 15px $shadow-prim;
+				box-shadow: inset 0 0 20px $shadow-prim;
 				margin-top: $after-margin;
 				margin-left: $after-margin;
 				border-radius: 100%;

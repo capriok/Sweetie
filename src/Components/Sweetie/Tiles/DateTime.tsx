@@ -15,7 +15,7 @@ const DateTime: React.FC = () => {
 	const holiday = useHoliday()
 
 	useEffect(() => {
-		!holiday.loading && console.log({ Holiday: holiday })
+		holiday.name && console.log({ Holiday: holiday })
 	}, [holiday])
 
 	useEffect(() => {
@@ -30,12 +30,10 @@ const DateTime: React.FC = () => {
 				<div className="date">{currentDate}</div>
 				<div className="time">{currentTime}</div>
 			</div>
-			{holiday.loading &&
+			{holiday.name &&
 				<div className="holiday sub-title">
-					{holiday.name && <>
-						<label>Happy </label>
-						<span className="name">{holiday.name}!</span>
-					</>}
+					<label>Happy </label>
+					<span className="name">{holiday.name}!</span>
 				</div>
 			}
 		</div>

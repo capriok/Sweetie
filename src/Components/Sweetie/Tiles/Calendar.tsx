@@ -1,29 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { format } from 'date-fns'
 import Api from '../../../api'
 
 import '../../../Styles/Sweetie/Tiles/calendar.scss'
-
-interface CalendarDay {
-	currentMonth: number,
-	date: string,
-	month: number
-	number: number
-	year: number
-	events: CalendarEvent[]
-	className: string
-}
+import useCalendarDays from '../../../Hooks/useCalendarDays';
 
 const Calendar: React.FC = () => {
-	const [calendarDays, setCalendarDays] = useState<CalendarDay[]>([])
-
-	const date = new Date()
-	const today = date.getDate()
+	const { calendarDays, MapEvents } = useCalendarDays()
 
 	useEffect(() => {
 		(async () => Api.GetCalendarEvents().then(ce => {
 			console.log({ calendarEvents: ce })
-			setCalendarDays(CreateCalendarDays(ce))
+			MapEvents(ce)
 		}))()
 	}, [])
 
@@ -31,7 +19,7 @@ const Calendar: React.FC = () => {
 		let calendarDayTitle = document.querySelectorAll('.day .number')
 		if (calendarDayTitle) {
 			calendarDayTitle.forEach((d) => {
-				if (parseInt(d.textContent!) === today) {
+				if (parseInt(d.textContent!) === new Date().getDate()) {
 					d.classList.add('today-mark')
 				}
 			})
@@ -90,42 +78,6 @@ const Calendar: React.FC = () => {
 		'Thursday', 'Friday', 'Saturday'
 	]
 
-	function CreateCalendarDays(ces: CalendarEvent[]) {
-		let days = []
-		const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
-		const weekdayOfFirstDay = firstDayOfMonth.getDay()
-
-		for (let date = 0; date < 42; date++) {
-			if (date === 0 && weekdayOfFirstDay === 0) {
-				firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 7)
-			} else if (date === 0) {
-				firstDayOfMonth.setDate(firstDayOfMonth.getDate() + (date - weekdayOfFirstDay))
-			} else {
-				firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 1)
-			}
-
-			const sameMonth = firstDayOfMonth.getMonth() === new Date().getMonth()
-
-			let dayEvents = ces.filter(ce => {
-				return ce.date === new Date(firstDayOfMonth).toJSON()
-			})
-
-			let calendarDay = {
-				className: sameMonth ? '' : 'out-of-month',
-				currentMonth: firstDayOfMonth.getMonth(),
-				date: new Date(firstDayOfMonth).toJSON(),
-				month: firstDayOfMonth.getMonth(),
-				number: firstDayOfMonth.getDate(),
-				year: firstDayOfMonth.getFullYear(),
-				events: dayEvents,
-			}
-			days.push(calendarDay)
-		}
-
-		console.log({ calenderDays: days });
-		return days
-	}
-
 	return (
 		<div className="calendar">
 			<div className="calendar-cont">
@@ -137,7 +89,7 @@ const Calendar: React.FC = () => {
 					))}
 				</div>
 				<div className="content">
-					{calendarDays.map((day: CalendarDay, i: number) => (
+					{calendarDays.map((day, i: number) => (
 						<div key={i} className="day">
 							<p className={`number ${day.className}`}>{day.number}</p>
 							{day.events.slice(0, 4).map((event, i) =>
