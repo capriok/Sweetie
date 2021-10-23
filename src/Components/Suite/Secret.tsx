@@ -114,7 +114,6 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 						onChange={(e) => handlePasscodeChange(e)} />
 				</>
 			}
-
 		</div>
 	)
 }

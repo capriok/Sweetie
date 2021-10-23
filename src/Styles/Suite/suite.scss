@@ -11,23 +11,25 @@
 	color: $modefont;
 	background-color: $modebg;
 
+	font-size: 14px;
 	#Tab {
 		scroll-snap-align: center;
 
 		width: 100vw;
 		height: 100%;
-	}
-	.tab-title {
-		color: $primary-font;
-		width: 100vw;
-		@include flex;
-		background-color: $primary;
-		border-bottom: 3px solid $primlight;
+		.tab-title {
+			color: $primary-font;
+			width: 100vw;
+			@include flex;
+			background-color: $primary;
+			border-bottom: 3px solid $primlight;
+			font-size: 12px;
+		}
+		.sub-title {
+			font-size: 10px;
+		}
 	}
 
-	* {
-		font-size: 14px;
-	}
 	input,
 	select {
 		padding: 7px 10px;
@@ -50,8 +52,6 @@
 		background-color: $primlight;
 		transition: 0.2s;
 		&:active {
-			font-weight: 600;
-			border-color: rgb(74, 18, 206);
 			background-color: rgba(120, 120, 120, 0.32);
 		}
 	}
@@ -60,7 +60,6 @@
 	h2,
 	h3,
 	h4 {
-		font-family: "Montserrat", sans-serif;
 		font-weight: 400;
 	}
 

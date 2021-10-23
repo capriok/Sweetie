@@ -6,7 +6,6 @@
 		min-height: 420px;
 		@include flex;
 		justify-content: space-around;
-		margin: 125px 0;
 
 		.description {
 			padding-top: 20px;
@@ -59,7 +58,7 @@
 		}
 		.cloudiness,
 		.windgust {
-			margin-bottom: 20px !important;
+			margin-bottom: 40px !important;
 		}
 	}
 }

@@ -1,11 +1,10 @@
 @import "../index.scss";
 
 #Sweetie {
-	.cat-schedule {
+	.cat-config {
 		width: 100%;
 		@include flex;
 		flex-direction: column;
-		margin: 125px 0;
 
 		.schedule {
 			width: 100%;

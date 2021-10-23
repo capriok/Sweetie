@@ -46,7 +46,7 @@ const Cats: React.FC = () => {
 	}
 
 	return (
-		<div className="cat-schedule">
+		<div className="cat-config">
 			<div className="schedule">
 				<div className="labels sub-title">
 					<p>Food</p>

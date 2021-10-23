@@ -22,4 +22,24 @@
 		width: 95vw;
 		margin: 0 auto;
 	}
+
+	.tile-title {
+		font-size: 5rem;
+	}
+	.sub-title {
+		font-size: 3.5rem;
+	}
+	.w-line {
+		padding-bottom: 10px !important;
+		margin-bottom: 10px !important;
+		border-bottom: 2px solid grey;
+	}
+
+	.date-time,
+	.calendar,
+	.weather,
+	.cat-config,
+	.grocerylist {
+		margin: 125px 0;
+	}
 }

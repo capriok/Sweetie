@@ -5,8 +5,7 @@
 		@include flex;
 		flex-direction: column;
 		width: 100%;
-		margin-top: 40px;
-		margin: 125px 0;
+		margin-bottom: 0 !important;
 
 		.line {
 			@include flex;
