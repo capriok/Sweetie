@@ -37,11 +37,11 @@ const Cats: React.FC = () => {
 	}
 
 	const circleProps = {
-		r: 85,
-		cx: 100,
-		cy: 100,
+		r: 80,
+		cx: 90,
+		cy: 90,
 		fill: 'transparent',
-		strokeDasharray: '532',
+		strokeDasharray: '500',
 		strokeDashoffset: '0'
 	}
 
@@ -54,7 +54,7 @@ const Cats: React.FC = () => {
 				</div>
 				<div className="indicators">
 					<div id="cont" style={{ animation: animate(foodProgress) }}>
-						<svg id="svg" width="200" height="200">
+						<svg id="svg" width="180" height="180">
 							<circle {...circleProps} />
 							<circle
 								id="bar"
@@ -63,7 +63,7 @@ const Cats: React.FC = () => {
 						</svg>
 					</div>
 					<div id="cont" style={{ animation: animate(wasteProgress) }}>
-						<svg id="svg" width="200" height="200">
+						<svg id="svg" width="180" height="180">
 							<circle {...circleProps} />
 							<circle
 								id="bar"
