@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import useNodeEnvEffects from '../../Hooks/useNodeEnvEffects'
 
 import Div100vh from 'react-div-100vh'
 import Secret from './Secret'
@@ -13,13 +12,14 @@ import '../../Styles/Suite/suite.scss'
 import '../../Styles/Suite/tab.scss'
 
 const Suite: React.FC<any> = (props) => {
-	useNodeEnvEffects()
 
 	const [auth, setAuth] = useState<boolean>(false)
 	const [readOnly, setReadOnly] = useState<boolean>(true)
 	const [mode, setMode] = useState<boolean>(false)
 
 	useEffect(() => {
+		// if (process.env.NODE_ENV === 'production') console.log = () => { }
+
 		const lsMode = localStorage.getItem('Swt-Mode')
 		if (!lsMode) return
 

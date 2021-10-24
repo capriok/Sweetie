@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import useNodeEnvEffects from '../../Hooks/useNodeEnvEffects';
 
 import DatetimeTile from './Tiles/DatetimeTile';
 import WeatherTile from './Tiles/WeatherTile';
@@ -11,9 +10,14 @@ import '../../Styles/Sweetie/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
 
 const Sweetie: React.FC<any> = () => {
-	useNodeEnvEffects()
+	const isProductionEnv = process.env.NODE_ENV === 'production'
 
 	useEffect(() => {
+		if (isProductionEnv) {
+			document.getElementById('Sweetie')?.classList.add('Swt-vert')
+			document.getElementById('Background')?.classList.add('Bg-vert')
+		}
+
 		setTimeout(() => {
 			window.location.reload()
 		}, 1200000)

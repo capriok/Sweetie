@@ -99,7 +99,13 @@ class Api {
 
 	public async GetCatSchedule(): Promise<{ today: CatScheduleDay, cs: Array<CatScheduleDay> }> {
 		const res = await AxiosInstance.get('/cs')
-		const today = res.data.schedule.find((d: CatScheduleDay) => isSameDay(new Date(d.date), tzZero(startOfToday())))
+		const today = res.data.schedule.find((d: CatScheduleDay) => {
+			console.log('d', new Date(d.date));
+			console.log('t', tzZero(startOfToday()));
+			console.log(isSameDay(new Date(d.date), tzZero(startOfToday())))
+
+			return isSameDay(tzZero(new Date(d.date)), tzZero(startOfToday()))
+		})
 		return {
 			today,
 			cs: formatDates(res.data.schedule, 'date')
