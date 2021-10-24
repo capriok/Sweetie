@@ -8,7 +8,6 @@ import Suite from './Components/Suite/Suite'
 import Sweetie from './Components/Sweetie/Sweetie'
 
 function Index() {
-
   const [serverIdle, setServerIdle] = useState<boolean>(true)
 
   useEffect(() => {
