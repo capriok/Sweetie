@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { format } from 'date-fns'
 import Api from '../../../api'
-
-import '../../../Styles/Sweetie/Tiles/calendar.scss'
 import useCalendarDays from '../../../Hooks/useCalendarDays';
 
-const Calendar: React.FC = () => {
+import '../../../Styles/Sweetie/Tiles/calendar-tile.scss'
+
+const CalendarTile: React.FC = () => {
 	const { calendarDays, MapEvents } = useCalendarDays()
 
 	useEffect(() => {
@@ -79,7 +79,7 @@ const Calendar: React.FC = () => {
 	]
 
 	return (
-		<div className="calendar">
+		<div className="calendar-tile">
 			<div className="calendar-cont">
 				<div className="header">
 					{weekdays.map((weekday, i) => (
@@ -111,4 +111,4 @@ const Calendar: React.FC = () => {
 	)
 }
 
-export default Calendar
+export default CalendarTile

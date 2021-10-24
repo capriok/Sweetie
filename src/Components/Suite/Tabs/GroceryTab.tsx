@@ -7,7 +7,7 @@ import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 
-import '../../../Styles/Suite/Tabs/groceries.scss'
+import '../../../Styles/Suite/Tabs/grocery-tab.scss'
 
 interface FormState {
 	name: string
@@ -21,7 +21,7 @@ const InitAddingForm: FormState = {
 	store: 'wholefoods',
 }
 
-const Groceries: React.FC<any> = ({ readOnly }) => {
+const GroceryTab: React.FC<any> = ({ readOnly }) => {
 	const [isAdding, setAddingState] = useState(false)
 	const [isRemoving, setRemovingState] = useState(false)
 
@@ -102,7 +102,7 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 					)
 
 					return (
-						<div className="groceries content">
+						<div className="grocery-tab content">
 							{groceryList.some(g => g.store === 'wholefoods') &&
 								<>
 									<h3>Whole Foods</h3>
@@ -155,5 +155,5 @@ const Groceries: React.FC<any> = ({ readOnly }) => {
 	)
 }
 
-export default Groceries
+export default GroceryTab
 

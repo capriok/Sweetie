@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react'
+import useNodeEnvEffects from '../../Hooks/useNodeEnvEffects';
 
-import DateTime from './Tiles/DateTime';
-import Weather from './Tiles/Weather';
-import Calendar from './Tiles/Calendar';
-import Groceries from './Tiles/Groceries';
-import Cats from './Tiles/Cats';
+import DatetimeTile from './Tiles/DatetimeTile';
+import WeatherTile from './Tiles/WeatherTile';
+import CalendarTile from './Tiles/CalendarTile';
+import GroceryTile from './Tiles/GroceryTile';
+import CatTile from './Tiles/CatTile';
 
 import '../../Styles/Sweetie/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
 
 const Sweetie: React.FC<any> = () => {
+	useNodeEnvEffects()
 
 	useEffect(() => {
-		if (process.env.NODE_ENV === 'production') {
-			document.getElementById('Sweetie')?.classList.add('Swt-vert')
-			document.getElementById('Background')?.classList.add('Bg-vert')
-		}
 		setTimeout(() => {
 			window.location.reload()
 		}, 1200000)
@@ -25,19 +23,19 @@ const Sweetie: React.FC<any> = () => {
 		<>
 			<div id="Sweetie">
 				<Tile>
-					<DateTime />
+					<DatetimeTile />
 				</Tile>
 				<Tile>
-					<Calendar />
+					<CalendarTile />
 				</Tile>
 				<Tile>
-					<Weather />
+					<WeatherTile />
 				</Tile>
 				<Tile>
-					<Cats />
+					<CatTile />
 				</Tile>
 				<Tile>
-					<Groceries />
+					<GroceryTile />
 				</Tile>
 			</div>
 			<div id="Background"></div>

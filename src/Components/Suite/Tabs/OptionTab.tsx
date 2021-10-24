@@ -1,11 +1,10 @@
-
 import React, { useEffect } from 'react'
 
-import '../../../Styles/Suite/Tabs/options.scss'
+import '../../../Styles/Suite/Tabs/option-tab.scss'
 
 const HEXtoHSL = require('hex-to-hsl');
 
-const Options: React.FC<any> = ({ props }) => {
+const OptionTab: React.FC<any> = ({ props }) => {
 	const { auth, setAuth, readOnly, mode, setMode } = props
 
 	let lastAuth = localStorage.getItem('Swt-Auth')
@@ -75,7 +74,7 @@ const Options: React.FC<any> = ({ props }) => {
 
 	return (
 		<div className="section-scroll">
-			<div className="content options">
+			<div className="option-tab content">
 				<ContentLine
 					className="last-authed"
 					label="Last Authentication">
@@ -116,7 +115,7 @@ const Options: React.FC<any> = ({ props }) => {
 	)
 }
 
-export default Options
+export default OptionTab
 
 const ContentLine: React.FC<any> = ({ className, label, children }) => (
 	<div className={'content-line ' + className}>

@@ -7,7 +7,7 @@ import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
-import '../../../Styles/Suite/Tabs/cats.scss'
+import '../../../Styles/Suite/Tabs/cat-tab.scss'
 
 interface FormState {
 	lfd?: string
@@ -20,7 +20,7 @@ const InitUpdatingForm: FormState = {
 }
 
 
-const Cats: React.FC<any> = ({ readOnly }) => {
+const CatTab: React.FC<any> = ({ readOnly }) => {
 	const [isUpdating, setUpdating] = useState(false)
 
 	const [schedule, setSchedule] = useState<Array<CatScheduleDay>>([])
@@ -95,7 +95,7 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 					)
 
 					return (
-						<div className="content cats">
+						<div className="cat-tab content">
 							<div className="content-head">
 								<p>Day</p>
 								<p>Food</p>
@@ -132,4 +132,4 @@ const Cats: React.FC<any> = ({ readOnly }) => {
 	)
 }
 
-export default Cats
+export default CatTab

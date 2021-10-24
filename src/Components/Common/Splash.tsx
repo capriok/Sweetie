@@ -1,7 +1,7 @@
 import React from 'react'
 import Swt from '../../Assets/swt.png'
 
-import '../../Styles/Suite/splash.scss'
+import '../../Styles/Common/splash.scss'
 
 const Splash: React.FC<any> = () => {
 	return (

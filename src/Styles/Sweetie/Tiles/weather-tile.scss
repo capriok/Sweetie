@@ -1,7 +1,7 @@
 @import "../index.scss";
 
 #Sweetie {
-	.weather {
+	.weather-tile {
 		width: 100%;
 		min-height: 420px;
 		@include flex;
@@ -55,10 +55,6 @@
 				width: 250px;
 				filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.3)) hue-rotate(180deg);
 			}
-		}
-		.cloudiness,
-		.windgust {
-			margin-bottom: 40px !important;
 		}
 	}
 }

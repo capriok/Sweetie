@@ -1,7 +1,7 @@
 @import "../index.scss";
 
 #Sweetie {
-	.grocerylist {
+	.grocery-tile {
 		@include flex;
 		align-items: stretch;
 		justify-content: space-evenly;

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import Api from '../../../api'
 
-import '../../../Styles/Sweetie/Tiles/cats.scss'
+import '../../../Styles/Sweetie/Tiles/cat-tile.scss'
 
-const Cats: React.FC = () => {
+const CatTile: React.FC = () => {
 	const [foodProgress, setFoodProgress] = useState(0)
 	const [foodPercent, setFoodPercent] = useState(0)
 	const [wasteProgress, setWasteProgress] = useState(0)
@@ -46,7 +46,7 @@ const Cats: React.FC = () => {
 	}
 
 	return (
-		<div className="cat-config">
+		<div className="cat-tile">
 			<div className="schedule">
 				<div className="labels sub-title">
 					<p>Food</p>
@@ -77,4 +77,4 @@ const Cats: React.FC = () => {
 	)
 }
 
-export default Cats
+export default CatTile

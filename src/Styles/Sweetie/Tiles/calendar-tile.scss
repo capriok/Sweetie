@@ -1,13 +1,13 @@
 @import "../index.scss";
 
 #Sweetie {
-	.calendar {
+	.calendar-tile {
 		width: 100%;
 		height: auto;
 		@include flex;
 		flex-direction: column;
 
-		$event-font-size: 1.8rem !important;
+		$event-font-size: 1.6rem !important;
 
 		.calendar-cont {
 			width: 100%;

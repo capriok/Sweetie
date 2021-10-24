@@ -30,16 +30,16 @@
 		font-size: 3.5rem;
 	}
 	.w-line {
-		padding-bottom: 10px !important;
-		margin-bottom: 10px !important;
+		padding-bottom: 20px;
+		margin-bottom: 40px;
 		border-bottom: 2px solid grey;
 	}
 
-	.date-time,
-	.calendar,
-	.weather,
-	.cat-config,
-	.grocerylist {
+	.datetime-tile,
+	.calendar-tile,
+	.weather-tile,
+	.cat-tile,
+	.grocery-tile {
 		margin: 125px 0;
 	}
 }

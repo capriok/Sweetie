@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import useWeather from '../../../Hooks/useWeather'
 
-import '../../../Styles/Sweetie/Tiles/weather.scss'
+import '../../../Styles/Sweetie/Tiles/weather-tile.scss'
 
-const Weather: React.FC = () => {
+const WeatherTile: React.FC = () => {
 	const stats = useWeather()
 
 	useEffect(() => {
@@ -11,7 +11,7 @@ const Weather: React.FC = () => {
 	}, [stats])
 
 	return (
-		<div className="weather">
+		<div className="weather-tile">
 			<div className="overview">
 				<p className="description sub-title">{stats.description}</p>
 				<br />
@@ -68,4 +68,4 @@ const Weather: React.FC = () => {
 	)
 }
 
-export default Weather
+export default WeatherTile

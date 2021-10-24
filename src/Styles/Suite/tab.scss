@@ -6,56 +6,73 @@
 		justify-content: flex-start;
 		flex-direction: column;
 
+		scroll-snap-align: center;
+
+		width: 100vw;
+		height: 100%;
+
+		.tab-title {
+			color: $primary-font;
+			width: 100vw;
+			@include flex;
+			background-color: $primary;
+			border-bottom: 3px solid $primlight;
+			font-size: 12px;
+		}
+		.sub-title {
+			font-size: 10px;
+		}
+
 		.section-scroll {
 			overflow-y: scroll;
 			height: 100%;
-		}
-		.content {
-			@include flex;
-			flex-direction: column;
-			justify-content: space-between;
-			width: 100vw;
-
-			padding: 0 20px !important;
-			margin: 0 auto;
-
-			.content-head {
-				width: 100%;
-				max-width: $MAX;
+			.content {
 				@include flex;
+				flex-direction: column;
 				justify-content: space-between;
-				margin-bottom: 20px;
+				width: 100vw;
+
+				padding: 0 20px !important;
+				margin: 0 auto;
+
+				.content-head {
+					width: 100%;
+					max-width: $MAX;
+					@include flex;
+					justify-content: space-between;
+					margin-bottom: 20px;
+					p {
+						font-weight: 600;
+					}
+				}
+				.content-line {
+					width: 100%;
+					max-width: $MAX;
+					@include flex;
+					justify-content: space-between;
+				}
+				.with-border {
+					&:not(:last-child) {
+						border-bottom: 2px solid $light-grey;
+					}
+				}
+			}
+			.content-empty {
+				@include flex;
+				width: 100vw;
 				p {
-					font-weight: 600;
+					margin-top: 40px;
 				}
 			}
-			.content-line {
-				width: 100%;
-				max-width: $MAX;
-				@include flex;
-				justify-content: space-between;
-			}
-			.with-border {
-				&:not(:last-child) {
-					border-bottom: 2px solid $light-grey;
-				}
-			}
-		}
-		.content-empty {
-			@include flex;
-			width: 100vw;
-			p {
-				margin-top: 40px;
-			}
-		}
 
-		.content-view-all {
-			@include flex;
-			height: 30px;
-			padding: 10px;
-			margin: 10px auto 10px;
-			cursor: pointer;
-			font-size: 1.1rem !important;
+			.content-view-all {
+				@include flex;
+				height: 30px;
+				padding: 10px;
+				margin: 10px auto 10px;
+				cursor: pointer;
+				font-size: 1.1rem !important;
+			}
 		}
 	}
 }

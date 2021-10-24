@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
 import useHoliday from '../../../Hooks/useHoliday'
 
-import '../../../Styles/Sweetie/Tiles/datetime.scss'
+import '../../../Styles/Sweetie/Tiles/datetime-tile.scss'
 
-const DateTime: React.FC = () => {
+const DatetimeTile: React.FC = () => {
 	const [currentTime, setCurrentTime] = useState(format(new Date(), 'pp'))
 	const [currentDate] = useState(`
 		${format(new Date(), 'iii')}, 
@@ -25,7 +25,7 @@ const DateTime: React.FC = () => {
 	}, [currentTime])
 
 	return (
-		<div className="date-time">
+		<div className="datetime-tile">
 			<div className="line">
 				<div className="date">{currentDate}</div>
 				<div className="time">{currentTime}</div>
@@ -40,4 +40,4 @@ const DateTime: React.FC = () => {
 	)
 }
 
-export default DateTime
+export default DatetimeTile

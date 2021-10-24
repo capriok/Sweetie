@@ -9,7 +9,7 @@ import ActionBar, { ActionBarButton } from '../ActionBar'
 import { VscDiffAdded, VscDiffRemoved } from 'react-icons/vsc'
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
-import '../../../Styles/Suite/Tabs/calendar.scss'
+import '../../../Styles/Suite/Tabs/calendar-tab.scss'
 
 interface FormState {
 	name?: string
@@ -38,7 +38,7 @@ const InitUpdatingForm: FormState = {
 	endTime: undefined
 }
 
-const Calendar: React.FC<any> = ({ readOnly }) => {
+const CalendarTab: React.FC<any> = ({ readOnly }) => {
 	const [isAdding, setAddingState] = useState(false)
 	const [isUpdating, setUpdatingState] = useState(false)
 	const [isRemoving, setRemovingState] = useState(false)
@@ -234,7 +234,7 @@ const Calendar: React.FC<any> = ({ readOnly }) => {
 					)
 
 					return (
-						<div className="calender content">
+						<div className="calendar-tab content">
 							<div className="content-head">
 								<p>Event</p>
 								<p>Date</p>
@@ -296,4 +296,4 @@ const Calendar: React.FC<any> = ({ readOnly }) => {
 	)
 }
 
-export default Calendar
+export default CalendarTab
