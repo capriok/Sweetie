@@ -21,7 +21,9 @@ const InitAddingForm: FormState = {
 	store: 'wholefoods',
 }
 
-const GroceryTab: React.FC<any> = ({ readOnly }) => {
+const GroceryTab: React.FC<any> = ({ props }) => {
+	const { state, dispatch, readOnly } = props
+
 	const [isAdding, setAddingState] = useState(false)
 	const [isRemoving, setRemovingState] = useState(false)
 
@@ -31,6 +33,10 @@ const GroceryTab: React.FC<any> = ({ readOnly }) => {
 
 	const toggleAdding = () => setAddingState(s => !s)
 	const toggleRemoving = () => setRemovingState(s => !s)
+
+	useEffect(() => {
+		setGroceryList(state.groceryList)
+	}, [state.groceryList])
 
 	function resetAddingState() {
 		setAddingForm({ ...InitAddingForm, store: addingForm.store })
@@ -44,7 +50,9 @@ const GroceryTab: React.FC<any> = ({ readOnly }) => {
 		);
 		if (confirmation?.toLocaleLowerCase() === 'confirm') {
 			if (readOnly) return alert('Not allowed in Read Only mode.')
-			Api.ClearGroceryList().then(gl => setGroceryList(gl))
+			Api.ClearGroceryList().then(gl => {
+				dispatch({ type: 'SetGroceryList', value: gl })
+			})
 		}
 	}
 
@@ -54,7 +62,9 @@ const GroceryTab: React.FC<any> = ({ readOnly }) => {
 		const confirmation = window.confirm(`Remove '${item.name}' ?`);
 		if (confirmation) {
 			if (readOnly) return alert('Not allowed in Read Only mode.')
-			Api.RemoveGrocery(item).then(gl => setGroceryList(gl))
+			Api.RemoveGrocery(item).then(gl => {
+				dispatch({ type: 'SetGroceryList', value: gl })
+			})
 		}
 	}
 
@@ -72,16 +82,9 @@ const GroceryTab: React.FC<any> = ({ readOnly }) => {
 		console.log(item);
 		Api.PostGrocery(item).then(gl => {
 			resetAddingState()
-			setGroceryList(gl)
+			dispatch({ type: 'SetGroceryList', value: gl })
 		})
 	}
-
-	useEffect(() => {
-		(async () => Api.GetGroceryList().then(gl => {
-			console.log({ Groceries: gl })
-			setGroceryList(gl)
-		}))()
-	}, [])
 
 	return (
 		<>

@@ -38,7 +38,9 @@ const InitUpdatingForm: FormState = {
 	endTime: undefined
 }
 
-const CalendarTab: React.FC<any> = ({ readOnly }) => {
+const CalendarTab: React.FC<any> = ({ props }) => {
+	const { state, dispatch, readOnly } = props
+
 	const [isAdding, setAddingState] = useState(false)
 	const [isUpdating, setUpdatingState] = useState(false)
 	const [isRemoving, setRemovingState] = useState(false)
@@ -50,6 +52,10 @@ const CalendarTab: React.FC<any> = ({ readOnly }) => {
 	const toggleAdding = () => setAddingState(s => !s)
 	const toggleUpdating = () => setUpdatingState(s => !s)
 	const toggleRemoving = () => setRemovingState(s => !s)
+
+	useEffect(() => {
+		setEventList(state.calendarEvents)
+	}, [state.calendarEvents])
 
 	function resetAddingState() {
 		setAddingForm(InitAddingForm)
@@ -94,13 +100,9 @@ const CalendarTab: React.FC<any> = ({ readOnly }) => {
 	}
 
 	async function PostEvent(dateString: string) {
-		console.log(dateString)
-
 		const invalidDate = !isNaN(Date.parse(dateString!))
 
-		console.log(isAdding, addingForm.name, !invalidDate)
 		if (!isAdding || !addingForm.name || !invalidDate) return
-
 		if (addingForm.timed && !addingForm.startTime) return
 
 		const date = new Date(dateString)
@@ -117,7 +119,7 @@ const CalendarTab: React.FC<any> = ({ readOnly }) => {
 		console.log(event);
 		Api.PostCalendarEvent(event).then(ce => {
 			resetAddingState()
-			setEventList(ce)
+			dispatch({ type: 'SetCalendarEvents', value: ce })
 		})
 	}
 
@@ -144,17 +146,9 @@ const CalendarTab: React.FC<any> = ({ readOnly }) => {
 		console.log(event);
 		Api.UpdateCalendarEvent(event).then(ce => {
 			resetUpdatingState()
-			setEventList(ce)
+			dispatch({ type: 'SetCalendarEvents', value: ce })
 		})
 	}
-
-	useEffect(() => {
-		(async () => Api.GetCalendarEvents().then(ce => {
-			console.log({ CalendarEvents: ce })
-			setEventList(ce)
-		}))()
-	}, [])
-
 
 	function formatEventTimes(event: CalendarEvent) {
 		const { startTime, endTime } = event
@@ -193,7 +187,6 @@ const CalendarTab: React.FC<any> = ({ readOnly }) => {
 	}
 
 	function displayMonth(i: number) {
-
 		const currEv = eventList[i]
 		const currMonth = new Date(currEv.date).toLocaleString('default', { month: 'long' })
 

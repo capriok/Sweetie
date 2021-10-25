@@ -9,7 +9,7 @@ import CatTile from './Tiles/CatTile';
 import '../../Styles/Sweetie/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
 
-const Sweetie: React.FC<any> = () => {
+const Sweetie: React.FC<any> = (props) => {
 	const isProductionEnv = process.env.NODE_ENV === 'production'
 
 	useEffect(() => {
@@ -27,19 +27,19 @@ const Sweetie: React.FC<any> = () => {
 		<>
 			<div id="Sweetie">
 				<Tile>
-					<DatetimeTile />
+					<DatetimeTile state={props.state} />
 				</Tile>
 				<Tile>
-					<CalendarTile />
+					<CalendarTile state={props.state} />
 				</Tile>
 				<Tile>
-					<WeatherTile />
+					<WeatherTile state={props.state} />
 				</Tile>
 				<Tile>
-					<CatTile />
+					<CatTile state={props.state} />
 				</Tile>
 				<Tile>
-					<GroceryTile />
+					<GroceryTile state={props.state} />
 				</Tile>
 			</div>
 			<div id="Background"></div>

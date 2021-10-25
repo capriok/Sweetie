@@ -4,7 +4,7 @@ import useHoliday from '../../../Hooks/useHoliday'
 
 import '../../../Styles/Sweetie/Tiles/datetime-tile.scss'
 
-const DatetimeTile: React.FC = () => {
+const DatetimeTile: React.FC<any> = () => {
 	const [currentTime, setCurrentTime] = useState(format(new Date(), 'pp'))
 	const [currentDate] = useState(`
 		${format(new Date(), 'iii')}, 

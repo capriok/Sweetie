@@ -3,7 +3,7 @@ import useWeather from '../../../Hooks/useWeather'
 
 import '../../../Styles/Sweetie/Tiles/weather-tile.scss'
 
-const WeatherTile: React.FC = () => {
+const WeatherTile: React.FC<any> = () => {
 	const stats = useWeather()
 
 	useEffect(() => {

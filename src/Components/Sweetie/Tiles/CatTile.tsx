@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react'
-import Api from '../../../api'
 
 import '../../../Styles/Sweetie/Tiles/cat-tile.scss'
 
-const CatTile: React.FC = () => {
+const CatTile: React.FC<{ state: SwtState }> = ({ state }) => {
 	const [foodProgress, setFoodProgress] = useState(0)
 	const [foodPercent, setFoodPercent] = useState(0)
 	const [wasteProgress, setWasteProgress] = useState(0)
 	const [wastePercent, setWastePercent] = useState(0)
 
 	useEffect(() => {
-		(async () => Api.GetCatSchedule().then(({ today, cs }) => {
-			console.log({ CatSchedule: cs })
-			if (today) {
-				setFoodProgress(today.food.progress)
-				setWasteProgress(today.waste.progress)
-			}
-		}))()
-	}, [])
+		if (state.catSchedule.today) {
+			setFoodProgress(state.catSchedule.today.food.progress)
+			setWasteProgress(state.catSchedule.today.waste.progress)
+		}
+	}, [state.catSchedule])
 
 	useEffect(() => {
 		calculateCircleProgress(circleProps.r, foodProgress, setFoodPercent)

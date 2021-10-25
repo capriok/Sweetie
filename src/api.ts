@@ -21,7 +21,7 @@ class Api {
 		return res.data.status
 	}
 
-	// Calendar 
+	// CALENDAR EVENTS 
 
 	public async GetCalendarEvents(): Promise<Array<CalendarEvent>> {
 		const res = await AxiosInstance.get('/ce')
@@ -65,43 +65,11 @@ class Api {
 		return res.data.list
 	}
 
-	// STATIC TASKS 
-
-	public async GetStaticTasks(): Promise<Array<StaticTask>> {
-		const res = await AxiosInstance.get('/st')
-		return res.data.list
-	}
-
-	// TASKS
-
-	public async GetTaskList(): Promise<Array<Task>> {
-		const res = await AxiosInstance.get('/tl')
-		return res.data.list
-	}
-
-	public async PostTask(task: Task): Promise<Array<Task>> {
-		const res = await AxiosInstance.post('/tl', { task: task })
-		return res.data.list
-	}
-
-	public async RemoveTask(task: Task): Promise<Array<Task>> {
-		const res = await AxiosInstance.delete('/tl', { data: { id: task._id } })
-		return res.data.list
-	}
-
-	public async ClearTaskList(): Promise<Array<Task>> {
-		const res = await AxiosInstance.post('/tl-clear')
-		return res.data.list
-	}
-
-
 	// CATS
 
 	public async GetCatSchedule(): Promise<{ today: CatScheduleDay, cs: Array<CatScheduleDay> }> {
 		const res = await AxiosInstance.get('/cs')
 		const today = res.data.schedule.find((d: CatScheduleDay) => {
-			console.log(new Date(d.date).toLocaleDateString())
-			console.log(tzZero(startOfToday()).toLocaleDateString())
 			return new Date(d.date).toLocaleDateString() === tzZero(startOfToday()).toLocaleDateString()
 		})
 		return {

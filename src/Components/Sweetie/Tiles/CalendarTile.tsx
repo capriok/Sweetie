@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
 import { format } from 'date-fns'
-import Api from '../../../api'
 import useCalendarDays from '../../../Hooks/useCalendarDays';
 
 import '../../../Styles/Sweetie/Tiles/calendar-tile.scss'
 
-const CalendarTile: React.FC = () => {
+const CalendarTile: React.FC<{ state: SwtState }> = ({ state }) => {
 	const { calendarDays, MapEvents } = useCalendarDays()
 
 	useEffect(() => {
-		(async () => Api.GetCalendarEvents().then(ce => {
-			console.log({ calendarEvents: ce })
-			MapEvents(ce)
-		}))()
-	}, [])
+		MapEvents(state.calendarEvents)
+	}, [state.calendarEvents])
 
 	useEffect(() => {
 		let calendarDayTitle = document.querySelectorAll('.day .number')
@@ -26,57 +22,16 @@ const CalendarTile: React.FC = () => {
 		}
 	}, [calendarDays])
 
-	function formatEventTimes(event: CalendarEvent) {
-		const { startTime, endTime } = event
-
-		if (!event.timed || (event.timed && !startTime)) return
-
-		const date = new Date(event.date).toJSON().split('T')[0]
-
-		const sDate = new Date(date + 'T' + startTime)
-		const start = trimTime(format(sDate, endTime ? 'h:mm' : 'p'))
-
-		let time = start
-		if (endTime) {
-			const eDate = new Date(date + 'T' + endTime)
-			const end = trimTime(format(eDate, 'p'))
-			time = time + ' - ' + end
-		}
-		return time
-	}
-
-	function trimTime(time: string) {
-		let slice = time.split(':')
-		const hour = slice[0]
-		const minute = slice[1].substring(0, 2)
-
-		const meridian = RegExp(/AM|PM/g).test(slice[1])
-			? slice[1].split(' ')[1]
-			: ''
-
-		time = hour + ':' + minute
-		if (slice[1].includes('00')) {
-			time = hour
-		}
-
-		return time + ' ' + meridian
-	}
 
 	function calendarEventClassName(event: CalendarEvent) {
 		const cns = ['event']
-		const works = ['STJ', 'TMC', 'Work']
+		const works = ['SJH', 'TMC']
 
 		if (event.name) cns.push('line')
 		if (works.includes(event.name)) cns.push('work')
 
 		return cns.join(' ')
 	}
-
-	const weekdays = [
-		'Sunday', 'Monday',
-		'Tueday', 'Wednesday',
-		'Thursday', 'Friday', 'Saturday'
-	]
 
 	return (
 		<div className="calendar-tile">
@@ -112,3 +67,44 @@ const CalendarTile: React.FC = () => {
 }
 
 export default CalendarTile
+
+const weekdays = [
+	'Sunday', 'Monday',
+	'Tueday', 'Wednesday',
+	'Thursday', 'Friday', 'Saturday'
+]
+
+function formatEventTimes(event: CalendarEvent) {
+	const { startTime, endTime } = event
+
+	if (!event.timed || (event.timed && !startTime)) return
+
+	const date = new Date(event.date).toJSON().split('T')[0]
+	const sDate = new Date(date + 'T' + startTime)
+	const start = trimTime(format(sDate, endTime ? 'h:mm' : 'p'))
+
+	let time = start
+	if (endTime) {
+		const eDate = new Date(date + 'T' + endTime)
+		const end = trimTime(format(eDate, 'p'))
+		time = time + ' - ' + end
+	}
+	return time
+}
+
+function trimTime(time: string) {
+	let slice = time.split(':')
+	const hour = slice[0]
+	const minute = slice[1].substring(0, 2)
+
+	const meridian = RegExp(/AM|PM/g).test(slice[1])
+		? slice[1].split(' ')[1]
+		: ''
+
+	time = hour + ':' + minute
+	if (slice[1].includes('00')) {
+		time = hour
+	}
+
+	return time + ' ' + meridian
+}

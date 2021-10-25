@@ -1,22 +1,19 @@
 import { useEffect, useState } from 'react'
-import Api from '../../../api'
 
 import '../../../Styles/Sweetie/Tiles/grocery-tile.scss'
 
-const GroceryTile: React.FC = () => {
+const GroceryTile: React.FC<{ state: SwtState }> = ({ state }) => {
 	const [groceryList, setGroceryList] = useState<{ wholeFoods: Array<Grocery>, bashas: Array<Grocery> }>({
 		wholeFoods: [],
 		bashas: [],
 	})
 
 	useEffect(() => {
-		(async () => Api.GetGroceryList().then(gl => {
-			console.log({ GroceryList: gl })
-			const wholeFoods = gl.filter(i => i.store === 'wholefoods')
-			const bashas = gl.filter(i => i.store === 'bashas')
-			setGroceryList({ wholeFoods, bashas })
-		}))()
-	}, [])
+		setGroceryList({
+			wholeFoods: state.groceryList.filter(i => i.store === 'wholefoods'),
+			bashas: state.groceryList.filter(i => i.store === 'bashas')
+		})
+	}, [state.groceryList])
 
 	return (
 		<div className="grocery-tile">

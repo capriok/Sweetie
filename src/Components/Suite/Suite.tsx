@@ -12,7 +12,6 @@ import '../../Styles/Suite/suite.scss'
 import '../../Styles/Suite/tab.scss'
 
 const Suite: React.FC<any> = (props) => {
-
 	const [auth, setAuth] = useState<boolean>(false)
 	const [readOnly, setReadOnly] = useState<boolean>(true)
 	const [mode, setMode] = useState<boolean>(false)

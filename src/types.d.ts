@@ -1,3 +1,25 @@
+
+interface SwtState {
+	calendarEvents: CalendarEvent[]
+	groceryList: Grocery[]
+	catSchedule: {
+		today: CatScheduleDay
+		cs: CatScheduleDay[]
+	}
+	catConfig: CatConfig
+}
+
+type SwtReducer =
+	| { type: 'SetCalendarEvents', value: CalendarEvent[] }
+	| { type: 'SetGroceryList', value: Grocery[] }
+	| {
+		type: 'SetCatSchedule', value: {
+			today: CatScheduleDay
+			cs: CatScheduleDay[]
+		}
+	}
+	| { type: 'SetCatConfig', value: CatConfig }
+
 interface CalendarEvent {
 	_id?: string
 	name: string

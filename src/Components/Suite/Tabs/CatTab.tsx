@@ -20,7 +20,9 @@ const InitUpdatingForm: FormState = {
 }
 
 
-const CatTab: React.FC<any> = ({ readOnly }) => {
+const CatTab: React.FC<any> = ({ props }) => {
+	const { state, dispatch, readOnly } = props
+
 	const [isUpdating, setUpdating] = useState(false)
 
 	const [schedule, setSchedule] = useState<Array<CatScheduleDay>>([])
@@ -28,10 +30,26 @@ const CatTab: React.FC<any> = ({ readOnly }) => {
 		lastFoodDay: '',
 		lastWasteDay: ''
 	})
-
 	const [updatingForm, setUpdatingForm] = useState(InitUpdatingForm)
 
 	const toggleUpdating = () => setUpdating(s => !s)
+
+	useEffect(() => {
+		setCatConfig(state.catConfig)
+	}, [state.catConfig])
+
+	useEffect(() => {
+		setSchedule(state.catSchedule.cs)
+	}, [state.catSchedule.cs])
+
+	useEffect(() => {
+		if (!state.catConfig.lastFoodDay || !state.catConfig.lastWasteDay) return
+		(async () => Api.GetCatSchedule().then(({ today, cs }) => {
+			console.log({ CatSchedule: cs })
+			dispatch({ type: 'SetCatSchedule', value: { today, cs } })
+		}))()
+		setUpdatingConfig(state.catConfig)
+	}, [catConfig])
 
 	function resetUpdatingState() {
 		setUpdating(false)
@@ -59,25 +77,9 @@ const CatTab: React.FC<any> = ({ readOnly }) => {
 		console.log(config)
 		Api.UpdateCatConfig(config).then(cc => {
 			resetUpdatingState()
-			setCatConfig(cc)
+			dispatch({ type: 'SetCatConfig', value: cc })
 		})
 	}
-
-	useEffect(() => {
-		(async () => Api.GetCatConfig().then(cc => {
-			console.log({ CatConfig: cc })
-			setCatConfig(cc)
-		}))()
-	}, [])
-
-	useEffect(() => {
-		if (!catConfig.lastFoodDay || !catConfig.lastWasteDay) return
-		(async () => Api.GetCatSchedule().then(({ today, cs }) => {
-			console.log({ CatSchedule: cs })
-			setSchedule(cs)
-		}))()
-		setUpdatingConfig(catConfig)
-	}, [catConfig])
 
 	return (
 		<>
