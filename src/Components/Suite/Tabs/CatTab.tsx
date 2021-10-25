@@ -19,47 +19,51 @@ const InitUpdatingForm: FormState = {
 	lwd: undefined
 }
 
-
 const CatTab: React.FC<any> = ({ props }) => {
 	const { state, dispatch, readOnly } = props
 
 	const [isUpdating, setUpdating] = useState(false)
-
-	const [schedule, setSchedule] = useState<Array<CatScheduleDay>>([])
 	const [catConfig, setCatConfig] = useState<CatConfig>({
 		lastFoodDay: '',
 		lastWasteDay: ''
 	})
 	const [updatingForm, setUpdatingForm] = useState(InitUpdatingForm)
+	const [foodProgress, setFoodProgress] = useState(0)
+	const [foodPercent, setFoodPercent] = useState(0)
+	const [wasteProgress, setWasteProgress] = useState(0)
+	const [wastePercent, setWastePercent] = useState(0)
 
 	const toggleUpdating = () => setUpdating(s => !s)
 
 	useEffect(() => {
+		if (state.catSchedule) {
+			setFoodProgress(state.catSchedule.food.progress)
+			setWasteProgress(state.catSchedule.waste.progress)
+		}
+	}, [state.catSchedule])
+
+	useEffect(() => {
+		calculateCircleProgress(circleProps.r, foodProgress, setFoodPercent)
+		calculateCircleProgress(circleProps.r, wasteProgress, setWastePercent)
+	}, [foodProgress, wasteProgress])
+
+	function calculateCircleProgress(r: number, progress: number, setter: any) {
+		var c = Math.PI * (r * 2)
+		var pct = ((100 - progress) / 100) * c
+		setter(pct)
+	}
+
+	useEffect(() => {
 		setCatConfig(state.catConfig)
-	}, [state.catConfig])
-
-	useEffect(() => {
-		setSchedule(state.catSchedule.cs)
-	}, [state.catSchedule.cs])
-
-	useEffect(() => {
 		if (!state.catConfig.lastFoodDay || !state.catConfig.lastWasteDay) return
-		(async () => Api.GetCatSchedule().then(({ today, cs }) => {
-			console.log({ CatSchedule: cs })
-			dispatch({ type: 'SetCatSchedule', value: { today, cs } })
-		}))()
-		setUpdatingConfig(state.catConfig)
-	}, [catConfig])
+		setUpdatingForm({
+			lfd: state.catConfig.lastFoodDay,
+			lwd: state.catConfig.lastWasteDay
+		})
+	}, [state.catConfig])
 
 	function resetUpdatingState() {
 		setUpdating(false)
-	}
-
-	function setUpdatingConfig(catConfig: CatConfig) {
-		setUpdatingForm({
-			lfd: catConfig.lastFoodDay,
-			lwd: catConfig.lastWasteDay
-		})
 	}
 
 	async function UpdateConfig(e: any) {
@@ -78,6 +82,11 @@ const CatTab: React.FC<any> = ({ props }) => {
 		Api.UpdateCatConfig(config).then(cc => {
 			resetUpdatingState()
 			dispatch({ type: 'SetCatConfig', value: cc })
+		}).then(() => {
+			Api.GetCatSchedule().then(today => {
+				resetUpdatingState()
+				dispatch({ type: 'SetCatSchedule', value: today })
+			})
 		})
 	}
 
@@ -98,26 +107,14 @@ const CatTab: React.FC<any> = ({ props }) => {
 
 					return (
 						<div className="cat-tab content">
-							<div className="content-head">
-								<p>Day</p>
+							<div className="food">
 								<p>Food</p>
-								<p>Waste</p>
+								<ProgressCircle progress={foodProgress} percent={foodPercent} />
 							</div>
-							{schedule.map((day, i) => (
-								<div className="content-line with-border" key={i}>
-									<div className="day">
-										<p>{new Date(day.date).toLocaleDateString('en-us',
-											{ weekday: 'short', month: 'short', day: 'numeric' })}
-										</p>
-									</div>
-									<div className="food">
-										<input tabIndex={-1} readOnly type="radio" checked={day.food.is} />
-									</div>
-									<div className="waste">
-										<input tabIndex={-1} readOnly type="radio" checked={day.waste.is} />
-									</div>
-								</div>
-							))}
+							<div className="waste">
+								<p>Waste</p>
+								<ProgressCircle progress={wasteProgress} percent={wastePercent} />
+							</div>
 						</div>
 					)
 				})()}
@@ -135,3 +132,34 @@ const CatTab: React.FC<any> = ({ props }) => {
 }
 
 export default CatTab
+
+
+function animate(prop: number) {
+	return prop === 100
+		? 'ease-in-out 5s infinite alternate glow'
+		: 'unset'
+}
+
+const circleProps = {
+	r: 42.5,
+	cx: 50,
+	cy: 50,
+	fill: 'transparent',
+	strokeDasharray: '268',
+	strokeDashoffset: '0'
+}
+
+const ProgressCircle: React.FC<any> = ({ progress, percent }) => {
+
+	return (
+		<div id="cont" style={{ animation: animate(progress) }}>
+			<svg id="svg" width="100" height="100">
+				<circle {...circleProps} />
+				<circle
+					id="bar"
+					{...circleProps}
+					style={{ strokeDashoffset: percent }} />
+			</svg>
+		</div>
+	)
+}

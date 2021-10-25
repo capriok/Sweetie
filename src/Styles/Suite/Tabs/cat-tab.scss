@@ -2,17 +2,71 @@
 
 #Suite {
 	.cat-tab {
-		.day {
-			flex: 1;
-			text-align: left;
-		}
-		.food {
-			flex: 1;
+		p {
 			text-align: center;
+			font-weight: bold;
+			margin-bottom: 20px;
 		}
+
+		.food {
+			margin-bottom: 50px;
+		}
+		.food,
 		.waste {
-			flex: 1;
-			text-align: right;
+			$stroke-color: rgba(220, 220, 220, 0.8);
+			$shadow-prim: rgba(165, 165, 165, 0.3);
+			$shadow-light: rgba(165, 165, 165, 0.15);
+			$cont-size: 100px;
+			$after-size: 70px;
+			$after-margin: -35px;
+
+			#svg circle {
+				stroke-dashoffset: 0;
+				transition: stroke-dashoffset 1s linear;
+				stroke: transparent;
+				stroke-width: 7px;
+			}
+			#svg #bar {
+				stroke: $stroke-color;
+			}
+			#cont {
+				position: relative;
+				display: block;
+				height: $cont-size;
+				width: $cont-size;
+				margin: 0 auto;
+				box-shadow: 0 0 15px $shadow-light;
+				border-radius: 100%;
+				transform: rotate(-90deg);
+			}
+			#cont:after {
+				position: absolute;
+				display: block;
+				content: "";
+				height: $after-size;
+				width: $after-size;
+				top: 50%;
+				left: 50%;
+				box-shadow: inset 0 0 7px $shadow-prim;
+				margin-top: $after-margin;
+				margin-left: $after-margin;
+				border-radius: 100%;
+			}
+
+			@keyframes glow {
+				10% {
+					// stroke: rgb(20, 84, 136);
+					box-shadow: 0 0 1em $shadow-light;
+				}
+				50% {
+					// stroke: rgba(199, 17, 17, 6);
+					box-shadow: 0 0 2em crimson;
+				}
+				90% {
+					// stroke: rgb(20, 84, 136);
+					box-shadow: 0 0 1em $shadow-light;
+				}
+			}
 		}
 	}
 }

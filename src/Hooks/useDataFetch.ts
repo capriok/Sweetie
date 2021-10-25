@@ -9,7 +9,7 @@ const useDataFetch = () => {
 	useEffect(() => {
 		setLoading(true)
 		FetchData()
-		setInterval(() => FetchData, 600000)
+		setInterval(FetchData, 600000)
 	}, [])
 
 	function FetchData() {
@@ -35,12 +35,9 @@ const swtState: SwtState = {
 	calendarEvents: [],
 	groceryList: [],
 	catSchedule: {
-		today: {
-			date: '',
-			food: { is: false, progress: 0 },
-			waste: { is: false, progress: 0 }
-		},
-		cs: []
+		date: '',
+		food: { is: false, progress: 0 },
+		waste: { is: false, progress: 0 }
 	},
 	catConfig: {
 		lastFoodDay: '',

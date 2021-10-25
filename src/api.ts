@@ -67,15 +67,12 @@ class Api {
 
 	// CATS
 
-	public async GetCatSchedule(): Promise<{ today: CatScheduleDay, cs: Array<CatScheduleDay> }> {
+	public async GetCatSchedule(): Promise<CatScheduleDay> {
 		const res = await AxiosInstance.get('/cs')
 		const today = res.data.schedule.find((d: CatScheduleDay) => {
 			return new Date(d.date).toLocaleDateString() === tzZero(startOfToday()).toLocaleDateString()
 		})
-		return {
-			today,
-			cs: formatDates(res.data.schedule, 'date')
-		}
+		return today
 	}
 
 	public async GetCatConfig(): Promise<CatConfig> {

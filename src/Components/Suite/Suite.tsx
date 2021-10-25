@@ -17,8 +17,6 @@ const Suite: React.FC<any> = (props) => {
 	const [mode, setMode] = useState<boolean>(false)
 
 	useEffect(() => {
-		// if (process.env.NODE_ENV === 'production') console.log = () => { }
-
 		const lsMode = localStorage.getItem('Swt-Mode')
 		if (!lsMode) return
 
