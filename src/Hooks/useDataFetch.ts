@@ -19,7 +19,10 @@ const useDataFetch = () => {
 			Api.GetCatSchedule(),
 			Api.GetCatConfig()
 		]).then((data) => {
-			console.log(data);
+			console.log({ CalevndarEvents: data[0] })
+			console.log({ GroceryList: data[1] })
+			console.log({ CatSchedule: data[2] })
+			console.log({ CatConfig: data[3] })
 			setLoading(false)
 			dispatch({ type: 'SetCalendarEvents', value: data[0] })
 			dispatch({ type: 'SetGroceryList', value: data[1] })

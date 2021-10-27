@@ -17,10 +17,6 @@ const Sweetie: React.FC<any> = (props) => {
 			document.getElementById('Sweetie')?.classList.add('Swt-vert')
 			document.getElementById('Background')?.classList.add('Bg-vert')
 		}
-
-		setTimeout(() => {
-			window.location.reload()
-		}, 1200000)
 	}, [])
 
 	return (
