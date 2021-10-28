@@ -1,7 +1,10 @@
+import { startOfToday } from 'date-fns'
 import { useEffect, useState } from 'react'
+import { tzZero } from '../api'
 
 interface CalendarDay {
-	className: string
+	dayCns: string
+	numberCns: string
 	currentMonth: number
 	date: string
 	month: number
@@ -29,10 +32,21 @@ const useCalendarDays = () => {
 				firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 1)
 			}
 
-			const sameMonth = firstDayOfMonth.getMonth() === new Date().getMonth()
+			const prevMonth = new Date().getMonth() <= firstDayOfMonth.getMonth()
+			const afterMonth = new Date().getMonth() >= firstDayOfMonth.getMonth()
+			const sameDay = tzZero(firstDayOfMonth).toJSON() === tzZero(startOfToday()).toJSON()
+
+			const dayCns = []
+			prevMonth ? dayCns.push('day') : dayCns.push('null-day')
+			afterMonth ? dayCns.push('day') : dayCns.push('blur-day')
+
+			const numberCns = ['number']
+			!sameDay ? numberCns.push() : numberCns.push('today-mark')
+			afterMonth ? numberCns.push() : numberCns.push('dull-number')
 
 			let calendarDay = {
-				className: sameMonth ? '' : 'out-of-month',
+				dayCns: dayCns.join(' '),
+				numberCns: numberCns.join(' '),
 				currentMonth: firstDayOfMonth.getMonth(),
 				date: new Date(firstDayOfMonth).toJSON(),
 				month: firstDayOfMonth.getMonth(),

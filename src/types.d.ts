@@ -1,16 +1,9 @@
-
 interface SwtState {
 	calendarEvents: CalendarEvent[]
 	groceryList: Grocery[]
 	catSchedule: CatScheduleDay
 	catConfig: CatConfig
 }
-
-type SwtReducer =
-	| { type: 'SetCalendarEvents', value: CalendarEvent[] }
-	| { type: 'SetGroceryList', value: Grocery[] }
-	| { type: 'SetCatSchedule', value: CatScheduleDay }
-	| { type: 'SetCatConfig', value: CatConfig }
 
 interface CalendarEvent {
 	_id?: string
@@ -69,4 +62,3 @@ type PlantScheduleDay = {
 	date: string
 	plants: Array<Plant>
 }
-

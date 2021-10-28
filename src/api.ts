@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { isSameDay, startOfToday } from 'date-fns'
+import { startOfToday } from 'date-fns'
 const ENDPOINT = process.env.REACT_APP_SERVER
 
 const baseInstanceParams = {

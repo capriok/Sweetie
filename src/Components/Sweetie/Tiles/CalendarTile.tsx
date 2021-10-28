@@ -11,18 +11,6 @@ const CalendarTile: React.FC<{ state: SwtState }> = ({ state }) => {
 		MapEvents(state.calendarEvents)
 	}, [state.calendarEvents])
 
-	useEffect(() => {
-		let calendarDayTitle = document.querySelectorAll('.day .number')
-		if (calendarDayTitle) {
-			calendarDayTitle.forEach((d) => {
-				if (parseInt(d.textContent!) === new Date().getDate()) {
-					d.classList.add('today-mark')
-				}
-			})
-		}
-	}, [calendarDays])
-
-
 	function calendarEventClassName(event: CalendarEvent) {
 		const cns = ['event']
 		const works = ['SJH', 'TMC']
@@ -45,10 +33,9 @@ const CalendarTile: React.FC<{ state: SwtState }> = ({ state }) => {
 				</div>
 				<div className="content">
 					{calendarDays.map((day, i: number) => (
-						<div key={i} className="day">
-							<p className={`number ${day.className}`}>{day.number}</p>
+						<div key={i} className={day.dayCns}>
+							<p className={day.numberCns}>{day.number}</p>
 							{day.events.slice(0, 4).map((event, i) =>
-								!day.className &&
 								<p key={i} className={calendarEventClassName(event)}>
 									<span className="name">{event.name}</span>
 									<span className="timed">
@@ -89,6 +76,7 @@ function formatEventTimes(event: CalendarEvent) {
 		const end = trimTime(format(eDate, 'p'))
 		time = time + ' - ' + end
 	}
+
 	return time
 }
 

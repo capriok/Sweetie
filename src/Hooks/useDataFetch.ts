@@ -2,6 +2,19 @@ import { useState, useEffect, useReducer } from 'react'
 
 import Api from '../api'
 
+enum SwtReducerActions {
+	SETCE = 'CalendarEvents',
+	SETGL = 'GroceryList',
+	SETCS = 'CatSchedule',
+	SETCC = 'CatConfig',
+}
+
+type SwtAction =
+	| { type: SwtReducerActions.SETCE, value: CalendarEvent[] }
+	| { type: SwtReducerActions.SETGL, value: Grocery[] }
+	| { type: SwtReducerActions.SETCS, value: CatScheduleDay }
+	| { type: SwtReducerActions.SETCC, value: CatConfig }
+
 const useDataFetch = () => {
 	const [loading, setLoading] = useState(true)
 	const [state, dispatch] = useReducer(swtReducer, swtState)
@@ -13,22 +26,20 @@ const useDataFetch = () => {
 	}, [])
 
 	function FetchData() {
-		Promise.all([
-			Api.GetCalendarEvents(),
-			Api.GetGroceryList(),
-			Api.GetCatSchedule(),
-			Api.GetCatConfig()
-		]).then((data) => {
-			console.log({ CalevndarEvents: data[0] })
-			console.log({ GroceryList: data[1] })
-			console.log({ CatSchedule: data[2] })
-			console.log({ CatConfig: data[3] })
-			setLoading(false)
-			dispatch({ type: 'SetCalendarEvents', value: data[0] })
-			dispatch({ type: 'SetGroceryList', value: data[1] })
-			dispatch({ type: 'SetCatSchedule', value: data[2] })
-			dispatch({ type: 'SetCatConfig', value: data[3] })
-		})
+		const requests = [
+			{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCE },
+			{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGL },
+			{ req: Api.GetCatSchedule(), dispatch: SwtReducerActions.SETCS },
+			{ req: Api.GetCatConfig(), dispatch: SwtReducerActions.SETCC },
+		]
+
+		Promise.all(requests.map((req: any) => req.req))
+			.then((responses) => {
+				responses.forEach((res, i) => {
+					dispatch({ type: requests[i].dispatch, value: res })
+				})
+				setLoading(false)
+			})
 	}
 
 	return { loading, state, dispatch }
@@ -48,18 +59,18 @@ const swtState: SwtState = {
 	}
 }
 
-const swtReducer = (state: SwtState, action: SwtReducer): SwtState => {
+const swtReducer = (state: SwtState, action: SwtAction): SwtState => {
 	switch (action.type) {
-		case "SetCalendarEvents":
+		case SwtReducerActions.SETCE:
 			return { ...state, calendarEvents: action.value }
 
-		case "SetGroceryList":
+		case SwtReducerActions.SETGL:
 			return { ...state, groceryList: action.value }
 
-		case "SetCatSchedule":
+		case SwtReducerActions.SETCS:
 			return { ...state, catSchedule: action.value }
 
-		case "SetCatConfig":
+		case SwtReducerActions.SETCC:
 			return { ...state, catConfig: action.value }
 
 		default:
