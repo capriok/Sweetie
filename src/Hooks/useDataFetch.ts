@@ -64,7 +64,7 @@ const swtReducer = (state: SwtState, action: SwtAction): SwtState => {
 			return { ...state, catSchedule: action.value }
 
 		default:
-			console.error('Reducer Type Not Found')
+			console.error('Invalid Dispatch Type')
 			return { ...swtState }
 	}
 }
