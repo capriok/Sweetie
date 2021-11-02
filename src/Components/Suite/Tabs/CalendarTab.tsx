@@ -119,7 +119,7 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 		console.log(event);
 		Api.PostCalendarEvent(event).then(ce => {
 			resetAddingState()
-			dispatch({ type: 'SetCalendarEvents', value: ce })
+			dispatch({ type: 'CalendarEvents', value: ce })
 		})
 	}
 
@@ -146,7 +146,7 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 		console.log(event);
 		Api.UpdateCalendarEvent(event).then(ce => {
 			resetUpdatingState()
-			dispatch({ type: 'SetCalendarEvents', value: ce })
+			dispatch({ type: 'CalendarEvents', value: ce })
 		})
 	}
 

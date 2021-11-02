@@ -5,15 +5,13 @@ import Api from '../api'
 enum SwtReducerActions {
 	SETCE = 'CalendarEvents',
 	SETGL = 'GroceryList',
-	SETCS = 'CatSchedule',
-	SETCC = 'CatConfig',
+	SETCS = 'CatSchedule'
 }
 
 type SwtAction =
 	| { type: SwtReducerActions.SETCE, value: CalendarEvent[] }
 	| { type: SwtReducerActions.SETGL, value: Grocery[] }
 	| { type: SwtReducerActions.SETCS, value: CatScheduleDay }
-	| { type: SwtReducerActions.SETCC, value: CatConfig }
 
 const useDataFetch = () => {
 	const [loading, setLoading] = useState(true)
@@ -30,7 +28,6 @@ const useDataFetch = () => {
 			{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCE },
 			{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGL },
 			{ req: Api.GetCatSchedule(), dispatch: SwtReducerActions.SETCS },
-			{ req: Api.GetCatConfig(), dispatch: SwtReducerActions.SETCC },
 		]
 
 		Promise.all(requests.map((req: any) => req.req))
@@ -52,10 +49,6 @@ const swtState: SwtState = {
 		date: '',
 		food: { is: false, progress: 0 },
 		waste: { is: false, progress: 0 }
-	},
-	catConfig: {
-		lastFoodDay: '',
-		lastWasteDay: ''
 	}
 }
 
@@ -70,10 +63,8 @@ const swtReducer = (state: SwtState, action: SwtAction): SwtState => {
 		case SwtReducerActions.SETCS:
 			return { ...state, catSchedule: action.value }
 
-		case SwtReducerActions.SETCC:
-			return { ...state, catConfig: action.value }
-
 		default:
+			console.error('Reducer Type Not Found')
 			return { ...swtState }
 	}
 }

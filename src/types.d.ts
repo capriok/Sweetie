@@ -2,7 +2,6 @@ interface SwtState {
 	calendarEvents: CalendarEvent[]
 	groceryList: Grocery[]
 	catSchedule: CatScheduleDay
-	catConfig: CatConfig
 }
 
 interface CalendarEvent {

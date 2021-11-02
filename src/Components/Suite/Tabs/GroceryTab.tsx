@@ -51,7 +51,7 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 		if (confirmation?.toLocaleLowerCase() === 'confirm') {
 			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.ClearGroceryList().then(gl => {
-				dispatch({ type: 'SetGroceryList', value: gl })
+				dispatch({ type: 'GroceryList', value: gl })
 			})
 		}
 	}
@@ -63,7 +63,7 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 		if (confirmation) {
 			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.RemoveGrocery(item).then(gl => {
-				dispatch({ type: 'SetGroceryList', value: gl })
+				dispatch({ type: 'GroceryList', value: gl })
 			})
 		}
 	}
@@ -82,7 +82,7 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 		console.log(item);
 		Api.PostGrocery(item).then(gl => {
 			resetAddingState()
-			dispatch({ type: 'SetGroceryList', value: gl })
+			dispatch({ type: 'GroceryList', value: gl })
 		})
 	}
 

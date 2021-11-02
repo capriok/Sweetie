@@ -22,11 +22,9 @@ const InitUpdatingForm: FormState = {
 const CatTab: React.FC<any> = ({ props }) => {
 	const { state, dispatch, readOnly } = props
 
+	const [catConfig, setCatConfig] = useState<any>({})
+
 	const [isUpdating, setUpdating] = useState(false)
-	const [catConfig, setCatConfig] = useState<CatConfig>({
-		lastFoodDay: '',
-		lastWasteDay: ''
-	})
 	const [updatingForm, setUpdatingForm] = useState(InitUpdatingForm)
 	const [foodProgress, setFoodProgress] = useState(0)
 	const [foodPercent, setFoodPercent] = useState(0)
@@ -36,10 +34,27 @@ const CatTab: React.FC<any> = ({ props }) => {
 	const toggleUpdating = () => setUpdating(s => !s)
 
 	useEffect(() => {
-		if (state.catSchedule) {
-			setFoodProgress(state.catSchedule.food.progress)
-			setWasteProgress(state.catSchedule.waste.progress)
-		}
+		Api.GetCatConfig().then((cc) => {
+			console.log('New CC', cc)
+			setCatConfig({
+				lastFoodDay: cc.lastFoodDay,
+				lastWasteDay: cc.lastWasteDay
+			})
+		})
+	}, [])
+
+	useEffect(() => {
+		if (!catConfig.lastFoodDay || !catConfig.lastWasteDay) return
+		setUpdatingForm({
+			lfd: catConfig.lastFoodDay,
+			lwd: catConfig.lastWasteDay
+		})
+	}, [catConfig])
+
+	useEffect(() => {
+		if (!state.catSchedule.date) return
+		setFoodProgress(state.catSchedule.food.progress)
+		setWasteProgress(state.catSchedule.waste.progress)
 	}, [state.catSchedule])
 
 	useEffect(() => {
@@ -52,15 +67,6 @@ const CatTab: React.FC<any> = ({ props }) => {
 		var pct = ((100 - progress) / 100) * c
 		setter(pct)
 	}
-
-	useEffect(() => {
-		setCatConfig(state.catConfig)
-		if (!state.catConfig.lastFoodDay || !state.catConfig.lastWasteDay) return
-		setUpdatingForm({
-			lfd: state.catConfig.lastFoodDay,
-			lwd: state.catConfig.lastWasteDay
-		})
-	}, [state.catConfig])
 
 	function resetUpdatingState() {
 		setUpdating(false)
@@ -78,15 +84,14 @@ const CatTab: React.FC<any> = ({ props }) => {
 		}
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
-		console.log(config)
+
+		console.log('Updating', config)
 		Api.UpdateCatConfig(config).then(cc => {
-			resetUpdatingState()
-			dispatch({ type: 'SetCatConfig', value: cc })
-		}).then(() => {
+			setCatConfig(cc)
 			Api.GetCatSchedule().then(today => {
-				resetUpdatingState()
-				dispatch({ type: 'SetCatSchedule', value: today })
+				dispatch({ type: 'CatSchedule', value: today })
 			})
+			resetUpdatingState()
 		})
 	}
 
