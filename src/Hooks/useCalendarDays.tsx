@@ -20,38 +20,39 @@ const useCalendarDays = () => {
 
 	function Create() {
 		let days = []
-		const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
-		const weekdayOfFirstDay = firstDayOfMonth.getDay()
+		const day = new Date(date.getFullYear(), date.getMonth(), 1)
+		const weekdayOfFirstDay = day.getDay()
 
 		for (let date = 0; date < 42; date++) {
 			if (date === 0 && weekdayOfFirstDay === 0) {
-				firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 7)
+				day.setDate(day.getDate() - 7)
 			} else if (date === 0) {
-				firstDayOfMonth.setDate(firstDayOfMonth.getDate() + (date - weekdayOfFirstDay))
+				day.setDate(day.getDate() + (date - weekdayOfFirstDay))
 			} else {
-				firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 1)
+				day.setDate(day.getDate() + 1)
 			}
 
-			const prevMonth = new Date().getMonth() <= firstDayOfMonth.getMonth()
-			const afterMonth = new Date().getMonth() >= firstDayOfMonth.getMonth()
-			const sameDay = tzZero(firstDayOfMonth).toJSON() === tzZero(startOfToday()).toJSON()
+			const prevMonth = new Date().getMonth() <= day.getMonth()
+			const nextMonth = new Date().getMonth() >= day.getMonth()
+			const sameDay = tzZero(day).toJSON() === tzZero(startOfToday()).toJSON()
+			const inPast = tzZero(day).toJSON() < tzZero(startOfToday()).toJSON()
 
-			const dayCns = []
-			prevMonth ? dayCns.push('day') : dayCns.push('null-day')
-			afterMonth ? dayCns.push('day') : dayCns.push('blur-day')
+			const dayCns = ['day']
+			if (!prevMonth) dayCns.push('null-day')
+			if (!nextMonth || inPast) dayCns.push('blur-day')
 
 			const numberCns = ['number']
-			!sameDay ? numberCns.push() : numberCns.push('today-mark')
-			afterMonth ? numberCns.push() : numberCns.push('dull-number')
+			if (sameDay) numberCns.push('today-mark')
+			if (nextMonth) numberCns.push('dull-number')
 
 			let calendarDay = {
 				dayCns: dayCns.join(' '),
 				numberCns: numberCns.join(' '),
-				currentMonth: firstDayOfMonth.getMonth(),
-				date: new Date(firstDayOfMonth).toJSON(),
-				month: firstDayOfMonth.getMonth(),
-				number: firstDayOfMonth.getDate(),
-				year: firstDayOfMonth.getFullYear(),
+				currentMonth: day.getMonth(),
+				date: new Date(day).toJSON(),
+				month: day.getMonth(),
+				number: day.getDate(),
+				year: day.getFullYear(),
 				events: []
 			}
 			days.push(calendarDay)

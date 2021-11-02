@@ -35,7 +35,6 @@ const CatTab: React.FC<any> = ({ props }) => {
 
 	useEffect(() => {
 		Api.GetCatConfig().then((cc) => {
-			console.log('New CC', cc)
 			setCatConfig({
 				lastFoodDay: cc.lastFoodDay,
 				lastWasteDay: cc.lastWasteDay

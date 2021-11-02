@@ -119,6 +119,7 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 		console.log(event);
 		Api.PostCalendarEvent(event).then(ce => {
 			resetAddingState()
+			console.log(ce);
 			dispatch({ type: 'CalendarEvents', value: ce })
 		})
 	}

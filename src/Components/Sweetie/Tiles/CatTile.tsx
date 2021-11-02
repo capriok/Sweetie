@@ -55,7 +55,7 @@ const circleProps = {
 	cx: 90,
 	cy: 90,
 	fill: 'transparent',
-	strokeDasharray: '500',
+	strokeDasharray: '485',
 	strokeDashoffset: '0'
 }
 
