@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { format } from 'date-fns'
+import { format, startOfToday } from 'date-fns'
 
-import Api from '../../../api'
+import Api, { tzZero } from '../../../api'
 import Form from '../Form'
 import CalendarForm from '../Forms/CalendarForm'
 import ActionBar, { ActionBarButton } from '../ActionBar'
@@ -119,7 +119,6 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 		console.log(event);
 		Api.PostCalendarEvent(event).then(ce => {
 			resetAddingState()
-			console.log(ce);
 			dispatch({ type: 'CalendarEvents', value: ce })
 		})
 	}
@@ -235,32 +234,36 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 								<p>Time</p>
 							</div>
 							{eventList.map((event, i) => {
+								const inPast = tzZero(event.date).toJSON() < tzZero(startOfToday()).toJSON()
 								return (
 									<div className="content-cont" key={i}>
 										<div className="month-line">{displayMonth(i)}</div>
-										<div className="content-line with-border"
-											onClick={() => {
-												return isRemoving
-													? RemoveEvent(event)
-													: isUpdating && !updatingForm.item
-														? setUpdatingFormItem(event)
-														: null
-											}}>
-											<div className="name">
-												<p>{event.name}</p>
+										{inPast
+											? <></>
+											: <div className={"content-line with-border"}
+												onClick={() => {
+													return isRemoving
+														? RemoveEvent(event)
+														: isUpdating && !updatingForm.item
+															? setUpdatingFormItem(event)
+															: null
+												}}>
+												<div className="name">
+													<p>{event.name}</p>
+												</div>
+												<div className="date">
+													<p>
+														{new Date(event.date).toLocaleDateString('en-us',
+															{ weekday: 'short', month: 'short', day: 'numeric' })}
+													</p>
+												</div>
+												<div className="time">
+													<p>
+														{event.timed ? formatEventTimes(event) : ''}
+													</p>
+												</div>
 											</div>
-											<div className="date">
-												<p>
-													{new Date(event.date).toLocaleDateString('en-us',
-														{ weekday: 'short', month: 'short', day: 'numeric' })}
-												</p>
-											</div>
-											<div className="time">
-												<p>
-													{event.timed ? formatEventTimes(event) : ''}
-												</p>
-											</div>
-										</div>
+										}
 									</div>
 								)
 							})}
