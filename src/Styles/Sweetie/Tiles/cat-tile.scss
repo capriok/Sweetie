@@ -26,7 +26,6 @@
 
 			$stroke-color: rgba(220, 220, 220, 0.8);
 			$shadow-prim: rgba(165, 165, 165, 0.3);
-			$shadow-light: rgba(165, 165, 165, 0.15);
 			$cont-size: 180px;
 			$after-size: 130px;
 			$after-margin: -65px;
@@ -46,7 +45,7 @@
 				height: $cont-size;
 				width: $cont-size;
 				margin: 0 auto;
-				box-shadow: 0 0 25px $shadow-light;
+				box-shadow: 0 0 35px $shadow-prim;
 				border-radius: 100%;
 				transform: rotate(-90deg);
 			}
@@ -58,24 +57,21 @@
 				width: $after-size;
 				top: 50%;
 				left: 50%;
-				box-shadow: inset 0 0 20px $shadow-prim;
+				box-shadow: inset 0 0 25px $shadow-prim;
 				margin-top: $after-margin;
 				margin-left: $after-margin;
 				border-radius: 100%;
 			}
 
-			@keyframes glow {
+			@keyframes tile-glow {
 				10% {
-					// stroke: rgb(20, 84, 136);
-					box-shadow: 0 0 1em $shadow-light;
+					box-shadow: 0 0 35px $shadow-prim;
 				}
 				50% {
-					// stroke: rgba(199, 17, 17, 6);
-					box-shadow: 0 0 2em crimson;
+					box-shadow: 0 0 40px crimson;
 				}
 				90% {
-					// stroke: rgb(20, 84, 136);
-					box-shadow: 0 0 1em $shadow-light;
+					box-shadow: 0 0 35px $shadow-prim;
 				}
 			}
 		}

@@ -46,7 +46,7 @@ export default CatTile
 
 function animate(prop: number) {
 	return prop === 100
-		? 'ease-in-out 5s infinite alternate glow'
+		? 'ease-in-out 5s infinite alternate tile-glow'
 		: 'unset'
 }
 
@@ -59,17 +59,14 @@ const circleProps = {
 	strokeDashoffset: '0'
 }
 
-const ProgressCircle: React.FC<any> = ({ progress, percent }) => {
-
-	return (
-		<div id="cont" style={{ animation: animate(progress) }}>
-			<svg id="svg" width="180" height="180">
-				<circle {...circleProps} />
-				<circle
-					id="bar"
-					{...circleProps}
-					style={{ strokeDashoffset: percent }} />
-			</svg>
-		</div>
-	)
-}
+const ProgressCircle: React.FC<any> = ({ progress, percent }) => (
+	<div id="cont" style={{ animation: animate(progress) }}>
+		<svg id="svg" width="180" height="180">
+			<circle {...circleProps} />
+			<circle
+				id="bar"
+				{...circleProps}
+				style={{ strokeDashoffset: percent }} />
+		</svg>
+	</div>
+)

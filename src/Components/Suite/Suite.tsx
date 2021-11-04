@@ -27,7 +27,7 @@ const Suite: React.FC<any> = (props) => {
 		document.documentElement.style.setProperty('--modeswt', mode['--modeswt'])
 	}, [])
 
-	props = { ...props, auth, mode, setMode, readOnly }
+	props = { ...props, auth, setAuth, mode, setMode, readOnly }
 
 	return (
 		<Div100vh>

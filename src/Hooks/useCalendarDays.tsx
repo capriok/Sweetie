@@ -33,7 +33,7 @@ const useCalendarDays = () => {
 			}
 
 			const prevMonth = new Date().getMonth() <= day.getMonth()
-			const nextMonth = new Date().getMonth() >= new Date().getMonth()
+			const nextMonth = new Date().getMonth() >= day.getMonth()
 			const sameDay = tzZero(day).toJSON() === tzZero(startOfToday()).toJSON()
 			const inPast = tzZero(day).toJSON() < tzZero(startOfToday()).toJSON()
 

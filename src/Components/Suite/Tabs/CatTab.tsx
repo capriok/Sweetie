@@ -100,7 +100,7 @@ const CatTab: React.FC<any> = ({ props }) => {
 				{(() => {
 
 					if (isUpdating) return (
-						<Form title="Cats">
+						<Form title="Modify">
 							<CatsForm
 								submit={UpdateConfig}
 								form={updatingForm}
@@ -111,11 +111,11 @@ const CatTab: React.FC<any> = ({ props }) => {
 
 					return (
 						<div className="cat-tab content">
-							<div className="food">
+							<div className="content-line">
 								<p>Food</p>
 								<ProgressCircle progress={foodProgress} percent={foodPercent} />
 							</div>
-							<div className="waste">
+							<div className="content-line">
 								<p>Waste</p>
 								<ProgressCircle progress={wasteProgress} percent={wastePercent} />
 							</div>
@@ -140,7 +140,7 @@ export default CatTab
 
 function animate(prop: number) {
 	return prop === 100
-		? 'ease-in-out 5s infinite alternate glow'
+		? 'ease-in-out 5s infinite alternate tab-glow'
 		: 'unset'
 }
 

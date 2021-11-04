@@ -6,11 +6,12 @@
 	height: 100vh;
 
 	background-color: $modebg;
-	// animation: breathe 2s infinite linear alternate;
 
-	#splash-swt {
-		width: 75px;
+	#Swt-png {
+		width: 15%;
+		max-width: 200px;
 		filter: $modeswt;
+		animation: breathe 2s infinite linear alternate;
 	}
 	.shrink {
 		animation: shrink 0.6s linear;
