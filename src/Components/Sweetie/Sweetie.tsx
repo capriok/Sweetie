@@ -17,6 +17,9 @@ const Sweetie: React.FC<any> = (props) => {
 			document.getElementById('Sweetie')?.classList.add('Swt-vert')
 			document.getElementById('Background')?.classList.add('Bg-vert')
 		}
+
+		const bg = document.getElementById('Background')
+		bg!.style.backgroundImage = `url("/bgs/${Math.floor((Math.random() * 9) + 1)}.jpg")`;
 	}, [])
 
 	return (
