@@ -4,12 +4,14 @@ import { format } from 'date-fns'
 import '../../../Styles/Sweetie/Tiles/datetime-tile.scss'
 
 const DatetimeTile: React.FC<any> = () => {
+	const day = format(new Date(), 'iii')
+	const month = format(new Date(), 'LLLL')
+	const date = format(new Date(), 'do')
+
 	const [currentTime, setCurrentTime] = useState(format(new Date(), 'pp'))
-	const [currentDate] = useState(`
-		${format(new Date(), 'iii')}, 
-		${format(new Date(), 'LLLL')}
-		${format(new Date(), 'do')}
-	`)
+	const [currentDate] = useState(`${day}, ${month} ${date}`)
+
+	console.log(`${day}, ${month} ${date}`);
 
 	useEffect(() => {
 		setTimeout(() => {
