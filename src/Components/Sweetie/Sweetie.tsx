@@ -10,21 +10,18 @@ import '../../Styles/Sweetie/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
 
 const Sweetie: React.FC<any> = (props) => {
-	const isProductionEnv = process.env.NODE_ENV === 'production'
+	let isProd = process.env.NODE_ENV === 'production'
+	const Swt_Orientation = isProd ? 'Sweetie-vert' : ''
+	const Bg_Orientation = isProd ? 'Bg-vert' : ''
 
 	useEffect(() => {
-		if (isProductionEnv) {
-			document.getElementById('Sweetie')?.classList.add('Swt-vert')
-			document.getElementById('Background')?.classList.add('Bg-vert')
-		}
-
 		const bg = document.getElementById('Background')
-		bg!.style.backgroundImage = `url("/bgs/${Math.floor((Math.random() * 9) + 1)}.jpg")`;
+		bg!.style.backgroundImage = `url("/bgs/${Math.floor((Math.random() * 9) + 1)}.jpg")`
 	}, [])
 
 	return (
 		<>
-			<div id="Sweetie">
+			<div id="Sweetie" className={Swt_Orientation}>
 				<Tile>
 					<DatetimeTile state={props.state} />
 				</Tile>
@@ -41,7 +38,7 @@ const Sweetie: React.FC<any> = (props) => {
 					<GroceryTile state={props.state} />
 				</Tile>
 			</div>
-			<div id="Background"></div>
+			<div id="Background" className={Bg_Orientation} />
 		</>
 	)
 }

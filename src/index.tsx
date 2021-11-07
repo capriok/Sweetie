@@ -16,7 +16,7 @@ function Index() {
     if (process.env.NODE_ENV === 'development') return setServerIdle(false)
 
     Api.ServerPing().then(() => {
-      document.getElementById('splash-swt')?.classList.add('shrink')
+      document.getElementById('splash-icon')?.classList.add('shrink')
       setTimeout(() => {
         setServerIdle(false)
       }, 500)
