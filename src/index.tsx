@@ -27,15 +27,19 @@ function Index() {
     <Router>
       {(() => {
         if (serverIdle)
-          return <Splash />
-        else return <>
-          <Route exact path="/" render={() =>
-            <Suite state={state} dispatch={dispatch} />
-          } />
-          <Route exact path="/sweetie" render={() =>
-            <Sweetie state={state} dispatch={dispatch} />
-          } />
-        </>
+          return (
+            <Splash />
+          )
+        else return (
+          <>
+            <Route exact path="/" render={() =>
+              <Suite state={state} dispatch={dispatch} />
+            } />
+            <Route exact path="/sweetie" render={() =>
+              <Sweetie state={state} dispatch={dispatch} />
+            } />
+          </>
+        )
       })()}
     </Router>
   )

@@ -11,8 +11,6 @@ const DatetimeTile: React.FC<any> = () => {
 	const [currentTime, setCurrentTime] = useState(format(new Date(), 'pp'))
 	const [currentDate] = useState(`${day}, ${month} ${date}`)
 
-	console.log(`${day}, ${month} ${date}`);
-
 	useEffect(() => {
 		setTimeout(() => {
 			setCurrentTime(format(new Date(), 'pp'))
