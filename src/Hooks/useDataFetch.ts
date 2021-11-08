@@ -33,10 +33,10 @@ const useDataFetch = () => {
 		Promise.all(requests.map((req: any) => req.req))
 			.then((responses) => {
 				responses.forEach((res, i) => {
+					console.log({ [requests[i].dispatch]: res })
 					dispatch({ type: requests[i].dispatch, value: res })
 				})
-				setLoading(false)
-			})
+			}).then(() => setLoading(false))
 	}
 
 	return { loading, state, dispatch }

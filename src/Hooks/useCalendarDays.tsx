@@ -19,18 +19,18 @@ const useCalendarDays = () => {
 	const date = new Date()
 
 	function Create() {
-		let days = []
+		const days: CalendarDay[] = []
 		const day = new Date(date.getFullYear(), date.getMonth(), 1)
-		const weekdayOfFirstDay = day.getDay()
+		const weekday = day.getDay()
 
-		for (let date = 0; date < 42; date++) {
-			if (date === 0 && weekdayOfFirstDay === 0) {
-				day.setDate(day.getDate() - 7)
-			} else if (date === 0) {
-				day.setDate(day.getDate() + (date - weekdayOfFirstDay))
-			} else {
-				day.setDate(day.getDate() + 1)
-			}
+		MapDays(day)
+
+		function MapDays(day: Date, d = 0) {
+			d === 0 && weekday === 0
+				? day.setDate(day.getDate() - 7)
+				: d === 0
+					? day.setDate(day.getDate() + (d - weekday))
+					: day.setDate(day.getDate() + 1)
 
 			const prevMonth = new Date().getMonth() <= day.getMonth()
 			const nextMonth = new Date().getMonth() >= day.getMonth()
@@ -45,7 +45,7 @@ const useCalendarDays = () => {
 			if (sameDay) numberCns.push('today-mark')
 			if (nextMonth) numberCns.push('dull-number')
 
-			let calendarDay = {
+			let calendarDay: CalendarDay = {
 				dayCns: dayCns.join(' '),
 				numberCns: numberCns.join(' '),
 				currentMonth: day.getMonth(),
@@ -56,9 +56,11 @@ const useCalendarDays = () => {
 				events: []
 			}
 			days.push(calendarDay)
+
+			d < 41 && MapDays(day, d = d + 1)
 		}
 
-		console.log({ calenderDays: days })
+		console.log({ CalenderDays: days })
 		setCalendarDays(days)
 	}
 
