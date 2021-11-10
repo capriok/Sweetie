@@ -42,6 +42,8 @@ const useDataFetch = () => {
 	return { loading, state, dispatch }
 }
 
+export default useDataFetch
+
 const swtState: SwtState = {
 	calendarEvents: [],
 	groceryList: [],
@@ -68,5 +70,3 @@ const swtReducer = (state: SwtState, action: SwtAction): SwtState => {
 			return { ...swtState }
 	}
 }
-
-export default useDataFetch
