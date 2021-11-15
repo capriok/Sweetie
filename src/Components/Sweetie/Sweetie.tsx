@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import useMultipleBackgrounds from '../../Hooks/useMultipleBackgrounds';
 
 import DatetimeTile from './Tiles/DatetimeTile';
 import WeatherTile from './Tiles/WeatherTile';
@@ -10,14 +11,11 @@ import '../../Styles/Sweetie/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
 
 const Sweetie: React.FC<any> = (props) => {
+	useMultipleBackgrounds()
+
 	let isProd = process.env.NODE_ENV === 'production'
 	const Swt_Orientation = isProd ? 'Sweetie-vert' : ''
 	const Bg_Orientation = isProd ? 'Bg-vert' : ''
-
-	useEffect(() => {
-		const bg = document.getElementById('Background')
-		bg!.style.backgroundImage = `url("/bgs/${Math.floor((Math.random() * 9) + 1)}.jpg")`
-	}, [])
 
 	return (
 		<>

@@ -55,20 +55,26 @@ const useWeather = () => {
 		const response = await fetch(url)
 		const res = await response.json()
 
+		const description = tod + ' has ' + res.current.weather[0].description.toString()
+		const temperature = Math.floor(res.current.feels_like).toString() + '°'
+		const humidity = res.current.humidity.toString() + ' %'
+		const rain = res.current.rain ? Math.ceil(res.current.rain).toString() : '0 %'
+		const clouds = Math.ceil(res.current.clouds).toString() + ' %'
+		const max = Math.ceil(res.daily[res.daily.length - 1].temp.max).toString() + '°'
+		const min = Math.floor(res.daily[res.daily.length - 1].temp.min).toString() + '°'
+		const windSpeed = res.current.wind_speed ? res.current.wind_speed.toFixed(1).toString() + ' mph' : '0 mph'
+		const windGust = res.current.wind_gust ? res.current.wind_gust.toFixed(1).toString() + ' mph' : '0 mph'
+		const sunrise = format(new Date(res.current.sunrise * 1000), 'p').toString()
+		const sunset = format(new Date(res.current.sunset * 1000), 'p').toString()
+		const icon = `https://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png`
+
 		const stats = {
 			loading: false,
-			description: tod + ' has ' + res.current.weather[0].description.toString(),
-			temperature: Math.floor(res.current.feels_like).toString() + '°',
-			humidity: res.current.humidity.toString() + ' %',
-			rain: res.current.rain ? Math.ceil(res.current.rain).toString() : (0).toString() + ' %',
-			clouds: Math.ceil(res.current.clouds).toString() + ' %',
-			max: Math.ceil(res.daily[res.daily.length - 1].temp.max).toString() + '°',
-			min: Math.floor(res.daily[res.daily.length - 1].temp.min).toString() + '°',
-			windSpeed: res.current.wind_speed.toFixed(1).toString() + ' mph',
-			windGust: res.current.wind_gust.toFixed(1).toString() + ' mph',
-			sunrise: format(new Date(res.current.sunrise * 1000), 'p').toString(),
-			sunset: format(new Date(res.current.sunset * 1000), 'p').toString(),
-			icon: `https://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png`
+			description, temperature,
+			icon, max, min,
+			humidity, rain, clouds,
+			windSpeed, windGust,
+			sunrise, sunset
 		}
 		setWeather(stats)
 	}
