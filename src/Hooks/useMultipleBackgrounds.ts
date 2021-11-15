@@ -19,8 +19,7 @@ const useMultipleBackgrounds = () => {
 		bg!.style.backgroundImage = `url("/bgs/${background}")`
 	}
 	useEffect(() => {
-		setInterval(setBackground, 3000)
-		// setInterval(setBackground, 1800000)
+		setInterval(setBackground, 600000)
 	}, [])
 }
 
