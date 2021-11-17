@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import useDataFetch from './Hooks/useDataFetch'
+import { startOfToday } from 'date-fns'
 
 import Api from './api'
 import Splash from './Components/Common/Splash'
 import Suite from './Components/Suite/Suite'
 import Sweetie from './Components/Sweetie/Sweetie'
-import { startOfToday } from 'date-fns'
 
 function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
