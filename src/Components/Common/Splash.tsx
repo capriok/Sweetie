@@ -5,7 +5,9 @@ import '../../Styles/Common/splash.scss'
 
 const Splash: React.FC<any> = () => {
 	let isProd = process.env.NODE_ENV === 'production'
-	const Splash_Orientation = isProd ? 'Splash-vert' : ''
+	let isSuite = window.innerWidth < 500
+
+	const Splash_Orientation = isProd && !isSuite ? 'Splash-vert' : ''
 
 	return (
 		<div id="Splash">

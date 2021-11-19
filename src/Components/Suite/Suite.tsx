@@ -7,7 +7,7 @@ import CatTab from './Tabs/CatTab'
 import GroceryTab from './Tabs/GroceryTab'
 import OptionTab from './Tabs/OptionTab'
 
-import '../../Styles/Suite/index.scss'
+import '../../Styles/index.scss'
 import '../../Styles/Suite/suite.scss'
 import '../../Styles/Suite/tab.scss'
 

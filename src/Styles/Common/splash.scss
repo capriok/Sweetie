@@ -1,4 +1,4 @@
-@import "../Suite/index.scss";
+@import "../index.scss";
 
 #Splash {
 	@include flex;
@@ -17,9 +17,9 @@
 			filter: $modeswt;
 			animation: breathe 2s infinite linear alternate;
 		}
-	}
-	.shrink {
-		animation: shrink 0.6s linear;
+		.shrink {
+			animation: shrink 0.6s linear;
+		}
 	}
 }
 

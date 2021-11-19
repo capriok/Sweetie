@@ -7,7 +7,7 @@ import CalendarTile from './Tiles/CalendarTile';
 import GroceryTile from './Tiles/GroceryTile';
 import CatTile from './Tiles/CatTile';
 
-import '../../Styles/Sweetie/index.scss'
+import '../../Styles/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
 
 const Sweetie: React.FC<any> = (props) => {

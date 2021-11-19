@@ -1,4 +1,38 @@
-@import "./index.scss";
+@import "../index.scss";
+
+body {
+	background-color: rgb(15, 15, 15);
+}
+
+// Dev
+#Sweetie,
+#Background {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+}
+
+// Prod
+.Sweetie-vert,
+.Bg-vert {
+	transform: rotate(90deg);
+	transform-origin: bottom left;
+	top: -100vw;
+	left: 0;
+	width: 100vh !important;
+	height: 100vw !important;
+}
+.Splash-vert {
+	transform: rotate(90deg);
+}
+
+#Background {
+	z-index: -1;
+	background-size: cover;
+	opacity: 0.25;
+	background-image: url("../../Assets/1.jpg");
+	transition: all 2s;
+}
 
 #Sweetie {
 	* {
@@ -7,8 +41,9 @@
 		color: white;
 	}
 
+	font-size: 2.4rem;
 	overflow: hidden;
-	background-color: $primary;
+	background-color: rgba(45, 45, 45, 0.7);
 
 	#Tile {
 		@include flex;
