@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import { startOfToday } from 'date-fns'
 import useDataFetch from './Hooks/useDataFetch'
-import { startOfToday } from 'date-fns'
 
 import Api from './api'
 import Splash from './Components/Common/Splash'
