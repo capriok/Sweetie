@@ -11,7 +11,6 @@ const useMultipleBackgrounds = () => {
 		if (!bgs.length) bgs = [...init]
 
 		const randomImage = bgs[randomIndex]
-
 		bgs.splice(bgs.indexOf(randomImage), 1)
 
 		const background = `${randomImage}.jpg`
