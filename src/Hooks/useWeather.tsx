@@ -88,11 +88,10 @@ const useWeather = () => {
 				FetchWeather(DYNAMIC_LOCATION)
 			})
 		} else {
-			const HOME_LOCATION = `lat=32.301210&lon=-110.827220`
+			const HOME_LOCATION = `lat=33.368100&lon=-111.698180`
 			FetchWeather(HOME_LOCATION)
 		}
 	}, [])
-
 
 	return weather
 }
