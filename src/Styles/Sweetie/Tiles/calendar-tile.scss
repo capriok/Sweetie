@@ -85,7 +85,9 @@
 					}
 				}
 				.null-day {
-					* {
+					*,
+					.line,
+					.work {
 						display: none;
 					}
 				}

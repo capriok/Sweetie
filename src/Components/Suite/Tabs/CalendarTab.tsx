@@ -240,7 +240,8 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 										<div className="month-line">{displayMonth(i)}</div>
 										{inPast
 											? <></>
-											: <div className={"content-line with-border"}
+											: <div
+												className={"content-line with-border"}
 												onClick={() => {
 													return isRemoving
 														? RemoveEvent(event)
