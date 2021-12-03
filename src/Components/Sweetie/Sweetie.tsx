@@ -9,6 +9,7 @@ import CatTile from './Tiles/CatTile';
 
 import '../../Styles/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
+import '../../Styles/Common/snowfall.scss'
 
 const Sweetie: React.FC<any> = (props) => {
 	useMultipleBackgrounds()
@@ -36,6 +37,7 @@ const Sweetie: React.FC<any> = (props) => {
 					<GroceryTile state={props.state} />
 				</Tile>
 			</div>
+			<div id="Snowfall" />
 			<div id="Background" className={Bg_Orientation} />
 		</>
 	)
