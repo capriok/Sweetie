@@ -16,9 +16,8 @@
 }
 
 :root {
-	--modebg: white;
+	--modebg: black;
 	--modefont: black;
-	--modeswt: invert(0);
 	--ph: 0;
 	--ps: 0%;
 	--pl: 85%;
@@ -27,7 +26,6 @@
 
 $modebg: var(--modebg);
 $modefont: var(--modefont);
-$modeswt: var(--modeswt);
 $primary-h: var(--ph);
 $primary-s: var(--ps);
 $primary-l: var(--pl);

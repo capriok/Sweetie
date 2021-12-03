@@ -24,7 +24,6 @@ const Suite: React.FC<any> = (props) => {
 		if (mode['--modebg'] !== 'white') setMode(true)
 		document.documentElement.style.setProperty('--modebg', mode['--modebg'])
 		document.documentElement.style.setProperty('--modefont', mode['--modefont'])
-		document.documentElement.style.setProperty('--modeswt', mode['--modeswt'])
 	}, [])
 
 	props = { ...props, auth, setAuth, mode, setMode, readOnly }

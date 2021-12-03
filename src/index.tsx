@@ -18,7 +18,7 @@ function Index() {
     ApplicationDate.setMinutes(ApplicationDate.getMinutes() - ApplicationDate.getTimezoneOffset())
     console.log('ApplicationDate:', ApplicationDate.toJSON())
 
-    if (process.env.NODE_ENV === 'development') return setServerIdle(false)
+    // if (process.env.NODE_ENV === 'development') return setServerIdle(false)
 
     Api.ServerPing().then(() => {
       document.querySelector('.splash-icon')?.classList.add('shrink')
