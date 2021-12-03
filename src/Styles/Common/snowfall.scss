@@ -1,62 +1,159 @@
 @import "../index.scss";
-$o: 0.45; /// opacity
-$d: 25; /// density
-$w: 2160; // grid size
-$s: 30s; /// speed
-
-// Generate the snow image using radial gradients
-$grad: ();
-@for $i from 0 to $d {
-	$v: random(4) + 2;
-	$a: random(5) * 0.1 + 0.5;
-	$grad: $grad,
-		radial-gradient(
-			$v +
-				px
-				$v +
-				px
-				at
-				(random($w - $v * 2) + $v) +
-				px
-				(random($w - $v * 2) + $v) +
-				px,
-			rgba(255, 255, 255, $a) 50%,
-			rgba(0, 0, 0, 0)
-		) !global;
-}
-
 #Snowfall,
 #Snowfall:before,
 #Snowfall:after {
 	content: "";
 	position: absolute;
-	top: -$w + px;
+	top: -2160px;
 	left: 0;
 	bottom: 0;
 	right: 0;
 	border: 50%;
-	opacity: $o;
-	animation: snow $s linear infinite;
-	background-image: $grad;
-	background-size: $w + px $w + px;
+	opacity: 0.45;
+	animation: snow 30s linear infinite;
+	background-image: radial-gradient(
+			3px 3px at 1298px 1579px,
+			rgba(255, 255, 255, 0.7) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			3px 3px at 1567px 2146px,
+			rgba(255, 255, 255, 0.7) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			5px 5px at 1010px 1899px,
+			rgba(255, 255, 255, 1) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			5px 5px at 964px 93px,
+			rgba(255, 255, 255, 0.9) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			4px 4px at 1189px 77px,
+			rgba(255, 255, 255, 0.6) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			5px 5px at 658px 55px,
+			rgba(255, 255, 255, 0.7) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			3px 3px at 880px 1041px,
+			rgba(255, 255, 255, 1) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			3px 3px at 2152px 1926px,
+			rgba(255, 255, 255, 0.6) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			4px 4px at 876px 1734px,
+			rgba(255, 255, 255, 0.9) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			6px 6px at 1127px 1938px,
+			rgba(255, 255, 255, 0.9) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			3px 3px at 406px 1214px,
+			rgba(255, 255, 255, 0.8) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			6px 6px at 1718px 1303px,
+			rgba(255, 255, 255, 0.9) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			5px 5px at 1509px 1505px,
+			rgba(255, 255, 255, 0.8) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			4px 4px at 971px 223px,
+			rgba(255, 255, 255, 0.6) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			4px 4px at 842px 27px,
+			rgba(255, 255, 255, 0.7) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			5px 5px at 149px 2089px,
+			rgba(255, 255, 255, 1) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			3px 3px at 655px 849px,
+			rgba(255, 255, 255, 0.8) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			3px 3px at 488px 1455px,
+			rgba(255, 255, 255, 0.6) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			4px 4px at 609px 216px,
+			rgba(255, 255, 255, 0.7) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			3px 3px at 1977px 1701px,
+			rgba(255, 255, 255, 0.9) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			4px 4px at 66px 907px,
+			rgba(255, 255, 255, 0.8) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			3px 3px at 549px 1054px,
+			rgba(255, 255, 255, 0.7) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			3px 3px at 1087px 1050px,
+			rgba(255, 255, 255, 0.9) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			5px 5px at 554px 707px,
+			rgba(255, 255, 255, 0.9) 50%,
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+			4px 4px at 341px 214px,
+			rgba(255, 255, 255, 1) 50%,
+			rgba(0, 0, 0, 0)
+		);
+	background-size: 2160px 2160px;
 }
 #Snowfall:after {
-	margin-left: -$w/3 + px;
+	margin-left: -720px;
 	opacity: 0.35;
-	animation-duration: $s * 2;
+	animation-duration: 60s;
 	animation-direction: reverse;
 	filter: blur(3px);
 }
 #Snowfall:before {
-	animation-duration: $s * 3;
+	animation-duration: 90s;
 	animation-direction: reverse;
-	margin-left: -$w/2 + px;
+	margin-left: -1080px;
 	opacity: 0.85;
 	filter: blur(1.5px);
 }
-
 @keyframes snow {
 	to {
-		transform: translateY($w + px);
+		transform: translateY(2160px);
 	}
 }
