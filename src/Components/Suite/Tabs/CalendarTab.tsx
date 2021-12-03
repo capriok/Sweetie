@@ -139,8 +139,8 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 		}
 
 		if (updatingForm.date) event.date = date.toJSON()
-		if (updatingForm.startTime) event.startTime = updatingForm.startTime
-		if (updatingForm.endTime) event.endTime = updatingForm.endTime
+		if (updatingForm.startTime !== event.startTime) event.startTime = updatingForm.startTime
+		if (updatingForm.endTime !== event.endTime) event.endTime = updatingForm.endTime
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(event);

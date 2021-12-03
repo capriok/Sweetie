@@ -32,7 +32,7 @@ const CalendarForm: React.FC<any> = ({ submit, form, setForm }) => {
 						</div>
 					)}
 					<div className="form-line date">
-						<label htmlFor="add-date">Actions</label>
+						<label htmlFor="add-date">Dates +/-</label>
 						<button
 							type="button"
 							name="add-date"
@@ -85,7 +85,10 @@ const CalendarForm: React.FC<any> = ({ submit, form, setForm }) => {
 						name="start-time"
 						type="time"
 						value={form.startTime}
-						onChange={(e) => setForm({ ...form, startTime: e.target.value })} />
+						onChange={(e) => {
+							console.log(e.target.value);
+							setForm({ ...form, startTime: e.target.value })
+						}} />
 				</div>
 				<div className="form-line end-time">
 					<label htmlFor="start-time">End</label>
@@ -93,7 +96,11 @@ const CalendarForm: React.FC<any> = ({ submit, form, setForm }) => {
 						name="end-time"
 						type="time"
 						value={form.endTime}
-						onChange={(e) => setForm({ ...form, endTime: e.target.value })} />
+						onChange={(e) => {
+							console.log(e.target.value);
+							const nullTime = e.target.value === ''
+							setForm({ ...form, endTime: nullTime ? undefined : e.target.value })
+						}} />
 				</div>
 			</>}
 			<div className="form-submit">
