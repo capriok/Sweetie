@@ -28,6 +28,7 @@ $grad: ();
 #Snowfall,
 #Snowfall:before,
 #Snowfall:after {
+	z-index: 20;
 	content: "";
 	position: absolute;
 	top: -$w + px;
