@@ -90,6 +90,9 @@ const useWeather = () => {
 		} else {
 			const HOME_LOCATION = `lat=33.368100&lon=-111.698180`
 			FetchWeather(HOME_LOCATION)
+			setTimeout(() => {
+				FetchWeather(HOME_LOCATION)
+			}, 600000)
 		}
 	}, [])
 
