@@ -81,14 +81,13 @@ const useWeather = () => {
 
 	useEffect(() => {
 		const useDynamicLocation = false
-
 		if (useDynamicLocation) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				const DYNAMIC_LOCATION = `lat=${position.coords.latitude}&lon=${position.coords.longitude}`
 				FetchWeather(DYNAMIC_LOCATION)
 			})
 		} else {
-			const HOME_LOCATION = `lat=33.368100&lon=-111.698180`
+			const HOME_LOCATION = `lat=33.3679347&lon=-111.6983785`
 			FetchWeather(HOME_LOCATION)
 			setTimeout(() => {
 				FetchWeather(HOME_LOCATION)

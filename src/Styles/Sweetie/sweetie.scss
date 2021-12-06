@@ -73,8 +73,10 @@ body {
 	.datetime-tile,
 	.calendar-tile,
 	.weather-tile,
-	.cat-tile,
 	.grocery-tile {
 		margin: 125px 0;
+	}
+	.cat-tile {
+		margin: 100px 0;
 	}
 }
