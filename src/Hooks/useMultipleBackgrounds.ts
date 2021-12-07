@@ -3,10 +3,9 @@ import { useEffect } from 'react'
 const init = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const useMultipleBackgrounds = () => {
-	let bgs = [...init]
 	const month = new Date().getMonth()
 
-	const folder = month === 11 ? 'chrimas' : 'bgs'
+	let bgs = [...init]
 
 	const setBackground = () => {
 		const randomIndex = Math.floor((Math.random() * bgs.length - 1) + 1)
@@ -18,10 +17,10 @@ const useMultipleBackgrounds = () => {
 
 		const image = `${randomImage}.jpg`
 		const bg = document.getElementById('Background')
-		bg!.style.backgroundImage = `url("/${folder}/${image}")`
+		bg!.style.backgroundImage = `url("/bgs/${image}")`
 	}
 	useEffect(() => {
-		setInterval(setBackground, 600000)
+		month !== 11 && setInterval(setBackground, 600000)
 	}, [])
 }
 

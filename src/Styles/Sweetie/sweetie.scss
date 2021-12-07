@@ -1,7 +1,7 @@
 @import "../index.scss";
 
 body {
-	background-color: rgb(15, 15, 15);
+	background-color: rgb(10, 10, 10);
 }
 
 // Dev
@@ -30,7 +30,7 @@ body {
 	z-index: -1;
 	background-size: cover;
 	opacity: 0.25;
-	background-image: url("../../Assets/chrimas-init.jpg");
+	background-image: url("../../Assets/chrimas.jpg");
 	transition: all 2s;
 }
 
@@ -43,7 +43,7 @@ body {
 
 	font-size: 2.4rem;
 	overflow: hidden;
-	background-color: rgba(45, 45, 45, 0.7);
+	background-color: rgba(25, 25, 25, 0.5);
 
 	#Tile {
 		@include flex;
@@ -73,10 +73,8 @@ body {
 	.datetime-tile,
 	.calendar-tile,
 	.weather-tile,
+	.cat-tile,
 	.grocery-tile {
-		margin: 125px 0;
-	}
-	.cat-tile {
 		margin: 100px 0;
 	}
 }

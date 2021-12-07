@@ -13,10 +13,10 @@ const CalendarTile: React.FC<{ state: SwtState }> = ({ state }) => {
 
 	function calendarEventClassName(event: CalendarEvent) {
 		const cns = ['event']
-		const works = ['SJH', 'TMC']
+		const work = 'Mayo'
 
 		if (event.name) cns.push('line')
-		if (works.includes(event.name)) cns.push('work')
+		if (event.name.includes(work)) cns.push('work')
 
 		return cns.join(' ')
 	}

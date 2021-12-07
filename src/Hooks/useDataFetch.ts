@@ -1,17 +1,14 @@
 import { useState, useEffect, useReducer } from 'react'
+import { swtReducer, swtState } from '../state'
 
 import Api from '../api'
 
 enum SwtReducerActions {
 	SETCE = 'CalendarEvents',
 	SETGL = 'GroceryList',
-	SETCS = 'CatSchedule'
+	SETCS = 'CatSchedule',
+	SETCM = 'CrimasMessage'
 }
-
-type SwtAction =
-	| { type: SwtReducerActions.SETCE, value: CalendarEvent[] }
-	| { type: SwtReducerActions.SETGL, value: Grocery[] }
-	| { type: SwtReducerActions.SETCS, value: CatScheduleDay }
 
 const useDataFetch = () => {
 	const [loading, setLoading] = useState(true)
@@ -28,6 +25,7 @@ const useDataFetch = () => {
 			{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCE },
 			{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGL },
 			{ req: Api.GetCatSchedule(), dispatch: SwtReducerActions.SETCS },
+			{ req: Api.GetCrimasMessage(), dispatch: SwtReducerActions.SETCM },
 		]
 		Promise.all(requests.map((req: any) => req.req))
 			.then((responses) => {
@@ -42,30 +40,3 @@ const useDataFetch = () => {
 }
 
 export default useDataFetch
-
-const swtState: SwtState = {
-	calendarEvents: [],
-	groceryList: [],
-	catSchedule: {
-		date: '',
-		food: { is: false, progress: 0 },
-		waste: { is: false, progress: 0 }
-	}
-}
-
-const swtReducer = (state: SwtState, action: SwtAction): SwtState => {
-	switch (action.type) {
-		case SwtReducerActions.SETCE:
-			return { ...state, calendarEvents: action.value }
-
-		case SwtReducerActions.SETGL:
-			return { ...state, groceryList: action.value }
-
-		case SwtReducerActions.SETCS:
-			return { ...state, catSchedule: action.value }
-
-		default:
-			console.error('Invalid Dispatch Type')
-			return { ...swtState }
-	}
-}
