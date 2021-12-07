@@ -14,7 +14,6 @@ import '../../Styles/Sweetie/sweetie.scss'
 const Sweetie: React.FC<any> = (props) => {
 	useMultipleBackgrounds()
 
-	let isPartyDay = new Date().getMonth() === 11 && new Date().getDate() === 18
 	let isProd = process.env.NODE_ENV === 'production'
 	const Swt_Orientation = isProd ? 'Sweetie-vert' : ''
 	const Bg_Orientation = isProd ? 'Bg-vert' : ''
@@ -35,12 +34,8 @@ const Sweetie: React.FC<any> = (props) => {
 					<CatTile state={props.state} />
 				</Tile>
 				<Tile>
-					{(() => {
-						if (isPartyDay)
-							return <CrimasTile state={props.state} />
-						else
-							return <GroceryTile state={props.state} />
-					})()}
+					{/* <CrimasTile state={props.state} /> */}
+					<GroceryTile state={props.state} />
 				</Tile>
 			</div>
 			<div id="Background" className={Bg_Orientation} />
