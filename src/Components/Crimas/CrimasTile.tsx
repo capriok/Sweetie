@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import '../../../Styles/Common/crimas.scss'
+import '../../Styles/Crimas/crimas.scss'
 
 const CrimasTile: React.FC<{ state: SwtState }> = ({ state }) => {
 	const [message, setMessage] = useState('')

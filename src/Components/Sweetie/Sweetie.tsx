@@ -6,7 +6,7 @@ import WeatherTile from './Tiles/WeatherTile';
 import CalendarTile from './Tiles/CalendarTile';
 import CatTile from './Tiles/CatTile';
 import GroceryTile from './Tiles/GroceryTile';
-import CrimasTile from './Tiles/CrimasTile';
+import CrimasTile from '../Crimas/CrimasTile';
 
 import '../../Styles/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'

@@ -4,9 +4,9 @@ import Api from '../../api'
 
 import '../../Styles/index.scss'
 import '../../Styles/Suite/suite.scss'
-import '../../Styles/Common/crimas.scss'
+import '../../Styles/Crimas/crimas.scss'
 
-const Crimas: React.FC<any> = ({ state, dispatch }) => {
+const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 	const [message, setMessage] = useState('')
 	const [btn, setBtn] = useState('Submit')
 	const [loading, setLoading] = useState(false)
@@ -27,7 +27,7 @@ const Crimas: React.FC<any> = ({ state, dispatch }) => {
 		})
 	}
 	return (
-		<div className="crimas">
+		<div className="crimas-form">
 			<h2 className="title">Change Message</h2>
 			<div className="form">
 				<form onSubmit={(e) => submit(e)}>
@@ -58,4 +58,4 @@ const Crimas: React.FC<any> = ({ state, dispatch }) => {
 	)
 }
 
-export default Crimas
+export default CrimasForm
