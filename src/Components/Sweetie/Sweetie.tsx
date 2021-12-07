@@ -4,16 +4,17 @@ import useMultipleBackgrounds from '../../Hooks/useMultipleBackgrounds';
 import DatetimeTile from './Tiles/DatetimeTile';
 import WeatherTile from './Tiles/WeatherTile';
 import CalendarTile from './Tiles/CalendarTile';
-import GroceryTile from './Tiles/GroceryTile';
 import CatTile from './Tiles/CatTile';
+import GroceryTile from './Tiles/GroceryTile';
+import CrimasTile from './Tiles/CrimasTile';
 
 import '../../Styles/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
-// import '../../Styles/Common/snowfall.scss'
 
 const Sweetie: React.FC<any> = (props) => {
 	useMultipleBackgrounds()
 
+	let isPartyDay = new Date().getMonth() === 11 && new Date().getDate() === 18
 	let isProd = process.env.NODE_ENV === 'production'
 	const Swt_Orientation = isProd ? 'Sweetie-vert' : ''
 	const Bg_Orientation = isProd ? 'Bg-vert' : ''
@@ -34,10 +35,14 @@ const Sweetie: React.FC<any> = (props) => {
 					<CatTile state={props.state} />
 				</Tile>
 				<Tile>
-					<GroceryTile state={props.state} />
+					{(() => {
+						if (isPartyDay)
+							return <CrimasTile state={props.state} />
+						else
+							return <GroceryTile state={props.state} />
+					})()}
 				</Tile>
 			</div>
-			{/* <div id="Snowfall" /> */}
 			<div id="Background" className={Bg_Orientation} />
 		</>
 	)

@@ -8,6 +8,7 @@ import Api from './api'
 import Splash from './Components/Common/Splash'
 import Suite from './Components/Suite/Suite'
 import Sweetie from './Components/Sweetie/Sweetie'
+import Crimas from './Components/Suite/Crimas'
 
 function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
@@ -39,6 +40,9 @@ function Index() {
           <>
             <Route exact path="/" render={() =>
               <Suite state={state} dispatch={dispatch} />
+            } />
+            <Route exact path="/crimas" render={() =>
+              <Crimas state={state} dispatch={dispatch} />
             } />
             <Route exact path="/sweetie" render={() =>
               <Sweetie state={state} dispatch={dispatch} />
