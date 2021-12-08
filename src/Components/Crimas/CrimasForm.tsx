@@ -17,7 +17,9 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 
 	function submit(e: any) {
 		e.preventDefault()
-		setBtn('Processing')
+		if (message === state.crimasMessage) return
+
+		setBtn('- - -')
 		setLoading(true)
 
 		console.log({ Message: message })
@@ -41,7 +43,13 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 							autoFocus={true}
 							autoComplete="off"
 							placeholder="Change Message"
-							onChange={(e) => setMessage(e.target.value)} />
+							onChange={(e) => {
+								console.log(e.target.value);
+								const val = e.target.value
+								console.log(val);
+
+								return setMessage(val)
+							}} />
 					</div>
 					<div className="form-submit">
 						<button

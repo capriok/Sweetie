@@ -1,16 +1,16 @@
 @import "../index.scss";
 
 .crimas-form {
-	z-index: 1;
+	z-index: 10;
 	@include flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	position: fixed;
 	width: 100vw;
 	height: 100vh;
-	background-color: rgb(200, 200, 200);
+	background-color: rgb(17, 20, 25);
 
-	$ice: rgb(220, 220, 220);
+	$ice: rgb(20, 20, 20);
 	$bgrad: linear-gradient(
 		90deg,
 		rgba(89, 180, 58, 1) 0%,
@@ -18,6 +18,7 @@
 		rgba(253, 29, 29, 1) 100%
 	);
 	* {
+		color: white;
 		user-select: none;
 		cursor: default;
 		font-weight: 400;
@@ -33,7 +34,7 @@
 		border-style: solid;
 		border-image-slice: 1;
 		border-width: 2px;
-		border-image-source: linear-gradient(to right, #2f6c9e, #ff000000);
+		border-image-source: linear-gradient(to right, #1688e6, #00000000);
 		border-radius: 10px;
 		background-color: $ice;
 	}
@@ -49,12 +50,15 @@
 				justify-content: space-between;
 				width: 100%;
 				textarea {
+					outline: none;
+					border: none;
 					resize: none;
 					font: 16px;
 					padding: 10px;
 					width: 100%;
 					border-radius: 7px;
-					background-color: rgb(220, 220, 220);
+					color: white;
+					background-color: rgba(220, 220, 220, 0.05);
 				}
 			}
 			.form-submit {
@@ -64,80 +68,86 @@
 					width: calc(100vw - 80px) !important;
 					padding: 10px 0;
 					border-radius: 10px;
-					border: 2px solid #2571af6b;
+					border: 2px solid #1688e693;
 					background-color: $ice;
 				}
 				button:active {
 					transform: scale(0.98);
 				}
+				button:disabled {
+					color: rgba(255, 255, 255, 0.1);
+					background: transparent;
+				}
 			}
 		}
 	}
+}
 
-	@import "../index.scss";
-	$o: 0.4; /// opacity
-	$d: 10; /// density
-	$w: 380; // grid size
-	$s: 20s; /// speed
+@import "../index.scss";
+$o: 0.5; /// opacity
+$d: 10; /// density
+$w: 380; // grid size
+$s: 20s; /// speed
 
-	// Generate the snow image using radial gradients
-	$grad: ();
-	@for $i from 0 to $d {
-		$v: random(3) + 1;
-		$a: random(2) * 0.05 + 0.3;
-		$grad: $grad,
-			radial-gradient(
+// Generate the snow image using radial gradients
+$grad: ();
+$colors: 0, 120;
+@for $i from 0 to $d {
+	$v: random(3) + 1;
+	$a: random(2) * 0.05 + 0.3;
+	$c: nth($colors, random(2));
+	$grad: $grad,
+		radial-gradient(
+			$v +
+				px
 				$v +
-					px
-					$v +
-					px
-					at
-					(random($w - $v * 2) + $v) +
-					px
-					(random($w - $v * 2) + $v) +
-					px,
-				rgba(20, 82, 133, $a) 50%,
-				rgba(0, 0, 0, 0)
-			) !global;
-	}
+				px
+				at
+				(random($w - $v * 2) + $v) +
+				px
+				(random($w - $v * 2) + $v) +
+				px,
+			hsl($c, 60, 30),
+			rgba(0, 0, 0, 0)
+		) !global;
+}
+#Snowfall,
+#Snowfall:before,
+#Snowfall:after {
+	z-index: -1;
+	content: "";
+	position: absolute;
+	top: -$w + px;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	border: 50%;
+	opacity: $o;
+	animation: snow $s linear infinite;
+	background-image: $grad;
+	background-size: $w + px $w + px;
+}
+#Snowfall:after {
+	margin-left: -$w/3 + px;
+	opacity: 0.35;
+	animation-duration: $s * 2;
+	animation-direction: reverse;
+	filter: blur(3px);
+}
+#Snowfall:before {
+	animation-duration: $s * 3;
+	animation-direction: reverse;
+	margin-left: -$w/2 + px;
+	opacity: 0.85;
+	filter: blur(1.5px);
+}
 
-	#Snowfall,
-	#Snowfall:before,
-	#Snowfall:after {
-		z-index: -1;
-		content: "";
-		position: absolute;
-		top: -$w + px;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		border: 50%;
-		opacity: $o;
-		animation: snow $s linear infinite;
-		background-image: $grad;
-		background-size: $w + px $w + px;
-	}
-	#Snowfall:after {
-		margin-left: -$w/3 + px;
-		opacity: 0.35;
-		animation-duration: $s * 2;
-		animation-direction: reverse;
-		filter: blur(3px);
-	}
-	#Snowfall:before {
-		animation-duration: $s * 3;
-		animation-direction: reverse;
-		margin-left: -$w/2 + px;
-		opacity: 0.85;
-		filter: blur(1.5px);
-	}
-
-	@keyframes snow {
-		to {
-			transform: translateY($w + px);
-		}
+@keyframes snow {
+	to {
+		transform: translateY($w + px);
 	}
 }
+
 #Sweetie {
 	.crimas-tile {
 		margin: 100px 0;

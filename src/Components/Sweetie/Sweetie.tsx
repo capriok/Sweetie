@@ -34,8 +34,8 @@ const Sweetie: React.FC<any> = (props) => {
 					<CatTile state={props.state} />
 				</Tile>
 				<Tile>
-					{/* <CrimasTile state={props.state} /> */}
-					<GroceryTile state={props.state} />
+					<CrimasTile state={props.state} />
+					{/* <GroceryTile state={props.state} /> */}
 				</Tile>
 			</div>
 			<div id="Background" className={Bg_Orientation} />
