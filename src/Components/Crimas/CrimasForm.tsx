@@ -8,7 +8,7 @@ import '../../Styles/Crimas/crimas.scss'
 
 const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 	const [message, setMessage] = useState('')
-	const [btn, setBtn] = useState('Submit')
+	const [button, setButton] = useState('Submit')
 	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
@@ -19,27 +19,26 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 		e.preventDefault()
 		if (message === state.crimasMessage) return
 
-		setBtn('- - -')
+		setButton('- - -')
 		setLoading(true)
 
 		console.log({ Message: message })
 		Api.UpdateCrimasMessage(message).then((cm) => {
 			dispatch({ type: 'CrimasMessage', value: cm })
-			setBtn('Done, goodbye.')
+			setButton('Done, goodbye.')
 		})
 	}
+
 	return (
 		<div className="crimas-form">
 			<h2 className="title">Change Message</h2>
 			<div className="form">
 				<form onSubmit={(e) => submit(e)}>
 					<div className="form-line name">
-						<textarea
+						<input
+							type="text"
 							name="message"
 							value={message}
-							rows={4}
-							maxLength={50}
-							required={true}
 							autoFocus={true}
 							autoComplete="off"
 							placeholder="Change Message"
@@ -50,7 +49,7 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 							className="submit"
 							type="submit"
 							disabled={loading}>
-							{btn}
+							{button}
 						</button>
 					</div>
 				</form>
