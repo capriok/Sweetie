@@ -6,6 +6,8 @@
   "scripts": {
     "start": "react-scripts start",
     "dev": "concurrently \"npm start\" \"cd.. & cd Swt-Server & npm run dev\"",
+    "pushclient": "git push origin master:prod",
+    "pushserver": "cd.. & cd Swt-Server & git push heroku master",
     "build": "react-scripts build"
   },
   "dependencies": {
