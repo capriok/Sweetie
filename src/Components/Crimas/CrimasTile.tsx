@@ -7,8 +7,7 @@ const CrimasTile: React.FC<{ state: SwtState }> = ({ state }) => {
 	const [message, setMessage] = useState('')
 
 	useEffect(() => {
-		const maxLengthStatement = state.crimasMessage.slice(0, 50)
-		setMessage(maxLengthStatement)
+		setMessage(state.crimasMessage)
 	}, [state.crimasMessage])
 
 	return (

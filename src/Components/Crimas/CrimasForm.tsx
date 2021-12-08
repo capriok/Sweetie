@@ -43,13 +43,7 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 							autoFocus={true}
 							autoComplete="off"
 							placeholder="Change Message"
-							onChange={(e) => {
-								console.log(e.target.value);
-								const val = e.target.value
-								console.log(val);
-
-								return setMessage(val)
-							}} />
+							onChange={(e) => setMessage(e.target.value)} />
 					</div>
 					<div className="form-submit">
 						<button
