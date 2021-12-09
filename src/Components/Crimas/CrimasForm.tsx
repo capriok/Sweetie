@@ -39,7 +39,6 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 							type="text"
 							name="message"
 							value={message}
-							autoFocus={true}
 							autoComplete="off"
 							placeholder="Change Message"
 							onChange={(e) => setMessage(e.target.value)} />
