@@ -91,7 +91,7 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 			if (lsPass.pass !== democode && lsPass.pass === passcode) setReadOnly(false)
 			if (lsPass.auth && !shouldRefresh) setAuth(true)
 		}
-		return setloading(false)
+		setloading(false)
 	}, [auth])
 
 	return (

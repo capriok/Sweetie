@@ -19,7 +19,7 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 		e.preventDefault()
 		if (message === state.crimasMessage) return
 
-		setButton('- - -')
+		setButton('Processing')
 		setLoading(true)
 
 		console.log({ Message: message })

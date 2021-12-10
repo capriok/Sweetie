@@ -34,8 +34,6 @@ $primlight: hsl($primary-h, $primary-s, calc(var(--pl) + 10%));
 $primary-font: var(--pfont);
 
 $MAX: 800px;
-$suite-bg: rgb(0, 0, 0);
-$light-grey: rgba(120, 120, 120, 0.1);
 
 @mixin flex {
 	display: flex;

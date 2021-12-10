@@ -54,7 +54,7 @@
 				}
 				.with-border {
 					&:not(:last-child) {
-						border-bottom: 2px solid $light-grey;
+						border-bottom: 2px solid rgba(117, 117, 117, 0.1);
 					}
 				}
 			}
