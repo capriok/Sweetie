@@ -10,48 +10,43 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 
 	const [success, setSuccess] = useState(false)
 	const [loading, setloading] = useState(true)
-	const [title, setTitle] = useState('Secret')
-	const [pinPass, setPin] = useState<Array<number>>([])
-
-	function resetTitle() {
-		setTitle('Secret')
-		document.getElementById('secret-title')?.classList.remove('Invalid')
-	}
+	const [pincode, setPincode] = useState<Array<number>>([])
 
 	function digitClick(digit: number) {
 		if (success) return
 
-		resetTitle()
-		let pincode = [...pinPass]
+		document.getElementById('pin')!.classList.remove('Invalid')
+
+		let pin = [...pincode]
 		if (digit === -1) {
-			pincode.pop()
-			setPin(pincode)
+			pin.pop()
+			setPincode(pin)
 		} else {
-			pincode.push(digit)
-			setPin(pincode)
+			pin.push(digit)
+			setPincode(pin)
 		}
 	}
 
 	useEffect(() => {
-		if (pinPass.length === 4) submitPass()
-	}, [pinPass])
+		if (pincode.length === 4) submitPass()
+	}, [pincode])
 
 	function submitPass() {
-		const p: string = pinPass.join('')
-		if (p === democode || p === passcode) {
+		const pin: string = pincode.join('')
+		if (pin === democode || pin === passcode) {
 			setSuccess(true)
 			localStorage.setItem('Swt-Auth', JSON.stringify({
-				p,
+				p: pin,
 				auth: true,
 				last: new Date().toJSON()
 			}))
-			if (p === democode) {
-				animate('Guest', () => {
+			if (pin === democode) {
+				animate('Welcome', () => {
 					setAuth(true)
 					setReadOnly(true)
 				})
 			}
-			if (p === passcode) {
+			if (pin === passcode) {
 				animate('Welcome', () => {
 					setAuth(true)
 					setReadOnly(false)
@@ -59,22 +54,23 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 			}
 		} else {
 			animate('Invalid')
-			setPin([])
 		}
 	}
 
-	function animate(title: string, cb = () => { }) {
-		setTitle(title)
-		const el = document.getElementById('secret-title')
-		if (el) {
+	function animate(type: string, cb = () => { }) {
+		let el: HTMLElement
+		if (type === 'Welcome')
+			el = document.getElementById('pinpad')!
+		else if (type === 'Invalid')
+			el = document.getElementById('pin')!
+
+		setTimeout(() => {
+			el.classList.add(type)
 			setTimeout(() => {
-				el.classList.add(title)
-				setTimeout(() => {
-					cb()
-					el.classList.remove(title)
-				}, 1000)
+				cb()
+				setPincode([])
 			}, 500)
-		}
+		}, 250)
 	}
 
 	useEffect(() => {
@@ -93,16 +89,18 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 		<div className="secret">
 			{loading
 				? <></>
-				: <>
-					<h3 id="secret-title">{title}</h3>
-					<div className="pin"
-						onClick={() => document.querySelector('input')?.focus()}>
-						{passcode!.split('').map((_, i) => (
-							<div key={i} className={pinPass[i] !== undefined ? 'mark val' : 'mark dot'} />
-						))}
+				: <div id="pinpad">
+					<div id="pin">
+						{passcode!.split('').map((_, i) =>
+							<div key={i} className={
+								pincode[i] !== undefined
+									? 'mark val'
+									: 'mark dot'
+							} />
+						)}
 					</div>
 					<Pinpad set={digitClick} />
-				</>
+				</div>
 			}
 		</div>
 	)
