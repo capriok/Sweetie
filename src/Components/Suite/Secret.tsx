@@ -36,7 +36,7 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 		if (pin === democode || pin === passcode) {
 			setSuccess(true)
 			localStorage.setItem('Swt-Auth', JSON.stringify({
-				p: pin,
+				pass: pin,
 				auth: true,
 				last: new Date().toJSON()
 			}))
