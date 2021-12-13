@@ -4,7 +4,8 @@ import Api from '../../api'
 
 import '../../Styles/index.scss'
 import '../../Styles/Suite/suite.scss'
-import '../../Styles/Crimas/crimas.scss'
+import '../../Styles/Crimas/CrimasForm.scss'
+import '../../Styles/Crimas/Snowfall.scss'
 
 const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 	const [message, setMessage] = useState('')

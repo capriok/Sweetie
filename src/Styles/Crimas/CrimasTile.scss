@@ -1,0 +1,33 @@
+@import "../index.scss";
+
+#Sweetie {
+	.crimas-tile {
+		margin: 100px 0;
+		@include flex;
+		flex-direction: column;
+		width: 100%;
+
+		.statement {
+			text-align: center;
+			font-size: 7rem;
+		}
+		.prompts {
+			position: absolute;
+			bottom: 40px;
+
+			width: 100%;
+			padding-top: 50px;
+			.top,
+			.bot {
+				text-align: center;
+				font-size: 1.8rem;
+			}
+			.top {
+				img {
+					max-width: 100px;
+					filter: invert(1);
+				}
+			}
+		}
+	}
+}
