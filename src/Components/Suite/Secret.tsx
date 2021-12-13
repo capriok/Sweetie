@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { differenceInCalendarDays } from 'date-fns'
 
 import '../../Styles/Suite/secret.scss'
+import Pinpad from './Pinpad'
 
 const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 	const passcode = process.env.REACT_APP_PASSCODE
@@ -9,77 +10,67 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 
 	const [success, setSuccess] = useState(false)
 	const [loading, setloading] = useState(true)
-	const [title, setTitle] = useState('Secret')
-	const [pass, setPass] = useState<string>('')
+	const [pincode, setPincode] = useState<Array<number>>([])
 
-	function resetForm() {
-		setTitle('Secret')
-		document.getElementById('secret-title')?.classList.remove('incorrect')
-	}
-
-	function validate(val: string) {
-		const exp = new RegExp(/^[0-9]+$/)
-		return !exp.test(val)
-			? false
-			: true
-	}
-
-	function handlePasscodeChange(e: any) {
-		const val: string = e.target.value
-
+	function digitClick(digit: number) {
 		if (success) return
-		if (!val) return setPass('')
 
-		resetForm()
+		document.getElementById('pin')!.classList.remove('Invalid')
 
-		if (!validate(val)) return
-
-		val.length > 4
-			? setPass(val.substring(4))
-			: setPass(val)
+		let pin = [...pincode]
+		if (digit === -1) {
+			pin.pop()
+			setPincode(pin)
+		} else {
+			pin.push(digit)
+			setPincode(pin)
+		}
 	}
 
 	useEffect(() => {
-		if (pass.length === 4) submitPass()
-	}, [pass])
+		if (pincode.length === 4) submitPass()
+	}, [pincode])
 
 	function submitPass() {
-		if (pass === democode || pass === passcode) {
+		const pin: string = pincode.join('')
+		if (pin === democode || pin === passcode) {
 			setSuccess(true)
 			localStorage.setItem('Swt-Auth', JSON.stringify({
-				pass,
+				pass: pin,
 				auth: true,
 				last: new Date().toJSON()
 			}))
-			if (pass === democode) {
-				animate('Guest', () => {
+			if (pin === democode) {
+				animate('Welcome', () => {
 					setAuth(true)
 					setReadOnly(true)
 				})
 			}
-			if (pass === passcode) {
-				animate('Hello', () => {
+			if (pin === passcode) {
+				animate('Welcome', () => {
 					setAuth(true)
 					setReadOnly(false)
 				})
 			}
 		} else {
-			animate('Incorrect')
+			animate('Invalid')
 		}
 	}
 
-	function animate(title: string, cb = () => { }) {
-		setTitle(title)
-		const el = document.getElementById('secret-title')
-		if (el) {
+	function animate(type: string, cb = () => { }) {
+		let el: HTMLElement
+		if (type === 'Welcome')
+			el = document.getElementById('pinpad')!
+		else if (type === 'Invalid')
+			el = document.getElementById('pin')!
+
+		setTimeout(() => {
+			el.classList.add(type)
 			setTimeout(() => {
-				el.classList.add(title)
-				setTimeout(() => {
-					cb()
-					el.classList.remove(title)
-				}, 1000)
+				cb()
+				setPincode([])
 			}, 500)
-		}
+		}, 250)
 	}
 
 	useEffect(() => {
@@ -91,28 +82,25 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 			if (lsPass.pass !== democode && lsPass.pass === passcode) setReadOnly(false)
 			if (lsPass.auth && !shouldRefresh) setAuth(true)
 		}
-		return setloading(false)
+		setloading(false)
 	}, [auth])
 
 	return (
 		<div className="secret">
 			{loading
 				? <></>
-				: <>
-					<h3 id="secret-title">{title}</h3>
-					<div
-						className="input"
-						onClick={() => document.querySelector('input')?.focus()}>
-						{passcode!.split('').map((_, i) => (
-							<div key={i} className={pass[i] ? 'mark val' : 'mark dot'} />
-						))}
+				: <div id="pinpad">
+					<div id="pin">
+						{passcode!.split('').map((_, i) =>
+							<div key={i} className={
+								pincode[i] !== undefined
+									? 'mark val'
+									: 'mark dot'
+							} />
+						)}
 					</div>
-					<input
-						autoFocus={true}
-						type="password"
-						value={pass}
-						onChange={(e) => handlePasscodeChange(e)} />
-				</>
+					<Pinpad set={digitClick} />
+				</div>
 			}
 		</div>
 	)

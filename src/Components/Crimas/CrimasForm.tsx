@@ -20,7 +20,7 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 		e.preventDefault()
 		if (message === state.crimasMessage) return
 
-		setButton('- - -')
+		setButton('Processing')
 		setLoading(true)
 
 		console.log({ Message: message })
@@ -33,27 +33,21 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 	return (
 		<div className="crimas-form">
 			<h2 className="title">Change Message</h2>
-			<div className="form">
-				<form onSubmit={(e) => submit(e)}>
-					<div className="form-line name">
-						<input
-							type="text"
-							name="message"
-							value={message}
-							autoComplete="off"
-							placeholder="Change Message"
-							onChange={(e) => setMessage(e.target.value)} />
-					</div>
-					<div className="form-submit">
-						<button
-							className="submit"
-							type="submit"
-							disabled={loading}>
-							{button}
-						</button>
-					</div>
-				</form>
-			</div>
+			<form onSubmit={(e) => submit(e)}>
+				<input
+					type="text"
+					name="message"
+					value={message}
+					autoComplete="off"
+					placeholder="Change Message"
+					onChange={(e) => setMessage(e.target.value)} />
+				<button
+					className="submit"
+					type="submit"
+					disabled={loading}>
+					{button}
+				</button>
+			</form>
 			<div id="Snowfall" />
 		</div>
 	)

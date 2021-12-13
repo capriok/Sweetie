@@ -56,7 +56,7 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 		}
 	}
 
-	async function removeGrocery(item: Grocery) {
+	function removeGrocery(item: Grocery) {
 		if (!isRemoving) return
 
 		const confirmation = window.confirm(`Remove '${item.name}' ?`);
@@ -68,7 +68,7 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 		}
 	}
 
-	async function postGrocery(e: any) {
+	function postGrocery(e: any) {
 		e.preventDefault()
 		if (!isAdding || !addingForm.name) return
 
