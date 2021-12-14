@@ -24,13 +24,13 @@ const GroceryForm: React.FC<any> = ({ submit, form, setForm }) => {
 					placeholder="Quantity"
 					onChange={(e) => setForm({ ...form, quantity: parseInt(e.target.value) })} />
 			</div>
-			<div className="form-line store">
-				<label htmlFor="store">Store</label>
+			<div className="form-line type">
+				<label htmlFor="type">Type</label>
 				<select
-					value={form.store}
-					onChange={(e) => setForm({ ...form, store: e.target.value })}>
-					<option value="wholefoods">Whole Foods</option>
-					<option value="bashas">Bashas</option>
+					value={form.type}
+					onChange={(e) => setForm({ ...form, type: e.target.value })}>
+					<option value="grocery">Grocery</option>
+					<option value="other">Other</option>
 				</select>
 			</div>
 			<div className="form-submit">

@@ -3,27 +3,27 @@ import { useEffect, useState } from 'react'
 import '../../../Styles/Sweetie/Tiles/grocery-tile.scss'
 
 const GroceryTile: React.FC<{ state: SwtState }> = ({ state }) => {
-	const [groceryList, setGroceryList] = useState<{ wholeFoods: Array<Grocery>, bashas: Array<Grocery> }>({
-		wholeFoods: [],
-		bashas: [],
+	const [groceryList, setGroceryList] = useState<{ grocery: Array<Grocery>, other: Array<Grocery> }>({
+		grocery: [],
+		other: [],
 	})
 
 	useEffect(() => {
 		setGroceryList({
-			wholeFoods: state.groceryList.filter(i => i.store === 'wholefoods'),
-			bashas: state.groceryList.filter(i => i.store === 'bashas')
+			grocery: state.groceryList.filter(i => i.type === 'grocery'),
+			other: state.groceryList.filter(i => i.type === 'other')
 		})
 	}, [state.groceryList])
 
 	return (
 		<div className="grocery-tile">
-			<div className="wholefoods">
-				<h3 className="sub-title w-line">Whole Foods</h3>
-				<GroceryList list={groceryList.wholeFoods} />
+			<div className="grocery">
+				<h3 className="sub-title w-line">Grocery</h3>
+				<GroceryList list={groceryList.grocery} />
 			</div>
-			<div className="bashas">
-				<h3 className="sub-title w-line">Bashas</h3>
-				<GroceryList list={groceryList.bashas} />
+			<div className="other">
+				<h3 className="sub-title w-line">Other</h3>
+				<GroceryList list={groceryList.other} />
 			</div>
 		</div>
 	)

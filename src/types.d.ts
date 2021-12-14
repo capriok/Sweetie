@@ -31,7 +31,7 @@ interface Grocery {
 	_id?: string
 	name: string
 	qty: number
-	store: string
+	type: string
 }
 
 interface StaticTask {

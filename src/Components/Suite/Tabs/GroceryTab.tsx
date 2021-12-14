@@ -12,13 +12,13 @@ import '../../../Styles/Suite/Tabs/grocery-tab.scss'
 interface FormState {
 	name: string
 	quantity: number
-	store: string
+	type: string
 }
 
 const InitAddingForm: FormState = {
 	name: '',
 	quantity: 1,
-	store: 'wholefoods',
+	type: 'grocery',
 }
 
 const GroceryTab: React.FC<any> = ({ props }) => {
@@ -39,16 +39,15 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 	}, [state.groceryList])
 
 	function resetAddingState() {
-		setAddingForm({ ...InitAddingForm, store: addingForm.store })
+		setAddingForm({ ...InitAddingForm, type: addingForm.type })
 		setAddingState(false)
 	}
 
 	function toggleClear() {
-		const confirmation = window.prompt(
-			'Are you sure you got everything?\n\n' +
-			'Type \'confirm\' to clear Groceries.'
+		const confirmation = window.confirm(
+			'Are you sure you got everything?\n\n'
 		);
-		if (confirmation?.toLocaleLowerCase() === 'confirm') {
+		if (confirmation) {
 			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.ClearGroceryList().then(gl => {
 				dispatch({ type: 'GroceryList', value: gl })
@@ -75,7 +74,7 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 		let item = {
 			name: addingForm.name,
 			qty: addingForm.quantity,
-			store: addingForm.store
+			type: addingForm.type
 		}
 
 		if (readOnly) return alert('Not allowed in Read Only mode.')
@@ -106,10 +105,10 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 
 					return (
 						<div className="grocery-tab content">
-							{groceryList.some(g => g.store === 'wholefoods') &&
+							{groceryList.some(g => g.type === 'grocery') &&
 								<>
-									<h3>Whole Foods</h3>
-									{groceryList.filter(i => i.store === 'wholefoods').map((item, i) => (
+									<h3>Grocery</h3>
+									{groceryList.filter(i => i.type === 'grocery').map((item, i) => (
 										<div
 											key={i}
 											className="content-line with-border"
@@ -120,10 +119,10 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 									))}
 								</>
 							}
-							{groceryList.some(g => g.store === 'bashas') &&
+							{groceryList.some(g => g.type === 'other') &&
 								<>
-									<h3>Bashas</h3>
-									{groceryList.filter(i => i.store === 'bashas').map((item, i) => (
+									<h3>Other</h3>
+									{groceryList.filter(i => i.type === 'other').map((item, i) => (
 										<div
 											key={i}
 											className="content-line with-border"

@@ -12,12 +12,13 @@ const CrimasTile: React.FC<{ state: SwtState }> = ({ state }) => {
 
 	return (
 		<div className="crimas-tile">
-			<div className="statement">{message}</div>
+			<div className="message">{message}</div>
+			<img src={message} alt="" className="message" />
 			<div className="prompts">
 				<div className="top">
 					<img className="qr" src={code} alt="" />
 				</div>
-				<div className="bot">Change the message</div>
+				<div className="bot">GTMR?</div>
 			</div>
 		</div>
 	)
