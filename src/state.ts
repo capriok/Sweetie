@@ -13,7 +13,7 @@ export const swtState: SwtState = {
 		food: { is: false, progress: 0 },
 		waste: { is: false, progress: 0 }
 	},
-	crimasMessage: ''
+	crimasMessage: 'Fetching...'
 }
 
 export const swtReducer = (state: SwtState, action: SwtAction): SwtState => {

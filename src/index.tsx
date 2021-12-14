@@ -1,34 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import { startOfToday } from 'date-fns'
 import useDataFetch from './Hooks/useDataFetch'
-import io from 'socket.io-client'
 
 import Api from './api'
 import Splash from './Components/Common/Splash'
 import Suite from './Components/Suite/Suite'
 import Sweetie from './Components/Sweetie/Sweetie'
 import CrimasForm from './Components/Crimas/CrimasForm'
+import useSocket from './Hooks/useSocket'
 
 function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
   const { state, dispatch } = useDataFetch()
-
-  const socketRef: React.MutableRefObject<Socket> = useRef(
-    io(process.env.REACT_APP_SERVER!, {
-      path: '/socket.io',
-      transports: ['websocket']
-    })
-  )
-  const socket: Socket = socketRef.current
-
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log({ SocketConnection: socket.connected })
-      socket.emit('connected', {})
-    })
-  }, [])
+  const socket = useSocket()
 
   useEffect(() => {
     const ApplicationDate: Date = startOfToday()

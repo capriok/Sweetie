@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 
 import Api from '../../api'
 
@@ -9,18 +9,32 @@ import '../../Styles/Crimas/Snowfall.scss'
 
 const profanity = require('profanity-censor')
 
-const CrimasForm: React.FC<any> = ({ socket, state, dispatch }) => {
+interface Props {
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<any>
+}
+
+const CrimasForm: React.FC<Props> = (props) => {
+	const { socket, state, dispatch } = props
 	const [message, setMessage] = useState('')
-	const [msgLen, setMsgLen] = useState(0)
+	const [msgLength, setMsgLength] = useState(0)
 	const [button, setButton] = useState('Submit')
 	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
-		setMsgLen(message.length)
+		setMsgLength(message.length)
 	}, [message])
 
+	useLayoutEffect(() => {
+		let len = document.getElementById('length')!
+		msgLength === 50
+			? len.style.color = '#c22929'
+			: len.style.color = 'grey'
+	}, [msgLength])
+
 	function change(msg: string) {
-		const maxLength = msgLen >= 50
+		const maxLength = msgLength >= 50
 		const backspaced = msg.length <= message.length
 
 		if (maxLength && !backspaced) return
@@ -48,13 +62,20 @@ const CrimasForm: React.FC<any> = ({ socket, state, dispatch }) => {
 		<div className="crimas-form">
 			<h2 className="title">Change Message</h2>
 			<form onSubmit={(e) => submit(e)}>
-				<input
-					type="text"
-					name="message"
-					autoComplete="off"
-					value={message}
-					placeholder={state.crimasMessage}
-					onChange={(e) => change(e.target.value)} />
+				<div className="current">
+					<label>Current:</label>
+					<div>{state.crimasMessage}</div>
+				</div>
+				<div className="input">
+					<input
+						type="text"
+						name="message"
+						autoComplete="off"
+						value={message}
+						placeholder="New Message"
+						onChange={(e) => change(e.target.value)} />
+					<div id="length">{msgLength}/50</div>
+				</div>
 				<button
 					className="submit"
 					type="submit"
