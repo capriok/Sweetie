@@ -9,7 +9,7 @@ import '../../Styles/Crimas/Snowfall.scss'
 
 const profanity = require('profanity-censor')
 
-const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
+const CrimasForm: React.FC<any> = ({ socket, state, dispatch }) => {
 	const [message, setMessage] = useState('')
 	const [msgLen, setMsgLen] = useState(0)
 	const [button, setButton] = useState('Submit')
@@ -39,6 +39,7 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 		console.log({ Message: message })
 		Api.UpdateCrimasMessage(message).then((cm) => {
 			dispatch({ type: 'CrimasMessage', value: cm })
+			socket.emit('update-message', message)
 			setButton('Done, goodbye.')
 		})
 	}

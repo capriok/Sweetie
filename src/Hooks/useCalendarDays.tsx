@@ -60,7 +60,6 @@ const useCalendarDays = () => {
 			d < 41 && MapDays(day, d = d + 1)
 		}
 
-		console.log({ CalenderDays: days })
 		setCalendarDays(days)
 	}
 

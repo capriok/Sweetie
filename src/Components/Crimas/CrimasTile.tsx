@@ -1,27 +1,23 @@
 import { useEffect, useState } from 'react'
-import Api from '../../api';
+// import Api from '../../api';
 
 import code from '../../Assets/code.png'
 import '../../Styles/Crimas/CrimasTile.scss'
 
 const profanity = require('profanity-censor');
 
-const CrimasTile: React.FC<{ state: SwtState }> = ({ state }) => {
+const CrimasTile: React.FC<any> = ({ socket, state }) => {
 	const [message, setMessage] = useState('')
+
+	useEffect(() => {
+		socket.on('message-change', (msg: string) => {
+			setMessage(msg)
+		})
+	}, [])
 
 	useEffect(() => {
 		setMessage(state.crimasMessage)
 	}, [state.crimasMessage])
-
-	useEffect(() => {
-		setInterval(() => {
-			if (new Date().getDate() !== 18) return
-			Api.GetCrimasMessage().then((cm) => {
-				console.log({ CrimasMessage: cm })
-				setMessage(cm)
-			})
-		}, 5000)
-	}, [])
 
 	function censor(message: string) {
 		message = profanity.filter(message)

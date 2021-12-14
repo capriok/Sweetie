@@ -34,7 +34,7 @@ const Sweetie: React.FC<any> = (props) => {
 					<CatTile state={props.state} />
 				</Tile>
 				<Tile>
-					<CrimasTile state={props.state} />
+					<CrimasTile socket={props.socket} state={props.state} />
 					{/* <GroceryTile state={props.state} /> */}
 				</Tile>
 			</div>

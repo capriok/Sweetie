@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import { startOfToday } from 'date-fns'
 import useDataFetch from './Hooks/useDataFetch'
+import io from 'socket.io-client'
 
 import Api from './api'
 import Splash from './Components/Common/Splash'
@@ -13,6 +14,24 @@ import CrimasForm from './Components/Crimas/CrimasForm'
 function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
   const { state, dispatch } = useDataFetch()
+
+  const Uri = process.env.REACT_APP_SERVER
+  const socketRef: React.MutableRefObject<any> = useRef(
+    io(Uri!, {
+      path: '/socket.io',
+      transports: ['websocket']
+    })
+  )
+  const socket = socketRef.current
+
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('Socket Connected', socket.connected)
+      socket.emit('connected', {})
+    })
+
+    return () => socket.disconnect()
+  }, [])
 
   useEffect(() => {
     const ApplicationDate: Date = startOfToday()
@@ -31,25 +50,20 @@ function Index() {
 
   return (
     <Router>
-      {(() => {
-        if (serverIdle)
-          return (
-            <Splash />
-          )
-        else return (
-          <>
-            <Route exact path="/" render={() =>
-              <Suite state={state} dispatch={dispatch} />
-            } />
-            <Route exact path="/crimas" render={() =>
-              <CrimasForm state={state} dispatch={dispatch} />
-            } />
-            <Route exact path="/sweetie" render={() =>
-              <Sweetie state={state} dispatch={dispatch} />
-            } />
-          </>
-        )
-      })()}
+      {serverIdle
+        ? <Splash />
+        : <>
+          <Route exact path="/" render={() =>
+            <Suite socket={socket} state={state} dispatch={dispatch} />
+          } />
+          <Route exact path="/crimas" render={() =>
+            <CrimasForm socket={socket} state={state} dispatch={dispatch} />
+          } />
+          <Route exact path="/sweetie" render={() =>
+            <Sweetie socket={socket} state={state} dispatch={dispatch} />
+          } />
+        </>
+      }
     </Router>
   )
 }
