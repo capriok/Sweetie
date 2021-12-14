@@ -11,9 +11,14 @@ import '../../Styles/index.scss'
 import '../../Styles/Suite/suite.scss'
 import '../../Styles/Suite/tab.scss'
 
-const Suite: React.FC<any> = (props) => {
+interface Props {
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
+}
+
+const Suite: React.FC<Props> = (props) => {
 	const [auth, setAuth] = useState<boolean>(false)
-	const [readOnly, setReadOnly] = useState<boolean>(true)
 	const [mode, setMode] = useState<boolean>(false)
 
 	useEffect(() => {
@@ -26,26 +31,31 @@ const Suite: React.FC<any> = (props) => {
 		document.documentElement.style.setProperty('--modefont', mode['--modefont'])
 	}, [])
 
-	props = { ...props, auth, setAuth, mode, setMode, readOnly }
-
 	return (
 		<Div100vh>
 			{!auth
-				? <Secret auth={auth} setAuth={setAuth} setReadOnly={setReadOnly} />
-				: <main id="Suite" dir="ltr">
-					<Tab title="Calendar" tabIndex={1}>
-						<CalendarTab props={props} />
-					</Tab>
-					<Tab title="Groceries" tabIndex={2}>
-						<GroceryTab props={props} />
-					</Tab>
-					<Tab title="Cats" tabIndex={3}>
-						<CatTab props={props} />
-					</Tab>
-					<Tab title="Options" tabIndex={4}>
-						<OptionTab props={props} />
-					</Tab>
-				</main>
+				? <Secret auth={auth} setAuth={setAuth} />
+				: (
+					<main id="Suite" dir="ltr">
+						<Tab title="Calendar" tabIndex={1}>
+							<CalendarTab props={props} />
+						</Tab>
+						<Tab title="Groceries" tabIndex={2}>
+							<GroceryTab props={props} />
+						</Tab>
+						<Tab title="Cats" tabIndex={3}>
+							<CatTab props={props} />
+						</Tab>
+						<Tab title="Options" tabIndex={4}>
+							<OptionTab
+								props={props}
+								auth={auth}
+								setAuth={setAuth}
+								mode={mode}
+								setMode={setMode} />
+						</Tab>
+					</main>
+				)
 			}
 		</Div100vh>
 	)

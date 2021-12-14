@@ -39,7 +39,7 @@ const InitUpdatingForm: FormState = {
 }
 
 const CalendarTab: React.FC<any> = ({ props }) => {
-	const { state, dispatch, readOnly } = props
+	const { state, dispatch } = props
 
 	const [isAdding, setAddingState] = useState(false)
 	const [isUpdating, setUpdatingState] = useState(false)
@@ -88,7 +88,6 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 
 		const confirmation = window.confirm(`Remove '${event.name}' ?`);
 		if (confirmation) {
-			if (readOnly) return alert('Not allowed in Read Only mode.')
 			Api.RemoveCalendarEvent(event).then(ce => setEventList(ce))
 		}
 	}
@@ -115,7 +114,6 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 			endTime: addingForm.endTime || ''
 		}
 
-		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(event);
 		Api.PostCalendarEvent(event).then(ce => {
 			resetAddingState()
@@ -142,7 +140,6 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 		if (updatingForm.startTime !== event.startTime) event.startTime = updatingForm.startTime
 		if (updatingForm.endTime !== event.endTime) event.endTime = updatingForm.endTime
 
-		if (readOnly) return alert('Not allowed in Read Only mode.')
 		console.log(event);
 		Api.UpdateCalendarEvent(event).then(ce => {
 			resetUpdatingState()

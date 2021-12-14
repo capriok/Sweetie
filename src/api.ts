@@ -18,7 +18,6 @@ class Api {
 
 	public async ServerPing(): Promise<{ status: number }> {
 		const res = await AxiosInstance.get('/ping')
-		console.log('Ping', res.data.status);
 		return res.data.status
 	}
 

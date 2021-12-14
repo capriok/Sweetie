@@ -4,9 +4,8 @@ import { differenceInCalendarDays } from 'date-fns'
 import '../../Styles/Suite/secret.scss'
 import Pinpad from './Pinpad'
 
-const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
+const Secret: React.FC<any> = ({ auth, setAuth }) => {
 	const passcode = process.env.REACT_APP_PASSCODE
-	const democode = '0000'
 
 	const [success, setSuccess] = useState(false)
 	const [loading, setloading] = useState(true)
@@ -33,25 +32,14 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 
 	function submitPass() {
 		const pin: string = pincode.join('')
-		if (pin === democode || pin === passcode) {
+		if (pin === passcode) {
 			setSuccess(true)
 			localStorage.setItem('Swt-Auth', JSON.stringify({
 				pass: pin,
 				auth: true,
 				last: new Date().toJSON()
 			}))
-			if (pin === democode) {
-				animate('Welcome', () => {
-					setAuth(true)
-					setReadOnly(true)
-				})
-			}
-			if (pin === passcode) {
-				animate('Welcome', () => {
-					setAuth(true)
-					setReadOnly(false)
-				})
-			}
+			animate('Welcome', () => setAuth(true))
 		} else {
 			animate('Invalid')
 		}
@@ -78,8 +66,7 @@ const Secret: React.FC<any> = ({ auth, setAuth, setReadOnly }) => {
 		if (ls) {
 			const lsPass: { pass: string, auth: boolean, last: string } = JSON.parse(ls)
 			const shouldRefresh = Math.abs(differenceInCalendarDays(new Date(lsPass.last), new Date())) > 6
-			if (lsPass.pass !== democode && lsPass.pass !== passcode) return
-			if (lsPass.pass !== democode && lsPass.pass === passcode) setReadOnly(false)
+			if (lsPass.pass !== passcode) return
 			if (lsPass.auth && !shouldRefresh) setAuth(true)
 		}
 		setloading(false)

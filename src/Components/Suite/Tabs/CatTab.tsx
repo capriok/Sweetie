@@ -20,7 +20,7 @@ const InitUpdatingForm: FormState = {
 }
 
 const CatTab: React.FC<any> = ({ props }) => {
-	const { state, dispatch, readOnly } = props
+	const { state, dispatch } = props
 
 	const [catConfig, setCatConfig] = useState<any>({})
 
@@ -81,8 +81,6 @@ const CatTab: React.FC<any> = ({ props }) => {
 			lastFoodDay: lastFoodDay.toJSON(),
 			lastWasteDay: lastWasteDay.toJSON()
 		}
-
-		if (readOnly) return alert('Not allowed in Read Only mode.')
 
 		console.log('Updating', config)
 		Api.UpdateCatConfig(config).then(cc => {

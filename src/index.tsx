@@ -15,22 +15,19 @@ function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
   const { state, dispatch } = useDataFetch()
 
-  const Uri = process.env.REACT_APP_SERVER
-  const socketRef: React.MutableRefObject<any> = useRef(
-    io(Uri!, {
+  const socketRef: React.MutableRefObject<Socket> = useRef(
+    io(process.env.REACT_APP_SERVER!, {
       path: '/socket.io',
       transports: ['websocket']
     })
   )
-  const socket = socketRef.current
+  const socket: Socket = socketRef.current
 
   useEffect(() => {
     socket.on('connect', () => {
-      console.log('Socket Connected', socket.connected)
+      console.log({ SocketConnection: socket.connected })
       socket.emit('connected', {})
     })
-
-    return () => socket.disconnect()
   }, [])
 
   useEffect(() => {

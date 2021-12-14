@@ -3,7 +3,15 @@ import { format } from 'date-fns'
 
 import '../../../Styles/Sweetie/Tiles/datetime-tile.scss'
 
-const DatetimeTile: React.FC<any> = () => {
+interface Props {
+	props: {
+		socket: Socket
+		state: SwtState
+		dispatch: React.Dispatch<SwtAction>
+	}
+}
+
+const DatetimeTile: React.FC<Props> = () => {
 	const day = format(new Date(), 'iii')
 	const month = format(new Date(), 'LLLL')
 	const date = format(new Date(), 'do')

@@ -11,7 +11,13 @@ import CrimasTile from '../Crimas/CrimasTile';
 import '../../Styles/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
 
-const Sweetie: React.FC<any> = (props) => {
+interface Props {
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
+}
+
+const Sweetie: React.FC<Props> = (props) => {
 	useMultipleBackgrounds()
 
 	let isProd = process.env.NODE_ENV === 'production'
@@ -22,20 +28,22 @@ const Sweetie: React.FC<any> = (props) => {
 		<>
 			<div id="Sweetie" className={Swt_Orientation}>
 				<Tile>
-					<DatetimeTile state={props.state} />
+					<DatetimeTile props={props} />
 				</Tile>
 				<Tile>
-					<CalendarTile state={props.state} />
+					<CalendarTile props={props} />
 				</Tile>
 				<Tile>
-					<WeatherTile state={props.state} />
+					<WeatherTile props={props} />
 				</Tile>
 				<Tile>
-					<CatTile state={props.state} />
+					<CatTile props={props} />
 				</Tile>
 				<Tile>
-					<CrimasTile socket={props.socket} state={props.state} />
-					{/* <GroceryTile state={props.state} /> */}
+					{true
+						? <CrimasTile props={props} />
+						: <GroceryTile props={props} />
+					}
 				</Tile>
 			</div>
 			<div id="Background" className={Bg_Orientation} />

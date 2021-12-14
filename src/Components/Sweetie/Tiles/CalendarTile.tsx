@@ -4,7 +4,16 @@ import useCalendarDays from '../../../Hooks/useCalendarDays';
 
 import '../../../Styles/Sweetie/Tiles/calendar-tile.scss'
 
-const CalendarTile: React.FC<{ state: SwtState }> = ({ state }) => {
+interface Props {
+	props: {
+		socket: Socket
+		state: SwtState
+		dispatch: React.Dispatch<SwtAction>
+	}
+}
+
+const CalendarTile: React.FC<Props> = ({ props }) => {
+	const { state } = props
 	const { calendarDays, MapEvents } = useCalendarDays()
 
 	useEffect(() => {

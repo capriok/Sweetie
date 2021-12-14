@@ -1,3 +1,5 @@
+type Socket = SocketIOClient.Socket
+
 enum SwtReducerActions {
 	SETCE = 'CalendarEvents',
 	SETGL = 'GroceryList',

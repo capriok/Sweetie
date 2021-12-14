@@ -4,9 +4,19 @@ import '../../../Styles/Suite/Tabs/option-tab.scss'
 
 const HEXtoHSL = require('hex-to-hsl');
 
-const OptionTab: React.FC<any> = ({ props }) => {
-	const { auth, setAuth, readOnly, mode, setMode } = props
+interface Props {
+	props: {
+		socket: Socket
+		state: SwtState
+		dispatch: React.Dispatch<SwtAction>
+	}
+	auth: boolean
+	setAuth: React.Dispatch<boolean>
+	mode: boolean
+	setMode: React.Dispatch<boolean>
+}
 
+const OptionTab: React.FC<Props> = ({ auth, setAuth, mode, setMode }) => {
 	let lastAuth = localStorage.getItem('Swt-Auth')
 	lastAuth
 		? lastAuth = dateToLocaleString(JSON.parse(lastAuth).last)
@@ -83,11 +93,6 @@ const OptionTab: React.FC<any> = ({ props }) => {
 					className="authed"
 					label="Authenticated">
 					{boolToString(auth)}
-				</ContentLine>
-				<ContentLine
-					className="read-only"
-					label="Read only">
-					{boolToString(readOnly)}
 				</ContentLine>
 				<ContentLine
 					className="theme"

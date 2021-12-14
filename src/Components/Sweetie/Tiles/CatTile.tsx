@@ -2,7 +2,16 @@ import { useEffect, useState } from 'react'
 
 import '../../../Styles/Sweetie/Tiles/cat-tile.scss'
 
-const CatTile: React.FC<{ state: SwtState }> = ({ state }) => {
+interface Props {
+	props: {
+		socket: Socket
+		state: SwtState
+		dispatch: React.Dispatch<SwtAction>
+	}
+}
+
+const CatTile: React.FC<Props> = ({ props }) => {
+	const { state } = props
 	const [foodProgress, setFoodProgress] = useState(0)
 	const [foodPercent, setFoodPercent] = useState(0)
 	const [wasteProgress, setWasteProgress] = useState(0)
