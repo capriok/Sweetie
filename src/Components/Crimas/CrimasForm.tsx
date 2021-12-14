@@ -7,18 +7,31 @@ import '../../Styles/Suite/suite.scss'
 import '../../Styles/Crimas/CrimasForm.scss'
 import '../../Styles/Crimas/Snowfall.scss'
 
+const profanity = require('profanity-censor')
+
 const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 	const [message, setMessage] = useState('')
+	const [msgLen, setMsgLen] = useState(0)
 	const [button, setButton] = useState('Submit')
 	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
-		setMessage(state.crimasMessage)
-	}, [state.crimasMessage])
+		setMsgLen(message.length)
+	}, [message])
+
+	function change(msg: string) {
+		const maxLength = msgLen >= 50
+		const backspaced = msg.length <= message.length
+
+		if (maxLength && !backspaced) return
+
+		setMessage(profanity.filter(msg))
+	}
 
 	function submit(e: any) {
 		e.preventDefault()
 		if (message === state.crimasMessage) return
+		if (!message) return
 
 		setButton('Processing')
 		setLoading(true)
@@ -37,10 +50,10 @@ const CrimasForm: React.FC<any> = ({ state, dispatch }) => {
 				<input
 					type="text"
 					name="message"
-					value={message}
 					autoComplete="off"
-					placeholder="Change Message"
-					onChange={(e) => setMessage(e.target.value)} />
+					value={message}
+					placeholder={state.crimasMessage}
+					onChange={(e) => change(e.target.value)} />
 				<button
 					className="submit"
 					type="submit"

@@ -36,7 +36,7 @@
 		border-width: 2px;
 		border-image-source: linear-gradient(to right, #1688e6, #00000000);
 		border-radius: 10px;
-		background-color: $ice;
+		background-color: rgba($ice, 0.2);
 	}
 	form {
 		width: 100%;
@@ -64,7 +64,7 @@
 			padding: 10px 0;
 			border-radius: 10px;
 			border: 2px solid #1688e693;
-			background-color: $ice;
+			background-color: rgba($ice, 0.2);
 		}
 		button:active {
 			transform: scale(0.98);

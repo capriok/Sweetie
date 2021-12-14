@@ -1,9 +1,9 @@
 @import "../index.scss";
 
-$o: 0.5; /// opacity
-$d: 10; /// density
+$o: 0.55; /// opacity
+$d: 11; /// density
 $w: 380; // grid size
-$s: 20s; /// speed
+$s: 17s; /// speed
 
 // Generate the snow image using radial gradients
 $grad: ();
