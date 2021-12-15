@@ -3,62 +3,65 @@
 #Sweetie {
 	.weather-tile {
 		width: 100%;
-		min-height: 420px;
+		min-height: 500px;
 		@include flex;
 		justify-content: space-around;
-
-		.description {
-			font-size: 3rem;
-			padding-top: 20px;
-		}
 
 		.overview,
 		.stats {
 			@include flex;
+			align-items: stretch;
 			flex-direction: column;
 			width: 100%;
 			max-width: 800px;
-		}
-		.overview {
-			.temp {
-				margin: 50px 0;
-			}
-			.visual {
+			.top,
+			.mid,
+			.bot {
+				width: 100%;
 				@include flex;
-				justify-content: space-between;
-				.min-max {
+				justify-content: space-evenly;
+				.icon {
 					@include flex;
-					flex-direction: column;
-					margin-left: 100px;
-				}
-				.max {
-					padding-left: 10px;
-					color: rgb(255, 90, 68);
-				}
-				.min {
-					padding-left: 10px;
-					color: rgb(160, 219, 255);
+					font-size: 5rem;
 				}
 			}
-			.temp {
-				font-size: 7.5rem;
+			.line {
+				flex: 1;
+				@include flex;
+				justify-content: space-evenly;
+				width: 100%;
 			}
 		}
 
-		.line {
-			width: 100%;
-			padding: 7px 0;
-			@include flex;
-			justify-content: space-between;
+		.overview {
+			.description {
+				font-size: 3rem;
+				margin: 0;
+				margin-bottom: 20px;
+			}
+			.mid {
+				.icon {
+					img {
+						width: 175px;
+						filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.3))
+							hue-rotate(180deg);
+					}
+				}
+				.temperature {
+					font-size: 6.5rem;
+				}
+			}
+			.bot {
+				@include flex;
+				justify-content: space-evenly;
+			}
 		}
-		.description {
-			margin: 0;
-		}
-		.icon {
-			@include flex;
-			img {
-				width: 250px;
-				filter: drop-shadow(-2px 2px 5px rgba(0, 0, 0, 0.3)) hue-rotate(180deg);
+
+		.stats {
+			.icon {
+				svg {
+					margin: 10px 40px;
+				}
 			}
 		}
 	}

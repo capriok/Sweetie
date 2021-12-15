@@ -1,6 +1,19 @@
 import { useEffect } from 'react'
 import useWeather from '../../../Hooks/useWeather'
 
+import {
+	WiThermometer,
+	WiThermometerExterior,
+
+	WiHumidity,
+	WiRain,
+	WiCloudy,
+	WiStrongWind,
+	WiWindy,
+	WiSunrise,
+	WiSunset
+} from 'react-icons/wi'
+
 import '../../../Styles/Sweetie/Tiles/weather-tile.scss'
 
 interface Props {
@@ -21,55 +34,59 @@ const WeatherTile: React.FC<Props> = () => {
 	return (
 		<div className="weather-tile">
 			<div className="overview">
-				<p className="description sub-title">{stats.description}</p>
-				<br />
-				<div className="temp">
-					<span>{stats.temperature}</span>
+				<div className="top w-line">
+					<p className="description sub-title">{stats.description}</p>
 				</div>
-				<div className="visual">
+				<div className="mid w-line">
 					<div className="icon">
 						<img src={stats.icon} draggable={false} alt="" />
 					</div>
-					<div className="min-max sub-title">
-						<div>
-							<span className="high">High: </span>
-							<span className="max">{stats.max}</span>
-						</div>
-						<div>
-							<span className="low">Low: </span>
-							<span className="min">{stats.min}</span>
-						</div>
+					<div className="temperature">
+						<span>{stats.temperature}</span>
+					</div>
+				</div>
+				<div className="bot w-line">
+					<div className="line">
+						<span className="icon high"><WiThermometer /></span>
+						<span className="max sub-title">{stats.max}</span>
+					</div>
+					<div className="line">
+						<div className="icon low"><WiThermometerExterior /></div>
+						<span className="min sub-title">{stats.min}</span>
 					</div>
 				</div>
 			</div>
+
 			<div className="stats">
-				<div className="line humidity">
-					<label>Humidity: </label>
-					<span>{stats.humidity}</span>
+				<div className="top w-line">
+					<div className="line rain">
+						<div className="icon"><WiRain /></div>
+						<span>{stats.rain}</span>
+					</div>
+					<div className="line cloudiness">
+						<div className="icon"><WiCloudy /></div>
+						<span>{stats.clouds}</span>
+					</div>
 				</div>
-				<div className="line rain">
-					<label>Precipitation: </label>
-					<span>{stats.rain}</span>
+				<div className="mid w-line">
+					<div className="line windspeed">
+						<div className="icon"><WiStrongWind /></div>
+						<span>{stats.windSpeed}</span>
+					</div>
+					<div className="line windgust">
+						<div className="icon"><WiWindy /></div>
+						<span>{stats.windGust}</span>
+					</div>
 				</div>
-				<div className="line cloudiness w-line">
-					<label>Cloud Coverage: </label>
-					<span>{stats.clouds}</span>
-				</div>
-				<div className="line windspeed">
-					<label>Wind Speed: </label>
-					<span>{stats.windSpeed}</span>
-				</div>
-				<div className="line windgust w-line">
-					<label>Wind Gust: </label>
-					<span>{stats.windGust}</span>
-				</div>
-				<div className="line sunrise">
-					<label>Sunrise: </label>
-					<span>{stats.sunrise}</span>
-				</div>
-				<div className="line sunset w-line">
-					<label>Sunset: </label>
-					<span>{stats.sunset}</span>
+				<div className="bot w-line">
+					<div className="line sunrise">
+						<div className="icon"><WiSunrise /></div>
+						<span>{stats.sunrise}</span>
+					</div>
+					<div className="line sunset">
+						<div className="icon"><WiSunset /></div>
+						<span>{stats.sunset}</span>
+					</div>
 				</div>
 			</div>
 		</div>

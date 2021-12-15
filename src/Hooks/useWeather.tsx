@@ -58,7 +58,7 @@ const useWeather = () => {
 		const res = await response.json()
 
 		const description = tod + ' has ' + res.current.weather[0].description.toString()
-		const temperature = Math.floor(res.current.feels_like).toString() + '°'
+		const temperature = Math.floor(res.current.temp).toString() + '°'
 		const humidity = res.current.humidity.toString() + ' %'
 		const rain = res.current.rain ? Math.ceil(res.current.rain).toString() : '0 %'
 		const clouds = Math.ceil(res.current.clouds).toString() + ' %'
