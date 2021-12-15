@@ -37,12 +37,14 @@ const useWeather = () => {
 	})
 
 	const ch = new Date().getHours()
+	const isMorning = ch >= 4 && ch < 12
 	const isAfternoon = ch >= 12
 	const isEvening = ch >= 17
-	const isNight = ch > 22
+	const isNight = ch >= 22
 
-	let tod = 'This morning'
+	let tod = 'Tonight'
 
+	if (isMorning) tod = 'This morning'
 	if (isAfternoon) tod = 'This afternoon'
 	if (isEvening) tod = 'This evening'
 	if (isNight) tod = 'Tonight'
