@@ -28,21 +28,21 @@ const Sweetie: React.FC<Props> = (props) => {
 		<>
 			<div id="Sweetie" className={Swt_Orientation}>
 				<Tile>
-					<DatetimeTile props={props} />
+					<DatetimeTile {...props} />
 				</Tile>
 				<Tile>
-					<CalendarTile props={props} />
+					<CalendarTile {...props} />
 				</Tile>
 				<Tile>
-					<WeatherTile props={props} />
+					<WeatherTile {...props} />
 				</Tile>
 				<Tile>
-					<CatTile props={props} />
+					<CatTile {...props} />
 				</Tile>
 				<Tile>
 					{true
-						? <CrimasTile props={props} />
-						: <GroceryTile props={props} />
+						? <CrimasTile {...props} />
+						: <GroceryTile {...props} />
 					}
 				</Tile>
 			</div>

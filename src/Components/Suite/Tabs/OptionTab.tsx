@@ -5,11 +5,6 @@ import '../../../Styles/Suite/Tabs/option-tab.scss'
 const HEXtoHSL = require('hex-to-hsl');
 
 interface Props {
-	props: {
-		socket: Socket
-		state: SwtState
-		dispatch: React.Dispatch<SwtAction>
-	}
 	auth: boolean
 	setAuth: React.Dispatch<boolean>
 	mode: boolean

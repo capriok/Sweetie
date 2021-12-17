@@ -5,14 +5,12 @@ import useCalendarDays from '../../../Hooks/useCalendarDays';
 import '../../../Styles/Sweetie/Tiles/calendar-tile.scss'
 
 interface Props {
-	props: {
-		socket: Socket
-		state: SwtState
-		dispatch: React.Dispatch<SwtAction>
-	}
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
 }
 
-const CalendarTile: React.FC<Props> = ({ props }) => {
+const CalendarTile: React.FC<Props> = (props) => {
 	const { state } = props
 	const { calendarDays, MapEvents } = useCalendarDays()
 
@@ -83,7 +81,7 @@ function formatEventTimes(event: CalendarEvent) {
 	if (endTime) {
 		const eDate = new Date(date + 'T' + endTime)
 		const end = trimTime(format(eDate, 'p'))
-		time = time + ' - ' + end
+		time = time + '-' + end
 	}
 
 	return time
@@ -94,14 +92,17 @@ function trimTime(time: string) {
 	const hour = slice[0]
 	const minute = slice[1].substring(0, 2)
 
-	const meridian = RegExp(/AM|PM/g).test(slice[1])
-		? slice[1].split(' ')[1]
+
+	let meridian = RegExp(/AM|PM/g).test(slice[1])
+		? ' ' + slice[1].split(' ')[1]
 		: ''
+
+	meridian = meridian.replace('AM', 'a')
+	meridian = meridian.replace('PM', 'p')
 
 	time = hour + ':' + minute
 	if (slice[1].includes('00')) {
 		time = hour
 	}
-
-	return time + ' ' + meridian
+	return time + '' + meridian
 }

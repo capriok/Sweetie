@@ -11,6 +11,12 @@ import { MdSystemUpdateAlt } from 'react-icons/md'
 
 import '../../../Styles/Suite/Tabs/calendar-tab.scss'
 
+interface Props {
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
+}
+
 interface FormState {
 	name?: string
 	item?: CalendarEvent
@@ -38,7 +44,7 @@ const InitUpdatingForm: FormState = {
 	endTime: undefined
 }
 
-const CalendarTab: React.FC<any> = ({ props }) => {
+const CalendarTab: React.FC<Props> = (props) => {
 	const { state, dispatch } = props
 
 	const [isAdding, setAddingState] = useState(false)
@@ -117,7 +123,7 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 		console.log(event);
 		Api.PostCalendarEvent(event).then(ce => {
 			resetAddingState()
-			dispatch({ type: 'CalendarEvents', value: ce })
+			dispatch({ type: SwtReducerActions.SETCE, value: ce })
 		})
 	}
 
@@ -143,7 +149,7 @@ const CalendarTab: React.FC<any> = ({ props }) => {
 		console.log(event);
 		Api.UpdateCalendarEvent(event).then(ce => {
 			resetUpdatingState()
-			dispatch({ type: 'CalendarEvents', value: ce })
+			dispatch({ type: SwtReducerActions.SETCE, value: ce })
 		})
 	}
 

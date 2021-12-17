@@ -9,6 +9,12 @@ import { MdSystemUpdateAlt } from 'react-icons/md'
 
 import '../../../Styles/Suite/Tabs/cat-tab.scss'
 
+interface Props {
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
+}
+
 interface FormState {
 	lfd?: string
 	lwd?: string
@@ -19,7 +25,7 @@ const InitUpdatingForm: FormState = {
 	lwd: undefined
 }
 
-const CatTab: React.FC<any> = ({ props }) => {
+const CatTab: React.FC<Props> = (props) => {
 	const { state, dispatch } = props
 
 	const [catConfig, setCatConfig] = useState<any>({})
@@ -86,7 +92,7 @@ const CatTab: React.FC<any> = ({ props }) => {
 		Api.UpdateCatConfig(config).then(cc => {
 			setCatConfig(cc)
 			Api.GetCatSchedule().then(today => {
-				dispatch({ type: 'CatSchedule', value: today })
+				dispatch({ type: SwtReducerActions.SETCS, value: today })
 			})
 			resetUpdatingState()
 		})

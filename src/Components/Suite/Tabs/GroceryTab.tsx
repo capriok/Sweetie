@@ -9,6 +9,12 @@ import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 
 import '../../../Styles/Suite/Tabs/grocery-tab.scss'
 
+interface Props {
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
+}
+
 interface FormState {
 	name: string
 	quantity: number
@@ -21,7 +27,7 @@ const InitAddingForm: FormState = {
 	type: 'grocery',
 }
 
-const GroceryTab: React.FC<any> = ({ props }) => {
+const GroceryTab: React.FC<Props> = (props) => {
 	const { state, dispatch } = props
 
 	const [isAdding, setAddingState] = useState(false)
@@ -49,7 +55,7 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 		);
 		if (confirmation) {
 			Api.ClearGroceryList().then(gl => {
-				dispatch({ type: 'GroceryList', value: gl })
+				dispatch({ type: SwtReducerActions.SETGL, value: gl })
 			})
 		}
 	}
@@ -60,7 +66,7 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 		const confirmation = window.confirm(`Remove '${item.name}' ?`);
 		if (confirmation) {
 			Api.RemoveGrocery(item).then(gl => {
-				dispatch({ type: 'GroceryList', value: gl })
+				dispatch({ type: SwtReducerActions.SETGL, value: gl })
 			})
 		}
 	}
@@ -78,7 +84,7 @@ const GroceryTab: React.FC<any> = ({ props }) => {
 		console.log(item);
 		Api.PostGrocery(item).then(gl => {
 			resetAddingState()
-			dispatch({ type: 'GroceryList', value: gl })
+			dispatch({ type: SwtReducerActions.SETGL, value: gl })
 		})
 	}
 

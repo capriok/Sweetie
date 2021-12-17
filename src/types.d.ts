@@ -15,7 +15,7 @@ interface SwtState {
 }
 
 type SwtAction =
-	| { type: SwtReducerActions.SETCE, value: CalendarEvent[] }
+	{ type: SwtReducerActions.SETCE, value: CalendarEvent[] }
 	| { type: SwtReducerActions.SETGL, value: Grocery[] }
 	| { type: SwtReducerActions.SETCS, value: CatScheduleDay }
 	| { type: SwtReducerActions.SETCM, value: string }

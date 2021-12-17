@@ -4,11 +4,9 @@ import { format } from 'date-fns'
 import '../../../Styles/Sweetie/Tiles/datetime-tile.scss'
 
 interface Props {
-	props: {
-		socket: Socket
-		state: SwtState
-		dispatch: React.Dispatch<SwtAction>
-	}
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
 }
 
 const DatetimeTile: React.FC<Props> = () => {

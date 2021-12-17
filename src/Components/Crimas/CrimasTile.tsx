@@ -6,7 +6,14 @@ import '../../Styles/Crimas/CrimasTile.scss'
 
 const profanity = require('profanity-censor');
 
-const CrimasTile: React.FC<any> = ({ props: { socket, state } }) => {
+interface Props {
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
+}
+
+const CrimasTile: React.FC<Props> = (props) => {
+	const { socket, state } = props
 	const [message, setMessage] = useState('')
 
 	useEffect(() => {

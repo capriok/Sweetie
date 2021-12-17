@@ -3,14 +3,12 @@ import { useEffect, useState } from 'react'
 import '../../../Styles/Sweetie/Tiles/grocery-tile.scss'
 
 interface Props {
-	props: {
-		socket: Socket
-		state: SwtState
-		dispatch: React.Dispatch<SwtAction>
-	}
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
 }
 
-const GroceryTile: React.FC<Props> = ({ props }) => {
+const GroceryTile: React.FC<Props> = (props) => {
 	const { state } = props
 	const [groceryList, setGroceryList] = useState<{ grocery: Array<Grocery>, other: Array<Grocery> }>({
 		grocery: [],

@@ -59,7 +59,7 @@
 					}
 					.event {
 						font-size: $event-font-size;
-						padding: 5px 10px;
+						padding: 7px 10px;
 						margin: 0;
 						@include flex;
 						justify-content: space-between;
@@ -79,10 +79,22 @@
 						color: rgb(212, 57, 88) !important;
 					}
 					.line {
-						border-left: 5px solid rgb(2, 91, 226) !important;
+						border-bottom: 2px solid grey;
+						border-image-slice: 1;
+						border-image-source: linear-gradient(
+							to right,
+							grey,
+							#00000000
+						) !important;
 					}
 					.work {
-						border-left: 5px solid rgb(0, 128, 38) !important;
+						border-bottom: 2px solid;
+						border-image-slice: 1;
+						border-image-source: linear-gradient(
+							to right,
+							#008026,
+							#00000000
+						) !important;
 					}
 				}
 				.null-day {

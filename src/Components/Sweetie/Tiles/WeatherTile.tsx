@@ -17,11 +17,9 @@ import {
 import '../../../Styles/Sweetie/Tiles/weather-tile.scss'
 
 interface Props {
-	props: {
-		socket: Socket
-		state: SwtState
-		dispatch: React.Dispatch<SwtAction>
-	}
+	socket: Socket
+	state: SwtState
+	dispatch: React.Dispatch<SwtAction>
 }
 
 const WeatherTile: React.FC<Props> = () => {
