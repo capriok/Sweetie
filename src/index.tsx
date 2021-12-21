@@ -9,6 +9,7 @@ import Splash from './Components/Common/Splash'
 import Suite from './Components/Suite/Suite'
 import Sweetie from './Components/Sweetie/Sweetie'
 import useSocket from './Hooks/useSocket'
+import PageNotFound from './Components/Common/PageNotFound'
 
 function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
@@ -40,6 +41,9 @@ function Index() {
           } />
           <Route exact path="/sweetie" render={() =>
             <Sweetie socket={socket} state={state} dispatch={dispatch} />
+          } />
+          <Route path="*" render={() =>
+            <PageNotFound />
           } />
         </>
       }
