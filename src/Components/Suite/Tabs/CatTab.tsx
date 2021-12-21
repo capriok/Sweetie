@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 import Api from '../../../api'
-import Form from '../Form'
+import Form from '../../Suite/Components/Form'
 import CatsForm from '../Forms/CatsForm'
-import ActionBar, { ActionBarButton } from '../ActionBar'
+import ActionBar, { ActionBarButton } from '../../Suite/Components/ActionBar'
 
 import { MdSystemUpdateAlt } from 'react-icons/md'
 

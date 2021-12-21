@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 import Api from '../../../api'
-import Form from '../Form'
+import Form from '../Components/Form'
 import GroceryForm from '../Forms/GroceryForm'
-import ActionBar, { ActionBarButton } from '../ActionBar'
+import ActionBar, { ActionBarButton } from '../Components/ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 

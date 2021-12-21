@@ -1,9 +1,3 @@
-export enum SwtReducerActions {
-	SETCE = 'CalendarEvents',
-	SETGL = 'GroceryList',
-	SETCS = 'CatSchedule'
-}
-
 export const swtState: SwtState = {
 	calendarEvents: [],
 	groceryList: [],
@@ -12,6 +6,12 @@ export const swtState: SwtState = {
 		food: { is: false, progress: 0 },
 		waste: { is: false, progress: 0 }
 	}
+}
+
+export enum SwtReducerActions {
+	SETCE = 'CalendarEvents',
+	SETGL = 'GroceryList',
+	SETCS = 'CatSchedule'
 }
 
 export const swtReducer = (state: SwtState, action: SwtAction): SwtState => {

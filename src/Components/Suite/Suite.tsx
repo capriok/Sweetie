@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useDarkMode from '../../Hooks/useDarkMode'
 
 import Div100vh from 'react-div-100vh'
-import Secret from './Auth/Secret'
+import Secret from './Components/Secret'
 import CalendarTab from './Tabs/CalendarTab'
 import CatTab from './Tabs/CatTab'
 import GroceryTab from './Tabs/GroceryTab'
@@ -10,7 +10,7 @@ import OptionTab from './Tabs/OptionTab'
 
 import '../../Styles/index.scss'
 import '../../Styles/Suite/Suite.scss'
-import '../../Styles/Suite/Tab.scss'
+import '../../Styles/Suite/Components/Tab.scss'
 
 interface Props {
 	socket: Socket
