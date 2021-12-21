@@ -1,13 +1,13 @@
 import React from 'react'
 
-import "../../Styles/Common/PageNotFound.scss"
+import "../../Styles/Shared/PageNotFound.scss"
 
 const PageNotFound: React.FC<any> = () => {
 	return (
 		<div className="page-not-found">
 			<h1>Page not found.</h1>
-			<div>Uh oh, you may be lost,</div>
-			<div>just like Joe Biden.</div>
+			<div>Uh oh, you seem lost,</div>
+			<div>like Joe Biden.</div>
 		</div>
 	)
 }

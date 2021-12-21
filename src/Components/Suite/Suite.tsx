@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import useDarkMode from '../../Hooks/useDarkMode'
 
 import Div100vh from 'react-div-100vh'
 import Secret from './Auth/Secret'
@@ -10,7 +11,6 @@ import OptionTab from './Tabs/OptionTab'
 import '../../Styles/index.scss'
 import '../../Styles/Suite/Suite.scss'
 import '../../Styles/Suite/Tab.scss'
-import useDarkMode from '../../Hooks/useDarkMode'
 
 interface Props {
 	socket: Socket

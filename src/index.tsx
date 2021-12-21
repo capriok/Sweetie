@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import { startOfToday } from 'date-fns'
 import useDataFetch from './Hooks/useDataFetch'
+import useSocket from './Hooks/useSocket'
 
 import Api from './api'
-import Splash from './Components/Common/Splash'
+import Splash from './Components/Shared/Splash'
 import Suite from './Components/Suite/Suite'
 import Sweetie from './Components/Sweetie/Sweetie'
-import useSocket from './Hooks/useSocket'
-import PageNotFound from './Components/Common/PageNotFound'
+import PageNotFound from './Components/Shared/PageNotFound'
 
 function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)

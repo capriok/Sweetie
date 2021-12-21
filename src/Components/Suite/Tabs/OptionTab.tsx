@@ -25,8 +25,8 @@ const OptionTab: React.FC<Props> = ({ auth, setAuth, mode, setMode }) => {
 	function SetDarkMode(e: any) {
 		const mode = e.target.checked
 		setMode(mode)
-		setModeValue('--modebg', mode ? '#0a0a0a' : 'white')
-		setModeValue('--modefont', mode ? 'white' : '#0a0a0a')
+		setModeValue('--modebg', mode ? '#111111' : 'white')
+		setModeValue('--modefont', mode ? 'white' : '#111111')
 	}
 
 	function SetPrimaryHSL(e: any) {
