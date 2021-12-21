@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import '../../../Styles/Sweetie/Tiles/cat-tile.scss'
+import '../../../Styles/Sweetie/Tiles/Cat-tile.scss'
 
 interface Props {
 	socket: Socket

@@ -9,7 +9,8 @@ import ActionBar, { ActionBarButton } from '../ActionBar'
 import { VscDiffAdded, VscDiffRemoved } from 'react-icons/vsc'
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
-import '../../../Styles/Suite/Tabs/calendar-tab.scss'
+import '../../../Styles/Suite/Tabs/Calendar-tab.scss'
+import { SwtReducerActions } from '../../../state'
 
 interface Props {
 	socket: Socket
@@ -159,7 +160,6 @@ const CalendarTab: React.FC<Props> = (props) => {
 		if (!event.timed || (event.timed && !startTime)) return
 
 		const date = new Date(event.date).toJSON().split('T')[0]
-
 		const sDate = new Date(date + 'T' + startTime)
 		const start = trimTime(format(sDate, endTime ? 'h:mm' : 'p'))
 
@@ -167,8 +167,9 @@ const CalendarTab: React.FC<Props> = (props) => {
 		if (endTime) {
 			const eDate = new Date(date + 'T' + endTime)
 			const end = trimTime(format(eDate, 'p'))
-			time = time + ' - ' + end
+			time = time + '-' + end
 		}
+
 		return time
 	}
 
@@ -177,16 +178,19 @@ const CalendarTab: React.FC<Props> = (props) => {
 		const hour = slice[0]
 		const minute = slice[1].substring(0, 2)
 
-		const meridian = RegExp(/AM|PM/g).test(slice[1])
-			? slice[1].split(' ')[1]
+
+		let meridian = RegExp(/AM|PM/g).test(slice[1])
+			? ' ' + slice[1].split(' ')[1]
 			: ''
+
+		meridian = meridian.replace('AM', 'a')
+		meridian = meridian.replace('PM', 'p')
 
 		time = hour + ':' + minute
 		if (slice[1].includes('00')) {
 			time = hour
 		}
-
-		return time + ' ' + meridian
+		return time + '' + meridian
 	}
 
 	function displayMonth(i: number) {
@@ -233,8 +237,7 @@ const CalendarTab: React.FC<Props> = (props) => {
 						<div className="calendar-tab content">
 							<div className="content-head">
 								<p>Event</p>
-								<p>Date</p>
-								<p>Time</p>
+								<p>Date / Time</p>
 							</div>
 							{eventList.map((event, i) => {
 								const inPast = tzZero(event.date).toJSON() < tzZero(startOfToday()).toJSON()
@@ -255,16 +258,17 @@ const CalendarTab: React.FC<Props> = (props) => {
 												<div className="name">
 													<p>{event.name}</p>
 												</div>
-												<div className="date">
-													<p>
-														{new Date(event.date).toLocaleDateString('en-us',
-															{ weekday: 'short', month: 'short', day: 'numeric' })}
-													</p>
-												</div>
-												<div className="time">
-													<p>
-														{event.timed ? formatEventTimes(event) : ''}
-													</p>
+												<div className="date-time">
+													<span className="date">
+														{event.timed
+															? new Date(event.date).toLocaleDateString('en-us',
+																{ weekday: 'short', month: 'short', day: 'numeric' })
+															: new Date(event.date).toLocaleDateString('en-us',
+																{ weekday: 'short', month: 'long', day: 'numeric' })}
+													</span>
+													<span className="time">
+														{`${event.timed ? `, ${formatEventTimes(event)}` : ''}`}
+													</span>
 												</div>
 											</div>
 										}

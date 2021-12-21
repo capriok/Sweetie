@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { differenceInCalendarDays } from 'date-fns'
 
-import '../../Styles/Suite/secret.scss'
 import Pinpad from './Pinpad'
+
+import '../../../Styles/Suite/Auth/Secret.scss'
+import Pinview from './Pinview'
 
 const Secret: React.FC<any> = ({ auth, setAuth }) => {
 	const passcode = process.env.REACT_APP_PASSCODE
@@ -76,15 +78,7 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 			{loading
 				? <></>
 				: <div id="pinpad">
-					<div id="pin">
-						{passcode!.split('').map((_, i) =>
-							<div key={i} className={
-								pincode[i] !== undefined
-									? 'mark val'
-									: 'mark dot'
-							} />
-						)}
-					</div>
+					<Pinview pincode={pincode.join('')} />
 					<Pinpad set={digitClick} />
 				</div>
 			}

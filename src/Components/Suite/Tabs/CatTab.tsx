@@ -7,7 +7,8 @@ import ActionBar, { ActionBarButton } from '../ActionBar'
 
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
-import '../../../Styles/Suite/Tabs/cat-tab.scss'
+import '../../../Styles/Suite/Tabs/Cat-tab.scss'
+import { SwtReducerActions } from '../../../state'
 
 interface Props {
 	socket: Socket

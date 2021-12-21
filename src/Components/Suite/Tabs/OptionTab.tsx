@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import '../../../Styles/Suite/Tabs/option-tab.scss'
+import '../../../Styles/Suite/Tabs/Option-tab.scss'
 
 const HEXtoHSL = require('hex-to-hsl');
 

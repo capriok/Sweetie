@@ -1,13 +1,7 @@
 import { useState, useEffect, useReducer } from 'react'
-import { swtReducer, swtState } from '../state'
+import { swtReducer, SwtReducerActions, swtState } from '../state'
 
 import Api from '../api'
-
-enum SwtReducerActions {
-	SETCE = 'CalendarEvents',
-	SETGL = 'GroceryList',
-	SETCS = 'CatSchedule'
-}
 
 const useDataFetch = () => {
 	const [loading, setLoading] = useState(true)

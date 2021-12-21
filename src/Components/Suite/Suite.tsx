@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 
 import Div100vh from 'react-div-100vh'
-import Secret from './Secret'
+import Secret from './Auth/Secret'
 import CalendarTab from './Tabs/CalendarTab'
 import CatTab from './Tabs/CatTab'
 import GroceryTab from './Tabs/GroceryTab'
 import OptionTab from './Tabs/OptionTab'
 
 import '../../Styles/index.scss'
-import '../../Styles/Suite/suite.scss'
-import '../../Styles/Suite/tab.scss'
+import '../../Styles/Suite/Suite.scss'
+import '../../Styles/Suite/Tab.scss'
 import useDarkMode from '../../Hooks/useDarkMode'
 
 interface Props {

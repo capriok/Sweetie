@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
 
-import '../../../Styles/Sweetie/Tiles/datetime-tile.scss'
+import '../../../Styles/Sweetie/Tiles/Datetime-tile.scss'
 
 interface Props {
 	socket: Socket

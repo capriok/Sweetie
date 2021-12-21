@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { format } from 'date-fns'
 import useCalendarDays from '../../../Hooks/useCalendarDays';
 
-import '../../../Styles/Sweetie/Tiles/calendar-tile.scss'
+import '../../../Styles/Sweetie/Tiles/Calendar-tile.scss'
 
 interface Props {
 	socket: Socket

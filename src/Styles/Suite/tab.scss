@@ -50,7 +50,9 @@
 					max-width: $MAX;
 					@include flex;
 					justify-content: space-between;
-					text-transform: capitalize;
+					.name {
+						text-transform: capitalize;
+					}
 				}
 				.with-border {
 					&:not(:last-child) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import { startOfToday } from 'date-fns'
 import useDataFetch from './Hooks/useDataFetch'
@@ -36,15 +36,17 @@ function Index() {
       {serverIdle
         ? <Splash />
         : <>
-          <Route exact path="/" render={() =>
-            <Suite socket={socket} state={state} dispatch={dispatch} />
-          } />
-          <Route exact path="/sweetie" render={() =>
-            <Sweetie socket={socket} state={state} dispatch={dispatch} />
-          } />
-          <Route path="*" render={() =>
-            <PageNotFound />
-          } />
+          <Switch>
+            <Route exact path="/" render={() =>
+              <Suite socket={socket} state={state} dispatch={dispatch} />
+            } />
+            <Route exact path="/sweetie" render={() =>
+              <Sweetie socket={socket} state={state} dispatch={dispatch} />
+            } />
+            <Route path="*" render={() =>
+              <PageNotFound />
+            } />
+          </Switch>
         </>
       }
     </Router>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { VscDebugStop } from 'react-icons/vsc'
 
-import '../../Styles/Suite/actionbar.scss'
+import '../../Styles/Suite/Actionbar.scss'
 
 const ActionBar: React.FC<any> = ({ children }) => {
 	if (children.length === undefined) children = [children]

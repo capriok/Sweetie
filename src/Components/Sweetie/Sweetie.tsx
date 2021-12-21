@@ -7,7 +7,7 @@ import CatTile from './Tiles/CatTile';
 import GroceryTile from './Tiles/GroceryTile';
 
 import '../../Styles/index.scss'
-import '../../Styles/Sweetie/sweetie.scss'
+import '../../Styles/Sweetie/Sweetie.scss'
 
 interface Props {
 	socket: Socket

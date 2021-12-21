@@ -4,8 +4,6 @@ import useWeather from '../../../Hooks/useWeather'
 import {
 	WiThermometer,
 	WiThermometerExterior,
-
-	WiHumidity,
 	WiRain,
 	WiCloudy,
 	WiStrongWind,
@@ -14,7 +12,7 @@ import {
 	WiSunset
 } from 'react-icons/wi'
 
-import '../../../Styles/Sweetie/Tiles/weather-tile.scss'
+import '../../../Styles/Sweetie/Tiles/Weather-tile.scss'
 
 interface Props {
 	socket: Socket

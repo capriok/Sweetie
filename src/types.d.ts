@@ -1,15 +1,15 @@
 type Socket = SocketIOClient.Socket
 
-enum SwtReducerActions {
-	SETCE = 'CalendarEvents',
-	SETGL = 'GroceryList',
-	SETCS = 'CatSchedule',
-}
-
 interface SwtState {
 	calendarEvents: CalendarEvent[]
 	groceryList: Grocery[]
 	catSchedule: CatScheduleDay
+}
+
+enum SwtReducerActions {
+	SETCE = 'CalendarEvents',
+	SETGL = 'GroceryList',
+	SETCS = 'CatSchedule'
 }
 
 type SwtAction =

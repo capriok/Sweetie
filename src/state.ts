@@ -1,4 +1,4 @@
-enum SwtReducerActions {
+export enum SwtReducerActions {
 	SETCE = 'CalendarEvents',
 	SETGL = 'GroceryList',
 	SETCS = 'CatSchedule'
