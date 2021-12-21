@@ -17,7 +17,7 @@ const useSocket = () => {
 		})
 	}, [])
 
-	return socket
+	return { socket }
 }
 
 export default useSocket

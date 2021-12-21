@@ -11,7 +11,7 @@ const profanity = require('profanity-censor')
 
 interface Props {
 	socket: Socket
-	state: SwtState
+	state: SwtState | any
 	dispatch: React.Dispatch<any>
 }
 
@@ -51,11 +51,11 @@ const CrimasForm: React.FC<Props> = (props) => {
 		setLoading(true)
 
 		console.log({ Message: message })
-		Api.UpdateCrimasMessage(message).then((cm) => {
-			dispatch({ type: 'CrimasMessage', value: cm })
-			socket.emit('update-message', message)
-			setButton('Done, goodbye.')
-		})
+		// Api.UpdateCrimasMessage(message).then((cm) => {
+		// 	dispatch({ type: 'CrimasMessage', value: cm })
+		// 	socket.emit('update-message', message)
+		// 	setButton('Done, goodbye.')
+		// })
 	}
 
 	return (

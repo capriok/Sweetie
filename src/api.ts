@@ -84,17 +84,6 @@ class Api {
 		const res = await AxiosInstance.put('/cc', { config: config })
 		return res.data.config
 	}
-
-	//CRIMAS MESSAGE
-
-	public async GetCrimasMessage(): Promise<CrimasMessage> {
-		const res = await AxiosInstance.get('/cm')
-		return res.data.message
-	}
-	public async UpdateCrimasMessage(message: string): Promise<CrimasMessage> {
-		const res = await AxiosInstance.put('/cm', { message: message })
-		return res.data.message
-	}
 }
 
 export function tzZero(date: any) {

@@ -1,8 +1,7 @@
 enum SwtReducerActions {
 	SETCE = 'CalendarEvents',
 	SETGL = 'GroceryList',
-	SETCS = 'CatSchedule',
-	SETCM = 'CrimasMessage'
+	SETCS = 'CatSchedule'
 }
 
 export const swtState: SwtState = {
@@ -12,8 +11,7 @@ export const swtState: SwtState = {
 		date: '',
 		food: { is: false, progress: 0 },
 		waste: { is: false, progress: 0 }
-	},
-	crimasMessage: 'Fetching...'
+	}
 }
 
 export const swtReducer = (state: SwtState, action: SwtAction): SwtState => {
@@ -26,9 +24,6 @@ export const swtReducer = (state: SwtState, action: SwtAction): SwtState => {
 
 		case SwtReducerActions.SETCS:
 			return { ...state, catSchedule: action.value }
-
-		case SwtReducerActions.SETCM:
-			return { ...state, crimasMessage: action.value }
 
 		default:
 			console.error('Invalid Dispatch Type')

@@ -4,21 +4,18 @@ enum SwtReducerActions {
 	SETCE = 'CalendarEvents',
 	SETGL = 'GroceryList',
 	SETCS = 'CatSchedule',
-	SETCM = 'CrimasMessage'
 }
 
 interface SwtState {
 	calendarEvents: CalendarEvent[]
 	groceryList: Grocery[]
 	catSchedule: CatScheduleDay
-	crimasMessage: string
 }
 
 type SwtAction =
 	{ type: SwtReducerActions.SETCE, value: CalendarEvent[] }
 	| { type: SwtReducerActions.SETGL, value: Grocery[] }
 	| { type: SwtReducerActions.SETCS, value: CatScheduleDay }
-	| { type: SwtReducerActions.SETCM, value: string }
 
 interface CalendarEvent {
 	_id?: string

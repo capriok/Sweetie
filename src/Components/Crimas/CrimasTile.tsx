@@ -8,7 +8,7 @@ const profanity = require('profanity-censor');
 
 interface Props {
 	socket: Socket
-	state: SwtState
+	state: SwtState | any
 	dispatch: React.Dispatch<SwtAction>
 }
 

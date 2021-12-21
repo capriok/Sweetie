@@ -3,8 +3,6 @@ import { useEffect } from 'react'
 const init = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const useMultipleBackgrounds = () => {
-	const month = new Date().getMonth()
-
 	let bgs = [...init]
 
 	const setBackground = () => {
@@ -20,7 +18,7 @@ const useMultipleBackgrounds = () => {
 		bg!.style.backgroundImage = `url("/bgs/${image}")`
 	}
 	useEffect(() => {
-		month !== 11 && setInterval(setBackground, 600000)
+		setInterval(setBackground, 600000)
 	}, [])
 }
 

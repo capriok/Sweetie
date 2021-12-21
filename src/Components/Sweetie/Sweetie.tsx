@@ -1,12 +1,10 @@
 import React from 'react'
-import useMultipleBackgrounds from '../../Hooks/useMultipleBackgrounds';
 
 import DatetimeTile from './Tiles/DatetimeTile';
 import WeatherTile from './Tiles/WeatherTile';
 import CalendarTile from './Tiles/CalendarTile';
 import CatTile from './Tiles/CatTile';
 import GroceryTile from './Tiles/GroceryTile';
-import CrimasTile from '../Crimas/CrimasTile';
 
 import '../../Styles/index.scss'
 import '../../Styles/Sweetie/sweetie.scss'
@@ -18,7 +16,7 @@ interface Props {
 }
 
 const Sweetie: React.FC<Props> = (props) => {
-	useMultipleBackgrounds()
+	// useMultipleBackgrounds()
 
 	let isProd = process.env.NODE_ENV === 'production'
 	const Swt_Orientation = isProd ? 'Sweetie-vert' : ''
@@ -40,10 +38,7 @@ const Sweetie: React.FC<Props> = (props) => {
 					<CatTile {...props} />
 				</Tile>
 				<Tile>
-					{true
-						? <CrimasTile {...props} />
-						: <GroceryTile {...props} />
-					}
+					<GroceryTile {...props} />
 				</Tile>
 			</div>
 			<div id="Background" className={Bg_Orientation} />

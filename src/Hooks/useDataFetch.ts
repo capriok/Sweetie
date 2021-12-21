@@ -6,8 +6,7 @@ import Api from '../api'
 enum SwtReducerActions {
 	SETCE = 'CalendarEvents',
 	SETGL = 'GroceryList',
-	SETCS = 'CatSchedule',
-	SETCM = 'CrimasMessage'
+	SETCS = 'CatSchedule'
 }
 
 const useDataFetch = () => {
@@ -24,8 +23,7 @@ const useDataFetch = () => {
 		const requests = [
 			{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCE },
 			{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGL },
-			{ req: Api.GetCatSchedule(), dispatch: SwtReducerActions.SETCS },
-			{ req: Api.GetCrimasMessage(), dispatch: SwtReducerActions.SETCM },
+			{ req: Api.GetCatSchedule(), dispatch: SwtReducerActions.SETCS }
 		]
 		Promise.all(requests.map((req: any) => req.req))
 			.then((responses) => {

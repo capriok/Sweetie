@@ -8,13 +8,12 @@ import Api from './api'
 import Splash from './Components/Common/Splash'
 import Suite from './Components/Suite/Suite'
 import Sweetie from './Components/Sweetie/Sweetie'
-import CrimasForm from './Components/Crimas/CrimasForm'
 import useSocket from './Hooks/useSocket'
 
 function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
   const { state, dispatch } = useDataFetch()
-  const socket = useSocket()
+  const { socket } = useSocket()
 
   useEffect(() => {
     const ApplicationDate: Date = startOfToday()
@@ -38,9 +37,6 @@ function Index() {
         : <>
           <Route exact path="/" render={() =>
             <Suite socket={socket} state={state} dispatch={dispatch} />
-          } />
-          <Route exact path="/crimas" render={() =>
-            <CrimasForm socket={socket} state={state} dispatch={dispatch} />
           } />
           <Route exact path="/sweetie" render={() =>
             <Sweetie socket={socket} state={state} dispatch={dispatch} />

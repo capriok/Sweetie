@@ -7,12 +7,11 @@ import Pinpad from './Pinpad'
 const Secret: React.FC<any> = ({ auth, setAuth }) => {
 	const passcode = process.env.REACT_APP_PASSCODE
 
-	const [success, setSuccess] = useState(false)
 	const [loading, setloading] = useState(true)
 	const [pincode, setPincode] = useState<Array<number>>([])
 
 	function digitClick(digit: number) {
-		if (success) return
+		if (pincode.length === 4) return
 
 		document.getElementById('pin')!.classList.remove('Invalid')
 
@@ -33,7 +32,6 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 	function submitPass() {
 		const pin: string = pincode.join('')
 		if (pin === passcode) {
-			setSuccess(true)
 			localStorage.setItem('Swt-Auth', JSON.stringify({
 				pass: pin,
 				auth: true,
@@ -67,9 +65,10 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 			const lsPass: { pass: string, auth: boolean, last: string } = JSON.parse(ls)
 			const shouldRefresh = Math.abs(differenceInCalendarDays(new Date(lsPass.last), new Date())) > 6
 			if (lsPass.pass !== passcode) return
-			if (lsPass.auth && !shouldRefresh) setAuth(true)
+			if (lsPass.auth && !shouldRefresh) return setAuth(true)
 		}
 		setloading(false)
+		return () => setloading(false)
 	}, [auth])
 
 	return (
