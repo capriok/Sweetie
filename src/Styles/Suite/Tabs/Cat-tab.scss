@@ -1,0 +1,66 @@
+@import "../../index.scss";
+
+#Suite {
+	.cat-tab {
+		.content-line {
+			@include flex;
+			flex-direction: column;
+			transform: scale(0.75);
+
+			$stroke-color: $primlight;
+			$shadow-prim: $modefont;
+			$cont-size: 100px;
+			$after-size: 70px;
+			$after-margin: -35px;
+
+			p {
+				transform: scale(1.25);
+				margin-bottom: 40px;
+			}
+			#svg circle {
+				stroke-dashoffset: 0;
+				transition: stroke-dashoffset 1s linear;
+				stroke: transparent;
+				stroke-width: 10px;
+			}
+			#svg #bar {
+				stroke: $stroke-color;
+			}
+			#cont {
+				position: relative;
+				display: block;
+				height: $cont-size;
+				width: $cont-size;
+				margin: 0 auto;
+				box-shadow: 0 0 20px -10px $shadow-prim;
+				border-radius: 100%;
+				transform: rotate(-90deg);
+			}
+			#cont:after {
+				position: absolute;
+				display: block;
+				content: "";
+				height: $after-size;
+				width: $after-size;
+				top: 50%;
+				left: 50%;
+				box-shadow: inset 0 0 15px -10px $shadow-prim;
+				margin-top: $after-margin;
+				margin-left: $after-margin;
+				border-radius: 100%;
+			}
+
+			@keyframes tab-glow {
+				10% {
+					box-shadow: 0 0 20px -10px $shadow-prim;
+				}
+				50% {
+					box-shadow: 0 0 25px -5px crimson;
+				}
+				90% {
+					box-shadow: 0 0 20px -10px $shadow-prim;
+				}
+			}
+		}
+	}
+}

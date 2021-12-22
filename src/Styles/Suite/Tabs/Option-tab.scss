@@ -1,0 +1,13 @@
+@import "../../index.scss";
+
+#Suite {
+	.option-tab {
+		.authenticate,
+		.logout {
+			margin-top: 20px;
+		}
+		input[type="color"] {
+			min-width: 50px;
+		}
+	}
+}

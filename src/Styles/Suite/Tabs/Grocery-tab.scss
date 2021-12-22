@@ -1,0 +1,14 @@
+@import "../../index.scss";
+
+#Suite {
+	.grocery-tab {
+		.content-line {
+			.name {
+				flex: 2;
+			}
+			.quantity {
+				text-align: right;
+			}
+		}
+	}
+}

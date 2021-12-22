@@ -1,0 +1,80 @@
+@import "../index.scss";
+
+body {
+	background-color: #0a0a0a;
+}
+
+// Dev
+#Sweetie,
+#Background {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+}
+
+// Prod
+.Sweetie-vert,
+.Bg-vert {
+	transform: rotate(90deg);
+	transform-origin: bottom left;
+	top: -100vw;
+	left: 0;
+	width: 100vh !important;
+	height: 100vw !important;
+}
+.Splash-vert {
+	transform: rotate(90deg);
+}
+
+#Background {
+	z-index: -1;
+	background-size: cover;
+	opacity: 0.25;
+	background-image: url("../../Assets/chrimas.jpg");
+	transition: all 2s;
+}
+
+#Sweetie {
+	* {
+		margin: 0;
+		padding: 0;
+		color: white;
+	}
+
+	font-size: 2.4rem;
+	overflow: hidden;
+	background-color: rgba(25, 25, 25, 0.5);
+
+	#Tile {
+		@include flex;
+		align-items: flex-start;
+		flex: 1;
+		padding: 0 100px;
+	}
+	#Line {
+		@include flex;
+		align-items: stretch;
+		width: 95vw;
+		margin: 0 auto;
+	}
+
+	.tile-title {
+		font-size: 5rem;
+	}
+	.sub-title {
+		font-size: 3.5rem;
+	}
+	.w-line {
+		padding-bottom: 20px;
+		margin-bottom: 40px;
+		border-bottom: 2px solid grey;
+	}
+
+	.datetime-tile,
+	.calendar-tile,
+	.weather-tile,
+	.cat-tile,
+	.grocery-tile {
+		margin: 120px 0;
+	}
+}
