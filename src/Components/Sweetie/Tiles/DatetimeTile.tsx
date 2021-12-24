@@ -10,18 +10,29 @@ interface Props {
 }
 
 const DatetimeTile: React.FC<Props> = () => {
-	const day = format(new Date(), 'iii')
-	const month = format(new Date(), 'LLLL')
-	const date = format(new Date(), 'do')
-
-	const [currentTime, setCurrentTime] = useState(format(new Date(), 'pp'))
-	const [currentDate] = useState(`${day}, ${month} ${date}`)
+	const [currentTime, setCurrentTime] = useState(getTime())
+	const [currentDate, setCurrentDate] = useState(getDate())
 
 	useEffect(() => {
 		setTimeout(() => {
-			setCurrentTime(format(new Date(), 'pp'))
+			setCurrentTime(getTime())
+			setCurrentDate(getDate())
 		}, 1000)
 	}, [currentTime])
+
+	function getTime() {
+		const time = format(new Date(), 'pp')
+
+		return time
+	}
+
+	function getDate() {
+		const day = format(new Date(), 'iii')
+		const month = format(new Date(), 'LLLL')
+		const date = format(new Date(), 'do')
+
+		return `${day}, ${month} ${date}`
+	}
 
 	return (
 		<div className="datetime-tile">

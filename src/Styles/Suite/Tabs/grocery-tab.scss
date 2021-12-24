@@ -2,6 +2,9 @@
 
 #Suite {
 	.grocery-tab {
+		.list-title {
+			text-transform: capitalize;
+		}
 		.content-line {
 			.name {
 				flex: 2;

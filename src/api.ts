@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { startOfToday } from 'date-fns'
+import { tzDate, tzZero } from './Helpers/TimeHelp'
 const ENDPOINT = process.env.REACT_APP_SERVER
 
 const baseInstanceParams = {
@@ -84,18 +85,6 @@ class Api {
 		const res = await AxiosInstance.put('/cc', { config: config })
 		return res.data.config
 	}
-}
-
-export function tzZero(date: any) {
-	const d = new Date(date)
-	d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
-	return d
-}
-
-export function tzDate(date: any) {
-	const d = new Date(date)
-	d.setMinutes(d.getMinutes() + d.getTimezoneOffset())
-	return d.toJSON()
 }
 
 const formatDates = (arr: Array<any>, prop: string) => {

@@ -8,9 +8,14 @@ interface Props {
 	dispatch: React.Dispatch<SwtAction>
 }
 
+interface GroceryList {
+	grocery: Array<Grocery>
+	other: Array<Grocery>
+}
+
 const GroceryTile: React.FC<Props> = (props) => {
 	const { state } = props
-	const [groceryList, setGroceryList] = useState<{ grocery: Array<Grocery>, other: Array<Grocery> }>({
+	const [groceryList, setGroceryList] = useState<GroceryList>({
 		grocery: [],
 		other: [],
 	})
@@ -26,11 +31,11 @@ const GroceryTile: React.FC<Props> = (props) => {
 		<div className="grocery-tile">
 			<div className="grocery">
 				<h3 className="sub-title w-line">Grocery</h3>
-				<GroceryList list={groceryList.grocery} />
+				<List list={groceryList.grocery} />
 			</div>
 			<div className="other">
 				<h3 className="sub-title w-line">Other</h3>
-				<GroceryList list={groceryList.other} />
+				<List list={groceryList.other} />
 			</div>
 		</div>
 	)
@@ -38,7 +43,7 @@ const GroceryTile: React.FC<Props> = (props) => {
 
 export default GroceryTile
 
-const GroceryList: React.FC<{ list: Grocery[] }> = ({ list }) => (
+const List: React.FC<{ list: Grocery[] }> = ({ list }) => (
 	<div className="items">
 		<div className="first-half">
 			{list.slice(0, Math.ceil((list.length) / 2)).map((item: any, i) => (

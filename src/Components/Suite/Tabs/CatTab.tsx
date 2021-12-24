@@ -142,7 +142,6 @@ const CatTab: React.FC<Props> = (props) => {
 
 export default CatTab
 
-
 function animate(prop: number) {
 	return prop === 100
 		? 'ease-in-out 5s infinite alternate tab-glow'
@@ -158,17 +157,14 @@ const circleProps = {
 	strokeDashoffset: '0'
 }
 
-const ProgressCircle: React.FC<any> = ({ progress, percent }) => {
-
-	return (
-		<div id="cont" style={{ animation: animate(progress) }}>
-			<svg id="svg" width="100" height="100">
-				<circle {...circleProps} />
-				<circle
-					id="bar"
-					{...circleProps}
-					style={{ strokeDashoffset: percent }} />
-			</svg>
-		</div>
-	)
-}
+const ProgressCircle: React.FC<any> = ({ progress, percent }) => (
+	<div id="cont" style={{ animation: animate(progress) }}>
+		<svg id="svg" width="100" height="100">
+			<circle {...circleProps} />
+			<circle
+				id="bar"
+				{...circleProps}
+				style={{ strokeDashoffset: percent }} />
+		</svg>
+	</div>
+)

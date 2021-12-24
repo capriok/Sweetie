@@ -109,34 +109,8 @@ const GroceryTab: React.FC<Props> = (props) => {
 
 					return (
 						<div className="grocery-tab content">
-							{groceryList.some(g => g.type === 'grocery') &&
-								<>
-									<h3>Grocery</h3>
-									{groceryList.filter(i => i.type === 'grocery').map((item, i) => (
-										<div
-											key={i}
-											className="content-line with-border"
-											onClick={() => removeGrocery(item)}>
-											<p className="name">{item.name}</p>
-											<p className="quantity">{item.qty}</p>
-										</div>
-									))}
-								</>
-							}
-							{groceryList.some(g => g.type === 'other') &&
-								<>
-									<h3>Other</h3>
-									{groceryList.filter(i => i.type === 'other').map((item, i) => (
-										<div
-											key={i}
-											className="content-line with-border"
-											onClick={() => removeGrocery(item)}>
-											<p className="name">{item.name}</p>
-											<p className="quantity">{item.qty}</p>
-										</div>
-									))}
-								</>
-							}
+							<List list={groceryList} remove={removeGrocery} type="grocery" />
+							<List list={groceryList} remove={removeGrocery} type="other" />
 						</div>
 					)
 				})()}
@@ -163,3 +137,20 @@ const GroceryTab: React.FC<Props> = (props) => {
 
 export default GroceryTab
 
+const List: React.FC<{ list: Array<Grocery>, remove: (item: Grocery) => void, type: string }> = ({ list, remove, type }) => {
+	if (!list.some(g => g.type === type)) return <></>
+	return (
+		<>
+			<h3 className="list-title">{type}</h3>
+			{list.filter(i => i.type === type).map((item, i) => (
+				<div
+					key={i}
+					className="content-line with-border"
+					onClick={() => remove(item)}>
+					<p className="name">{item.name}</p>
+					<p className="quantity">{item.qty}</p>
+				</div>
+			))}
+		</>
+	)
+}

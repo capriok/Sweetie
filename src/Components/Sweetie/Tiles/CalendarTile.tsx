@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { format } from 'date-fns'
+import { formatEventTimes } from '../../../Helpers/TimeHelp';
 import useCalendarDays from '../../../Hooks/useCalendarDays';
 
 import '../../../Styles/Sweetie/Tiles/Calendar-tile.scss'
@@ -67,42 +67,3 @@ const weekdays = [
 	'Tueday', 'Wednesday',
 	'Thursday', 'Friday', 'Saturday'
 ]
-
-function formatEventTimes(event: CalendarEvent) {
-	const { startTime, endTime } = event
-
-	if (!event.timed || (event.timed && !startTime)) return
-
-	const date = new Date(event.date).toJSON().split('T')[0]
-	const sDate = new Date(date + 'T' + startTime)
-	const start = trimTime(format(sDate, endTime ? 'h:mm' : 'p'))
-
-	let time = start
-	if (endTime) {
-		const eDate = new Date(date + 'T' + endTime)
-		const end = trimTime(format(eDate, 'p'))
-		time = time + '-' + end
-	}
-
-	return time
-}
-
-function trimTime(time: string) {
-	let slice = time.split(':')
-	const hour = slice[0]
-	const minute = slice[1].substring(0, 2)
-
-
-	let meridian = RegExp(/AM|PM/g).test(slice[1])
-		? ' ' + slice[1].split(' ')[1]
-		: ''
-
-	meridian = meridian.replace('AM', 'a')
-	meridian = meridian.replace('PM', 'p')
-
-	time = hour + ':' + minute
-	if (slice[1].includes('00')) {
-		time = hour
-	}
-	return time + '' + meridian
-}
