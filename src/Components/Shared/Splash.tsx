@@ -10,9 +10,9 @@ const Splash: React.FC<any> = () => {
 	const Splash_Orientation = isProd && isSweetie ? 'Splash-vert' : ''
 
 	return (
-		<div id="Splash">
+		<div className="splash">
 			<div id="Splash-content" className={Splash_Orientation}>
-				<img className="splash-icon" src={Swt} alt="" />
+				<img id="Splash-icon" src={Swt} alt="" />
 			</div>
 		</div>
 	)
