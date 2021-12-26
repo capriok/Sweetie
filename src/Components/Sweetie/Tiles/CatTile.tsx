@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import '../../../Styles/Sweetie/Tiles/Cat-tile.scss'
+import ProgressCircle from '../../Shared/ProgressCircle'
 
 interface Props {
 	socket: Socket
@@ -41,8 +42,14 @@ const CatTile: React.FC<Props> = (props) => {
 					<p>Litter</p>
 				</div>
 				<div className="indicators">
-					<ProgressCircle progress={foodProgress} percent={foodPercent} />
-					<ProgressCircle progress={wasteProgress} percent={wastePercent} />
+					<ProgressCircle
+						{...circleProps}
+						progress={foodProgress}
+						percent={foodPercent} />
+					<ProgressCircle
+						{...circleProps}
+						progress={wasteProgress}
+						percent={wastePercent} />
 				</div>
 			</div>
 		</div>
@@ -51,29 +58,11 @@ const CatTile: React.FC<Props> = (props) => {
 
 export default CatTile
 
-function animate(prop: number) {
-	return prop === 100
-		? 'ease-in-out 5s infinite alternate tile-glow'
-		: 'unset'
-}
-
 const circleProps = {
+	h: 180,
+	w: 180,
 	r: 77.5,
 	cx: 90,
 	cy: 90,
-	fill: 'transparent',
-	strokeDasharray: '485',
-	strokeDashoffset: '0'
+	strokeDasharray: '485'
 }
-
-const ProgressCircle: React.FC<any> = ({ progress, percent }) => (
-	<div id="cont" style={{ animation: animate(progress) }}>
-		<svg id="svg" width="180" height="180">
-			<circle {...circleProps} />
-			<circle
-				id="bar"
-				{...circleProps}
-				style={{ strokeDashoffset: percent }} />
-		</svg>
-	</div>
-)

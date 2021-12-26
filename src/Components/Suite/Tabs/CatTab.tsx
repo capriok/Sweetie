@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
+import { SwtReducerActions } from '../../../state'
 
 import Api from '../../../api'
 import Form from '../../Suite/Components/Form'
 import CatsForm from '../Forms/CatsForm'
 import ActionBar, { ActionBarButton } from '../../Suite/Components/ActionBar'
+import ProgressCircle from '../../Shared/ProgressCircle'
 
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
 import '../../../Styles/Suite/Tabs/Cat-tab.scss'
-import { SwtReducerActions } from '../../../state'
 
 interface Props {
 	socket: Socket
@@ -117,12 +118,18 @@ const CatTab: React.FC<Props> = (props) => {
 					return (
 						<div className="cat-tab content">
 							<div className="content-line">
+								<ProgressCircle
+									{...circleProps}
+									progress={foodProgress}
+									percent={foodPercent} />
 								<p>Food</p>
-								<ProgressCircle progress={foodProgress} percent={foodPercent} />
 							</div>
 							<div className="content-line">
+								<ProgressCircle
+									{...circleProps}
+									progress={wasteProgress}
+									percent={wastePercent} />
 								<p>Waste</p>
-								<ProgressCircle progress={wasteProgress} percent={wastePercent} />
 							</div>
 						</div>
 					)
@@ -142,29 +149,11 @@ const CatTab: React.FC<Props> = (props) => {
 
 export default CatTab
 
-function animate(prop: number) {
-	return prop === 100
-		? 'ease-in-out 5s infinite alternate tab-glow'
-		: 'unset'
-}
-
 const circleProps = {
-	r: 42.5,
+	h: 100,
+	w: 100,
+	r: 30,
 	cx: 50,
 	cy: 50,
-	fill: 'transparent',
-	strokeDasharray: '268',
-	strokeDashoffset: '0'
+	strokeDasharray: '189'
 }
-
-const ProgressCircle: React.FC<any> = ({ progress, percent }) => (
-	<div id="cont" style={{ animation: animate(progress) }}>
-		<svg id="svg" width="100" height="100">
-			<circle {...circleProps} />
-			<circle
-				id="bar"
-				{...circleProps}
-				style={{ strokeDashoffset: percent }} />
-		</svg>
-	</div>
-)
