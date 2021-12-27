@@ -13,8 +13,8 @@ import PageNotFound from './Components/Suite/Components/PageNotFound'
 
 function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
-  const { state, dispatch } = useDataFetch()
   const { socket } = useSocket()
+  const { state, dispatch } = useDataFetch(socket)
 
   useEffect(() => {
     const ApplicationDate: Date = startOfToday()

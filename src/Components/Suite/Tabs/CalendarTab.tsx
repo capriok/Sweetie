@@ -47,7 +47,7 @@ const InitUpdatingForm: FormState = {
 }
 
 const CalendarTab: React.FC<Props> = (props) => {
-	const { state, dispatch } = props
+	const { socket, state, dispatch } = props
 
 	const [isAdding, setAddingState] = useState(false)
 	const [isUpdating, setUpdatingState] = useState(false)
@@ -96,7 +96,10 @@ const CalendarTab: React.FC<Props> = (props) => {
 
 		const confirmation = window.confirm(`Remove '${event.name}' ?`);
 		if (confirmation) {
-			Api.RemoveCalendarEvent(event).then(ce => setEventList(ce))
+			Api.RemoveCalendarEvent(event).then(ce => {
+				socket.emit('ce-change', ce)
+				setEventList(ce)
+			})
 		}
 	}
 
@@ -125,6 +128,7 @@ const CalendarTab: React.FC<Props> = (props) => {
 		console.log(event);
 		Api.PostCalendarEvent(event).then(ce => {
 			resetAddingState()
+			socket.emit('ce-change', ce)
 			dispatch({ type: SwtReducerActions.SETCE, value: ce })
 		})
 	}
@@ -151,6 +155,7 @@ const CalendarTab: React.FC<Props> = (props) => {
 		console.log(event);
 		Api.UpdateCalendarEvent(event).then(ce => {
 			resetUpdatingState()
+			socket.emit('ce-change', ce)
 			dispatch({ type: SwtReducerActions.SETCE, value: ce })
 		})
 	}

@@ -3,14 +3,27 @@ import { swtReducer, SwtReducerActions, swtState } from '../state'
 
 import Api from '../api'
 
-const useDataFetch = () => {
+const useDataFetch = (socket: Socket) => {
 	const [loading, setLoading] = useState(true)
 	const [state, dispatch] = useReducer(swtReducer, swtState)
 
 	useEffect(() => {
 		setLoading(true)
 		FetchData()
-		setInterval(FetchData, 600000)
+	}, [])
+
+	useEffect(() => {
+		socket.on('ce-update', (ce: Array<CalendarEvent>) => {
+			dispatch({ type: SwtReducerActions.SETCE, value: ce })
+		})
+
+		socket.on('gl-update', (gl: Array<Grocery>) => {
+			dispatch({ type: SwtReducerActions.SETGL, value: gl })
+		})
+
+		socket.on('cs-update', (today: CatScheduleDay) => {
+			dispatch({ type: SwtReducerActions.SETCS, value: today })
+		})
 	}, [])
 
 	function FetchData() {

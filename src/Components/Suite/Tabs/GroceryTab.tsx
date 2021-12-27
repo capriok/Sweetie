@@ -29,7 +29,7 @@ const InitAddingForm: FormState = {
 }
 
 const GroceryTab: React.FC<Props> = (props) => {
-	const { state, dispatch } = props
+	const { socket, state, dispatch } = props
 
 	const [isAdding, setAddingState] = useState(false)
 	const [isRemoving, setRemovingState] = useState(false)
@@ -56,6 +56,7 @@ const GroceryTab: React.FC<Props> = (props) => {
 		);
 		if (confirmation) {
 			Api.ClearGroceryList().then(gl => {
+				socket.emit('gl-change', gl)
 				dispatch({ type: SwtReducerActions.SETGL, value: gl })
 			})
 		}
@@ -67,6 +68,7 @@ const GroceryTab: React.FC<Props> = (props) => {
 		const confirmation = window.confirm(`Remove '${item.name}' ?`);
 		if (confirmation) {
 			Api.RemoveGrocery(item).then(gl => {
+				socket.emit('gl-change', gl)
 				dispatch({ type: SwtReducerActions.SETGL, value: gl })
 			})
 		}
@@ -85,6 +87,7 @@ const GroceryTab: React.FC<Props> = (props) => {
 		console.log(item);
 		Api.PostGrocery(item).then(gl => {
 			resetAddingState()
+			socket.emit('gl-change', gl)
 			dispatch({ type: SwtReducerActions.SETGL, value: gl })
 		})
 	}

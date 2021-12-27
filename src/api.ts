@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { startOfToday } from 'date-fns'
-import { tzDate, tzZero } from './Helpers/TimeHelp'
+
 const ENDPOINT = process.env.REACT_APP_SERVER
 
 const baseInstanceParams = {
@@ -26,22 +25,22 @@ class Api {
 
 	public async GetCalendarEvents(): Promise<Array<CalendarEvent>> {
 		const res = await AxiosInstance.get('/ce')
-		return formatDates(res.data.list, 'date')
+		return res.data.list
 	}
 
 	public async PostCalendarEvent(event: CalendarEvent): Promise<Array<CalendarEvent>> {
 		const res = await AxiosInstance.post('/ce', { event: event })
-		return formatDates(res.data.list, 'date')
+		return res.data.list
 	}
 
 	public async UpdateCalendarEvent(event: Partial<CalendarEvent>): Promise<Array<CalendarEvent>> {
 		const res = await AxiosInstance.put('/ce', { event: event })
-		return formatDates(res.data.list, 'date')
+		return res.data.list
 	}
 
 	public async RemoveCalendarEvent(event: CalendarEvent): Promise<Array<CalendarEvent>> {
 		const res = await AxiosInstance.delete('/ce', { data: { id: event._id } })
-		return formatDates(res.data.list, 'date')
+		return res.data.list
 	}
 
 	// GROCERIES
@@ -70,10 +69,7 @@ class Api {
 
 	public async GetCatSchedule(): Promise<CatScheduleDay> {
 		const res = await AxiosInstance.get('/cs')
-		const today = res.data.schedule.find((d: CatScheduleDay) => {
-			return new Date(d.date).toLocaleDateString() === tzZero(startOfToday()).toLocaleDateString()
-		})
-		return today
+		return res.data.today
 	}
 
 	public async GetCatConfig(): Promise<CatConfig> {
@@ -86,13 +82,5 @@ class Api {
 		return res.data.config
 	}
 }
-
-const formatDates = (arr: Array<any>, prop: string) => {
-	return arr.map((x: any) => {
-		x[prop] = tzDate(x[prop])
-		return x
-	})
-}
-
 
 export default new Api()

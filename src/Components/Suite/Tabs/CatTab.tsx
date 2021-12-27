@@ -28,7 +28,7 @@ const InitUpdatingForm: FormState = {
 }
 
 const CatTab: React.FC<Props> = (props) => {
-	const { state, dispatch } = props
+	const { socket, state, dispatch } = props
 
 	const [catConfig, setCatConfig] = useState<any>({})
 
@@ -94,6 +94,7 @@ const CatTab: React.FC<Props> = (props) => {
 		Api.UpdateCatConfig(config).then(cc => {
 			setCatConfig(cc)
 			Api.GetCatSchedule().then(today => {
+				socket.emit('cs-change', today)
 				dispatch({ type: SwtReducerActions.SETCS, value: today })
 			})
 			resetUpdatingState()
