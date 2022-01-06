@@ -14,14 +14,14 @@ import PageNotFound from './Components/Suite/Components/PageNotFound'
 function Index() {
   const [serverIdle, setServerIdle] = useState<boolean>(true)
   const { socket } = useSocket()
-  const { state, dispatch } = useDataFetch(socket)
+  const { state, dispatch } = useDataFetch(socket, serverIdle)
 
   useEffect(() => {
     const ApplicationDate: Date = startOfToday()
     ApplicationDate.setMinutes(ApplicationDate.getMinutes() - ApplicationDate.getTimezoneOffset())
     console.log('ApplicationDate:', ApplicationDate.toJSON())
 
-    if (process.env.NODE_ENV === 'development') return setServerIdle(false)
+    // if (process.env.NODE_ENV === 'development') return setServerIdle(false)
 
     Api.ServerPing().then(() => {
       document.getElementById('Splash-icon')?.classList.add('shrink')
