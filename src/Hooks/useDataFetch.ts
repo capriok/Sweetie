@@ -3,15 +3,14 @@ import { swtReducer, SwtReducerActions, swtState } from '../state'
 
 import Api from '../api'
 
-const useDataFetch = (socket: Socket, serverIdle: boolean) => {
+const useDataFetch = (socket: Socket) => {
 	const [loading, setLoading] = useState(true)
 	const [state, dispatch] = useReducer(swtReducer, swtState)
 
 	useEffect(() => {
-		if (serverIdle) return
 		setLoading(true)
 		FetchData()
-	}, [serverIdle])
+	}, [])
 
 	useEffect(() => {
 		socket.on('ce-update', (ce: Array<CalendarEvent>) => {
