@@ -64,5 +64,5 @@ const circleProps = {
 	r: 77.5,
 	cx: 90,
 	cy: 90,
-	strokeDasharray: '485'
+	strokeDasharray: '488'
 }
