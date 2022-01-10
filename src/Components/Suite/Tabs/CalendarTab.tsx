@@ -62,7 +62,17 @@ const CalendarTab: React.FC<Props> = (props) => {
 	const toggleRemoving = () => setRemovingState(s => !s)
 
 	useEffect(() => {
-		setEventList(state.calendarEvents)
+		const filteredList = state.calendarEvents.filter((ce: CalendarEvent) => {
+			const eventDate = new Date(ce.date).getTime()
+			const todayDate = new Date(
+				new Date().getFullYear(),
+				new Date().getMonth(),
+				new Date().getDate() - 1
+			).getTime()
+
+			return eventDate > todayDate && ce
+		})
+		setEventList(filteredList)
 	}, [state.calendarEvents])
 
 	function resetAddingState() {
@@ -171,10 +181,7 @@ const CalendarTab: React.FC<Props> = (props) => {
 
 		const prevMonth = new Date(prevEv.date).toLocaleString('default', { month: 'long' })
 
-		if (prevMonth !== currMonth)
-			return monthName
-		else
-			return ''
+		return prevMonth !== currMonth ? monthName : ''
 	}
 
 	return (
@@ -198,6 +205,10 @@ const CalendarTab: React.FC<Props> = (props) => {
 								form={updatingForm}
 								setForm={setUpdatingForm} />
 						</Form>
+					)
+
+					if (!eventList.length) return (
+						<p>No Future Events</p>
 					)
 
 					return (

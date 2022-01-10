@@ -107,7 +107,7 @@ const GroceryTab: React.FC<Props> = (props) => {
 					)
 
 					if (!groceryList.length) return (
-						<div className="content-empty"><p>Nothing here.</p></div>
+						<div className="content-empty"><p>No Groceries Needed</p></div>
 					)
 
 					return (
