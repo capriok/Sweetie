@@ -9,7 +9,9 @@ import PageNotFound from './Components/Suite/Components/PageNotFound'
 
 const App: React.FC = () => {
   const { socket } = useSocket()
-  const { state, dispatch } = useDataFetch(socket)
+  const { loading, state, dispatch } = useDataFetch(socket)
+
+  if (loading) return <></>
 
   return (
     <Router>

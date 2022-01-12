@@ -38,7 +38,8 @@ const useDataFetch = (socket: Socket) => {
 					console.log({ [requests[i].dispatch]: res })
 					dispatch({ type: requests[i].dispatch, value: res })
 				})
-			}).then(() => setLoading(false))
+			})
+			.then(() => setLoading(false))
 	}
 
 	return { loading, state, dispatch }

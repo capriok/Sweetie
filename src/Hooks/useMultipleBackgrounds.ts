@@ -13,7 +13,7 @@ const useMultipleBackgrounds = () => {
 		const randomImage = bgs[randomIndex]
 		bgs.splice(bgs.indexOf(randomImage), 1)
 
-		const image = `${randomImage}.jpg`
+		const image = `${6}.jpg`
 		const bg = document.getElementById('Background')
 		bg!.style.backgroundImage = `url("/bgs/${image}")`
 	}

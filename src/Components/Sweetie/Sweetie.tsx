@@ -1,4 +1,5 @@
 import React from 'react'
+import useMultipleBackgrounds from '../../Hooks/useMultipleBackgrounds';
 
 import DatetimeTile from './Tiles/DatetimeTile';
 import WeatherTile from './Tiles/WeatherTile';
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const Sweetie: React.FC<Props> = (props) => {
-	// useMultipleBackgrounds()
+	useMultipleBackgrounds()
 
 	let isProd = process.env.NODE_ENV === 'production'
 	const Swt_Orientation = isProd ? 'Sweetie-vert' : ''
