@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "sweetie suite",
   "private": true,
-  "homepage": "https://capriok/github.io/Capstone",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
