@@ -6,12 +6,10 @@
   "homepage": "https://capriok/github.io/Capstone",
   "scripts": {
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "dev": "concurrently \"npm start\" \"cd.. & cd Swt-Server & npm run dev\"",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "pushclient": "git push origin master:prod",
-    "pushserver": "cd.. & cd Swt-Server & git push heroku master",
-    "build": "react-scripts build"
+    "pushserver": "cd.. & cd Swt-Server & git push heroku master"
   },
   "dependencies": {
     "@types/node": "^12.20.16",
@@ -22,7 +20,6 @@
     "@zach.codes/react-calendar": "^0.3.0",
     "axios": "^0.21.1",
     "date-fns": "^2.22.1",
-    "gh-pages": "^3.2.3",
     "hex-to-hsl": "^1.0.2",
     "react": "^17.0.2",
     "react-div-100vh": "^0.6.0",
