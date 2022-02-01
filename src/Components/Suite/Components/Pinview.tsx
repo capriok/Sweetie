@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../../../Styles/Suite/Components/Pinview.scss'
+import '../../../Styles/Suite/components/pinview.scss'
 const Pinview: React.FC<any> = ({ pincode }) => {
   const passcode = process.env.REACT_APP_PASSCODE
 

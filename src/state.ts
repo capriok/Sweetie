@@ -3,8 +3,14 @@ export const swtState: SwtState = {
 	groceryList: [],
 	catSchedule: {
 		date: '',
-		food: { is: false, progress: 0 },
-		waste: { is: false, progress: 0 }
+		food: {
+			is: false,
+			progress: 0
+		},
+		waste: {
+			is: false,
+			progress: 0
+		}
 	}
 }
 

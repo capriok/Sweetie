@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../../../Styles/Suite/Components/Form.scss'
+import '../../../Styles/Suite/components/form.scss'
 
 const Form: React.FC<any> = ({ title, children }) => {
 	return (

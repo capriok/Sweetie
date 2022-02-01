@@ -1,7 +1,7 @@
 import React from 'react'
 import Swt from '../../Assets/swt.png'
 
-import '../../Styles/Shared/Splash.scss'
+import '../../Styles/Shared/splash.scss'
 
 const Splash: React.FC<any> = () => {
 	let isProd = process.env.NODE_ENV === 'production'

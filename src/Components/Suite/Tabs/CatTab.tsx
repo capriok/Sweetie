@@ -9,7 +9,7 @@ import ProgressCircle from '../../Shared/ProgressCircle'
 
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
-import '../../../Styles/Suite/Tabs/Cat-tab.scss'
+import '../../../Styles/Suite/tabs/cat-tab.scss'
 
 interface Props {
 	socket: Socket

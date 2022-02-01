@@ -1,5 +1,4 @@
 import React from 'react'
-import useMultipleBackgrounds from '../../Hooks/useMultipleBackgrounds';
 
 import DatetimeTile from './Tiles/DatetimeTile';
 import WeatherTile from './Tiles/WeatherTile';
@@ -17,30 +16,27 @@ interface Props {
 }
 
 const Sweetie: React.FC<Props> = (props) => {
-	useMultipleBackgrounds()
 
 	let isProd = process.env.NODE_ENV === 'production'
 	const Swt_Orientation = isProd ? 'Sweetie-vert' : ''
 	const Bg_Orientation = isProd ? 'Bg-vert' : ''
 
+	const tiles = [
+		{ component: <DatetimeTile {...props} /> },
+		{ component: <CalendarTile {...props} /> },
+		{ component: <WeatherTile {...props} /> },
+		{ component: <CatTile {...props} /> },
+		{ component: <GroceryTile {...props} /> },
+	]
+
 	return (
 		<>
 			<div id="Sweetie" className={Swt_Orientation}>
-				<Tile>
-					<DatetimeTile {...props} />
-				</Tile>
-				<Tile>
-					<CalendarTile {...props} />
-				</Tile>
-				<Tile>
-					<WeatherTile {...props} />
-				</Tile>
-				<Tile>
-					<CatTile {...props} />
-				</Tile>
-				<Tile>
-					<GroceryTile {...props} />
-				</Tile>
+				{tiles.map(({ component }, i) => (
+					<div id="Tile">
+						{component}
+					</div>
+				))}
 			</div>
 			<div id="Background" className={Bg_Orientation} />
 		</>
@@ -48,9 +44,3 @@ const Sweetie: React.FC<Props> = (props) => {
 }
 
 export default Sweetie
-
-const Tile: React.FC<any> = ({ children }) => (
-	<div id="Tile">
-		{children}
-	</div>
-)

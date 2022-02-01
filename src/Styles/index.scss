@@ -16,24 +16,55 @@
 }
 
 :root {
-	--modebg: white;
-	--modefont: black;
-	--ph: 0;
-	--ps: 0%;
-	--pl: 20%;
-	--pfont: hsl(var(--ph), var(--ps), calc((25% - var(--pl) * 0.5) * 100));
+	--themeH: 0;
+	--themeS: 0%;
+	--themeL: 10%;
+
+	--modeH: 0;
+	--modeS: 0%;
+	--modeL: 95%;
 }
 
-$modebg: var(--modebg);
-$modefont: var(--modefont);
-$primary-h: var(--ph);
-$primary-s: var(--ps);
-$primary-l: var(--pl);
-$primary: hsl($primary-h, $primary-s, $primary-l);
-$primlight: hsl($primary-h, $primary-s, calc(var(--pl) + 10%));
-$primary-font: var(--pfont);
+$theme: hsl(
+	var(--themeH),
+	var(--themeS),
+	var(--themeL)
+);
+$themelight: hsl(
+	var(--themeH),
+	var(--themeS),
+	calc(var(--themeL) + 10%)
+);
+$themefont: hsl(
+	var(--themeH),
+	var(--themeS),
+	calc((25% - var(--themeL) * 0.5) * 100)
+);
 
-$MAX: 800px;
+$mode: hsl(
+	var(--modeH),
+	var(--modeS),
+	var(--modeL)
+);
+$modelight: hsl(
+	var(--modeH),
+	var(--modeS),
+	calc(var(--modeL) + 2.5%)
+);
+$modelighter: hsl(
+	var(--modeH),
+	var(--modeS),
+	calc(var(--modeL) + 5%)
+);
+$modefont: hsl(
+	var(--modeH),
+	var(--modeS),
+	calc((25% - var(--modeL) * 0.5) * 100)
+);
+
+$shadow: -2px 2px 6px -4px black;
+
+$maxwidth: 600px;
 
 @mixin flex {
 	display: flex;

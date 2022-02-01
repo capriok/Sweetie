@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
-import useDarkMode from '../../Hooks/useDarkMode'
+import React, { useEffect, useState } from 'react'
+import useAppMode from 'Hooks/useAppMode'
+import useAppTheme from 'Hooks/useAppTheme'
 
-import Div100vh from 'react-div-100vh'
 import Secret from './Components/Secret'
-import CalendarTab from './Tabs/CalendarTab'
-import CatTab from './Tabs/CatTab'
-import GroceryTab from './Tabs/GroceryTab'
-import OptionTab from './Tabs/OptionTab'
+import View from './Components/View'
+import Overview from './Views/Overview'
+import Calendar from './Views/Calendar'
+import Groceries from './Views/Groceries'
+import Cats from './Views/Cats'
+import Options from './Views/Options'
 
-import '../../Styles/index.scss'
-import '../../Styles/Suite/Suite.scss'
-import '../../Styles/Suite/Components/Tab.scss'
+import 'Styles/index.scss'
+import 'Styles/Suite/suite.scss'
 
 interface Props {
 	socket: Socket
@@ -19,45 +20,43 @@ interface Props {
 }
 
 const Suite: React.FC<Props> = (props) => {
+	const { socket, state, dispatch } = props
+
 	const [auth, setAuth] = useState<boolean>(false)
-	const { mode, setMode } = useDarkMode()
+	const { setModeValue } = useAppMode()
+	const { setThemeValues } = useAppTheme()
+
+	function dispatchView(value: string) {
+		setComponent({ [value]: true })
+	}
+
+	const suiteProps = { socket, state, dispatch, dispatchView }
+	const authProps = { auth, setAuth, dispatchView }
+	const optionProps = { ...authProps, setModeValue, setThemeValues }
+
+	const views = [
+		{ title: 'Overview', props: suiteProps, component: Overview },
+		{ title: 'Calendar', props: suiteProps, component: Calendar },
+		{ title: 'Groceries', props: suiteProps, component: Groceries },
+		{ title: 'Cats', props: suiteProps, component: Cats },
+		{ title: 'Options', props: optionProps, component: Options },
+	]
+
+	const [component, setComponent] = useState<{ [key: string]: boolean }>({ overview: true })
+	const [view, setView] = useState(views[0])
+
+	useEffect(() => {
+		const view = views.find((v) => component[v.title.toLowerCase()])
+		if (view) setView(view)
+	}, [component])
+
+	if (!auth) return <Secret {...authProps} />
 
 	return (
-		<Div100vh>
-			{!auth
-				? <Secret auth={auth} setAuth={setAuth} />
-				: <main id="Suite" dir="ltr">
-					<Tab title="Calendar" tabIndex={1}>
-						<CalendarTab {...props} />
-					</Tab>
-					<Tab title="Groceries" tabIndex={2}>
-						<GroceryTab {...props} />
-					</Tab>
-					<Tab title="Cats" tabIndex={3}>
-						<CatTab {...props} />
-					</Tab>
-					<Tab title="Options" tabIndex={4}>
-						<OptionTab
-							auth={auth}
-							setAuth={setAuth}
-							mode={mode}
-							setMode={setMode} />
-					</Tab>
-				</main>
-			}
-		</Div100vh>
+		<div id="Suite">
+			<View {...suiteProps} {...view} />
+		</div>
 	)
 }
 
 export default Suite
-
-const Tab: React.FC<any> = ({ title, tabIndex, children }) => {
-	return (
-		<div id="Tab">
-			<div className="tab-title">
-				<h1 tabIndex={tabIndex}>{title}</h1>
-			</div>
-			{children}
-		</div>
-	)
-}

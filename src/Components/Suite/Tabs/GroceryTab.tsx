@@ -7,7 +7,7 @@ import ActionBar, { ActionBarButton } from '../Components/ActionBar'
 
 import { VscDiffAdded, VscDiffRemoved, VscDebugStop } from 'react-icons/vsc'
 
-import '../../../Styles/Suite/Tabs/Grocery-tab.scss'
+import '../../../Styles/Suite/tabs/grocery-tab.scss'
 import { SwtReducerActions } from '../../../state'
 
 interface Props {

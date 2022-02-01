@@ -11,7 +11,7 @@ import ActionBar, { ActionBarButton } from '../Components/ActionBar'
 import { VscDiffAdded, VscDiffRemoved } from 'react-icons/vsc'
 import { MdSystemUpdateAlt } from 'react-icons/md'
 
-import '../../../Styles/Suite/Tabs/Calendar-tab.scss'
+import '../../../Styles/Suite/tabs/calendar-tab.scss'
 
 interface Props {
 	socket: Socket

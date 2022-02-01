@@ -1,0 +1,25 @@
+@import "../../index.scss";
+
+.groceries {
+	width: 100%;
+
+	.grocery-lists {
+		.list-title {
+			text-transform: capitalize;
+			margin: 20px 0;
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+		.grocery-wrap {
+			@include flex;
+			margin-bottom: 10px;
+			.name {
+				flex: 2;
+			}
+			.quantity {
+				text-align: right;
+			}
+		}
+	}
+}

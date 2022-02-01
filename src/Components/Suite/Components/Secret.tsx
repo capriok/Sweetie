@@ -3,7 +3,7 @@ import { differenceInCalendarDays } from 'date-fns'
 
 import Pinpad from './Pinpad'
 
-import '../../../Styles/Suite/Components/Secret.scss'
+import '../../../Styles/Suite/components/secret.scss'
 import Pinview from './Pinview'
 
 const Secret: React.FC<any> = ({ auth, setAuth }) => {

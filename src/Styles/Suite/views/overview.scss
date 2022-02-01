@@ -1,0 +1,48 @@
+@import "../../index.scss";
+
+.overview {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 10px;
+
+	.tile {
+		text-align: center;
+
+		.tile-title {
+			width: 50%;
+			text-align: left;
+			font-weight: bold;
+			padding-left: 10px;
+			margin: 10px 0;
+		}
+		.tile-wrap {
+			@include flex;
+			height: 100px;
+
+			.ce-ov,
+			.gl-ov,
+			.cs-ov {
+				p {
+					&:first-child {
+						margin-bottom: 10px !important;
+					}
+				}
+			}
+
+			.ce-ov,
+			.gl-ov {
+				width: 100%;
+				p {
+					width: 100%;
+					@include flex;
+					justify-content: space-between;
+				}
+			}
+		}
+		&:nth-child(1),
+		&:nth-child(4) {
+			grid-column: span 2;
+		}
+	}
+}

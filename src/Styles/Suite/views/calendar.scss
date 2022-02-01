@@ -1,0 +1,32 @@
+@import "../../index.scss";
+
+.calendar {
+	width: 100%;
+
+	.event {
+		.month-wrap {
+			p {
+				margin: 30px 0;
+				font-weight: bold;
+			}
+		}
+		&:first-child .month-wrap > p {
+			margin-top: 0;
+		}
+
+		.event-wrap {
+			@include flex;
+			margin-bottom: 10px;
+
+			.name {
+				flex: 1;
+				text-align: left;
+			}
+			.date-time {
+				text-align: right;
+				@include flex;
+				justify-content: space-between;
+			}
+		}
+	}
+}
