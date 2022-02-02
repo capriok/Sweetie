@@ -19,6 +19,8 @@ const Overview: React.FC<Props> = (props) => {
 			return datesAreOnSameDay(new Date(), new Date(event.date))
 		})
 
+		if (!todaysEvents.length) return <p>Day off</p>
+
 		return <div className="ce-ov">
 			{todaysEvents.map((e, i) => (
 				<p key={i}>
@@ -49,7 +51,7 @@ const Overview: React.FC<Props> = (props) => {
 			return <p>Food Day</p>
 		} else if (isWasteDay && !isFoodDay) {
 			return <p>Litter Day</p>
-		} else if (isWasteDay && isFoodDay) {
+		} else {
 			return <div className="cs-ov">
 				<p>Food Day</p>
 				<p>Waste Day</p>
@@ -66,7 +68,7 @@ const Overview: React.FC<Props> = (props) => {
 			</Tile>
 			<Tile
 				title="Groceries"
-				onClick={() => dispatchView('groceries')}>
+				onClick={() => dispatchView('grocery')}>
 				{renderGroceryOverview()}
 			</Tile>
 			<Tile

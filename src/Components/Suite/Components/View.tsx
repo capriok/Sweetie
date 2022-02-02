@@ -14,26 +14,38 @@ interface Props {
 	}
 	title: string
 	component: React.FC<any>
-	actions: Array<{
-		type: string
-		component: React.FC<any> | string
-	}>
+	actions: Array<ViewAction>
+}
+
+const INITIAL_FORM = {
+	type: '', component: null
 }
 
 const View: React.FC<Props> = (viewProps) => {
 	const { props, title, component, actions } = viewProps
 	const { dispatchView } = props
-	const Component = component
 
-	const [form, setForm] = useState<ViewFormState>({ post: false })
+	const [form, setForm] = useState<any>(INITIAL_FORM)
 
-	function dispatchForm(value: string) {
-		setForm({ [value]: true })
+	const Parent = component
+	const Form = form.component
+
+
+	function dispatchForm(action: ViewAction) {
+		console.log(action)
+		setForm(action)
+	}
+
+	function goBackClick() {
+		if (form.type) {
+			return setForm(INITIAL_FORM)
+		}
+		dispatchView('overview')
 	}
 
 	const titleProps = {
 		title,
-		goBack: () => dispatchView('overview')
+		goBack: goBackClick
 	}
 
 	const componentProps = {
@@ -43,14 +55,20 @@ const View: React.FC<Props> = (viewProps) => {
 	}
 
 	const actionsProps = {
-		actions, form, dispatchForm
+		component,
+		actions,
+		form,
+		dispatchForm
 	}
 
 	return (
 		<div id="View">
 			<ViewTitle {...titleProps} />
-			<Component {...componentProps} />
-			<ViewActions {...actionsProps} />
+			{form.type
+				? <Form />
+				: <Parent {...componentProps} />
+			}
+			{!form.type && <ViewActions {...actionsProps} />}
 		</div>
 	)
 }

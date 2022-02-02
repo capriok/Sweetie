@@ -6,8 +6,14 @@ import Secret from './Components/Secret'
 import View from './Components/View'
 import Overview from './Views/Overview'
 import Calendar from './Views/Calendar'
-import Groceries from './Views/Groceries'
+import CalendarPost from './Forms/Calendar/Post'
+import CalendarUpdate from './Forms/Calendar/Update'
+import CalendarDelete from './Forms/Calendar/Delete'
+import Grocery from './Views/Grocery'
+import GroceryPost from './Forms/Grocery/Post'
+import GroceryDelete from './Forms/Grocery/Delete'
 import Cats from './Views/Cats'
+import CatsUpdate from './Forms/Cats/Update'
 import Options from './Views/Options'
 
 import 'Styles/index.scss'
@@ -36,10 +42,12 @@ const Suite: React.FC<Props> = (props) => {
 		dispatch,
 		dispatchView
 	}
+
 	const authProps = {
 		auth,
 		setAuth
 	}
+
 	const optionProps = {
 		...suiteProps,
 		...authProps,
@@ -59,18 +67,18 @@ const Suite: React.FC<Props> = (props) => {
 			title: 'Calendar',
 			component: Calendar,
 			actions: [
-				{ type: 'post', component: '' },
-				{ type: 'update', component: '' },
-				{ type: 'delete', component: '' }
+				{ type: 'post', component: CalendarPost },
+				{ type: 'update', component: CalendarUpdate },
+				{ type: 'delete', component: CalendarDelete }
 			]
 		},
 		{
 			props: suiteProps,
-			title: 'Groceries',
-			component: Groceries,
+			title: 'Grocery',
+			component: Grocery,
 			actions: [
-				{ type: 'post', component: '' },
-				{ type: 'delete', component: '' }
+				{ type: 'post', component: GroceryPost },
+				{ type: 'delete', component: GroceryDelete }
 			]
 		},
 		{
@@ -78,7 +86,7 @@ const Suite: React.FC<Props> = (props) => {
 			title: 'Cats',
 			component: Cats,
 			actions: [
-				{ type: 'update', component: '' }
+				{ type: 'update', component: CatsUpdate }
 			]
 		},
 		{
@@ -86,7 +94,7 @@ const Suite: React.FC<Props> = (props) => {
 			title: 'Options',
 			component: Options,
 			actions: []
-		},
+		}
 	]
 
 	const [component, setComponent] = useState<{ [key: string]: boolean }>({ overview: true })

@@ -19,12 +19,9 @@ type SwtAction =
 
 interface ViewAction {
 	type: string
-	component: React.FC<any> | string
+	component: any
 }
 
-interface ViewFormState {
-	[key: string]: boolean
-}
 interface CalendarEvent {
 	_id?: string
 	name: string
@@ -39,6 +36,12 @@ interface Grocery {
 	name: string
 	qty: number
 	type: string
+}
+
+type CatConfig = {
+	_id?: string
+	lastFoodDay: string
+	lastWasteDay: string
 }
 
 type CatScheduleDay = {

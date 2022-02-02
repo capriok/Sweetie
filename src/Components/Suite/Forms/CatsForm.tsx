@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { startOfToday } from 'date-fns';
 
-const CatsForm: React.FC<any> = ({ submit, form, setForm }) => {
+const INITIAL_FORM = {
+	lfd: undefined,
+	lwd: undefined
+}
+
+const CatsForm: React.FC<any> = ({ submit }) => {
 	const date = startOfToday()
 	date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
 	const maxDate = new Date(date).toISOString().split('T')[0]
+
+	const [form, setForm] = useState<any>(INITIAL_FORM)
 
 	return (
 		<form onSubmit={(e) => submit(e)} className="cats">

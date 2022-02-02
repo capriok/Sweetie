@@ -1,23 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { MdPostAdd, MdOutlineUpdate, MdDeleteOutline } from 'react-icons/md'
 
 import 'Styles/Suite/components/view/actions.scss'
 
 interface Props {
+	component: React.FC<any>
 	actions: Array<ViewAction>
-	form: ViewFormState
-	dispatchForm: (value: string) => void
+	form: ViewAction
+	dispatchForm: (action: ViewAction) => void
 }
 
 const ViewActions: React.FC<Props> = (props) => {
-	const { actions, form, dispatchForm } = props
+	const { component, actions, form, dispatchForm } = props
 
 	const [visible, setVisibility] = useState(false)
 
-	function actionClick(action: any) {
-		dispatchForm(action.type)
-	}
+	useEffect(() => {
+		setVisibility(false)
+	}, [component, form])
 
 	const actionButtonProps = {
 		visible,
@@ -30,7 +31,7 @@ const ViewActions: React.FC<Props> = (props) => {
 		<div className="view-actions">
 			<div className="actions-wrap">
 				{visible && actions.map((action, i) => (
-					<ActionType key={i} action={action} onClick={() => actionClick(action)} />
+					<ActionType key={i} action={action} onClick={() => dispatchForm(action)} />
 				))}
 				<ActionsButton {...actionButtonProps} />
 			</div>

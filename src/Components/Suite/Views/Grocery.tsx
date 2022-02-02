@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import ViewItem from '../Components/View/Item'
 
-import 'Styles/Suite/views/groceries.scss'
+import 'Styles/Suite/views/grocery.scss'
 
-const Groceries: React.FC<any> = (props) => {
+const Grocery: React.FC<any> = (props) => {
 	const { state, dispatch } = props
 
 	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
@@ -23,7 +23,7 @@ const Groceries: React.FC<any> = (props) => {
 	)
 }
 
-export default Groceries
+export default Grocery
 
 const List: React.FC<any> = ({ list, remove, type }) => {
 
