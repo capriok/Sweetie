@@ -6,10 +6,10 @@ const useAppMode = () => {
 
 	const colors = {
 		light: {
-			h: '0', s: '0%', l: '95%'
+			h: '0', s: '0%', l: '92%'
 		},
 		dark: {
-			h: '0', s: '0%', l: '5%'
+			h: '0', s: '0%', l: '8%'
 		}
 	}
 

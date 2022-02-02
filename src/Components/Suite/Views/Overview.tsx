@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ViewItem from '../Components/ViewItem'
+import ViewItem from '../Components/View/Item'
 
 import 'Styles/Suite/views/overview.scss'
 import { datesAreOnSameDay } from 'Helpers/TimeHelp'
@@ -76,6 +76,7 @@ const Overview: React.FC<Props> = (props) => {
 			</Tile>
 			<Tile
 				title="Options"
+				cname="option-tile"
 				onClick={() => dispatchView('options')}>
 				Options
 			</Tile>
@@ -85,13 +86,19 @@ const Overview: React.FC<Props> = (props) => {
 
 export default Overview
 
-const Tile: React.FC<any> = ({ title, onClick, children }) => (
-	<div className="tile">
-		<div className="tile-title">
-			<h4>{title}</h4>
+const Tile: React.FC<any> = ({ title, onClick, cname, children }) => {
+	const tileProps = {
+		onClick,
+		className: `tile-wrap vi-active ${cname}`
+	}
+	return (
+		<div className="tile">
+			<div className="tile-title">
+				<h4>{title}</h4>
+			</div>
+			<ViewItem {...tileProps}>
+				{children}
+			</ViewItem>
 		</div>
-		<ViewItem className="tile-wrap vi-active" onClick={onClick}>
-			{children}
-		</ViewItem>
-	</div>
-)
+	)
+}

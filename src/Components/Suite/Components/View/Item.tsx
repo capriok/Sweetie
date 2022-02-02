@@ -1,5 +1,7 @@
 import React from 'react'
 
+import 'Styles/Suite/components/view/item.scss'
+
 interface Props {
 	className: string
 	onClick?: () => any

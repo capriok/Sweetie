@@ -30,16 +30,63 @@ const Suite: React.FC<Props> = (props) => {
 		setComponent({ [value]: true })
 	}
 
-	const suiteProps = { socket, state, dispatch, dispatchView }
-	const authProps = { auth, setAuth, dispatchView }
-	const optionProps = { ...authProps, setModeValue, setThemeValues }
+	const suiteProps = {
+		socket,
+		state,
+		dispatch,
+		dispatchView
+	}
+	const authProps = {
+		auth,
+		setAuth
+	}
+	const optionProps = {
+		...suiteProps,
+		...authProps,
+		setModeValue,
+		setThemeValues
+	}
 
 	const views = [
-		{ title: 'Overview', props: suiteProps, component: Overview },
-		{ title: 'Calendar', props: suiteProps, component: Calendar },
-		{ title: 'Groceries', props: suiteProps, component: Groceries },
-		{ title: 'Cats', props: suiteProps, component: Cats },
-		{ title: 'Options', props: optionProps, component: Options },
+		{
+			props: suiteProps,
+			title: 'Overview',
+			component: Overview,
+			actions: []
+		},
+		{
+			props: suiteProps,
+			title: 'Calendar',
+			component: Calendar,
+			actions: [
+				{ type: 'post', component: '' },
+				{ type: 'update', component: '' },
+				{ type: 'delete', component: '' }
+			]
+		},
+		{
+			props: suiteProps,
+			title: 'Groceries',
+			component: Groceries,
+			actions: [
+				{ type: 'post', component: '' },
+				{ type: 'delete', component: '' }
+			]
+		},
+		{
+			props: suiteProps,
+			title: 'Cats',
+			component: Cats,
+			actions: [
+				{ type: 'update', component: '' }
+			]
+		},
+		{
+			props: optionProps,
+			title: 'Options',
+			component: Options,
+			actions: []
+		},
 	]
 
 	const [component, setComponent] = useState<{ [key: string]: boolean }>({ overview: true })
@@ -54,7 +101,7 @@ const Suite: React.FC<Props> = (props) => {
 
 	return (
 		<div id="Suite">
-			<View {...suiteProps} {...view} />
+			<View {...view} />
 		</div>
 	)
 }

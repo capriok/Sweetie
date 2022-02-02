@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Api from 'api'
 
-import ViewItem from '../Components/ViewItem'
+import ViewItem from '../Components/View/Item'
 import ProgressCircle from 'Components/Shared/ProgressCircle'
 
 import 'Styles/Suite/views/cats.scss'

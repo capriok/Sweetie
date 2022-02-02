@@ -9,11 +9,14 @@
 	.tile {
 		text-align: center;
 
+		&:nth-child(1),
+		&:nth-child(4) {
+			grid-column: span 2;
+		}
 		.tile-title {
 			width: 50%;
 			text-align: left;
 			font-weight: bold;
-			padding-left: 10px;
 			margin: 10px 0;
 		}
 		.tile-wrap {
@@ -23,26 +26,21 @@
 			.ce-ov,
 			.gl-ov,
 			.cs-ov {
-				p {
-					&:first-child {
-						margin-bottom: 10px !important;
-					}
-				}
-			}
-
-			.ce-ov,
-			.gl-ov {
 				width: 100%;
 				p {
 					width: 100%;
 					@include flex;
 					justify-content: space-between;
+					&:not(:first-child) {
+						margin-top: 10px !important;
+					}
 				}
 			}
 		}
-		&:nth-child(1),
-		&:nth-child(4) {
-			grid-column: span 2;
+		.option-tile {
+			height: 50px !important;
+			color: $themefont !important;
+			background-color: $themelight !important;
 		}
 	}
 }

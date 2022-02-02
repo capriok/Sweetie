@@ -18,11 +18,11 @@
 :root {
 	--themeH: 0;
 	--themeS: 0%;
-	--themeL: 10%;
+	--themeL: 8%;
 
 	--modeH: 0;
 	--modeS: 0%;
-	--modeL: 95%;
+	--modeL: 92%;
 }
 
 $theme: hsl(
@@ -33,7 +33,12 @@ $theme: hsl(
 $themelight: hsl(
 	var(--themeH),
 	var(--themeS),
-	calc(var(--themeL) + 10%)
+	calc(var(--themeL) + 4%)
+);
+$themelighter: hsl(
+	var(--themeH),
+	var(--themeS),
+	calc(var(--themeL) + 8%)
 );
 $themefont: hsl(
 	var(--themeH),
@@ -49,12 +54,12 @@ $mode: hsl(
 $modelight: hsl(
 	var(--modeH),
 	var(--modeS),
-	calc(var(--modeL) + 2.5%)
+	calc(var(--modeL) + 4%)
 );
 $modelighter: hsl(
 	var(--modeH),
 	var(--modeS),
-	calc(var(--modeL) + 5%)
+	calc(var(--modeL) + 8%)
 );
 $modefont: hsl(
 	var(--modeH),

@@ -1,23 +1,31 @@
 import React, { useState } from 'react'
 
-import ViewTitle from './ViewTitle'
+import ViewTitle from './View/Title'
+import ViewActions from './View/Actions'
 
-import 'Styles/Suite/components/view.scss'
+import 'Styles/Suite/components/view/view.scss'
 
 interface Props {
-	socket: Socket
-	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
+	props: {
+		socket: Socket
+		state: SwtState
+		dispatch: React.Dispatch<SwtAction>
+		dispatchView: (value: string) => void
+	}
 	title: string
-	props: any
 	component: React.FC<any>
+	actions: Array<{
+		type: string
+		component: React.FC<any> | string
+	}>
 }
 
 const View: React.FC<Props> = (viewProps) => {
-	const { title, component, props } = viewProps
+	const { props, title, component, actions } = viewProps
+	const { dispatchView } = props
 	const Component = component
 
-	const [form, setForm] = useState<{ [key: string]: boolean }>({ post: false })
+	const [form, setForm] = useState<ViewFormState>({ post: false })
 
 	function dispatchForm(value: string) {
 		setForm({ [value]: true })
@@ -25,7 +33,7 @@ const View: React.FC<Props> = (viewProps) => {
 
 	const titleProps = {
 		title,
-		goBack: () => props.dispatchView('overview')
+		goBack: () => dispatchView('overview')
 	}
 
 	const componentProps = {
@@ -34,10 +42,15 @@ const View: React.FC<Props> = (viewProps) => {
 		dispatchForm
 	}
 
+	const actionsProps = {
+		actions, form, dispatchForm
+	}
+
 	return (
 		<div id="View">
 			<ViewTitle {...titleProps} />
 			<Component {...componentProps} />
+			<ViewActions {...actionsProps} />
 		</div>
 	)
 }

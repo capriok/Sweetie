@@ -1,5 +1,7 @@
 import React from 'react'
 
+import 'Styles/Suite/components/view/title.scss'
+
 interface Props {
 	title: string
 	goBack?: () => any

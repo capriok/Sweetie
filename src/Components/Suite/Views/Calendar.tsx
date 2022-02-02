@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { formatEventTimes } from 'Helpers/TimeHelp'
 
-import ViewItem from '../Components/ViewItem'
+import ViewItem from '../Components/View/Item'
 
 import 'Styles/Suite/views/calendar.scss'
 
 const Calendar: React.FC<any> = (props) => {
+	console.log(props);
+
 	const { state, dispatch } = props
 
 	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])

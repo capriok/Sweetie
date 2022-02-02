@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import ViewItem from '../Components/ViewItem'
+import ViewItem from '../Components/View/Item'
 
 import 'Styles/Suite/views/groceries.scss'
 

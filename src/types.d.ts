@@ -17,6 +17,14 @@ type SwtAction =
 	{ type: SwtReducerActions.SETGL, value: Grocery[] } |
 	{ type: SwtReducerActions.SETCS, value: CatScheduleDay }
 
+interface ViewAction {
+	type: string
+	component: React.FC<any> | string
+}
+
+interface ViewFormState {
+	[key: string]: boolean
+}
 interface CalendarEvent {
 	_id?: string
 	name: string
@@ -33,24 +41,6 @@ interface Grocery {
 	type: string
 }
 
-interface StaticTask {
-	_id?: string
-	name: string
-	weekday: boolean
-}
-
-interface Task {
-	_id?: string
-	name: string
-	pinned: boolean
-}
-
-type CatConfig = {
-	_id?: string
-	lastFoodDay: string
-	lastWasteDay: string
-}
-
 type CatScheduleDay = {
 	date: string
 	food: {
@@ -62,5 +52,3 @@ type CatScheduleDay = {
 		progress: number
 	}
 }
-
-type CrimasMessage = string
