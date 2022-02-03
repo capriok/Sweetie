@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import ViewTitle from './View/Title'
 import ViewActions from './View/Actions'

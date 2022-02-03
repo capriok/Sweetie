@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import Api from 'api'
 
 import 'Styles/Suite/forms/form.scss'
@@ -6,8 +6,7 @@ import 'Styles/Suite/forms/form.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
-	closeForm: () => SetStateAction<any>
+	closeForm: () => React.SetStateAction<any>
 }
 
 interface FormState {

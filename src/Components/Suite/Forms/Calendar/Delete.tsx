@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { SwtReducerActions } from 'state'
 import { formatEventTimes } from 'Helpers/TimeHelp'
 import Api from 'api'
 
@@ -10,11 +9,10 @@ import 'Styles/Suite/forms/form.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
 }
 
 const CalendarDelete: React.FC<Props> = (props) => {
-	const { socket, state, dispatch } = props
+	const { socket, state } = props
 
 	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])
 
@@ -30,7 +28,6 @@ const CalendarDelete: React.FC<Props> = (props) => {
 			Api.RemoveCalendarEvent(event).then(ce => {
 				socket.emit('ce-change', ce)
 				setEventList(ce)
-				dispatch({ type: SwtReducerActions.SETCE, value: ce })
 			})
 		}
 	}

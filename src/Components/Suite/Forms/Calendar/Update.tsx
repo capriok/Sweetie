@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
-import { SwtReducerActions } from 'state'
+import React, { useEffect, useState } from 'react'
+import { formatEventTimes } from 'Helpers/TimeHelp'
 import Api from 'api'
+
+import ViewItem from 'Components/Suite/Components/View/Item'
 
 import 'Styles/Suite/forms/form.scss'
 
 interface Props {
 	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
+	closeForm: () => React.Dispatch<any>
 }
 
 interface FormState {
@@ -29,14 +31,32 @@ const INITIAL_FORM: FormState = {
 }
 
 const CalendarUpdate: React.FC<Props> = (props) => {
-	const { socket, dispatch } = props
+	const { socket, state, closeForm } = props
+	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])
 
+	useEffect(() => {
+		const filteredList = filterEvents(state.calendarEvents)
+		setEventList(filteredList)
+	}, [state.calendarEvents])
+
+	const [event, setEvent] = useState<any>(null)
 	const [form, setForm] = useState<any>(INITIAL_FORM)
 
-	function submitClick(e: any) {
-		e.preventDefault()
-		console.log(form)
-		form!.dates?.forEach(async (date: any) => await submit(date!))
+	function setUpdatingEvent(event: CalendarEvent) {
+		const d = new Date(event.date)
+		d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+		const formattedDate = d.toISOString().split('T')[0]
+
+		setEvent(event)
+		setForm({
+			...form,
+			item: event,
+			name: event.name,
+			timed: event.timed,
+			date: formattedDate,
+			startTime: event.startTime,
+			endTime: event.endTime,
+		})
 	}
 
 	async function submit(e: any) {
@@ -61,74 +81,110 @@ const CalendarUpdate: React.FC<Props> = (props) => {
 		console.log(event);
 		Api.UpdateCalendarEvent(event).then(ce => {
 			socket.emit('ce-change', ce)
-			dispatch({ type: SwtReducerActions.SETCE, value: ce })
+			closeForm()
 		})
 	}
-
 	return (
-		<div id="form">
+		<div id="form" className={!event ? 'no-form-bg' : ''}>
 			<div className="form-wrap">
-				<div className="title">Update</div>
-				<form onSubmit={(e) => submitClick(e)}>
-					<div className="form-line name">
-						<label htmlFor="name">Name</label>
-						<input
-							name="name"
-							type="text"
-							autoFocus={true}
-							autoComplete="off"
-							placeholder="Name"
-							value={form.name}
-							onChange={(e) => setForm({ ...form, name: e.target.value })} />
+				<div className="title">{!event ? 'Choose Event' : 'Update Event'}</div>
+				{!event
+					? <div className="calendar">
+						{eventList.map((event, i) => (
+							<div key={i} className="event" onClick={() => setUpdatingEvent(event)}>
+								<ViewItem className="event-wrap">
+									<div className="name">
+										<p>{event.name}</p>
+									</div>
+									<div className="date-time">
+										<span className="date">
+											{new Date(event.date).toLocaleDateString('en-us',
+												{ weekday: 'short', month: event.timed ? 'short' : 'long', day: 'numeric' })
+											}
+										</span>
+										<span className="time">
+											{`${event.timed ? `, ${formatEventTimes(event)}` : ''}`}
+										</span>
+									</div>
+								</ViewItem>
+							</div>
+						))}
 					</div>
-					<div className="form-line date">
-						<label htmlFor="date">Date</label>
-						<input
-							name="date"
-							type="date"
-							value={form.date}
-							onChange={(e) => setForm({ ...form, date: e.target.value })} />
-					</div>
-					<div className="form-line timed">
-						<label htmlFor="timed">Timed</label>
-						<input
-							name="timed"
-							type="checkbox"
-							checked={form.timed}
-							onChange={(e) => setForm({ ...form, timed: e.target.checked })} />
-					</div>
-					{form.timed && <>
-						<div className="form-line start-time">
-							<label htmlFor="start-time">Start</label>
+					: <form onSubmit={(e) => submit(e)}>
+						<div className="form-line name">
+							<label htmlFor="name">Name</label>
 							<input
-								name="start-time"
-								type="time"
-								value={form.startTime}
-								onChange={(e) => {
-									console.log(e.target.value);
-									setForm({ ...form, startTime: e.target.value })
-								}} />
+								name="name"
+								type="text"
+								autoFocus={true}
+								autoComplete="off"
+								placeholder="Name"
+								value={form.name}
+								onChange={(e) => setForm({ ...form, name: e.target.value })} />
 						</div>
-						<div className="form-line end-time">
-							<label htmlFor="start-time">End</label>
+						<div className="form-line date">
+							<label htmlFor="date">Date</label>
 							<input
-								name="end-time"
-								type="time"
-								value={form.endTime}
-								onChange={(e) => {
-									console.log(e.target.value);
-									const nullTime = e.target.value === ''
-									setForm({ ...form, endTime: nullTime ? undefined : e.target.value })
-								}} />
+								name="date"
+								type="date"
+								value={form.date}
+								onChange={(e) => setForm({ ...form, date: e.target.value })} />
 						</div>
-					</>}
-					<div className="form-submit">
-						<button type="submit">Submit</button>
-					</div>
-				</form>
+						<div className="form-line timed">
+							<label htmlFor="timed">Timed</label>
+							<input
+								name="timed"
+								type="checkbox"
+								checked={form.timed}
+								onChange={(e) => setForm({ ...form, timed: e.target.checked })} />
+						</div>
+						{form.timed && <>
+							<div className="form-line start-time">
+								<label htmlFor="start-time">Start</label>
+								<input
+									name="start-time"
+									type="time"
+									value={form.startTime}
+									onChange={(e) => {
+										console.log(e.target.value);
+										setForm({ ...form, startTime: e.target.value })
+									}} />
+							</div>
+							<div className="form-line end-time">
+								<label htmlFor="start-time">End</label>
+								<input
+									name="end-time"
+									type="time"
+									value={form.endTime}
+									onChange={(e) => {
+										console.log(e.target.value);
+										const nullTime = e.target.value === ''
+										setForm({ ...form, endTime: nullTime ? undefined : e.target.value })
+									}} />
+							</div>
+						</>}
+						<div className="form-submit">
+							<button type="submit">Submit</button>
+						</div>
+					</form>
+				}
 			</div>
 		</div>
 	)
 }
 
 export default CalendarUpdate
+
+function filterEvents(ce: Array<CalendarEvent>) {
+	const events = ce.filter((ce) => {
+		const eventDate = new Date(ce.date).getTime()
+		const todayDate = new Date(
+			new Date().getFullYear(),
+			new Date().getMonth(),
+			new Date().getDate() - 1
+		).getTime()
+
+		return eventDate > todayDate && ce
+	})
+	return events
+}

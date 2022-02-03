@@ -9,7 +9,6 @@ import 'Styles/Suite/forms/grocery.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
 }
 
 

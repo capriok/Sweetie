@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { SwtReducerActions } from 'state'
 import { startOfToday } from 'date-fns'
 import Api from 'api'
 
@@ -8,7 +7,6 @@ import 'Styles/Suite/forms/form.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
 }
 
 const INITIAL_FORM = {
@@ -17,7 +15,7 @@ const INITIAL_FORM = {
 }
 
 const CatsUpdate: React.FC<Props> = (props) => {
-	const { socket, dispatch } = props
+	const { socket } = props
 
 	const date = startOfToday()
 	date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
@@ -59,7 +57,6 @@ const CatsUpdate: React.FC<Props> = (props) => {
 			setCatConfig(cc)
 			Api.GetCatSchedule().then(today => {
 				socket.emit('cs-change', today)
-				dispatch({ type: SwtReducerActions.SETCS, value: today })
 			})
 		})
 	}
