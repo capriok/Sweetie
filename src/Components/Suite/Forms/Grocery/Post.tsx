@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
+import { SwtReducerActions } from 'state'
 import Api from 'api'
 
 import 'Styles/Suite/forms/form.scss'
@@ -7,6 +8,7 @@ interface Props {
 	socket: Socket
 	state: SwtState
 	dispatch: React.Dispatch<SwtAction>
+	closeForm: () => SetStateAction<any>
 }
 
 
@@ -23,7 +25,7 @@ const INITIAL_FORM: FormState = {
 }
 
 const GroceryPost: React.FC<Props> = (props) => {
-	const { socket, dispatch } = props
+	const { socket, closeForm } = props
 
 	const [form, setForm] = useState<any>(INITIAL_FORM)
 
@@ -40,14 +42,14 @@ const GroceryPost: React.FC<Props> = (props) => {
 		console.log(item);
 		Api.PostGrocery(item).then(gl => {
 			socket.emit('gl-change', gl)
-			dispatch({ type: SwtReducerActions.SETGL, value: gl })
+			closeForm()
 		})
 	}
 
 	return (
 		<div id="form">
 			<div className="form-wrap">
-				<div className="title">Create</div>
+				<div className="title">Add Items</div>
 				<form onSubmit={(e) => submit(e)}>
 					<div className="form-line name">
 						<label htmlFor="name">Name</label>

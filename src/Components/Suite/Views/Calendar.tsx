@@ -6,21 +6,12 @@ import ViewItem from '../Components/View/Item'
 import 'Styles/Suite/views/calendar.scss'
 
 const Calendar: React.FC<any> = (props) => {
-	const { state, dispatch } = props
+	const { state } = props
 
 	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])
 
 	useEffect(() => {
-		const filteredList = state.calendarEvents.filter((ce: CalendarEvent) => {
-			const eventDate = new Date(ce.date).getTime()
-			const todayDate = new Date(
-				new Date().getFullYear(),
-				new Date().getMonth(),
-				new Date().getDate() - 1
-			).getTime()
-
-			return eventDate > todayDate && ce
-		})
+		const filteredList = filterEvents(state.calendarEvents)
 		setEventList(filteredList)
 	}, [state.calendarEvents])
 
@@ -51,6 +42,20 @@ const Calendar: React.FC<any> = (props) => {
 }
 
 export default Calendar
+
+function filterEvents(ce: Array<CalendarEvent>) {
+	const events = ce.filter((ce) => {
+		const eventDate = new Date(ce.date).getTime()
+		const todayDate = new Date(
+			new Date().getFullYear(),
+			new Date().getMonth(),
+			new Date().getDate() - 1
+		).getTime()
+
+		return eventDate > todayDate && ce
+	})
+	return events
+}
 
 function displayMonth(eventList: Array<CalendarEvent>, i: number) {
 	const currEv = eventList[i]

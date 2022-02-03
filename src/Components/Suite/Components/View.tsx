@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ViewTitle from './View/Title'
 import ViewActions from './View/Actions'
@@ -25,50 +25,58 @@ const View: React.FC<Props> = (viewProps) => {
 	const { props, title, component, actions } = viewProps
 	const { dispatchView } = props
 
-	const [form, setForm] = useState<any>(INITIAL_FORM)
+	const [activeForm, setActiveForm] = useState<any>(INITIAL_FORM)
 
 	const Parent = component
-	const Form = form.component
-
+	const Form = activeForm.component
 
 	function dispatchForm(action: ViewAction) {
 		console.log(action)
-		setForm(action)
+		setActiveForm(action)
 	}
 
-	function goBackClick() {
-		if (form.type) {
-			return setForm(INITIAL_FORM)
+	function closeForm() {
+		setActiveForm(INITIAL_FORM)
+	}
+
+	function goBack() {
+		if (activeForm.type) {
+			return closeForm()
 		}
 		dispatchView('overview')
 	}
 
 	const titleProps = {
 		title,
-		goBack: goBackClick
+		goBack
 	}
 
 	const componentProps = {
 		...props,
-		form,
+		activeForm,
 		dispatchForm
+	}
+
+	const formProps = {
+		...props,
+		closeForm
 	}
 
 	const actionsProps = {
 		component,
 		actions,
-		form,
+		activeForm,
 		dispatchForm
 	}
 
 	return (
 		<div id="View">
 			<ViewTitle {...titleProps} />
-			{form.type
-				? <Form />
+			{activeForm.type
+				? <Form  {...formProps} />
 				: <Parent {...componentProps} />
 			}
-			{!form.type && <ViewActions {...actionsProps} />}
+			{!activeForm.type && <ViewActions {...actionsProps} />}
 		</div>
 	)
 }

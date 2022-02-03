@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { SwtReducerActions } from 'state'
 import Api from 'api'
 
 import 'Styles/Suite/forms/form.scss'
@@ -68,7 +69,7 @@ const CalendarUpdate: React.FC<Props> = (props) => {
 		<div id="form">
 			<div className="form-wrap">
 				<div className="title">Update</div>
-				<form onSubmit={(e) => submitClick(e)} >
+				<form onSubmit={(e) => submitClick(e)}>
 					<div className="form-line name">
 						<label htmlFor="name">Name</label>
 						<input

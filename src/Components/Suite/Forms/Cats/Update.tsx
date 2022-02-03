@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { SwtReducerActions } from 'state'
 import { startOfToday } from 'date-fns'
 import Api from 'api'
 
@@ -67,7 +68,7 @@ const CatsUpdate: React.FC<Props> = (props) => {
 		<div id="form">
 			<div className="form-wrap">
 				<div className="title">Update</div>
-				<form onSubmit={(e) => submit(e)} className="cats">
+				<form onSubmit={(e) => submit(e)}>
 					<div className="form-line food">
 						<label htmlFor="food">Food Day</label>
 						<input

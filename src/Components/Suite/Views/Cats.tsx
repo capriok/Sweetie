@@ -7,7 +7,7 @@ import ProgressCircle from 'Components/Shared/ProgressCircle'
 import 'Styles/Suite/views/cats.scss'
 
 const Cats: React.FC<any> = (props) => {
-	const { state, dispatch } = props
+	const { state } = props
 
 	const [catConfig, setCatConfig] = useState<any>({})
 

@@ -1,6 +1,6 @@
 @import "../../index.scss";
 
-.groceries {
+.grocery {
 	width: 100%;
 
 	.grocery-lists {
@@ -20,6 +20,9 @@
 			.quantity {
 				text-align: right;
 			}
+		}
+		.gl-empty {
+			text-align: center;
 		}
 	}
 }

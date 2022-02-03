@@ -14,6 +14,7 @@ const useDataFetch = (socket: Socket) => {
 
 	useEffect(() => {
 		socket.on('ce-update', (ce: Array<CalendarEvent>) => {
+			console.log(ce)
 			dispatch({ type: SwtReducerActions.SETCE, value: ce })
 		})
 

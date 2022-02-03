@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import useAppMode from 'Hooks/useAppMode'
 import useAppTheme from 'Hooks/useAppTheme'
 
-import Secret from './Components/Secret'
+import Secret from './Components/Auth/Secret'
 import View from './Components/View'
 import Overview from './Views/Overview'
 import Calendar from './Views/Calendar'
@@ -103,7 +103,7 @@ const Suite: React.FC<Props> = (props) => {
 	useEffect(() => {
 		const view = views.find((v) => component[v.title.toLowerCase()])
 		if (view) setView(view)
-	}, [component])
+	}, [state, component])
 
 	if (!auth) return <Secret {...authProps} />
 

@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react'
 
-import { MdPostAdd, MdOutlineUpdate, MdDeleteOutline } from 'react-icons/md'
+import { MdMoreHoriz, MdMoreVert, MdPostAdd, MdOutlineUpdate, MdDeleteOutline } from 'react-icons/md'
 
 import 'Styles/Suite/components/view/actions.scss'
 
 interface Props {
 	component: React.FC<any>
 	actions: Array<ViewAction>
-	form: ViewAction
+	activeForm: ViewAction
 	dispatchForm: (action: ViewAction) => void
 }
 
 const ViewActions: React.FC<Props> = (props) => {
-	const { component, actions, form, dispatchForm } = props
+	const { component, actions, activeForm, dispatchForm } = props
 
 	const [visible, setVisibility] = useState(false)
 
 	useEffect(() => {
 		setVisibility(false)
-	}, [component, form])
+	}, [component, activeForm])
 
 	const actionButtonProps = {
 		visible,
@@ -45,7 +45,7 @@ const ActionsButton: React.FC<any> = ({ visible, setVisibility }) => (
 	<div
 		className="actions-button"
 		onClick={() => setVisibility(!visible)}>
-		+
+		{!visible ? <MdMoreHoriz /> : <MdMoreVert />}
 	</div>
 )
 

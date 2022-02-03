@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../../../Styles/Suite/components/pinpad.scss'
+import 'Styles/Suite/components/auth/pinpad.scss'
 
 const Pinpad: React.FC<any> = ({ set }) => (
   <div className="pinpad">

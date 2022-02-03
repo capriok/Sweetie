@@ -7,7 +7,11 @@
 	* {
 		color: $modefont;
 	}
-	background-color: $mode;
+	padding: 10px;
+	padding-bottom: 20px;
+	margin-top: 20px;
+	border-radius: 10px;
+	background-color: $modelight;
 
 	.form-wrap {
 		text-align: center;
@@ -23,7 +27,6 @@
 			width: 100%;
 			max-width: 500px;
 			transition: all 0.2s;
-			margin-bottom: 20px;
 			.form-line {
 				@include flex;
 				justify-content: space-between;
@@ -61,4 +64,9 @@
 			}
 		}
 	}
+}
+
+.no-form-bg {
+	padding: 0 !important;
+	background-color: transparent !important;
 }

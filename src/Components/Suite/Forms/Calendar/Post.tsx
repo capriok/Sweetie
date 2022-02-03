@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 import Api from 'api'
 
 import 'Styles/Suite/forms/form.scss'
@@ -7,6 +7,7 @@ interface Props {
 	socket: Socket
 	state: SwtState
 	dispatch: React.Dispatch<SwtAction>
+	closeForm: () => SetStateAction<any>
 }
 
 interface FormState {
@@ -27,17 +28,20 @@ const INITIAL_FORM: FormState = {
 }
 
 const CalendarPost: React.FC<Props> = (props) => {
-	const { socket, dispatch } = props
+	const { socket, closeForm } = props
 
 	const [form, setForm] = useState<any>(INITIAL_FORM)
 
 	function submitClick(e: any) {
 		e.preventDefault()
-		console.log(form)
-		form!.dates?.forEach(async (date: any) => await submit(date!))
+		new Promise((resolve) => form.dates.forEach((date: any, i: number) => {
+			submit(date)
+			if (i === form.dates.length - 1) resolve('Done')
+		})
+		).then(() => closeForm())
 	}
 
-	async function submit(dateString: string) {
+	function submit(dateString: string) {
 		const invalidDate = !isNaN(Date.parse(dateString!))
 
 		if (!form.name || !invalidDate) return
@@ -56,14 +60,13 @@ const CalendarPost: React.FC<Props> = (props) => {
 		console.log(event);
 		Api.PostCalendarEvent(event).then(ce => {
 			socket.emit('ce-change', ce)
-			dispatch({ type: SwtReducerActions.SETCE, value: ce })
 		})
 	}
 
 	return (
 		<div id="form">
 			<div className="form-wrap">
-				<div className="title">Create</div>
+				<div className="title">Add Events</div>
 				<form onSubmit={(e) => submitClick(e)} >
 					<div className="form-line name">
 						<label htmlFor="name">Name</label>
@@ -84,7 +87,8 @@ const CalendarPost: React.FC<Props> = (props) => {
 								type="date"
 								value={date}
 								onChange={(e) => setForm({
-									...form, dates: form.dates.map((d: string, index: number) => {
+									...form,
+									dates: form.dates.map((d: string, index: number) => {
 										if (index === i) d = e.target.value
 										return d
 									})
