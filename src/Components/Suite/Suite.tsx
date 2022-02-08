@@ -18,6 +18,7 @@ import Options from './Views/Options'
 
 import 'Styles/index.scss'
 import 'Styles/Suite/suite.scss'
+import Motion from './Components/View/Motion'
 
 interface Props {
 	socket: Socket
@@ -31,6 +32,8 @@ const Suite: React.FC<Props> = (props) => {
 	const [auth, setAuth] = useState<boolean>(false)
 	const { setModeValue } = useAppMode()
 	const { setThemeValues } = useAppTheme()
+
+	const [component, setComponent] = useState<{ [key: string]: boolean }>({ overview: true })
 
 	function dispatchView(value: string) {
 		setComponent({ [value]: true })
@@ -55,61 +58,79 @@ const Suite: React.FC<Props> = (props) => {
 		setThemeValues
 	}
 
-	const views = [
-		{
-			props: suiteProps,
-			title: 'Overview',
-			component: Overview,
-			actions: []
-		},
-		{
-			props: suiteProps,
-			title: 'Calendar',
-			component: Calendar,
-			actions: [
-				{ type: 'post', component: CalendarPost },
-				{ type: 'update', component: CalendarUpdate },
-				{ type: 'delete', component: CalendarDelete }
-			]
-		},
-		{
-			props: suiteProps,
-			title: 'Grocery',
-			component: Grocery,
-			actions: [
-				{ type: 'post', component: GroceryPost },
-				{ type: 'delete', component: GroceryDelete }
-			]
-		},
-		{
-			props: suiteProps,
-			title: 'Cats',
-			component: Cats,
-			actions: [
-				{ type: 'update', component: CatsUpdate }
-			]
-		},
-		{
-			props: optionProps,
-			title: 'Options',
-			component: Options,
-			actions: []
-		}
-	]
-
-	const [component, setComponent] = useState<{ [key: string]: boolean }>({ overview: true })
-	const [view, setView] = useState(views[0])
-
-	useEffect(() => {
-		const view = views.find((v) => component[v.title.toLowerCase()])
-		if (view) setView(view)
-	}, [state, component])
+	const fromLeftVariants = {
+		hidden: { opacity: 0, y: 0, x: -300 },
+		visible: { opacity: 1, y: 0, x: 0 },
+		exit: { opacity: 0, y: 0, x: -300 }
+	}
+	const fromRightVariants = {
+		hidden: { opacity: 0, y: 0, x: 300 },
+		visible: { opacity: 1, y: 0, x: 0 },
+		exit: { opacity: 0, y: 0, x: 300 }
+	}
 
 	if (!auth) return <Secret {...authProps} />
 
 	return (
 		<div id="Suite">
-			<View {...view} />
+			<Motion
+				visible={component.overview}
+				variants={fromLeftVariants}
+				component={
+					<View
+						title="Overview"
+						props={suiteProps}
+						component={Overview}
+						actions={[]}
+					/>
+				} />
+			<Motion
+				visible={component.calendar}
+				variants={fromRightVariants}
+				component={
+					<View
+						title="Calendar"
+						props={suiteProps}
+						component={Calendar}
+						actions={[{ type: 'post', component: CalendarPost },
+						{ type: 'update', component: CalendarUpdate },
+						{ type: 'delete', component: CalendarDelete }]}
+					/>
+				} />
+			<Motion
+				visible={component.grocery}
+				variants={fromRightVariants}
+				component={
+					<View
+						title="Grocery"
+						props={suiteProps}
+						component={Grocery}
+						actions={[{ type: 'post', component: GroceryPost },
+						{ type: 'delete', component: GroceryDelete }]}
+					/>
+				} />
+			<Motion
+				visible={component.cats}
+				variants={fromRightVariants}
+				component={
+					<View
+						title="Cats"
+						props={suiteProps}
+						component={Cats}
+						actions={[{ type: 'update', component: CatsUpdate }]}
+					/>
+				} />
+			<Motion
+				visible={component.options}
+				variants={fromRightVariants}
+				component={
+					<View
+						title="Options"
+						props={optionProps}
+						component={Options}
+						actions={[]}
+					/>
+				} />
 		</div>
 	)
 }

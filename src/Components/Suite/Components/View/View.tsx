@@ -69,6 +69,12 @@ const View: React.FC<Props> = (viewProps) => {
 		dispatchForm
 	}
 
+	const vairants = {
+		hidden: { opacity: 0, x: 0, y: 400 },
+		visible: { opacity: 1, x: 0, y: 0 },
+		exit: { opacity: 0, x: 0, y: -400 }
+	}
+
 	return (
 		<div id="View">
 			<ViewTitle {...titleProps} />
