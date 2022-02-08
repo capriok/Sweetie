@@ -75,7 +75,7 @@ const CatsUpdate: React.FC<Props> = (props) => {
 							onChange={(e) => setForm({ ...form, lfd: e.target.value })} />
 					</div>
 					<div className="form-line waste">
-						<label htmlFor="waste">Litter Change</label>
+						<label htmlFor="waste">Litter Day</label>
 						<input
 							type="date"
 							max={maxDate}
