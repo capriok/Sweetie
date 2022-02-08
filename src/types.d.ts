@@ -34,8 +34,7 @@ interface CalendarEvent {
 interface Grocery {
 	_id?: string
 	name: string
-	qty: number
-	type: string
+	checked: boolean
 }
 
 type CatConfig = {

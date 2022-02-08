@@ -55,6 +55,11 @@ class Api {
 		return res.data.list
 	}
 
+	public async UpdateGrocery(item: Grocery): Promise<Array<Grocery>> {
+		const res = await AxiosInstance.put('/gl', { item: item })
+		return res.data.list
+	}
+
 	public async RemoveGrocery(item: Grocery): Promise<Array<Grocery>> {
 		const res = await AxiosInstance.delete('/gl', { data: { id: item._id } })
 		return res.data.list

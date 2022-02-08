@@ -35,7 +35,7 @@ const CalendarDelete: React.FC<Props> = (props) => {
 	return (
 		<div id="form" className="no-form-bg">
 			<div className="form-wrap">
-				<div className="title">Delete Events</div>
+				<div className="title no-mt">Delete Events</div>
 				<div className="calendar">
 					{eventList.map((event, i) => (
 						<div key={i} className="event">

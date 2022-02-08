@@ -3,7 +3,7 @@ import useAppMode from 'Hooks/useAppMode'
 import useAppTheme from 'Hooks/useAppTheme'
 
 import Secret from './Components/Auth/Secret'
-import View from './Components/View'
+import View from './Components/View/View'
 import Overview from './Views/Overview'
 import Calendar from './Views/Calendar'
 import CalendarPost from './Forms/Calendar/Post'

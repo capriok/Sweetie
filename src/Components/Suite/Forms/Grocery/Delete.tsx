@@ -9,11 +9,12 @@ import 'Styles/Suite/forms/grocery.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
+	closeForm: () => React.SetStateAction<any>
 }
 
 
 const GroceryDelete: React.FC<Props> = (props) => {
-	const { socket, state } = props
+	const { socket, state, closeForm } = props
 
 	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
 
@@ -37,41 +38,28 @@ const GroceryDelete: React.FC<Props> = (props) => {
 		if (confirmation) {
 			Api.ClearGroceryList().then(gl => {
 				socket.emit('gl-change', gl)
+				closeForm()
 			})
 		}
 	}
 
 	return (
-		<div id="form" className="no-form-bg">
-			<div className="form-wrap">
-				<div className="title">Delete Items</div>
-				<div className="grocery">
-					<div className="grocery-lists">
-						<List list={groceryList} click={deleteClick} type="grocery" />
-						<List list={groceryList} click={deleteClick} type="other" />
+		<>
+			<div id="form" className="no-form-bg">
+				<div className="form-wrap">
+					<div className="title no-mt">Delete Items</div>
+					<div className="grocery">
+						<button onClick={clearClick}>Clear List</button>
+						{groceryList.map((item: any, i) => (
+							<ViewItem key={i} className="grocery-wrap" onClick={() => deleteClick(item)}>
+								<p className="name">{item.name}</p>
+							</ViewItem>
+						))}
 					</div>
-					<button onClick={clearClick}>Clear List</button>
 				</div>
 			</div>
-		</div >
+		</>
 	)
 }
 
 export default GroceryDelete
-
-const List: React.FC<any> = ({ list, click, type }) => (
-	<>
-		<div className="list-title"><h3>{type}</h3></div>
-		{!list.some((i: any) => i.type === type)
-			? <p className="gl-empty">No items</p>
-			: list.filter((i: any) => i.type === type).map((item: any, i: number) => (
-				<ViewItem
-					key={i}
-					className="grocery-wrap"
-					onClick={() => click(item)}>
-					<p className="name">{item.name}</p>
-					<p className="quantity">{item.qty}</p>
-				</ViewItem>
-			))}
-	</>
-)

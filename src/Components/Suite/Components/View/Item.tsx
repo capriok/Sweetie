@@ -3,7 +3,7 @@ import React from 'react'
 import 'Styles/Suite/components/view/item.scss'
 
 interface Props {
-	className: string
+	className?: string
 	onClick?: () => any
 }
 

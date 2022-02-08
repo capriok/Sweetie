@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import ViewTitle from './View/Title'
-import ViewActions from './View/Actions'
+import ViewTitle from './Title'
+import ViewActions from './Actions'
 
 import 'Styles/Suite/components/view/view.scss'
 

@@ -17,26 +17,29 @@ const Calendar: React.FC<any> = (props) => {
 
 	return (
 		<div className="calendar">
-			{eventList.map((event, i) => (
-				<div key={i} className="event">
-					<div className="month-wrap">{displayMonth(eventList, i)}</div>
-					<ViewItem className="event-wrap">
-						<div className="name">
-							<p>{event.name}</p>
-						</div>
-						<div className="date-time">
-							<span className="date">
-								{new Date(event.date).toLocaleDateString('en-us',
-									{ weekday: 'short', month: event.timed ? 'short' : 'long', day: 'numeric' })
-								}
-							</span>
-							<span className="time">
-								{`${event.timed ? `, ${formatEventTimes(event)}` : ''}`}
-							</span>
-						</div>
-					</ViewItem>
-				</div>
-			))}
+			{!eventList.length && <div className="list-title"><p><b>Events</b></p></div>}
+			{!eventList.length
+				? <ViewItem><p className="ce-empty">No Events</p></ViewItem>
+				: eventList.map((event, i) => (
+					<div key={i} className="event">
+						<div className="month-wrap">{displayMonth(eventList, i)}</div>
+						<ViewItem className="event-wrap">
+							<div className="name">
+								<p>{event.name}</p>
+							</div>
+							<div className="date-time">
+								<span className="date">
+									{new Date(event.date).toLocaleDateString('en-us',
+										{ weekday: 'short', month: event.timed ? 'short' : 'long', day: 'numeric' })
+									}
+								</span>
+								<span className="time">
+									{`${event.timed ? `, ${formatEventTimes(event)}` : ''}`}
+								</span>
+							</div>
+						</ViewItem>
+					</div>
+				))}
 		</div>
 	)
 }

@@ -32,13 +32,9 @@ const Overview: React.FC<Props> = (props) => {
 	}
 
 	function renderGroceryOverview() {
-		const groceryItems = state.groceryList.filter(e => e.type === 'grocery').length
-		const otherItems = state.groceryList.filter(e => e.type === 'other').length
+		const groceryItems = state.groceryList.length
 
-		return <div className="gl-ov">
-			<p><span>Grocery</span><span>{groceryItems}</span></p>
-			<p><span>Other</span><span>{otherItems}</span></p>
-		</div>
+		return <p>{groceryItems} Items</p>
 	}
 
 	function renderCatsOverview() {

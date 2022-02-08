@@ -19,10 +19,10 @@
       border: 1px solid grey;
     }
     .dot {
-      background-color: black;
+      background-color: $mode;
     }
     .val {
-      background-color: white;
+      background-color: $modefont;
     }
   }
 }

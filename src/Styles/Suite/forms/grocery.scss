@@ -1,20 +1,7 @@
 @import "../../index.scss";
 
 #form .grocery {
-	.list-title {
-		text-align: left;
-	}
-	.grocery-wrap {
-		@include flex;
-		justify-content: space-between;
-		.name {
-			text-align: left;
-		}
-		.quantity {
-			text-align: right;
-		}
-	}
 	button {
-		margin-top: 20px;
+		margin: 20px 0 40px;
 	}
 }

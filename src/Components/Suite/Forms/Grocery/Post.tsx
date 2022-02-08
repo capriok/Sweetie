@@ -11,15 +11,13 @@ interface Props {
 
 
 interface FormState {
-	name: string
-	quantity: number
-	type: string
+	names: Array<string>
+	checked: boolean
 }
 
 const INITIAL_FORM: FormState = {
-	name: '',
-	quantity: 1,
-	type: 'grocery',
+	names: [''],
+	checked: false
 }
 
 const GroceryPost: React.FC<Props> = (props) => {
@@ -27,20 +25,26 @@ const GroceryPost: React.FC<Props> = (props) => {
 
 	const [form, setForm] = useState<any>(INITIAL_FORM)
 
-	function submit(e: any) {
+	function submitClick(e: any) {
 		e.preventDefault()
-		if (!form.name) return
+		new Promise((resolve) => form.names.forEach((name: any, i: number) => {
+			submit(name)
+			if (i === form.names.length - 1) resolve('Done')
+		})
+		).then(() => closeForm())
+	}
+
+	function submit(name: string) {
+		if (!name) return
 
 		let item = {
-			name: form.name,
-			qty: form.quantity,
-			type: form.type
+			name,
+			checked: false
 		}
 
 		console.log(item);
 		Api.PostGrocery(item).then(gl => {
 			socket.emit('gl-change', gl)
-			closeForm()
 		})
 	}
 
@@ -48,37 +52,53 @@ const GroceryPost: React.FC<Props> = (props) => {
 		<div id="form">
 			<div className="form-wrap">
 				<div className="title">Add Items</div>
-				<form onSubmit={(e) => submit(e)}>
+				<form onSubmit={(e) => submitClick(e)}>
+					{form.names.map((name: string, i: number) =>
+						<div key={i} className="form-line name">
+							<label htmlFor="name">Name</label>
+							<input
+								name="name"
+								type="text"
+								value={name}
+								onChange={(e) => setForm({
+									...form,
+									names: form.names.map((n: string, index: number) => {
+										if (index === i) n = e.target.value
+										return n
+									})
+								})} />
+						</div>
+					)}
 					<div className="form-line name">
-						<label htmlFor="name">Name</label>
-						<input
-							name="name"
-							type="text"
-							value={form.name}
-							placeholder="Name"
-							autoFocus={true}
-							autoComplete="off"
-							onChange={(e) => setForm({ ...form, name: e.target.value })} />
+						<label htmlFor="add-name">Items +/-</label>
+						<button
+							type="button"
+							name="add-name"
+							className="add-button"
+							tabIndex={-1}
+							onClick={() => {
+								if (form.names[form.names.length - 1] === undefined) return
+								setForm({
+									...form, names: [...form.names, undefined]
+								})
+							}}
+						>+</button>
+						{form.names.length !== 1 &&
+							<button
+								type="button"
+								name="delete-name"
+								className="delete-button"
+								tabIndex={-1}
+								onClick={() => {
+									form.names.pop()
+									setForm({
+										...form, names: form.names
+									})
+								}}
+							>-</button>
+						}
 					</div>
-					<div className="form-line quantity">
-						<label htmlFor="quantity">Quantity</label>
-						<input
-							name="quantity"
-							type="number"
-							min={1}
-							value={form.quantity}
-							placeholder="Quantity"
-							onChange={(e) => setForm({ ...form, quantity: parseInt(e.target.value) })} />
-					</div>
-					<div className="form-line type">
-						<label htmlFor="type">Type</label>
-						<select
-							value={form.type}
-							onChange={(e) => setForm({ ...form, type: e.target.value })}>
-							<option value="grocery">Grocery</option>
-							<option value="other">Other</option>
-						</select>
-					</div>
+
 					<div className="form-submit">
 						<button className="submit" type="submit">Submit</button>
 					</div>

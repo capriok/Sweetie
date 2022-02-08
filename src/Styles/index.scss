@@ -22,7 +22,7 @@
 
 	--modeH: 0;
 	--modeS: 0%;
-	--modeL: 92%;
+	--modeL: 90%;
 }
 
 $theme: hsl(
@@ -54,12 +54,12 @@ $mode: hsl(
 $modelight: hsl(
 	var(--modeH),
 	var(--modeS),
-	calc(var(--modeL) + 4%)
+	calc(var(--modeL) + 5%)
 );
 $modelighter: hsl(
 	var(--modeH),
 	var(--modeS),
-	calc(var(--modeL) + 8%)
+	calc(var(--modeL) + 10%)
 );
 $modefont: hsl(
 	var(--modeH),

@@ -8,34 +8,19 @@ interface Props {
 	dispatch: React.Dispatch<SwtAction>
 }
 
-interface GroceryList {
-	grocery: Array<Grocery>
-	other: Array<Grocery>
-}
-
 const GroceryTile: React.FC<Props> = (props) => {
 	const { state } = props
-	const [groceryList, setGroceryList] = useState<GroceryList>({
-		grocery: [],
-		other: [],
-	})
+	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
 
 	useEffect(() => {
-		setGroceryList({
-			grocery: state.groceryList.filter(i => i.type === 'grocery'),
-			other: state.groceryList.filter(i => i.type === 'other')
-		})
+		setGroceryList(state.groceryList)
 	}, [state.groceryList])
 
 	return (
 		<div className="grocery-tile">
 			<div className="grocery">
 				<h3 className="sub-title w-line">Grocery</h3>
-				<List list={groceryList.grocery} />
-			</div>
-			<div className="other">
-				<h3 className="sub-title w-line">Other</h3>
-				<List list={groceryList.other} />
+				<List list={groceryList} />
 			</div>
 		</div>
 	)
