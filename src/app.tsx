@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import useDataFetch from './Hooks/useDataFetch'
 import useSocket from './Hooks/useSocket'
 
-import Wrapper from 'react-div-100vh'
 import Suite from './Components/Suite/Suite'
 import Sweetie from './Components/Sweetie/Sweetie'
 import PageNotFound from './Components/Suite/Components/PageNotFound'
@@ -26,9 +25,9 @@ const App: React.FC = () => {
         <Route exact path="/" render={() =>
           <Suite {...swtProps} />
         } />
-        {/* <Route exact path="/sweetie" render={() =>
+        <Route exact path="/sweetie" render={() =>
           <Sweetie {...swtProps} />
-        } /> */}
+        } />
         <Route path="*" render={() =>
           <PageNotFound />
         } />

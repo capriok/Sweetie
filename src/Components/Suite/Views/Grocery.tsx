@@ -27,7 +27,7 @@ const Grocery: React.FC<any> = (props) => {
 
 	return (
 		<div className="grocery">
-			<div className="list-title"><p><b>Items</b></p></div>
+			<div className="list-title"><p>Items</p></div>
 			{!groceryList.length
 				? <ViewItem><p className="gl-empty">No Items</p></ViewItem>
 				: groceryList.map((item: any, i) => (

@@ -1,42 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Api from 'api'
 
-import ViewItem from 'Components/Suite/Components/View/Item'
 
 import 'Styles/Suite/forms/form.scss'
 import 'Styles/Suite/forms/grocery.scss'
 
 interface Props {
 	socket: Socket
-	state: SwtState
 	closeForm: () => React.SetStateAction<any>
 }
 
 
 const GroceryDelete: React.FC<Props> = (props) => {
-	const { socket, state, closeForm } = props
+	const { socket, closeForm } = props
 
-	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
-
-	useEffect(() => {
-		setGroceryList(state.groceryList)
-	}, [state.groceryList])
-
-	function deleteClick(item: Grocery) {
-		const confirmation = window.confirm(`Remove '${item.name}' ?`);
+	function clearAllClick() {
+		const confirmation = window.confirm(
+			'Clear all items?\n\n'
+		);
 		if (confirmation) {
-			Api.RemoveGrocery(item).then(gl => {
+			Api.RemoveAllGrocery().then(gl => {
 				socket.emit('gl-change', gl)
+				closeForm()
 			})
 		}
 	}
 
-	function clearClick() {
+	function clearCheckedClick() {
 		const confirmation = window.confirm(
-			'Are you sure you want to clear the list?\n\n'
+			'Clear checked items?\n\n'
 		);
 		if (confirmation) {
-			Api.ClearGroceryList().then(gl => {
+			Api.RemoveCheckedGrocery().then(gl => {
 				socket.emit('gl-change', gl)
 				closeForm()
 			})
@@ -49,12 +44,8 @@ const GroceryDelete: React.FC<Props> = (props) => {
 				<div className="form-wrap">
 					<div className="title no-mt">Delete Items</div>
 					<div className="grocery">
-						<button onClick={clearClick}>Clear List</button>
-						{groceryList.map((item: any, i) => (
-							<ViewItem key={i} className="grocery-wrap" onClick={() => deleteClick(item)}>
-								<p className="name">{item.name}</p>
-							</ViewItem>
-						))}
+						<button onClick={clearCheckedClick}>Clear checked</button>
+						<button onClick={clearAllClick}>Clear all</button>
 					</div>
 				</div>
 			</div>

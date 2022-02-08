@@ -43,9 +43,7 @@ const CalendarUpdate: React.FC<Props> = (props) => {
 	const [form, setForm] = useState<any>(INITIAL_FORM)
 
 	function setUpdatingEvent(event: CalendarEvent) {
-		const d = new Date(event.date)
-		d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
-		const formattedDate = d.toISOString().split('T')[0]
+		const formattedDate = new Date(event.date).toJSON().split('T')[0]
 
 		setEvent(event)
 		setForm({

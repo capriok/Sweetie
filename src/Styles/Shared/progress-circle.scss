@@ -5,7 +5,7 @@
 	width: 100%;
 	transform: rotate(-90deg);
 
-	$stroke-color: $modefont;
+	$stroke-color: rgb(151, 151, 151);
 
 	#svg circle {
 		transition: stroke-dashoffset 1s linear;

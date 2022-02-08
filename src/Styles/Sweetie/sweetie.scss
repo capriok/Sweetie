@@ -1,16 +1,14 @@
 @import "../index.scss";
 
 // Dev
-#Sweetie,
-#Background {
+#Sweetie {
 	position: absolute;
 	width: 100vw;
 	height: 100vh;
 }
 
 // Prod
-.Sweetie-vert,
-.Bg-vert {
+.Sweetie-vert {
 	transform: rotate(90deg);
 	transform-origin: bottom left;
 	top: -100vw;
@@ -22,14 +20,6 @@
 	transform: rotate(90deg);
 }
 
-#Background {
-	z-index: -1;
-	background-size: cover;
-	opacity: 0.25;
-	background-image: url("../../Assets/bg.jpg");
-	transition: all 2s;
-}
-
 #Sweetie {
 	* {
 		margin: 0;
@@ -39,7 +29,9 @@
 
 	font-size: 2.4rem;
 	overflow: hidden;
-	background-color: rgba(25, 25, 25, 0.5);
+
+	background-size: cover;
+	background-image: url("../../Assets/bg.jpg");
 
 	#Tile {
 		@include flex;
@@ -69,8 +61,11 @@
 	.datetime-tile,
 	.calendar-tile,
 	.weather-tile,
-	.cat-tile,
+	.cats-tile,
 	.grocery-tile {
 		margin: 120px 0;
+	}
+	#Progress {
+		$stroke-color: white !important;
 	}
 }

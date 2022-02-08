@@ -27,12 +27,16 @@
 			.cs-ov {
 				width: 100%;
 				p {
-					width: 100%;
 					@include flex;
-					justify-content: space-between;
+					width: 100%;
 					&:not(:first-child) {
 						margin-top: 10px !important;
 					}
+				}
+			}
+			.ce-ov {
+				p {
+					justify-content: space-between;
 				}
 			}
 		}

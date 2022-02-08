@@ -60,13 +60,13 @@ class Api {
 		return res.data.list
 	}
 
-	public async RemoveGrocery(item: Grocery): Promise<Array<Grocery>> {
-		const res = await AxiosInstance.delete('/gl', { data: { id: item._id } })
+	public async RemoveCheckedGrocery(): Promise<Array<Grocery>> {
+		const res = await AxiosInstance.post('/gl-rem-checked')
 		return res.data.list
 	}
 
-	public async ClearGroceryList(): Promise<Array<Grocery>> {
-		const res = await AxiosInstance.post('/gl-clear')
+	public async RemoveAllGrocery(): Promise<Array<Grocery>> {
+		const res = await AxiosInstance.post('/gl-rem-all')
 		return res.data.list
 	}
 

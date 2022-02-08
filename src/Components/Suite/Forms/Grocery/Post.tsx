@@ -60,6 +60,7 @@ const GroceryPost: React.FC<Props> = (props) => {
 								name="name"
 								type="text"
 								value={name}
+								autoFocus={true}
 								onChange={(e) => setForm({
 									...form,
 									names: form.names.map((n: string, index: number) => {

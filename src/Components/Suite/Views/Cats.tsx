@@ -9,29 +9,10 @@ import 'Styles/Suite/views/cats.scss'
 const Cats: React.FC<any> = (props) => {
 	const { state } = props
 
-	const [catConfig, setCatConfig] = useState<any>({})
-
 	const [foodProgress, setFoodProgress] = useState(0)
 	const [foodPercent, setFoodPercent] = useState(0)
 	const [wasteProgress, setWasteProgress] = useState(0)
 	const [wastePercent, setWastePercent] = useState(0)
-
-	useEffect(() => {
-		Api.GetCatConfig().then((cc) => {
-			setCatConfig({
-				lastFoodDay: cc.lastFoodDay,
-				lastWasteDay: cc.lastWasteDay
-			})
-		})
-	}, [])
-
-	useEffect(() => {
-		if (!catConfig.lastFoodDay || !catConfig.lastWasteDay) return
-		// setUpdatingForm({
-		// 	lfd: catConfig.lastFoodDay,
-		// 	lwd: catConfig.lastWasteDay
-		// })
-	}, [catConfig])
 
 	useEffect(() => {
 		if (!state.catSchedule.date) return
@@ -61,20 +42,23 @@ const Cats: React.FC<any> = (props) => {
 
 	return (
 		<div className="cats">
-			<ViewItem className="progress-wrap">
-				<p>Food</p>
-				<ProgressCircle
-					{...circleProps}
-					progress={foodProgress}
-					percent={foodPercent} />
-			</ViewItem>
-			<ViewItem className="progress-wrap">
-				<p>Waste</p>
-				<ProgressCircle
-					{...circleProps}
-					progress={wasteProgress}
-					percent={wastePercent} />
-			</ViewItem>
+			<div className="cats-title"><p>Schedules</p></div>
+			<div className="schedules">
+				<ViewItem className="progress-wrap">
+					<p>Food</p>
+					<ProgressCircle
+						{...circleProps}
+						progress={foodProgress}
+						percent={foodPercent} />
+				</ViewItem>
+				<ViewItem className="progress-wrap">
+					<p>Waste</p>
+					<ProgressCircle
+						{...circleProps}
+						progress={wasteProgress}
+						percent={wastePercent} />
+				</ViewItem>
+			</div>
 		</div>
 	)
 }

@@ -2,33 +2,31 @@
 
 .cats {
 	@include flex;
-	flex-direction: column;
+	flex-direction: column !important;
+	width: 100%;
 
-	.progress-wrap {
+	.cats-title {
+		text-align: left;
+		font-weight: bold;
+		width: 100%;
+	}
+	.schedules {
 		@include flex;
 		flex-direction: column;
-		padding: 20px 30px !important;
-		margin-bottom: 20px;
 
-		#Progress {
-			#svg circle {
-				stroke-width: 5px !important;
-			}
-			&:after {
-				width: 65px;
-				height: 65px;
-			}
-		}
-	}
-
-	@media (min-width: 500px) {
-		flex-direction: row;
-		.progress-wrap:first-child {
-			margin-bottom: usnet;
-			margin-right: 20px;
-		}
 		.progress-wrap {
-			padding: 40px !important;
+			padding: 20px 30px !important;
+			margin-bottom: 20px;
+
+			#Progress {
+				#svg circle {
+					stroke-width: 5px !important;
+				}
+				&:after {
+					width: 65px;
+					height: 65px;
+				}
+			}
 		}
 	}
 }

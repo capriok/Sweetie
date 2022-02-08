@@ -21,7 +21,7 @@ interface FormState {
 const INITIAL_FORM: FormState = {
 	name: '',
 	timed: false,
-	dates: [undefined],
+	dates: [new Date().toJSON().split('T')[0]],
 	startTime: undefined,
 	endTime: undefined
 }
