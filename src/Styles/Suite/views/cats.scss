@@ -12,10 +12,16 @@
 	}
 	.schedules {
 		@include flex;
+		width: 100%;
 		flex-direction: column;
 
+		.cats-title {
+			margin: 20px;
+		}
 		.progress-wrap {
-			padding: 20px 30px !important;
+			width: 100%;
+			@include flex;
+			justify-content: space-between;
 			margin-bottom: 20px;
 
 			#Progress {

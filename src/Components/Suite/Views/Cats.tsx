@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Api from 'api'
 
 import ViewItem from '../Components/View/Item'
 import ProgressCircle from 'Components/Shared/ProgressCircle'
@@ -45,14 +44,14 @@ const Cats: React.FC<any> = (props) => {
 			<div className="cats-title"><p>Schedules</p></div>
 			<div className="schedules">
 				<ViewItem className="progress-wrap">
-					<p>Food</p>
+					<div className="cats-title">Food</div>
 					<ProgressCircle
 						{...circleProps}
 						progress={foodProgress}
 						percent={foodPercent} />
 				</ViewItem>
 				<ViewItem className="progress-wrap">
-					<p>Waste</p>
+					<div className="cats-title">Waste</div>
 					<ProgressCircle
 						{...circleProps}
 						progress={wasteProgress}
