@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import useAppMode from 'Hooks/useAppMode'
 import useAppTheme from 'Hooks/useAppTheme'
 
@@ -18,7 +18,7 @@ import Options from './Views/Options'
 
 import 'Styles/index.scss'
 import 'Styles/Suite/suite.scss'
-import Motion from './Components/View/Motion'
+import ViewMotion from './Components/View/Motion'
 
 interface Props {
 	socket: Socket
@@ -73,7 +73,7 @@ const Suite: React.FC<Props> = (props) => {
 
 	return (
 		<div id="Suite">
-			<Motion
+			<ViewMotion
 				visible={component.overview}
 				variants={fromLeftVariants}
 				component={
@@ -84,7 +84,7 @@ const Suite: React.FC<Props> = (props) => {
 						actions={[]}
 					/>
 				} />
-			<Motion
+			<ViewMotion
 				visible={component.calendar}
 				variants={fromRightVariants}
 				component={
@@ -92,12 +92,14 @@ const Suite: React.FC<Props> = (props) => {
 						title="Calendar"
 						props={suiteProps}
 						component={Calendar}
-						actions={[{ type: 'post', component: CalendarPost },
-						{ type: 'update', component: CalendarUpdate },
-						{ type: 'delete', component: CalendarDelete }]}
+						actions={[
+							{ type: 'post', component: CalendarPost },
+							{ type: 'update', component: CalendarUpdate },
+							{ type: 'delete', component: CalendarDelete }
+						]}
 					/>
 				} />
-			<Motion
+			<ViewMotion
 				visible={component.grocery}
 				variants={fromRightVariants}
 				component={
@@ -105,11 +107,13 @@ const Suite: React.FC<Props> = (props) => {
 						title="Grocery"
 						props={suiteProps}
 						component={Grocery}
-						actions={[{ type: 'post', component: GroceryPost },
-						{ type: 'delete', component: GroceryDelete }]}
+						actions={[
+							{ type: 'post', component: GroceryPost },
+							{ type: 'delete', component: GroceryDelete }
+						]}
 					/>
 				} />
-			<Motion
+			<ViewMotion
 				visible={component.cats}
 				variants={fromRightVariants}
 				component={
@@ -117,10 +121,12 @@ const Suite: React.FC<Props> = (props) => {
 						title="Cats"
 						props={suiteProps}
 						component={Cats}
-						actions={[{ type: 'update', component: CatsUpdate }]}
+						actions={[
+							{ type: 'update', component: CatsUpdate }
+						]}
 					/>
 				} />
-			<Motion
+			<ViewMotion
 				visible={component.options}
 				variants={fromRightVariants}
 				component={

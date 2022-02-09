@@ -7,16 +7,17 @@ import 'Styles/Suite/forms/grocery.scss'
 
 interface Props {
 	socket: Socket
+	state: SwtState
 	closeForm: () => React.SetStateAction<any>
 }
 
 
 const GroceryDelete: React.FC<Props> = (props) => {
-	const { socket, closeForm } = props
+	const { socket, state, closeForm } = props
 
 	function clearAllClick() {
 		const confirmation = window.confirm(
-			'Clear all items?\n\n'
+			'Clear all items?'
 		);
 		if (confirmation) {
 			Api.RemoveAllGrocery().then(gl => {
@@ -27,9 +28,13 @@ const GroceryDelete: React.FC<Props> = (props) => {
 	}
 
 	function clearCheckedClick() {
+		if (!state.groceryList.filter(g => g.checked).length) return
+
 		const confirmation = window.confirm(
-			'Clear checked items?\n\n'
-		);
+			'Clear checked items?'
+		)
+		console.log(confirmation)
+
 		if (confirmation) {
 			Api.RemoveCheckedGrocery().then(gl => {
 				socket.emit('gl-change', gl)
@@ -39,17 +44,21 @@ const GroceryDelete: React.FC<Props> = (props) => {
 	}
 
 	return (
-		<>
-			<div id="form" className="no-form-bg">
-				<div className="form-wrap">
-					<div className="title no-mt">Delete Items</div>
-					<div className="grocery">
-						<button onClick={clearCheckedClick}>Clear checked</button>
-						<button onClick={clearAllClick}>Clear all</button>
+		<div id="form">
+			<div className="form-wrap">
+				<div className="title">Delete Items</div>
+				<div className="grocery">
+					<div className="form-line">
+						<label>Checked Items</label>
+						<button onClick={clearCheckedClick}>{state.groceryList.filter(g => g.checked).length}</button>
+					</div>
+					<div className="form-line">
+						<label>All Items</label>
+						<button onClick={clearAllClick}>{state.groceryList.length}</button>
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { motion, MotionProps } from 'framer-motion'
 
 import ViewTitle from './Title'
 import ViewActions from './Actions'
@@ -69,20 +70,35 @@ const View: React.FC<Props> = (viewProps) => {
 		dispatchForm
 	}
 
-	const vairants = {
-		hidden: { opacity: 0, x: 0, y: 400 },
-		visible: { opacity: 1, x: 0, y: 0 },
-		exit: { opacity: 0, x: 0, y: -400 }
+	const slideDownProps: MotionProps = {
+		initial: 'hidden',
+		transition: {
+			duration: .5,
+		},
+		style: { width: '100%', },
+		variants: {
+			hidden: {
+				opacity: 0, y:
+					title !== 'Overview'
+						? -40
+						: 0
+			},
+			visible: { opacity: 1, y: 0 }
+		}
 	}
 
 	return (
 		<div id="View">
 			<ViewTitle {...titleProps} />
-			{activeForm.type
-				? <Form  {...formProps} />
-				: <Parent {...componentProps} />
-			}
-			{!activeForm.type && <ViewActions {...actionsProps} />}
+
+			<motion.div {...slideDownProps} animate={activeForm.type ? 'visible' : 'hidden'}>
+				{activeForm.type && <Form  {...formProps} />}
+			</motion.div>
+			<motion.div {...slideDownProps} animate={!activeForm.type ? 'visible' : 'hidden'}>
+				{!activeForm.type && <Parent {...componentProps} />}
+			</motion.div>
+
+			<ViewActions {...actionsProps} />
 		</div>
 	)
 }

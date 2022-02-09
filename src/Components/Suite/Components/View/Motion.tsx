@@ -13,12 +13,12 @@ const ViewMotion: React.FC<Props> = (props) => {
 	const { visible, variants, component } = props
 
 	const motionProps = {
-		whileInView: "visible",
-		initial: "hidden",
-		exit: "exit",
+		whileInView: 'visible',
+		initial: 'hidden',
+		exit: 'exit',
 		viewport: { once: true },
 		transition: {
-			type: "spring",
+			type: 'spring',
 			duration: 0.1,
 			stiffness: 80,
 			mass: .6
