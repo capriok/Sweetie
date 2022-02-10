@@ -78,10 +78,10 @@ const View: React.FC<Props> = (viewProps) => {
 		style: { width: '100%', },
 		variants: {
 			hidden: {
-				opacity: 0, y:
-					title !== 'Overview'
-						? -40
-						: 0
+				opacity: 0,
+				y: title !== 'Overview'
+					? -40
+					: 0
 			},
 			visible: { opacity: 1, y: 0 }
 		}

@@ -1,5 +1,5 @@
 import React from 'react'
-import Swt from '../../Assets/swt.png'
+import Swt from '../../Assets/sweetie-icon.png'
 
 import '../../Styles/Shared/splash.scss'
 
