@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { formatEventTimes } from 'Helpers/TimeHelp'
 import { motion, MotionProps } from 'framer-motion'
+import { FormatEventTimes } from 'Helpers/TimeHelp'
 import Api from 'api'
 
 import ViewItem from 'Components/Suite/Components/View/Item'
@@ -117,7 +117,7 @@ const CalendarUpdate: React.FC<Props> = (props) => {
 													}
 												</span>
 												<span className="time">
-													{`${event.timed ? `, ${formatEventTimes(event)}` : ''}`}
+													{`${event.timed ? `, ${FormatEventTimes(event)}` : ''}`}
 												</span>
 											</div>
 										</ViewItem>

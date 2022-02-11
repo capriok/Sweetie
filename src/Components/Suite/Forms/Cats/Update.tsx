@@ -10,16 +10,12 @@ interface Props {
 }
 
 const INITIAL_FORM = {
-	lfd: new Date().toISOString().split('T')[0],
-	lwd: new Date().toISOString().split('T')[0]
+	lfd: new Date().toJSON().split('T')[0],
+	lwd: new Date().toJSON().split('T')[0]
 }
 
 const CatsUpdate: React.FC<Props> = (props) => {
 	const { socket } = props
-
-	const date = startOfToday()
-	date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
-	const maxDate = new Date(date).toISOString().split('T')[0]
 
 	const [catConfig, setCatConfig] = useState<any>({})
 	const [form, setForm] = useState<any>(INITIAL_FORM)
@@ -67,18 +63,18 @@ const CatsUpdate: React.FC<Props> = (props) => {
 				<div className="title">Update</div>
 				<form onSubmit={(e) => submit(e)}>
 					<div className="form-line food">
-						<label htmlFor="food">Food Day</label>
+						<label>Food Day</label>
 						<input
 							type="date"
-							max={maxDate}
+							max={new Date().toJSON().split('T')[0]}
 							value={new Date(form.lfd).toISOString().split('T')[0]}
 							onChange={(e) => setForm({ ...form, lfd: e.target.value })} />
 					</div>
 					<div className="form-line waste">
-						<label htmlFor="waste">Litter Day</label>
+						<label>Waste Day</label>
 						<input
 							type="date"
-							max={maxDate}
+							max={new Date().toJSON().split('T')[0]}
 							value={new Date(form.lwd).toISOString().split('T')[0]}
 							onChange={(e) => setForm({ ...form, lwd: e.target.value })} />
 					</div>

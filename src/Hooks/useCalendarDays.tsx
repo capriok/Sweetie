@@ -1,6 +1,6 @@
-import { startOfToday } from 'date-fns'
 import { useEffect, useState } from 'react'
-import { tzZero } from '../Helpers/TimeHelp'
+import { startOfToday } from 'date-fns'
+import { TimezoneZero } from '../Helpers/TimeHelp'
 
 interface CalendarDay {
 	dayCns: string
@@ -34,8 +34,8 @@ const useCalendarDays = () => {
 
 			const prevMonth = new Date().getMonth() <= day.getMonth()
 			const nextMonth = new Date().getMonth() >= day.getMonth()
-			const sameDay = tzZero(day).toJSON() === tzZero(startOfToday()).toJSON()
-			const inPast = tzZero(day).toJSON() < tzZero(startOfToday()).toJSON()
+			const sameDay = TimezoneZero(day).toJSON() === TimezoneZero(startOfToday()).toJSON()
+			const inPast = TimezoneZero(day).toJSON() < TimezoneZero(startOfToday()).toJSON()
 
 			const dayCns = ['day']
 			if (!prevMonth) dayCns.push('null-day')

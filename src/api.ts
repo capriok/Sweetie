@@ -16,9 +16,18 @@ const AxiosInstance = axios.create({
 
 class Api {
 
+	// PING
+
 	public async ServerPing(): Promise<{ status: number }> {
 		const res = await AxiosInstance.get('/ping')
 		return res.data.status
+	}
+
+	// WEATHER
+
+	public async GetWeatherStats(): Promise<any> {
+		const res = await AxiosInstance.get('/ws')
+		return res.data.stats
 	}
 
 	// CALENDAR EVENTS 

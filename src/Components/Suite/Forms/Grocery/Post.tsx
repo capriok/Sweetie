@@ -55,9 +55,8 @@ const GroceryPost: React.FC<Props> = (props) => {
 				<form onSubmit={(e) => submitClick(e)}>
 					{form.names.map((name: string, i: number) =>
 						<div key={i} className="form-line name">
-							<label htmlFor="name">Name</label>
+							<label>Name</label>
 							<input
-								name="name"
 								type="text"
 								value={name}
 								autoFocus={true}
@@ -71,24 +70,11 @@ const GroceryPost: React.FC<Props> = (props) => {
 						</div>
 					)}
 					<div className="form-line name">
-						<label htmlFor="add-name">Items +/-</label>
-						<button
-							type="button"
-							name="add-name"
-							className="add-button"
-							tabIndex={-1}
-							onClick={() => {
-								if (form.names[form.names.length - 1] === undefined) return
-								setForm({
-									...form, names: [...form.names, undefined]
-								})
-							}}
-						>+</button>
+						<label>Items +/-</label>
 						{form.names.length !== 1 &&
 							<button
 								type="button"
-								name="delete-name"
-								className="delete-button"
+								className="minus-button"
 								tabIndex={-1}
 								onClick={() => {
 									form.names.pop()
@@ -98,8 +84,18 @@ const GroceryPost: React.FC<Props> = (props) => {
 								}}
 							>-</button>
 						}
+						<button
+							type="button"
+							className="add-button"
+							tabIndex={-1}
+							onClick={() => {
+								if (!form.names[form.names.length - 1]) return
+								setForm({
+									...form, names: [...form.names, '']
+								})
+							}}
+						>+</button>
 					</div>
-
 					<div className="form-submit">
 						<button className="submit" type="submit">Submit</button>
 					</div>

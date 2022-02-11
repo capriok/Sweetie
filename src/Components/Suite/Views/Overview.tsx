@@ -1,9 +1,9 @@
 import React from 'react'
+import { DatesAreOnSameDay } from 'Helpers/TimeHelp'
 
 import ViewItem from '../Components/View/Item'
 
 import 'Styles/Suite/views/overview.scss'
-import { datesAreOnSameDay } from 'Helpers/TimeHelp'
 
 interface Props {
 	socket: Socket
@@ -16,7 +16,7 @@ const Overview: React.FC<Props> = (props) => {
 
 	function renderCalendarOverview() {
 		const todaysEvents = state.calendarEvents.filter((event, i) => {
-			return datesAreOnSameDay(new Date(), new Date(event.date))
+			return DatesAreOnSameDay(new Date(), new Date(event.date))
 		})
 
 		if (!todaysEvents.length) return <p>Day off</p>

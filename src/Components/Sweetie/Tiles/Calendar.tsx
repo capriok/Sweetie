@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { formatEventTimes } from 'Helpers/TimeHelp';
-import useCalendarDays from 'Hooks/useCalendarDays';
+import React, { useEffect } from 'react'
+import { FormatEventTimes } from 'Helpers/TimeHelp'
+import useCalendarDays from 'Hooks/useCalendarDays'
 
 import 'Styles/Sweetie/tiles/calendar.scss'
 
@@ -20,7 +20,7 @@ const CalendarTile: React.FC<Props> = (props) => {
 
 	function calendarEventClassName(event: CalendarEvent) {
 		const cns = ['event']
-		const work = 'Mayo'
+		const work = 'Work'
 
 		if (event.name) cns.push('line')
 		if (event.name.includes(work)) cns.push('work')
@@ -47,7 +47,7 @@ const CalendarTile: React.FC<Props> = (props) => {
 									<span className="name">{event.name}</span>
 									<span className="timed">
 										{event.timed
-											? formatEventTimes(event)
+											? FormatEventTimes(event)
 											: ''
 										}</span>
 								</p>

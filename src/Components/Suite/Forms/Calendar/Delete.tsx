@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { formatEventTimes } from 'Helpers/TimeHelp'
+import { FormatEventTimes } from 'Helpers/TimeHelp'
 import Api from 'api'
 
 import ViewItem from 'Components/Suite/Components/View/Item'
@@ -52,7 +52,7 @@ const CalendarDelete: React.FC<Props> = (props) => {
 										}
 									</span>
 									<span className="time">
-										{`${event.timed ? `, ${formatEventTimes(event)}` : ''}`}
+										{`${event.timed ? `, ${FormatEventTimes(event)}` : ''}`}
 									</span>
 								</div>
 							</ViewItem>

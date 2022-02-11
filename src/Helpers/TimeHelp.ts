@@ -1,25 +1,25 @@
 import { format } from 'date-fns'
 
-export function formatEventTimes(event: CalendarEvent) {
+export function FormatEventTimes(event: CalendarEvent) {
 	const { startTime, endTime } = event
 
 	if (!event.timed || (event.timed && !startTime)) return
 
 	const date = new Date(event.date).toJSON().split('T')[0]
 	const sDate = new Date(date + 'T' + startTime)
-	const start = trimTime(format(sDate, endTime ? 'h:mm' : 'p'))
+	const start = TrimTime(format(sDate, endTime ? 'h:mm' : 'p'))
 
 	let time = start
 	if (endTime) {
 		const eDate = new Date(date + 'T' + endTime)
-		const end = trimTime(format(eDate, 'p'))
+		const end = TrimTime(format(eDate, 'p'))
 		time = time + '-' + end
 	}
 
 	return time
 }
 
-export function trimTime(time: string) {
+export function TrimTime(time: string) {
 	let slice = time.split(':')
 	const hour = slice[0]
 	const minute = slice[1].substring(0, 2)
@@ -39,19 +39,19 @@ export function trimTime(time: string) {
 	return time + '' + meridian
 }
 
-export function tzZero(date: any) {
+export function TimezoneZero(date: any) {
 	const d = new Date(date)
 	d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
 	return d
 }
 
-export function tzDate(date: any) {
+export function TimezoneDate(date: any) {
 	const d = new Date(date)
 	d.setMinutes(d.getMinutes() + d.getTimezoneOffset())
 	return d.toJSON()
 }
 
-export const datesAreOnSameDay = (first: Date, second: Date) =>
+export const DatesAreOnSameDay = (first: Date, second: Date) =>
 	first.getFullYear() === second.getFullYear() &&
 	first.getMonth() === second.getMonth() &&
 	first.getDate() === second.getDate()

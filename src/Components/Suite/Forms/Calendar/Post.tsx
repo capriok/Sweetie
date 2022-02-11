@@ -68,9 +68,8 @@ const CalendarPost: React.FC<Props> = (props) => {
 				<div className="title">Add Events</div>
 				<form onSubmit={(e) => submitClick(e)} >
 					<div className="form-line name">
-						<label htmlFor="name">Name</label>
+						<label>Name</label>
 						<input
-							name="name"
 							type="text"
 							autoFocus={true}
 							autoComplete="off"
@@ -80,9 +79,8 @@ const CalendarPost: React.FC<Props> = (props) => {
 					</div>
 					{form.dates.map((date: string, i: number) =>
 						<div key={i} className="form-line date">
-							<label htmlFor="date">Date</label>
+							<label>Date</label>
 							<input
-								name="date"
 								type="date"
 								value={date}
 								onChange={(e) => setForm({
@@ -95,24 +93,11 @@ const CalendarPost: React.FC<Props> = (props) => {
 						</div>
 					)}
 					<div className="form-line date">
-						<label htmlFor="add-date">Dates +/-</label>
-						<button
-							type="button"
-							name="add-date"
-							className="add-button"
-							tabIndex={-1}
-							onClick={() => {
-								if (form.dates[form.dates.length - 1] === undefined) return
-								setForm({
-									...form, dates: [...form.dates, undefined]
-								})
-							}}
-						>+</button>
+						<label>Dates +/-</label>
 						{form.dates.length !== 1 &&
 							<button
 								type="button"
-								name="delete-date"
-								className="delete-button"
+								className="minus-button"
 								tabIndex={-1}
 								onClick={() => {
 									form.dates.pop()
@@ -122,20 +107,29 @@ const CalendarPost: React.FC<Props> = (props) => {
 								}}
 							>-</button>
 						}
+						<button
+							type="button"
+							className="add-button"
+							tabIndex={-1}
+							onClick={() => {
+								if (form.dates[form.dates.length - 1] === undefined) return
+								setForm({
+									...form, dates: [...form.dates, undefined]
+								})
+							}}
+						>+</button>
 					</div>
 					<div className="form-line timed">
-						<label htmlFor="timed">Timed</label>
+						<label>Timed</label>
 						<input
-							name="timed"
 							type="checkbox"
 							checked={form.timed}
 							onChange={(e) => setForm({ ...form, timed: e.target.checked })} />
 					</div>
 					{form.timed && <>
 						<div className="form-line start-time">
-							<label htmlFor="start-time">Start</label>
+							<label>Start</label>
 							<input
-								name="start-time"
 								type="time"
 								value={form.startTime}
 								onChange={(e) => {
@@ -144,9 +138,8 @@ const CalendarPost: React.FC<Props> = (props) => {
 								}} />
 						</div>
 						<div className="form-line end-time">
-							<label htmlFor="start-time">End</label>
+							<label>End</label>
 							<input
-								name="end-time"
 								type="time"
 								value={form.endTime}
 								onChange={(e) => {
