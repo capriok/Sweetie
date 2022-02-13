@@ -19,25 +19,22 @@ function Index() {
     Api.ServerPing()
       .then(({ status }) => {
         if (status === 200) {
-          document.getElementById('Splash-message')!.textContent = 'Ping Success'
+          let t = 29
+          const countdown = setInterval(() => {
+            if (t < 1) return
+            document.getElementById('Splash-message')!.textContent = `Sweetie will wake up in ${t--}`
+          }, 1000)
           setTimeout(() => {
-            let t = 27
-            const countdown = setInterval(() => {
-              document.getElementById('Splash-message')!.textContent = `Sweetie will wake up in ${t--}`
-              if (t < 1) clearInterval(countdown)
-            }, 1000)
-          }, 2500)
+            clearInterval(countdown)
+            document.getElementById('Splash-content')!.classList.add('shrink')
+            setTimeout(() => {
+              setServerIdle(false)
+            }, 500)
+          }, 30000)
         }
       })
       .catch(() => {
-        document.getElementById('Splash-message')!.textContent = 'Ping Failure'
         document.getElementById('Splash-message')!.textContent = `Sweetie will not wake up`
-      })
-      .finally(() => {
-        setTimeout(() => {
-          document.getElementById('Splash-content')!.classList.add('shrink')
-          setServerIdle(false)
-        }, 30000)
       })
   }, [])
 

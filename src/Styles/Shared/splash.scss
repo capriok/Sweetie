@@ -28,8 +28,12 @@
 
 	#Splash-message {
 		position: fixed;
-		bottom: 20px;
 		font-weight: bold;
+		right: 20px;
+		transform: rotate(-90deg);
+		@media (max-width: 500px) {
+			display: none;
+		}
 	}
 }
 
