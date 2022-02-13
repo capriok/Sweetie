@@ -18,11 +18,13 @@ function Index() {
 
     Api.ServerPing().then(() => {
       setTimeout(() => {
-        document.getElementById('Splash-content')?.classList.add('shrink')
-        setTimeout(() => {
-          setServerIdle(false)
-        }, 500)
-      }, 500)
+        Api.ServerPing().then(() => {
+          setTimeout(() => {
+            document.getElementById('Splash-content')?.classList.add('shrink')
+            setServerIdle(false)
+          }, 2500)
+        })
+      }, 2500)
     })
   }, [])
 

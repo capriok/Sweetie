@@ -26,9 +26,9 @@ const useWeather = () => {
 
 	useEffect(() => {
 		GetWeather()
-		setTimeout(() => {
+		setInterval(() => {
 			GetWeather()
-		}, 600000)
+		}, 1800000)
 	}, [])
 
 	return weather

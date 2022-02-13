@@ -19,6 +19,7 @@
 		}
 	}
 	.shrink {
+		transform: rotate(90deg);
 		animation: shrink 0.6s linear;
 	}
 }

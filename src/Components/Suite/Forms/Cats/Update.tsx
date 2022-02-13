@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { startOfToday } from 'date-fns'
 import Api from 'api'
 
 import 'Styles/Suite/forms/form.scss'
