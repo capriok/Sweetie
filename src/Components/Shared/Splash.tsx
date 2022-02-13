@@ -14,6 +14,7 @@ const Splash: React.FC<any> = () => {
 			<div id="Splash-content" className={Splash_Orientation}>
 				<img id="Splash-icon" src={Swt} alt="" />
 			</div>
+			<div id="Splash-message"></div>
 		</div>
 	)
 }

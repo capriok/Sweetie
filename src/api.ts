@@ -4,7 +4,7 @@ const ENDPOINT = process.env.REACT_APP_SERVER
 
 const baseInstanceParams = {
 	baseURL: ENDPOINT + '/swt/',
-	timeout: 30000
+	timeout: 10000
 }
 
 const AxiosInstance = axios.create({
@@ -19,8 +19,8 @@ class Api {
 	// PING
 
 	public async ServerPing(): Promise<{ status: number }> {
-		const res = await AxiosInstance.get('/ping')
-		return res.data.status
+		const res = await AxiosInstance.get('/ping', { timeout: 60000 })
+		return res.data
 	}
 
 	// WEATHER

@@ -6,6 +6,7 @@ import 'Styles/Suite/forms/form.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
+	closeForm: () => React.Dispatch<any>
 }
 
 const INITIAL_FORM = {
@@ -14,7 +15,7 @@ const INITIAL_FORM = {
 }
 
 const CatsUpdate: React.FC<Props> = (props) => {
-	const { socket } = props
+	const { socket, closeForm } = props
 
 	const [catConfig, setCatConfig] = useState<any>({})
 	const [form, setForm] = useState<any>(INITIAL_FORM)
@@ -52,6 +53,7 @@ const CatsUpdate: React.FC<Props> = (props) => {
 			setCatConfig(cc)
 			Api.GetCatSchedule().then(today => {
 				socket.emit('cs-change', today)
+				closeForm()
 			})
 		})
 	}
