@@ -3,6 +3,7 @@ import useAppMode from 'Hooks/useAppMode'
 import useAppTheme from 'Hooks/useAppTheme'
 
 import Secret from './Components/Auth/Secret'
+import ViewMotion from './Components/View/Motion'
 import View from './Components/View/View'
 import Overview from './Views/Overview'
 import Calendar from './Views/Calendar'
@@ -18,7 +19,6 @@ import Options from './Views/Options'
 
 import 'Styles/index.scss'
 import 'Styles/Suite/suite.scss'
-import ViewMotion from './Components/View/Motion'
 
 interface Props {
 	socket: Socket

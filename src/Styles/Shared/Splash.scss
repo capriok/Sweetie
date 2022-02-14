@@ -14,55 +14,68 @@
 		#Splash-icon {
 			width: 15%;
 			max-width: 200px;
-			animation: breathe 2s infinite linear
-				alternate;
-		}
-	}
-	.shrink {
-		animation: shrink 0.6s linear;
-
-		@media (max-width: 500px) {
-			transform: rotate(90deg);
+			animation: beat 1.2s infinite linear;
 		}
 	}
 
 	#Splash-message {
-		position: fixed;
+		font-size: 2.5rem;
 		font-weight: bold;
-		left: 20px;
-		transform: rotate(90deg);
+		position: fixed;
+		bottom: 50px;
 		@media (max-width: 500px) {
 			display: none;
 		}
 	}
+
+	.Content-vert {
+		transform: rotate(90deg);
+	}
+	.Message-vert {
+		transform: rotate(90deg);
+		bottom: unset !important;
+		left: 0;
+	}
 }
 
-@keyframes shrink {
+@keyframes beat {
 	0% {
-		transform: scale(0.95);
+		transform: scale(1);
+	}
+	20% {
+		transform: scale(1.12);
+	}
+	40% {
+		transform: scale(1.04);
+	}
+	60% {
+		transform: scale(1.1);
+	}
+	80% {
+		transform: scale(1.07);
 	}
 	100% {
-		transform: scale(0.1);
+		transform: scale(1);
 	}
 }
 
-@keyframes breathe {
-	10%,
-	100% {
-		transform: scale(0.97);
-	}
-	20%,
-	40%,
-	80% {
-		transform: scale(0.94);
-	}
-	30%,
-	60%,
-	90% {
-		transform: scale(0.95);
-	}
-	50%,
-	70% {
-		transform: scale(0.93);
-	}
-}
+// @keyframes breathe {
+// 	10%,
+// 	100% {
+// 		transform: scale(0.95);
+// 	}
+// 	20%,
+// 	40%,
+// 	80% {
+// 		transform: scale(0.90);
+// 	}
+// 	30%,
+// 	60%,
+// 	90% {
+// 		transform: scale(0.93);
+// 	}
+// 	50%,
+// 	70% {
+// 		transform: scale(0.88);
+// 	}
+// }

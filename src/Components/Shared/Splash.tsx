@@ -7,14 +7,15 @@ const Splash: React.FC<any> = () => {
 	let isProd = process.env.NODE_ENV === 'production'
 	let isSweetie = window.location.pathname === '/sweetie'
 
-	const Splash_Orientation = isProd && isSweetie ? 'Splash-vert' : ''
+	const Splash_Orientation = isProd && isSweetie ? 'Content-vert' : ''
+	const Message_Orientation = isProd && isSweetie ? 'Message-vert' : ''
 
 	return (
 		<div className="splash">
 			<div id="Splash-content" className={Splash_Orientation}>
 				<img id="Splash-icon" src={Swt} alt="" />
 			</div>
-			<div id="Splash-message"></div>
+			<div id="Splash-message" className={Message_Orientation}></div>
 		</div>
 	)
 }

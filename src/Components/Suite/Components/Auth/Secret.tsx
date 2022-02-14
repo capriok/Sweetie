@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { differenceInCalendarDays } from 'date-fns'
+import { motion, MotionProps } from 'framer-motion'
+import { useLocalStorage } from 'Hooks/useLocalStorage'
 
 import Pinpad from './Pinpad'
 
@@ -9,8 +10,26 @@ import Pinview from './Pinview'
 const Secret: React.FC<any> = ({ auth, setAuth }) => {
 	const passcode = process.env.REACT_APP_PASSCODE
 
+	const [lsAuth, setLsAuth] = useLocalStorage('Swt-Auth')
+
 	const [loading, setloading] = useState(true)
 	const [pincode, setPincode] = useState<Array<number>>([])
+
+	useEffect(() => {
+		if (lsAuth) {
+			if (lsAuth.pass !== passcode) return
+			if (lsAuth.auth) {
+				setLsAuth({
+					...lsAuth,
+					last: new Date().toJSON()
+				})
+				return setAuth(true)
+			}
+		}
+		setloading(false)
+		return () => setloading(false)
+	}, [auth])
+
 
 	function digitClick(digit: number) {
 		if (pincode.length === 4) return
@@ -34,11 +53,11 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 	function submitPass() {
 		const pin: string = pincode.join('')
 		if (pin === passcode) {
-			localStorage.setItem('Swt-Auth', JSON.stringify({
+			setLsAuth({
 				pass: pin,
 				auth: true,
 				last: new Date().toJSON()
-			}))
+			})
 			animate('Welcome', () => setAuth(true))
 		} else {
 			animate('Invalid')
@@ -61,20 +80,30 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 		}, 250)
 	}
 
-	useEffect(() => {
-		const ls = localStorage.getItem('Swt-Auth')
-		if (ls) {
-			const lsPass: { pass: string, auth: boolean, last: string } = JSON.parse(ls)
-			const shouldRefresh = Math.abs(differenceInCalendarDays(new Date(lsPass.last), new Date())) > 6
-			if (lsPass.pass !== passcode) return
-			if (lsPass.auth && !shouldRefresh) return setAuth(true)
+	const slideDownProps: MotionProps = {
+		initial: 'hidden',
+		transition: {
+			duration: .5,
+		},
+		style: { width: '100%', },
+		variants: {
+			hidden: { opacity: 0, y: -40 },
+			visible: { opacity: 1, y: 0 }
 		}
-		setloading(false)
-		return () => setloading(false)
-	}, [auth])
+	}
 
 	return (
 		<div className="secret">
+			{/* <motion.div {...slideDownProps} animate={auth ? 'visible' : 'hidden'}>
+				{loading
+					? <></>
+					: <div id="pinpad">
+						<Pinview pincode={pincode.join('')} />
+						<Pinpad set={digitClick} />
+					</div>
+				}
+			</motion.div> */}
+
 			{loading
 				? <></>
 				: <div id="pinpad">
