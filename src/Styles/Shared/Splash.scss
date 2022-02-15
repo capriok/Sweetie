@@ -1,40 +1,35 @@
 @import "../index.scss";
 
-.splash {
+#Splash {
 	@include flex;
 	width: 100vw;
 	height: 100vh;
 
 	background-color: hsl(0, 0%, 92%);
 
-	#Splash-content {
+	.splash-content {
 		@include flex;
 		width: 100%;
 		height: 100%;
-		#Splash-icon {
+		.splash-icon {
 			width: 15%;
 			max-width: 200px;
 			animation: beat 1.2s infinite linear;
 		}
 	}
 
-	#Splash-message {
-		font-size: 2.5rem;
-		font-weight: bold;
+	#Splash-progress {
 		position: fixed;
-		bottom: 50px;
+		left: 0;
+		bottom: 0;
+		width: 10vw;
+		height: 20px;
+		background-color: black;
+		transition: width 0.1;
+
 		@media (max-width: 500px) {
 			display: none;
 		}
-	}
-
-	.Content-vert {
-		transform: rotate(90deg);
-	}
-	.Message-vert {
-		transform: rotate(90deg);
-		bottom: unset !important;
-		left: 0;
 	}
 }
 

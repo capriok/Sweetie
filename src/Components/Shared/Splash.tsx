@@ -1,23 +1,15 @@
 import React from 'react'
-import Swt from '../../Assets/sweetie-icon.png'
+import Swt from 'Assets/sweetie-icon.png'
 
-import '../../Styles/Shared/splash.scss'
+import 'Styles/Shared/splash.scss'
 
-const Splash: React.FC<any> = () => {
-	let isProd = process.env.NODE_ENV === 'production'
-	let isSweetie = window.location.pathname === '/sweetie'
-
-	const Splash_Orientation = isProd && isSweetie ? 'Content-vert' : ''
-	const Message_Orientation = isProd && isSweetie ? 'Message-vert' : ''
-
-	return (
-		<div className="splash">
-			<div id="Splash-content" className={Splash_Orientation}>
-				<img id="Splash-icon" src={Swt} alt="" />
-			</div>
-			<div id="Splash-message" className={Message_Orientation}></div>
+const Splash: React.FC<any> = () => (
+	<div id="Splash">
+		<div className="splash-content">
+			<img className="splash-icon" src={Swt} alt="" />
 		</div>
-	)
-}
+		<div id="Splash-progress" />
+	</div>
+)
 
 export default Splash

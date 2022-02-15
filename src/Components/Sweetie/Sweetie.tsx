@@ -16,10 +16,6 @@ interface Props {
 }
 
 const Sweetie: React.FC<Props> = (props) => {
-
-	let isProd = process.env.NODE_ENV === 'production'
-	const Swt_Orientation = isProd ? 'Sweetie-vert' : ''
-
 	const tiles = [
 		{ component: <DatetimeTile {...props} /> },
 		{ component: <CalendarTile {...props} /> },
@@ -29,7 +25,7 @@ const Sweetie: React.FC<Props> = (props) => {
 	]
 
 	return (
-		<div id="Sweetie" className={Swt_Orientation}>
+		<div id="Sweetie">
 			{tiles.map(({ component }, i) => (
 				<div id="Tile" key={i}>
 					{component}

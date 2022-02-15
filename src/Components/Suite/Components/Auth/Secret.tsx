@@ -30,7 +30,6 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 		return () => setloading(false)
 	}, [auth])
 
-
 	function digitClick(digit: number) {
 		if (pincode.length === 4) return
 
@@ -58,59 +57,37 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 				auth: true,
 				last: new Date().toJSON()
 			})
-			animate('Welcome', () => setAuth(true))
-		} else {
-			animate('Invalid')
-		}
-	}
-
-	function animate(type: string, cb = () => { }) {
-		let el: HTMLElement
-		if (type === 'Welcome')
-			el = document.getElementById('pinpad')!
-		else if (type === 'Invalid')
-			el = document.getElementById('pin')!
-
-		setTimeout(() => {
-			el.classList.add(type)
+			setloading(true)
 			setTimeout(() => {
-				cb()
-				setPincode([])
+				setAuth(true)
 			}, 500)
-		}, 250)
+		} else {
+			setTimeout(() => {
+				document.getElementById('pin')!.classList.add('invalid')
+				setTimeout(() => {
+					setPincode([])
+				}, 500)
+			}, 250)
+		}
 	}
 
 	const slideDownProps: MotionProps = {
 		initial: 'hidden',
-		transition: {
-			duration: .5,
-		},
-		style: { width: '100%', },
+		transition: { duration: .5 },
+		style: { width: '100%' },
 		variants: {
-			hidden: { opacity: 0, y: -40 },
+			hidden: { opacity: 0, y: -500 },
 			visible: { opacity: 1, y: 0 }
 		}
 	}
-
 	return (
 		<div className="secret">
-			{/* <motion.div {...slideDownProps} animate={auth ? 'visible' : 'hidden'}>
-				{loading
-					? <></>
-					: <div id="pinpad">
-						<Pinview pincode={pincode.join('')} />
-						<Pinpad set={digitClick} />
-					</div>
-				}
-			</motion.div> */}
-
-			{loading
-				? <></>
-				: <div id="pinpad">
+			<motion.div {...slideDownProps} animate={!loading ? 'visible' : 'hidden'}>
+				<div id="pinpad">
 					<Pinview pincode={pincode.join('')} />
 					<Pinpad set={digitClick} />
 				</div>
-			}
+			</motion.div>
 		</div>
 	)
 }

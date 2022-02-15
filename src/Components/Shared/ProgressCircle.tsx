@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../Styles/Shared/progress-circle.scss'
+import 'Styles/Shared/progress-circle.scss'
 
 interface Props {
 	h: number

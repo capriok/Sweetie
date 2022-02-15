@@ -20,6 +20,8 @@
       border-radius: 50%;
       border: 2px solid grey;
       background-color: rgb(20, 20, 20);
+
+      transition: all 0.1s;
       &:active {
         border: 2px solid white;
         transform: scale(0.95);

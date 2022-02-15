@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import Api from 'api'
 
 import ViewItem from '../Components/View/Item'
 
 import 'Styles/Suite/views/grocery.scss'
-import Api from 'api'
 
 const Grocery: React.FC<any> = (props) => {
 	const { socket, state } = props

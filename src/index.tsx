@@ -17,7 +17,7 @@ function Index() {
     ApplicationDate.setMinutes(ApplicationDate.getMinutes() - ApplicationDate.getTimezoneOffset())
     console.log('ApplicationDate:', ApplicationDate.toJSON())
 
-    if (process.env.NODE_ENV === 'development') return setServerIdle(false)
+    // if (process.env.NODE_ENV === 'development') return setServerIdle(false)
 
     if (isMobile) {
       if (lsAuth) {
@@ -29,6 +29,8 @@ function Index() {
       }
     }
 
+    const ProgressBar = document.getElementById('Splash-progress')!
+
     Api.ServerPing()
       .then(({ status }) => {
         if (status === 200) {
@@ -37,22 +39,21 @@ function Index() {
               setServerIdle(false)
             }, 1000)
           } else {
-            let seconds = 30
+            let ms = 0
             const countdown = setInterval(() => {
-              if (seconds < 1) return
-              document.getElementById('Splash-message')!.textContent = `Sweetie will wake up in ${seconds--}`
-            }, 1000)
-            setTimeout(() => {
-              clearInterval(countdown)
-              setTimeout(() => {
-                setServerIdle(false)
-              }, 1000)
-            }, 30000)
+              let progress = ms++ * 45 / 1000
+              if (progress >= 100) {
+                clearInterval(countdown)
+                return setServerIdle(false)
+              }
+              ProgressBar.style.width = `${progress}vw`
+            }, 10)
           }
         }
       })
       .catch(() => {
-        document.getElementById('Splash-message')!.textContent = 'Sweetie will not wake up'
+        ProgressBar.style.width = '100vw'
+        ProgressBar.style.backgroundColor = 'red'
       })
   }, [])
 
