@@ -41,7 +41,7 @@ function Index() {
           } else {
             let ms = 0
             const countdown = setInterval(() => {
-              let progress = ms++ * 45 / 1000
+              let progress = ms++ * 30 / 1000
               if (progress >= 100) {
                 clearInterval(countdown)
                 return setServerIdle(false)
