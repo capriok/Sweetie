@@ -1,0 +1,49 @@
+@import "../index.scss";
+
+.overview {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 10px;
+
+	.tile {
+		text-align: center;
+
+		&:nth-child(1),
+		&:nth-child(4) {
+			grid-column: span 2;
+		}
+		.tile-title {
+			width: 50%;
+			text-align: left;
+			font-weight: bold;
+			margin: 10px 0;
+		}
+		.tile-wrap {
+			@include flex;
+			height: 100px;
+
+			.ce-ov,
+			.cs-ov {
+				width: 100%;
+				p {
+					@include flex;
+					width: 100%;
+					&:not(:first-child) {
+						margin-top: 10px !important;
+					}
+				}
+			}
+			.ce-ov {
+				p {
+					justify-content: space-between;
+				}
+			}
+		}
+		.option-tile {
+			height: 50px !important;
+			color: $themefont !important;
+			background-color: $themelight !important;
+		}
+	}
+}

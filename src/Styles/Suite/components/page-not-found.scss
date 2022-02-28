@@ -1,9 +1,0 @@
-@import "../../index.scss";
-
-.page-not-found {
-	@include flex;
-	flex-direction: column;
-	width: 100vw;
-	height: 75vh;
-	color: black;
-}

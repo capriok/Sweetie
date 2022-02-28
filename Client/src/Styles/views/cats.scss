@@ -1,0 +1,38 @@
+@import "../index.scss";
+
+.cats {
+	@include flex;
+	flex-direction: column !important;
+	width: 100%;
+
+	.cats-title {
+		text-align: left;
+		font-weight: bold;
+		width: 100%;
+	}
+	.schedules {
+		@include flex;
+		width: 100%;
+		flex-direction: column;
+
+		.cats-title {
+			margin: 20px;
+		}
+		.progress-wrap {
+			width: 100%;
+			@include flex;
+			justify-content: space-between;
+			margin-bottom: 20px;
+
+			#Progress {
+				#svg circle {
+					stroke-width: 5px !important;
+				}
+				&:after {
+					width: 65px;
+					height: 65px;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,56 @@
+@import "./index.scss";
+
+#App {
+	* {
+		margin: 0;
+		padding: 0;
+		color: white;
+	}
+
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+
+	font-size: 2.4rem;
+	overflow: hidden;
+
+	background-size: cover;
+	background-image: url("../Assets/sweetie-bg.jpg");
+
+	#Module {
+		@include flex;
+		align-items: flex-start;
+		flex: 1;
+		padding: 0 100px;
+	}
+	#Line {
+		@include flex;
+		align-items: stretch;
+		width: 95vw;
+		margin: 0 auto;
+	}
+
+	.module-title {
+		font-size: 5rem;
+	}
+	.sub-title {
+		font-size: 3.5rem;
+	}
+	.w-line {
+		padding-bottom: 20px;
+		margin-bottom: 40px;
+		border-bottom: 2px solid grey;
+	}
+
+	.datetime-module,
+	.calendar-module,
+	.weather-module,
+	.cats-module,
+	.grocery-module {
+		margin: 120px 0;
+	}
+
+	#Progress {
+		$stroke-color: white !important;
+	}
+}

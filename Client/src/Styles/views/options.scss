@@ -1,0 +1,23 @@
+@import "../index.scss";
+
+.options {
+	width: 100%;
+	@include flex;
+	align-items: stretch;
+	flex-direction: column;
+	padding: 10px;
+
+	.option-wrap {
+		@include flex;
+		justify-content: space-between;
+		margin-bottom: 10px;
+	}
+	.authenticate,
+	.logout {
+		text-align: center;
+		margin-top: 20px;
+	}
+	input[type="color"] {
+		min-width: 50px;
+	}
+}

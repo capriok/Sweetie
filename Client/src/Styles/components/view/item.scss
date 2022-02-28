@@ -1,0 +1,29 @@
+@import "../../index.scss";
+
+#View .view-item * {
+	user-select: none;
+	cursor: pointer;
+}
+
+#View .view-item {
+	user-select: none;
+	cursor: pointer;
+	width: 100%;
+	padding: 15px;
+	border-radius: 10px;
+	box-shadow: $shadow;
+	background-color: $modelight;
+	transition: 0.2s;
+	P {
+		margin: unset;
+	}
+}
+
+#View .vi-active {
+	&:active {
+		transition: 0.2s;
+		transform: scale(0.98);
+		box-shadow: -2px 2px 6px -6px black;
+		background-color: $modelighter !important;
+	}
+}

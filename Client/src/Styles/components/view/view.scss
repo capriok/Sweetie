@@ -1,0 +1,13 @@
+@import "../../index.scss";
+
+#View {
+	@include flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 20px;
+
+	@media (min-width: 500px) {
+		max-width: $maxwidth;
+		margin: auto;
+	}
+}

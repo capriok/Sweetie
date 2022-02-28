@@ -1,0 +1,15 @@
+@import "../../index.scss";
+
+.animated-content {
+	position: absolute;
+	top: 0;
+	width: 100%;
+
+	.greeting,
+	.navigation,
+	.faq,
+	.rating,
+	.feedback {
+		width: 100%;
+	}
+}

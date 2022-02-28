@@ -1,0 +1,44 @@
+@import "../../index.scss";
+
+#View .view-actions {
+	margin-top: 60px;
+	width: 100%;
+
+	.actions-wrap {
+		position: fixed;
+		right: 20px;
+		bottom: 20px;
+
+		.actions-button,
+		.action {
+			font-size: 1.2rem;
+			user-select: none;
+			cursor: pointer;
+			@include flex;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			color: $themefont;
+			transition: all 0.2s;
+			&:active {
+				transform: scale(0.9);
+			}
+		}
+
+		.actions-button {
+			background-color: $theme;
+			&:active {
+				background-color: $themelight;
+			}
+		}
+
+		.action {
+			background-color: $themelight;
+			margin-bottom: 10px;
+			font-size: 1.2rem;
+			&:active {
+				background-color: $themelighter;
+			}
+		}
+	}
+}

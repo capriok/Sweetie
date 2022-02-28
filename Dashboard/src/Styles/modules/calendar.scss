@@ -1,0 +1,108 @@
+@import "../index.scss";
+
+.calendar-module {
+	width: 100%;
+	height: auto;
+	@include flex;
+	flex-direction: column;
+
+	$event-font-size: 1.6rem !important;
+
+	.calendar-cont {
+		width: 100%;
+		@include flex;
+		flex-direction: column;
+
+		.header {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			margin-bottom: 20px;
+			.weekday {
+				flex: 1;
+				width: 100%;
+				margin: 20px 0;
+				text-align: center;
+			}
+		}
+		.content {
+			width: 100%;
+			@include flex;
+			flex-wrap: wrap;
+
+			.day,
+			.null-day {
+				width: 100%;
+				max-width: calc(100% / 7.1);
+				height: 200px;
+				border: 1px solid #6e6e6e;
+			}
+			.blur-day {
+				* {
+					opacity: 0.7;
+				}
+				.number {
+					color: grey;
+				}
+			}
+			.day {
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+
+				background-color: rgba(10, 10, 10, 0.15);
+				.number {
+					font-size: 1.8rem !important;
+					margin: 10px;
+				}
+				.event {
+					font-size: $event-font-size;
+					padding: 7px 10px;
+					margin: 0;
+					@include flex;
+					justify-content: space-between;
+					background-color: rgba(80, 80, 80, 0.1);
+					.name {
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+					}
+					.timed {
+						margin-left: 5px;
+						min-width: fit-content;
+					}
+				}
+				.today-mark {
+					font-weight: bold;
+					color: rgb(212, 57, 88) !important;
+				}
+				.line {
+					border-bottom: 2px solid grey;
+					border-image-slice: 1;
+					border-image-source: linear-gradient(
+						to right,
+						grey,
+						#00000000
+					) !important;
+				}
+				.work {
+					border-bottom: 2px solid;
+					border-image-slice: 1;
+					border-image-source: linear-gradient(
+						to right,
+						#008026,
+						#00000000
+					) !important;
+				}
+			}
+			.null-day {
+				*,
+				.line,
+				.work {
+					display: none;
+				}
+			}
+		}
+	}
+}
