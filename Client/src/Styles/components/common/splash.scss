@@ -17,20 +17,6 @@
 			animation: beat 1.2s infinite linear;
 		}
 	}
-
-	#Splash-progress {
-		position: fixed;
-		left: 0;
-		bottom: 0;
-		width: 10vw;
-		height: 20px;
-		background-color: black;
-		transition: width 0.1;
-
-		@media (max-width: 500px) {
-			display: none;
-		}
-	}
 }
 
 @keyframes beat {

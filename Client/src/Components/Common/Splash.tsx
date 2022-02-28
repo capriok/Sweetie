@@ -8,7 +8,6 @@ const Splash: React.FC<any> = () => (
 		<div className="splash-content">
 			<img className="splash-icon" src={Swt} alt="" />
 		</div>
-		<div id="Splash-progress" />
 	</div>
 )
 
