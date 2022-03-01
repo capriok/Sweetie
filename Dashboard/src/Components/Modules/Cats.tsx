@@ -5,9 +5,7 @@ import ProgressCircle from 'Components/Common/ProgressCircle'
 import 'Styles/modules/cats.scss'
 
 interface Props {
-	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
 }
 
 const CatsModule: React.FC<Props> = (props) => {
@@ -37,16 +35,16 @@ const CatsModule: React.FC<Props> = (props) => {
 
 	return (
 		<div className="cats-module">
-			<div className="schedule">
-				<div className="labels sub-title">
-					<p>Food</p>
-					<p>Litter</p>
-				</div>
-				<div className="indicators">
+			<div className="schedules">
+				<div className="schedule">
+					<p className="sub-title">Food</p>
 					<ProgressCircle
 						{...circleProps}
 						progress={foodProgress}
 						percent={foodPercent} />
+				</div>
+				<div className="schedule">
+					<p className="sub-title">Waste</p>
 					<ProgressCircle
 						{...circleProps}
 						progress={wasteProgress}

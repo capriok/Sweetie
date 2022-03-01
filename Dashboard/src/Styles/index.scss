@@ -26,6 +26,14 @@ $shadow: -2px 2px 6px -4px black;
 * {
 	box-sizing: border-box;
 }
+h1,
+h2,
+h3,
+h4,
+p {
+	margin: 0;
+	padding: 0;
+}
 
 body {
 	margin: 0;

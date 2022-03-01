@@ -12,15 +12,7 @@ import 'Styles/app.scss'
 
 const App: React.FC = () => {
   const { socket } = useSocket()
-  const { loading, state, dispatch } = useDataFetch(socket)
-
-  if (loading) return <></>
-
-  const swtProps = {
-    socket,
-    state,
-    dispatch
-  }
+  const { loading, state } = useDataFetch(socket)
 
   const modules = [
     DatetimeModule,
@@ -32,9 +24,9 @@ const App: React.FC = () => {
 
   return (
     <div id="App">
-      {modules.map((Component, i) => (
+      {!loading && modules.map((Component, i) => (
         <div id="Module" key={i}>
-          <Component {...swtProps} />
+          <Component state={state} />
         </div>
       ))}
     </div>

@@ -5,22 +5,17 @@
 	@include flex;
 	flex-direction: column;
 
-	.schedule {
+	.schedules {
 		width: 100%;
 		@include flex;
-		flex-direction: column;
-		justify-content: space-evenly;
-		.labels {
-			margin-bottom: 60px;
-			p {
-				width: 100%;
-				text-align: center;
-			}
-		}
-		.labels,
-		.indicators {
-			width: 100%;
+		justify-content: space-around;
+		.schedule {
 			@include flex;
+			flex-direction: column;
+
+			.sub-title {
+				margin-bottom: 40px !important;
+			}
 		}
 
 		#Progress {

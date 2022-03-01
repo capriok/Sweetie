@@ -15,9 +15,7 @@ import {
 import 'Styles/modules/weather.scss'
 
 interface Props {
-	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
 }
 
 const WeatherModule: React.FC<Props> = () => {
