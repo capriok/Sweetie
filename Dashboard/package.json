@@ -5,8 +5,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "dev": "concurrently \"npm start\" \"cd.. & cd.. & cd Swt-Server & npm run dev\""
+    "build": "react-scripts build"
   },
   "dependencies": {
     "@types/node": "^17.0.8",
@@ -24,7 +23,6 @@
     "typescript": "^4.5.4"
   },
   "devDependencies": {
-    "concurrently": "^6.3.0",
     "sass": "^1.48.0"
   },
   "eslintConfig": {
