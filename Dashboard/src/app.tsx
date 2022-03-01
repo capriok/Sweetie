@@ -7,7 +7,7 @@ import Api from './api'
 import DatetimeModule from 'Components/Modules/Datetime'
 import WeatherModule from 'Components/Modules/Weather'
 import CalendarModule from 'Components/Modules/Calendar'
-import CatsModule from 'Components/Modules/Cats'
+import ProgressModule from 'Components/Modules/Progress'
 import GroceryModule from 'Components/Modules/Grocery'
 
 import 'Styles/app.scss'
@@ -56,7 +56,7 @@ const App: React.FC = () => {
     DatetimeModule,
     CalendarModule,
     WeatherModule,
-    CatsModule,
+    ProgressModule,
     GroceryModule
   ]
 

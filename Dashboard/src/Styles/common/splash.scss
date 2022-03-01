@@ -7,11 +7,11 @@
 
 	background-color: hsl(0, 0%, 92%);
 
-	.splash-content {
+	.splash-icon {
 		@include flex;
 		width: 100%;
 		height: 100%;
-		.splash-icon {
+		.swt-icon {
 			width: 15%;
 			max-width: 200px;
 			animation: beat 1.2s infinite linear;
@@ -22,9 +22,11 @@
 		position: fixed;
 		left: 0;
 		bottom: 0;
-		width: 10vw;
+		width: 0vw;
 		height: 20px;
 		background-color: black;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
 		transition: width 0.1;
 
 		@media (max-width: 500px) {

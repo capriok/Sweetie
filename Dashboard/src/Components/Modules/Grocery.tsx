@@ -16,8 +16,8 @@ const GroceryModule: React.FC<Props> = (props) => {
 
 	return (
 		<div className="grocery-module">
-			<div className="grocery">
-				<h3 className="sub-title w-line">Groceries</h3>
+			<div className="module-cont">
+				<h3 className="_module-title _underline">Groceries</h3>
 				<div className="items">
 					{groceryList.map((item: any, i) => (
 						<p key={i} className="item">{item.name}</p>

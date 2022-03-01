@@ -1,14 +1,7 @@
 @import "../index.scss";
 
 .calendar-module {
-	width: 100%;
-	height: auto;
-	@include flex;
-	flex-direction: column;
-
-	$event-font-size: 1.6rem !important;
-
-	.calendar-cont {
+	.module-cont {
 		width: 100%;
 		@include flex;
 		flex-direction: column;
@@ -53,11 +46,11 @@
 
 				background-color: rgba(10, 10, 10, 0.15);
 				.number {
-					font-size: 1.8rem !important;
+					font-size: 1.8rem;
 					margin: 10px;
 				}
 				.event {
-					font-size: $event-font-size;
+					font-size: 1.6rem;
 					padding: 7px 10px;
 					margin: 0;
 					@include flex;
@@ -75,7 +68,7 @@
 				}
 				.today-mark {
 					font-weight: bold;
-					color: rgb(212, 57, 88) !important;
+					color: rgb(212, 57, 88);
 				}
 				.line {
 					border-bottom: 2px solid grey;
@@ -84,7 +77,7 @@
 						to right,
 						grey,
 						#00000000
-					) !important;
+					);
 				}
 				.work {
 					border-bottom: 2px solid;
@@ -93,7 +86,7 @@
 						to right,
 						#008026,
 						#00000000
-					) !important;
+					);
 				}
 			}
 			.null-day {

@@ -2,30 +2,34 @@ import { useEffect, useState } from 'react'
 
 import ProgressCircle from 'Components/Common/ProgressCircle'
 
-import 'Styles/modules/cats.scss'
+import 'Styles/modules/progress.scss'
 
 interface Props {
 	state: SwtState
 }
 
-const CatsModule: React.FC<Props> = (props) => {
+const ProgressModule: React.FC<Props> = (props) => {
 	const { state } = props
 	const [foodProgress, setFoodProgress] = useState(0)
 	const [foodPercent, setFoodPercent] = useState(0)
 	const [wasteProgress, setWasteProgress] = useState(0)
 	const [wastePercent, setWastePercent] = useState(0)
+	// const [floorProgress, setFloorProgress] = useState(0)
+	// const [floorPercent, setFloorPercent] = useState(0)
 
 	useEffect(() => {
 		if (state.catSchedule) {
 			setFoodProgress(state.catSchedule.food.progress)
 			setWasteProgress(state.catSchedule.waste.progress)
+			// setFloorProgress(20)
 		}
 	}, [state.catSchedule])
 
 	useEffect(() => {
 		calculateCircleProgress(circleProps.r, foodProgress, setFoodPercent)
 		calculateCircleProgress(circleProps.r, wasteProgress, setWastePercent)
-	}, [foodProgress, wasteProgress])
+		// calculateCircleProgress(circleProps.r, floorProgress, setFloorPercent)
+	}, [foodProgress, wasteProgress, /*floorProgress*/])
 
 	function calculateCircleProgress(r: number, progress: number, setter: any) {
 		var c = Math.PI * (r * 2)
@@ -34,28 +38,35 @@ const CatsModule: React.FC<Props> = (props) => {
 	}
 
 	return (
-		<div className="cats-module">
-			<div className="schedules">
+		<div className="progress-module">
+			<div className="module-cont">
 				<div className="schedule">
-					<p className="sub-title">Food</p>
+					<p className="schedule-title _module-title">Food</p>
 					<ProgressCircle
 						{...circleProps}
 						progress={foodProgress}
 						percent={foodPercent} />
 				</div>
 				<div className="schedule">
-					<p className="sub-title">Waste</p>
+					<p className="schedule-title _module-title">Waste</p>
 					<ProgressCircle
 						{...circleProps}
 						progress={wasteProgress}
 						percent={wastePercent} />
 				</div>
+				{/* <div className="schedule">
+					<p className="schedule-title _module-title">Floor</p>
+					<ProgressCircle
+						{...circleProps}
+						progress={floorProgress}
+						percent={floorPercent} />
+				</div> */}
 			</div>
 		</div>
 	)
 }
 
-export default CatsModule
+export default ProgressModule
 
 const circleProps = {
 	h: 180,

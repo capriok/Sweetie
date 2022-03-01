@@ -28,7 +28,7 @@ const CalendarModule: React.FC<Props> = (props) => {
 
 	return (
 		<div className="calendar-module">
-			<div className="calendar-cont">
+			<div className="module-cont">
 				<div className="header">
 					{weekdays.map((weekday, i) => (
 						<div key={i} className="weekday">

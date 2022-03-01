@@ -15,8 +15,6 @@
 	border-radius: 5px;
 }
 
-$shadow: -2px 2px 6px -4px black;
-
 @mixin flex {
 	display: flex;
 	justify-content: center;
@@ -26,6 +24,7 @@ $shadow: -2px 2px 6px -4px black;
 * {
 	box-sizing: border-box;
 }
+
 h1,
 h2,
 h3,
@@ -41,4 +40,5 @@ body {
 	font-family: "Quicksand", sans-serif;
 	width: 100vw;
 	height: 100vh;
+	color: white;
 }

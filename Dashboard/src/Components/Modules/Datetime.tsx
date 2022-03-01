@@ -34,7 +34,7 @@ const DatetimeModule: React.FC<Props> = () => {
 
 	return (
 		<div className="datetime-module">
-			<div className="line">
+			<div className="module-cont">
 				<div className="date">{currentDate}</div>
 				<div className="time">{currentTime}</div>
 			</div>

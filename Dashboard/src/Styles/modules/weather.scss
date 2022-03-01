@@ -1,66 +1,65 @@
 @import "../index.scss";
 
 .weather-module {
-	width: 100%;
-	min-height: 500px;
-	@include flex;
-	justify-content: space-around;
-
-	.overview,
-	.stats {
-		@include flex;
-		align-items: stretch;
-		flex-direction: column;
+	.module-cont {
 		width: 100%;
-		max-width: 800px;
-		.top,
-		.mid,
-		.bot {
-			width: 100%;
-			@include flex;
-			justify-content: space-evenly;
-			.icon {
-				@include flex;
-				font-size: 5rem;
-			}
-		}
-		.line {
-			flex: 1;
-			@include flex;
-			justify-content: space-evenly;
-			width: 100%;
-		}
-	}
+		@include flex;
+		justify-content: space-between;
 
-	.overview {
-		.description {
-			font-size: 3rem;
-			margin: 0;
-			margin-bottom: 20px;
-		}
-		.mid {
-			.icon {
-				img {
-					width: 160px;
-					filter: drop-shadow(
-						-2px 2px 5px rgba(0, 0, 0, 0.3)
-					);
+		.overview,
+		.stats {
+			width: 45%;
+			@include flex;
+			align-items: stretch;
+			flex-direction: column;
+			.top,
+			.mid,
+			.bot {
+				width: 100%;
+				@include flex;
+				justify-content: space-evenly;
+				.icon {
+					@include flex;
+					font-size: 5rem;
 				}
 			}
-			.temperature {
-				font-size: 6.5rem;
+			.line {
+				flex: 1;
+				@include flex;
+				justify-content: space-evenly;
+				width: 100%;
 			}
 		}
-		.bot {
-			@include flex;
-			justify-content: space-evenly;
-		}
-	}
 
-	.stats {
-		.icon {
-			svg {
-				margin: 10px 40px;
+		.overview {
+			.description {
+				margin: 0;
+				margin-bottom: 20px;
+			}
+			.mid {
+				.icon {
+					img {
+						width: 160px;
+						filter: drop-shadow(
+							-2px 2px 5px rgba(0, 0, 0, 0.3)
+						);
+					}
+				}
+				.temperature {
+					font-size: 6.5rem;
+				}
+			}
+			.bot {
+				@include flex;
+				justify-content: space-evenly;
+			}
+		}
+
+		.stats {
+			.icon {
+				svg {
+					margin: 10px 40px;
+				}
 			}
 		}
 	}

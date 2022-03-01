@@ -1,15 +1,12 @@
 @import "../index.scss";
 
 .datetime-module {
-	@include flex;
-	flex-direction: column;
-	width: 100%;
 	margin-bottom: 0 !important;
 
-	.line {
+	.module-cont {
+		width: 100%;
 		@include flex;
 		justify-content: space-between;
-		width: 100%;
 	}
 	.date,
 	.time {
