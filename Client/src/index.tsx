@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
+import useSocket from 'Hooks/useSocket'
 import { useLocalStorage } from 'Hooks/useLocalStorage'
+
 import Api from './api'
 
 import App from './app'
 import Splash from 'Components/Common/Splash'
 
 function Index() {
+  const { socket } = useSocket()
+
   const [serverIdle, setServerIdle] = useState<boolean>(true)
   const [lsAuth] = useLocalStorage('Swt-Auth')
 
@@ -33,7 +37,7 @@ function Index() {
 
   if (serverIdle) return <Splash />
 
-  return <App />
+  return <App socket={socket} />
 }
 
 ReactDOM.render(

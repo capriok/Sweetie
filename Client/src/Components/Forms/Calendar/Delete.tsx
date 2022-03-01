@@ -26,8 +26,8 @@ const CalendarDelete: React.FC<Props> = (props) => {
 
 		if (confirmation) {
 			Api.RemoveCalendarEvent(event).then(ce => {
-				socket.emit('calendar-change', ce)
 				setEventList(ce)
+				socket.emit('calendar-change', ce)
 			})
 		}
 	}

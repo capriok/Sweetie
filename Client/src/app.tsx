@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import useSocket from 'Hooks/useSocket'
 import useDataFetch from 'Hooks/useDataFetch'
 import useAppMode from 'Hooks/useAppMode'
 import useAppTheme from 'Hooks/useAppTheme'
@@ -21,8 +20,12 @@ import Options from 'Views/Options'
 
 import 'Styles/app.scss'
 
-const App: React.FC = () => {
-  const { socket } = useSocket()
+interface Props {
+  socket: Socket
+}
+
+const App: React.FC<Props> = (props) => {
+  const { socket } = props
   const { loading, state, dispatch } = useDataFetch(socket)
 
   const [auth, setAuth] = useState<boolean>(false)
