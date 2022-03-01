@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { startOfToday } from 'date-fns'
-
 import Api from './api'
+
 import Splash from './Components/Common/Splash'
 import App from './app'
 

@@ -22,13 +22,21 @@ const App: React.FC = () => {
     dispatch
   }
 
+  const modules = [
+    DatetimeModule,
+    CalendarModule,
+    WeatherModule,
+    CatsModule,
+    GroceryModule
+  ]
+
   return (
     <div id="App">
-      <DatetimeModule {...swtProps} />
-      <CalendarModule {...swtProps} />
-      <WeatherModule {...swtProps} />
-      <CatsModule {...swtProps} />
-      <GroceryModule {...swtProps} />
+      {modules.map((Component, i) => (
+        <div id="Module" key={i}>
+          <Component {...swtProps} />
+        </div>
+      ))}
     </div>
   )
 }
