@@ -10,49 +10,57 @@ interface Props {
 }
 
 const INITIAL_FORM = {
-	lfd: new Date().toJSON().split('T')[0],
-	lwd: new Date().toJSON().split('T')[0]
+	foodDay: new Date().toJSON().split('T')[0],
+	wasteDay: new Date().toJSON().split('T')[0],
+	floorDay: new Date().toJSON().split('T')[0]
 }
 
 const ScheduleUpdate: React.FC<Props> = (props) => {
 	const { socket, closeForm } = props
 
-	const [catConfig, setCatConfig] = useState<any>({})
+	const [schedulesConfig, setSchedulesConfig] = useState<any>({})
 	const [form, setForm] = useState<any>(INITIAL_FORM)
 
 	useEffect(() => {
-		Api.GetCatConfig().then((cc) => {
-			setCatConfig({
-				lastFoodDay: cc.lastFoodDay,
-				lastWasteDay: cc.lastWasteDay
+		Api.GetSchedulesConfig().then((sc) => {
+			console.log(sc)
+			setSchedulesConfig({
+				lastFoodDay: sc.lastFoodDay,
+				lastWasteDay: sc.lastWasteDay,
+				lastFloorDay: sc.lastFloorDay
 			})
 		})
 	}, [])
 
 	useEffect(() => {
-		if (!catConfig.lastFoodDay || !catConfig.lastWasteDay) return
+		if (!schedulesConfig.lastFoodDay ||
+			!schedulesConfig.lastWasteDay ||
+			!schedulesConfig.lastFloorDay) return
 		setForm({
-			lfd: catConfig.lastFoodDay,
-			lwd: catConfig.lastWasteDay
+			foodDay: schedulesConfig.lastFoodDay,
+			wasteDay: schedulesConfig.lastWasteDay,
+			floorDay: schedulesConfig.lastFloorDay
 		})
-	}, [catConfig])
+	}, [schedulesConfig])
 
 	async function submit(e: any) {
 		e.preventDefault()
 
-		const lastFoodDay = new Date(form.lfd!)
-		const lastWasteDay = new Date(form.lwd!)
+		const lastFoodDay = new Date(form.foodDay!)
+		const lastWasteDay = new Date(form.wasteDay!)
+		const lastFloorDay = new Date(form.floorDay!)
 
 		let config = {
 			lastFoodDay: lastFoodDay.toJSON(),
-			lastWasteDay: lastWasteDay.toJSON()
+			lastWasteDay: lastWasteDay.toJSON(),
+			lastFloorDay: lastFloorDay.toJSON()
 		}
 
 		console.log('Updating', config)
-		Api.UpdateCatConfig(config).then(cc => {
-			setCatConfig(cc)
-			Api.GetCatSchedule().then(today => {
-				socket.emit('schedule-change', today)
+		Api.UpdateSchedulesConfig(config).then(sc => {
+			setSchedulesConfig(sc)
+			Api.GetSchedules().then(schedules => {
+				socket.emit('schedule-change', schedules)
 				closeForm()
 			})
 		})
@@ -69,16 +77,16 @@ const ScheduleUpdate: React.FC<Props> = (props) => {
 						<input
 							type="date"
 							max={new Date().toJSON().split('T')[0]}
-							value={new Date(form.lfd).toISOString().split('T')[0]}
-							onChange={(e) => setForm({ ...form, lfd: e.target.value })} />
+							value={new Date(form.foodDay).toISOString().split('T')[0]}
+							onChange={(e) => setForm({ ...form, foodDay: e.target.value })} />
 					</div>
 					<div className="form-line waste">
 						<label>Waste Day</label>
 						<input
 							type="date"
 							max={new Date().toJSON().split('T')[0]}
-							value={new Date(form.lwd).toISOString().split('T')[0]}
-							onChange={(e) => setForm({ ...form, lwd: e.target.value })} />
+							value={new Date(form.wasteDay).toISOString().split('T')[0]}
+							onChange={(e) => setForm({ ...form, wasteDay: e.target.value })} />
 					</div>
 					<div className="line-title">House</div>
 					<div className="form-line floor">
@@ -86,8 +94,8 @@ const ScheduleUpdate: React.FC<Props> = (props) => {
 						<input
 							type="date"
 							max={new Date().toJSON().split('T')[0]}
-							value={new Date(form.lwd).toISOString().split('T')[0]}
-							onChange={(e) => setForm({ ...form, flr: e.target.value })}
+							value={new Date(form.floorDay).toISOString().split('T')[0]}
+							onChange={(e) => setForm({ ...form, floorDay: e.target.value })}
 						/>
 					</div>
 					<div className="form-submit">

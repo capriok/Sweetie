@@ -13,27 +13,27 @@ const useDataFetch = (socket: Socket) => {
 	}, [])
 
 	useEffect(() => {
-		socket.on('calendar-update', (ce: Array<CalendarEvent>) => {
-			console.log({ UpdatedEvents: ce })
-			dispatch({ type: SwtReducerActions.SETCE, value: ce })
+		socket.on('calendar-update', (data: Array<CalendarEvent>) => {
+			console.log({ UpdatedCalendar: data })
+			dispatch({ type: SwtReducerActions.SETCALENDAR, value: data })
 		})
 
-		socket.on('grocery-update', (gl: Array<Grocery>) => {
-			console.log({ UpdatedGroceryList: gl })
-			dispatch({ type: SwtReducerActions.SETGL, value: gl })
+		socket.on('grocery-update', (data: Array<Grocery>) => {
+			console.log({ UpdatedGrocery: data })
+			dispatch({ type: SwtReducerActions.SETGROCERY, value: data })
 		})
 
-		socket.on('schedule-update', (today: CatScheduleDay) => {
-			console.log({ UpdatedCatConfig: today })
-			dispatch({ type: SwtReducerActions.SETCS, value: today })
+		socket.on('schedule-update', (data: ScheduleDay) => {
+			console.log({ UpdatedSchedule: data })
+			dispatch({ type: SwtReducerActions.SETSCHEDULE, value: data })
 		})
 	}, [])
 
 	function FetchData() {
 		const requests = [
-			{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCE },
-			{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGL },
-			{ req: Api.GetCatSchedule(), dispatch: SwtReducerActions.SETCS }
+			{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCALENDAR },
+			{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGROCERY },
+			{ req: Api.GetSchedules(), dispatch: SwtReducerActions.SETSCHEDULE }
 		]
 		Promise.all(requests.map((req: any) => req.req))
 			.then((responses) => {

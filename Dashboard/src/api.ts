@@ -26,29 +26,29 @@ class Api {
 	// WEATHER
 
 	public async GetWeatherStats(): Promise<any> {
-		const res = await AxiosInstance.get('/ws')
+		const res = await AxiosInstance.get('/weather')
 		return res.data.stats
 	}
 
-	// CALENDAR EVENTS 
+	// CALENDAR
 
 	public async GetCalendarEvents(): Promise<Array<CalendarEvent>> {
-		const res = await AxiosInstance.get('/ce')
+		const res = await AxiosInstance.get('/calendar')
 		return res.data.list
 	}
 
-	// GROCERIES
+	// GROCERY
 
 	public async GetGroceryList(): Promise<Array<Grocery>> {
-		const res = await AxiosInstance.get('/gl')
+		const res = await AxiosInstance.get('/grocery')
 		return res.data.list
 	}
 
-	// CATS
+	// SCHEDULE
 
-	public async GetCatSchedule(): Promise<CatScheduleDay> {
-		const res = await AxiosInstance.get('/cs')
-		return res.data.today
+	public async GetCatSchedule(): Promise<ScheduleDay> {
+		const res = await AxiosInstance.get('/schedule')
+		return res.data.schedules
 	}
 
 }

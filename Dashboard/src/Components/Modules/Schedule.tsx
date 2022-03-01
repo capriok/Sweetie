@@ -16,12 +16,12 @@ const ScheduleModule: React.FC<Props> = (props) => {
 	const [floorProgress, setFloorProgress] = useState(0)
 
 	useEffect(() => {
-		if (state.catSchedule) {
-			setFoodProgress(state.catSchedule.food.progress)
-			setWasteProgress(state.catSchedule.waste.progress)
-			setFloorProgress(20)
+		if (state.schedules) {
+			setFoodProgress(state.schedules.food.progress)
+			setWasteProgress(state.schedules.waste.progress)
+			setFloorProgress(state.schedules.floor.progress)
 		}
-	}, [state.catSchedule])
+	}, [state.schedules])
 
 	return (
 		<div className="schedule-module">

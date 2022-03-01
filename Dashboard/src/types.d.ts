@@ -1,21 +1,21 @@
 type Socket = SocketIOClient.Socket
 
 interface SwtState {
-	calendarEvents: CalendarEvent[]
-	groceryList: Grocery[]
-	catSchedule: CatScheduleDay
+	calendarEvents: Array<CalendarEvent>
+	groceryList: Array<Grocery>
+	schedules: CatScheduleDay
 }
 
 enum SwtReducerActions {
-	SETCE = 'CalendarEvents',
-	SETGL = 'GroceryList',
-	SETCS = 'CatSchedule'
+	SETCALENDAR = 'Calendar',
+	SETGROCERY = 'Grocery',
+	SETSCHEDULE = 'Schedule'
 }
 
 type SwtAction =
-	{ type: SwtReducerActions.SETCE, value: CalendarEvent[] } |
-	{ type: SwtReducerActions.SETGL, value: Grocery[] } |
-	{ type: SwtReducerActions.SETCS, value: CatScheduleDay }
+	{ type: SwtReducerActions.SETCALENDAR, value: Array<CalendarEvent> } |
+	{ type: SwtReducerActions.SETGROCERY, value: Array<Grocery> } |
+	{ type: SwtReducerActions.SETSCHEDULE, value: CatScheduleDay }
 
 interface ViewAction {
 	type: string
@@ -37,19 +37,17 @@ interface Grocery {
 	checked: boolean
 }
 
-type CatConfig = {
-	_id?: string
-	lastFoodDay: string
-	lastWasteDay: string
-}
-
-type CatScheduleDay = {
+type ScheduleDay = {
 	date: string
 	food: {
 		is: boolean
 		progress: number
 	}
 	waste: {
+		is: boolean
+		progress: number
+	}
+	floor: {
 		is: boolean
 		progress: number
 	}

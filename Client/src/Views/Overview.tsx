@@ -38,15 +38,18 @@ const Overview: React.FC<Props> = (props) => {
 	}
 
 	function renderScheduleOverview() {
-		const isFoodDay = state.catSchedule.food.is
-		const isWasteDay = state.catSchedule.waste.is
+		const isFoodDay = state.schedules.food.is
+		const isWasteDay = state.schedules.waste.is
+		const isFloorDay = state.schedules.floor.is
 
-		if (!isFoodDay && !isWasteDay) {
+		if (!isFoodDay && !isWasteDay && !isFloorDay) {
 			return <p>Day off</p>
-		} else if (isFoodDay && !isWasteDay) {
+		} else if (isFoodDay && (!isWasteDay || !isFloorDay)) {
 			return <p>Food Day</p>
-		} else if (isWasteDay && !isFoodDay) {
-			return <p>Litter Day</p>
+		} else if (isWasteDay && (!isFoodDay || !isFloorDay)) {
+			return <p>Waste Day</p>
+		} else if (isFloorDay && (!isFoodDay || !isWasteDay)) {
+			return <p>Floor Day</p>
 		} else {
 			return <div className="cs-ov">
 				<p>Food Day</p>
