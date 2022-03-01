@@ -7,7 +7,7 @@ import Api from './api'
 import DatetimeModule from 'Components/Modules/Datetime'
 import WeatherModule from 'Components/Modules/Weather'
 import CalendarModule from 'Components/Modules/Calendar'
-import ProgressModule from 'Components/Modules/Progress'
+import ScheduleModule from 'Components/Modules/Schedule'
 import GroceryModule from 'Components/Modules/Grocery'
 
 import 'Styles/app.scss'
@@ -36,33 +36,35 @@ const App: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    socket.on('ce-update', (ce: Array<CalendarEvent>) => {
+    socket.on('calendar-update', (ce: Array<CalendarEvent>) => {
       console.log({ UpdatedCelendarEvents: ce })
       dispatch({ type: SwtReducerActions.SETCE, value: ce })
     })
 
-    socket.on('gl-update', (gl: Array<Grocery>) => {
+    socket.on('grocery-update', (gl: Array<Grocery>) => {
       console.log({ UpdatedGroceryList: gl })
       dispatch({ type: SwtReducerActions.SETGL, value: gl })
     })
 
-    socket.on('cs-update', (today: CatScheduleDay) => {
+    socket.on('schedule-update', (today: CatScheduleDay) => {
       console.log({ UpdatedCatSchedule: today })
       dispatch({ type: SwtReducerActions.SETCS, value: today })
     })
-  }, [])
+  }, [socket])
 
   const modules = [
     DatetimeModule,
     CalendarModule,
     WeatherModule,
-    ProgressModule,
+    ScheduleModule,
     GroceryModule
   ]
 
+  if (loading) return <div id="App" />
+
   return (
     <div id="App">
-      {!loading && modules.map((Component, i) => (
+      {modules.map((Component, i) => (
         <div id="Module" key={i}>
           <Component state={state} />
         </div>

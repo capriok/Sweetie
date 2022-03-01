@@ -8,12 +8,16 @@
 		@include flex;
 		flex-direction: column;
 
+		.no-items {
+			margin-top: 50px;
+		}
 		.items {
 			width: 100%;
 			margin: 0 auto;
 			@include flex;
 			flex-wrap: wrap;
 			justify-content: flex-start;
+
 			.item {
 				text-align: center;
 				min-width: 33%;
