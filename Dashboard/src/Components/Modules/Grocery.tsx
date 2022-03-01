@@ -3,9 +3,7 @@ import { useEffect, useState } from 'react'
 import 'Styles/modules/grocery.scss'
 
 interface Props {
-	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
 }
 
 const GroceryModule: React.FC<Props> = (props) => {

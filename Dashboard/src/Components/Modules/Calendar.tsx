@@ -5,9 +5,7 @@ import useCalendarDays from 'Hooks/useCalendarDays'
 import 'Styles/modules/calendar.scss'
 
 interface Props {
-	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
 }
 
 const CalendarModule: React.FC<Props> = (props) => {

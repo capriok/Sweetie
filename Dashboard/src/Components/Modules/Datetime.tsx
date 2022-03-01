@@ -4,9 +4,7 @@ import { format } from 'date-fns'
 import 'Styles/modules/datetime.scss'
 
 interface Props {
-	socket: Socket
 	state: SwtState
-	dispatch: React.Dispatch<SwtAction>
 }
 
 const DatetimeModule: React.FC<Props> = () => {
@@ -21,7 +19,7 @@ const DatetimeModule: React.FC<Props> = () => {
 	}, [currentTime])
 
 	function getTime() {
-		const time = format(new Date(), 'pp')
+		const time = format(new Date(), 'p')
 
 		return time
 	}
