@@ -77,9 +77,9 @@ const CalendarUpdate: React.FC<Props> = (props) => {
 		if (form.startTime !== event.startTime) event.startTime = form.startTime
 		if (form.endTime !== event.endTime) event.endTime = form.endTime
 
-		console.log(event);
+		console.log(event)
 		Api.UpdateCalendarEvent(event).then(ce => {
-			socket.emit('ce-change', ce)
+			socket.emit('calendar-change', ce)
 			closeForm()
 		})
 	}

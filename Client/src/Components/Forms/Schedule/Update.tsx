@@ -14,7 +14,7 @@ const INITIAL_FORM = {
 	lwd: new Date().toJSON().split('T')[0]
 }
 
-const CatsUpdate: React.FC<Props> = (props) => {
+const ScheduleUpdate: React.FC<Props> = (props) => {
 	const { socket, closeForm } = props
 
 	const [catConfig, setCatConfig] = useState<any>({})
@@ -52,7 +52,7 @@ const CatsUpdate: React.FC<Props> = (props) => {
 		Api.UpdateCatConfig(config).then(cc => {
 			setCatConfig(cc)
 			Api.GetCatSchedule().then(today => {
-				socket.emit('cs-change', today)
+				socket.emit('schedule-change', today)
 				closeForm()
 			})
 		})
@@ -63,6 +63,7 @@ const CatsUpdate: React.FC<Props> = (props) => {
 			<div className="form-wrap">
 				<div className="title">Update</div>
 				<form onSubmit={(e) => submit(e)}>
+					<div className="line-title">Cats</div>
 					<div className="form-line food">
 						<label>Food Day</label>
 						<input
@@ -79,6 +80,16 @@ const CatsUpdate: React.FC<Props> = (props) => {
 							value={new Date(form.lwd).toISOString().split('T')[0]}
 							onChange={(e) => setForm({ ...form, lwd: e.target.value })} />
 					</div>
+					<div className="line-title">House</div>
+					<div className="form-line floor">
+						<label>Floor Day</label>
+						<input
+							type="date"
+							max={new Date().toJSON().split('T')[0]}
+							value={new Date(form.lwd).toISOString().split('T')[0]}
+							onChange={(e) => setForm({ ...form, flr: e.target.value })}
+						/>
+					</div>
 					<div className="form-submit">
 						<button className="submit" type="submit">Submit</button>
 					</div>
@@ -88,4 +99,4 @@ const CatsUpdate: React.FC<Props> = (props) => {
 	)
 }
 
-export default CatsUpdate
+export default ScheduleUpdate

@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
+import useSocket from 'Hooks/useSocket'
+import useDataFetch from 'Hooks/useDataFetch'
 import useAppMode from 'Hooks/useAppMode'
 import useAppTheme from 'Hooks/useAppTheme'
-import useDataFetch from './Hooks/useDataFetch'
-import useSocket from './Hooks/useSocket'
 
-import Secret from './Components/Auth/Secret'
-import ViewMotion from './Components/View/Motion'
-import View from './Components/View/View'
-import Overview from './Views/Overview'
-import Calendar from './Views/Calendar'
-import CalendarPost from './Components/Forms/Calendar/Post'
-import CalendarUpdate from './Components/Forms/Calendar/Update'
-import CalendarDelete from './Components/Forms/Calendar/Delete'
-import Grocery from './Views/Grocery'
-import GroceryPost from './Components/Forms/Grocery/Post'
-import GroceryDelete from './Components/Forms/Grocery/Delete'
-import Cats from './Views/Cats'
-import CatsUpdate from './Components/Forms/Cats/Update'
-import Options from './Views/Options'
+import Secret from 'Components/Auth/Secret'
+import ViewMotion from 'Components/View/Motion'
+import View from 'Components/View/View'
+import Overview from 'Views/Overview'
+import Calendar from 'Views/Calendar'
+import CalendarPost from 'Components/Forms/Calendar/Post'
+import CalendarUpdate from 'Components/Forms/Calendar/Update'
+import CalendarDelete from 'Components/Forms/Calendar/Delete'
+import Grocery from 'Views/Grocery'
+import GroceryPost from 'Components/Forms/Grocery/Post'
+import GroceryDelete from 'Components/Forms/Grocery/Delete'
+import Schedule from 'Views/Schedule'
+import ScheduleUpdate from 'Components/Forms/Schedule/Update'
+import Options from 'Views/Options'
 
 import 'Styles/app.scss'
 
@@ -87,7 +87,7 @@ const App: React.FC = () => {
         variants={fromRightVariants}
         component={
           <View
-            title="Calendar"
+            title="Calendar Events"
             props={suiteProps}
             component={Calendar}
             actions={[
@@ -102,7 +102,7 @@ const App: React.FC = () => {
         variants={fromRightVariants}
         component={
           <View
-            title="Grocery"
+            title="Groceries"
             props={suiteProps}
             component={Grocery}
             actions={[
@@ -112,15 +112,15 @@ const App: React.FC = () => {
           />
         } />
       <ViewMotion
-        visible={component.cats}
+        visible={component.schedule}
         variants={fromRightVariants}
         component={
           <View
-            title="Cats"
+            title="Schedules"
             props={suiteProps}
-            component={Cats}
+            component={Schedule}
             actions={[
-              { type: 'update', component: CatsUpdate }
+              { type: 'update', component: ScheduleUpdate }
             ]}
           />
         } />

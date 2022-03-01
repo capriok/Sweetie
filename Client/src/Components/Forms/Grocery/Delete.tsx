@@ -10,17 +10,16 @@ interface Props {
 	closeForm: () => React.SetStateAction<any>
 }
 
-
 const GroceryDelete: React.FC<Props> = (props) => {
 	const { socket, state, closeForm } = props
 
 	function clearAllClick() {
 		const confirmation = window.confirm(
 			'Clear all items?'
-		);
+		)
 		if (confirmation) {
 			Api.RemoveAllGrocery().then(gl => {
-				socket.emit('gl-change', gl)
+				socket.emit('grocery-change', gl)
 				closeForm()
 			})
 		}
@@ -32,11 +31,9 @@ const GroceryDelete: React.FC<Props> = (props) => {
 		const confirmation = window.confirm(
 			'Clear checked items?'
 		)
-		console.log(confirmation)
-
 		if (confirmation) {
 			Api.RemoveCheckedGrocery().then(gl => {
-				socket.emit('gl-change', gl)
+				socket.emit('grocery-change', gl)
 				closeForm()
 			})
 		}

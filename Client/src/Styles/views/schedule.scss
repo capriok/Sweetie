@@ -1,11 +1,11 @@
 @import "../index.scss";
 
-.cats {
+.schedule {
 	@include flex;
 	flex-direction: column !important;
 	width: 100%;
 
-	.cats-title {
+	.schedule-title {
 		text-align: left;
 		font-weight: bold;
 		width: 100%;
@@ -15,10 +15,10 @@
 		width: 100%;
 		flex-direction: column;
 
-		.cats-title {
+		.schedule-title {
 			margin: 20px;
 		}
-		.progress-wrap {
+		.schedule-wrap {
 			width: 100%;
 			@include flex;
 			justify-content: space-between;

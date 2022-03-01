@@ -56,9 +56,9 @@ const CalendarPost: React.FC<Props> = (props) => {
 			endTime: form.endTime || ''
 		}
 
-		console.log(event);
+		console.log(event)
 		Api.PostCalendarEvent(event).then(ce => {
-			socket.emit('ce-change', ce)
+			socket.emit('calendar-change', ce)
 		})
 	}
 

@@ -7,7 +7,12 @@ import Pinview from './Pinview'
 
 import 'Styles/components/auth/secret.scss'
 
-const Secret: React.FC<any> = ({ auth, setAuth }) => {
+interface Props {
+	auth: boolean
+	setAuth: React.Dispatch<boolean>
+}
+
+const Secret: React.FC<Props> = ({ auth, setAuth }) => {
 	const passcode = process.env.REACT_APP_PASSCODE
 
 	const [lsAuth, setLsAuth] = useLocalStorage('Swt-Auth')
@@ -33,7 +38,7 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 	function digitClick(digit: number) {
 		if (pincode.length === 4) return
 
-		document.getElementById('pin')!.classList.remove('Invalid')
+		document.getElementById('pin')!.classList.remove('invalid')
 
 		let pin = [...pincode]
 		if (digit === -1) {
@@ -63,7 +68,7 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 			}, 500)
 		} else {
 			setTimeout(() => {
-				document.getElementById('pin')!.classList.add('invalid')
+				document.getElementById('pin')!.classList.toggle('invalid')
 				setTimeout(() => {
 					setPincode([])
 				}, 500)
@@ -84,7 +89,7 @@ const Secret: React.FC<any> = ({ auth, setAuth }) => {
 		<div className="secret">
 			<motion.div {...slideDownProps} animate={!loading ? 'visible' : 'hidden'}>
 				<div id="pinpad">
-					<Pinview pincode={pincode.join('')} />
+					<Pinview pincode={pincode} />
 					<Pinpad set={digitClick} />
 				</div>
 			</motion.div>

@@ -5,7 +5,12 @@ import ViewItem from 'Components/View/Item'
 
 import 'Styles/views/grocery.scss'
 
-const Grocery: React.FC<any> = (props) => {
+interface Props {
+	socket: Socket
+	state: SwtState
+}
+
+const Grocery: React.FC<Props> = (props) => {
 	const { socket, state } = props
 
 	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
@@ -17,7 +22,7 @@ const Grocery: React.FC<any> = (props) => {
 			checked: val
 		}
 		Api.UpdateGrocery(item).then(gl => {
-			socket.emit('gl-change', gl)
+			socket.emit('grocery-list-change', gl)
 		})
 	}
 

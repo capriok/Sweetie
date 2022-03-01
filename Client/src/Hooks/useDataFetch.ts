@@ -13,17 +13,17 @@ const useDataFetch = (socket: Socket) => {
 	}, [])
 
 	useEffect(() => {
-		socket.on('ce-update', (ce: Array<CalendarEvent>) => {
+		socket.on('calendar-update', (ce: Array<CalendarEvent>) => {
 			console.log({ UpdatedEvents: ce })
 			dispatch({ type: SwtReducerActions.SETCE, value: ce })
 		})
 
-		socket.on('gl-update', (gl: Array<Grocery>) => {
+		socket.on('grocery-update', (gl: Array<Grocery>) => {
 			console.log({ UpdatedGroceryList: gl })
 			dispatch({ type: SwtReducerActions.SETGL, value: gl })
 		})
 
-		socket.on('cs-update', (today: CatScheduleDay) => {
+		socket.on('schedule-update', (today: CatScheduleDay) => {
 			console.log({ UpdatedCatConfig: today })
 			dispatch({ type: SwtReducerActions.SETCS, value: today })
 		})

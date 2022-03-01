@@ -9,7 +9,6 @@ interface Props {
 	closeForm: () => React.SetStateAction<any>
 }
 
-
 interface FormState {
 	names: Array<string>
 	checked: boolean
@@ -42,9 +41,9 @@ const GroceryPost: React.FC<Props> = (props) => {
 			checked: false
 		}
 
-		console.log(item);
+		console.log(item)
 		Api.PostGrocery(item).then(gl => {
-			socket.emit('gl-change', gl)
+			socket.emit('grocery-change', gl)
 		})
 	}
 

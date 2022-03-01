@@ -37,7 +37,7 @@ const Overview: React.FC<Props> = (props) => {
 		return <p>{groceryItems} Items</p>
 	}
 
-	function renderCatsOverview() {
+	function renderScheduleOverview() {
 		const isFoodDay = state.catSchedule.food.is
 		const isWasteDay = state.catSchedule.waste.is
 
@@ -68,9 +68,9 @@ const Overview: React.FC<Props> = (props) => {
 				{renderGroceryOverview()}
 			</Tile>
 			<Tile
-				title="Cats"
-				onClick={() => dispatchView('cats')}>
-				{renderCatsOverview()}
+				title="Schedules"
+				onClick={() => dispatchView('schedule')}>
+				{renderScheduleOverview()}
 			</Tile>
 			<Tile
 				title="Options"

@@ -5,7 +5,11 @@ import ViewItem from 'Components/View/Item'
 
 import 'Styles/views/calendar.scss'
 
-const Calendar: React.FC<any> = (props) => {
+interface Props {
+	state: SwtState
+}
+
+const Calendar: React.FC<Props> = (props) => {
 	const { state } = props
 
 	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])
