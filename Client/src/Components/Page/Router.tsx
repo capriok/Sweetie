@@ -4,25 +4,25 @@ import { MotionProps, motion } from 'framer-motion'
 
 import { MdMoreHoriz, MdMoreVert, MdPostAdd, MdOutlineUpdate, MdDeleteOutline } from 'react-icons/md'
 
-import 'Styles/components/view/actions.scss'
+import 'Styles/components/page/router.scss'
 
 interface Props {
 	open: boolean
 	setOpen: React.Dispatch<boolean>
-	actions: Array<SubRoute>
+	routes: Array<SubRoute>
 }
 
-const ViewActions: React.FC<Props> = (props) => {
-	const { open, setOpen, actions } = props
+const PageRouter: React.FC<Props> = (props) => {
+	const { open, setOpen, routes: router } = props
 
 	const navigate = useNavigate()
 
-	const actionButtonProps = {
+	const routerButtonProps = {
 		open,
 		toggle: () => setOpen(!open)
 	}
 
-	function actionClick(path: string) {
+	function routeClick(path: string) {
 		navigate(path)
 		setOpen(false)
 	}
@@ -43,46 +43,43 @@ const ViewActions: React.FC<Props> = (props) => {
 		}
 	}
 
-	if (!actions.length) return <></>
+	if (!router.length) return <></>
 
 	return (
-		<div className="view-actions">
-			<div className="actions-wrap">
+		<div className="page-router">
+			<div className="router-wrap">
 				<motion.div {...slideUpProps}>
-					{open && actions.map((action, i) => (
-						<Action
+					{open && router.map((action, i) => (
+						<Route
 							key={i}
 							path={action.path}
-							onClick={() => actionClick(action.path)} />
+							onClick={() => routeClick(action.path)} />
 					))}
 				</motion.div>
-				<ActionsButton {...actionButtonProps} />
+				<RouterButton {...routerButtonProps} />
 			</div>
 		</div>
 	)
 }
 
-export default ViewActions
+export default PageRouter
 
-const ActionsButton: React.FC<any> = ({ open, toggle }) => (
+const RouterButton: React.FC<any> = ({ open, toggle }) => (
 	<div
-		className="actions-button"
+		className="router-button"
 		onClick={toggle}>
 		{!open ? <MdMoreHoriz /> : <MdMoreVert />}
 	</div>
 )
 
-const Action: React.FC<any> = ({ path, onClick }) => {
-	console.log(path);
-
+const Route: React.FC<any> = ({ path, onClick }) => {
 	switch (path) {
 		case 'post':
-			return <div className="action" onClick={onClick}><MdPostAdd /></div>
+			return <div className="route" onClick={onClick}><MdPostAdd /></div>
 		case 'update':
-			return <div className="action" onClick={onClick}><MdOutlineUpdate /></div>
+			return <div className="route" onClick={onClick}><MdOutlineUpdate /></div>
 		case 'delete':
-			return <div className="action" onClick={onClick}><MdDeleteOutline /></div>
-
+			return <div className="route" onClick={onClick}><MdDeleteOutline /></div>
 		default:
 			return <></>
 	}

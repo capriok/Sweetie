@@ -1,16 +1,16 @@
 import React from 'react'
 
-import 'Styles/components/view/item.scss'
+import 'Styles/components/page/item.scss'
 
 interface Props {
 	className?: string
 	onClick?: () => any
 }
 
-const ViewItem: React.FC<Props> = (props) => {
+const PageItem: React.FC<Props> = (props) => {
 
 	const itemProps = {
-		className: 'view-item ' + props.className,
+		className: 'page-item ' + props.className,
 		onClick: props.onClick
 	}
 
@@ -21,4 +21,4 @@ const ViewItem: React.FC<Props> = (props) => {
 	)
 }
 
-export default ViewItem
+export default PageItem

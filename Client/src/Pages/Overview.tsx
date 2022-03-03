@@ -2,16 +2,16 @@ import React from 'react'
 import { useNavigate } from "react-router-dom"
 import { DatesAreOnSameDay } from 'Helpers/TimeHelp'
 
-import ViewItem from 'Components/View/Item'
+import PageItem from 'Components/Page/Item'
 
-import 'Styles/views/overview.scss'
+import 'Styles/pages/overview.scss'
 
 interface Props {
 	socket: Socket
 	state: SwtState
 }
 
-const Overview: React.FC<Props> = (props) => {
+const OverviewPage: React.FC<Props> = (props) => {
 	const { state } = props
 	const navigate = useNavigate()
 
@@ -63,44 +63,44 @@ const Overview: React.FC<Props> = (props) => {
 		<div className="overview">
 			<Tile
 				title="Todays Events"
-				onClick={() => navigate('calendar')}>
+				onClick={() => navigate('/calendar')}>
 				{renderCalendarOverview()}
 			</Tile>
 			<Tile
 				title="Groceries"
-				onClick={() => navigate('grocery')}>
+				onClick={() => navigate('/grocery')}>
 				{renderGroceryOverview()}
 			</Tile>
 			<Tile
 				title="Schedules"
-				onClick={() => navigate('schedule')}>
+				onClick={() => navigate('/schedule')}>
 				{renderScheduleOverview()}
 			</Tile>
 			<Tile
 				title="Options"
 				cname="option-tile"
-				onClick={() => navigate('options')}>
+				onClick={() => navigate('/options')}>
 				Options
 			</Tile>
 		</div>
 	)
 }
 
-export default Overview
+export default OverviewPage
 
 const Tile: React.FC<any> = ({ title, onClick, cname, children }) => {
 	const tileProps = {
 		onClick,
-		className: `tile-wrap vi-active${cname ? ` ${cname}` : ''}`
+		className: `tile-wrap pi-active${cname ? ` ${cname}` : ''}`
 	}
 	return (
 		<div className="tile">
 			<div className="tile-title">
 				<h4>{title}</h4>
 			</div>
-			<ViewItem {...tileProps}>
+			<PageItem {...tileProps}>
 				{children}
-			</ViewItem>
+			</PageItem>
 		</div>
 	)
 }

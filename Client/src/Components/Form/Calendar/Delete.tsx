@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { FormatEventTimes } from 'Helpers/TimeHelp'
 import Api from 'api'
 
-import ViewItem from 'Components/View/Item'
+import PageItem from 'Components/Page/Item'
 
-import 'Styles/components/forms/form.scss'
+import 'Styles/components/form/form.scss'
 
 interface Props {
 	socket: Socket
@@ -39,7 +39,7 @@ const CalendarDelete: React.FC<Props> = (props) => {
 				<div className="calendar">
 					{eventList.map((event, i) => (
 						<div key={i} className="event">
-							<ViewItem
+							<PageItem
 								className="event-wrap"
 								onClick={() => deleteClick(event)}>
 								<div className="name">
@@ -55,7 +55,7 @@ const CalendarDelete: React.FC<Props> = (props) => {
 										{`${event.timed ? `, ${FormatEventTimes(event)}` : ''}`}
 									</span>
 								</div>
-							</ViewItem>
+							</PageItem>
 						</div>
 					))}
 				</div>

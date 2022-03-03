@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import Api from 'api'
 
-import 'Styles/components/forms/form.scss'
+import 'Styles/components/form/form.scss'
 
 interface Props {
 	socket: Socket
 	state: SwtState
-	closeForm: () => React.Dispatch<any>
 }
 
 const INITIAL_FORM = {
@@ -16,7 +16,9 @@ const INITIAL_FORM = {
 }
 
 const ScheduleUpdate: React.FC<Props> = (props) => {
-	const { socket, closeForm } = props
+	const { socket } = props
+
+	const navigate = useNavigate()
 
 	const [schedulesConfig, setSchedulesConfig] = useState<any>({})
 	const [form, setForm] = useState<any>(INITIAL_FORM)
@@ -61,7 +63,7 @@ const ScheduleUpdate: React.FC<Props> = (props) => {
 			setSchedulesConfig(sc)
 			Api.GetSchedules().then(schedules => {
 				socket.emit('schedule-change', schedules)
-				closeForm()
+				navigate(-1)
 			})
 		})
 	}

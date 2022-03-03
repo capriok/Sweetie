@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { Routes, Route, Outlet, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Routes, Route, Outlet } from 'react-router-dom'
 
-import ViewTitle from './Title'
-import ViewActions from './Actions'
+import PageTitle from './Title'
+import PageRouter from './Router'
 
-import 'Styles/components/view/view.scss'
+import 'Styles/components/page/page.scss'
 
 interface Props {
 	props: {
@@ -15,21 +15,16 @@ interface Props {
 		setModeValue: (mode: any) => any
 		setThemeValues: (theme: any) => any
 	}
-	path: string
 	title: string
 	component: React.FC<any>
 	subRoutes: Array<SubRoute>
 }
 
-const View: React.FC<Props> = (viewProps) => {
-	const { props, path, title, component, subRoutes } = viewProps
-	const Parent = component
+const Page: React.FC<Props> = (viewProps) => {
+	const { props, title, component, subRoutes } = viewProps
+	const PageComponent = component
 
 	const [actionsOpen, setActionsOpen] = useState(false)
-
-	useEffect(() => {
-		setActionsOpen(false)
-	}, [path])
 
 	const layoutProps = {
 		title,
@@ -41,29 +36,30 @@ const View: React.FC<Props> = (viewProps) => {
 	return (
 		<Routes>
 			<Route path="/" element={<Layout props={layoutProps} />}>
-				<Route index element={<Parent {...props} />} />
-				{subRoutes.map(({ path, component }) => {
-					const Form = component
-					return (
-						<Route
-							key={path}
-							path={path}
-							element={<Form {...props} />} />
-					)
-				})}
+				<Route index element={
+					<PageComponent {...props} />
+				} />
+				{subRoutes.map(({ path, component: Form }) => (
+					<Route
+						key={path}
+						path={path}
+						element={
+							<Form {...props} />
+						} />
+				))}
 			</Route>
 		</Routes>
 	)
 }
 
-export default View
+export default Page
 
 const Layout: React.FC<any> = ({ props }) => (
-	<div id="View">
-		<ViewTitle title={props.title} />
+	<div id="Page">
+		<PageTitle title={props.title} />
 		<Outlet />
-		<ViewActions
-			actions={props.subRoutes}
+		<PageRouter
+			routes={props.subRoutes}
 			open={props.actionsOpen}
 			setOpen={props.setActionsOpen} />
 	</div>

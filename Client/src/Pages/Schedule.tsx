@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-import ViewItem from 'Components/View/Item'
+import PageItem from 'Components/Page/Item'
 import ProgressCircle from 'Components/Common/ProgressCircle'
 
-import 'Styles/views/schedule.scss'
+import 'Styles/pages/schedule.scss'
 
 interface Props {
 	state: SwtState
 }
 
-const Schedule: React.FC<Props> = (props) => {
+const SchedulePage: React.FC<Props> = (props) => {
 	const { state } = props
 
 	const [foodProgress, setFoodProgress] = useState(0)
@@ -27,22 +27,22 @@ const Schedule: React.FC<Props> = (props) => {
 		<div className="schedule">
 			<div className="schedule-title"><p>Cats</p></div>
 			<div className="schedules">
-				<ViewItem className="schedule-wrap">
+				<PageItem className="schedule-wrap">
 					<div className="schedule-title">Food</div>
 					<ProgressCircle progress={foodProgress} />
-				</ViewItem>
-				<ViewItem className="schedule-wrap">
+				</PageItem>
+				<PageItem className="schedule-wrap">
 					<div className="schedule-title">Waste</div>
 					<ProgressCircle progress={wasteProgress} />
-				</ViewItem>
+				</PageItem>
 				<div className="schedule-title">House</div>
-				<ViewItem className="schedule-wrap">
+				<PageItem className="schedule-wrap">
 					<div className="schedule-title">Floor</div>
 					<ProgressCircle progress={floorProgress} />
-				</ViewItem>
+				</PageItem>
 			</div>
 		</div>
 	)
 }
 
-export default Schedule
+export default SchedulePage

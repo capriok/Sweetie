@@ -1,26 +1,26 @@
-import Overview from 'Views/Overview'
-import Calendar from 'Views/Calendar'
-import CalendarPost from 'Components/Forms/Calendar/Post'
-import CalendarUpdate from 'Components/Forms/Calendar/Update'
-import CalendarDelete from 'Components/Forms/Calendar/Delete'
-import Grocery from 'Views/Grocery'
-import GroceryPost from 'Components/Forms/Grocery/Post'
-import GroceryDelete from 'Components/Forms/Grocery/Delete'
-import Schedule from 'Views/Schedule'
-import ScheduleUpdate from 'Components/Forms/Schedule/Update'
-import Options from 'Views/Options'
+import OverviewPage from 'Pages/Overview'
+import CalendarPage from 'Pages/Calendar'
+import CalendarPost from 'Components/Form/Calendar/Post'
+import CalendarUpdate from 'Components/Form/Calendar/Update'
+import CalendarDelete from 'Components/Form/Calendar/Delete'
+import GroceryPage from 'Pages/Grocery'
+import GroceryPost from 'Components/Form/Grocery/Post'
+import GroceryDelete from 'Components/Form/Grocery/Delete'
+import SchedulePage from 'Pages/Schedule'
+import ScheduleUpdate from 'Components/Form/Schedule/Update'
+import OptionsPage from 'Pages/Options'
 
 export const routes = [
 	{
-		path: '',
+		path: 'overview/*',
 		title: 'Overview',
-		component: Overview,
+		component: OverviewPage,
 		subRoutes: []
 	},
 	{
 		path: 'calendar/*',
 		title: 'Calendar Events',
-		component: Calendar,
+		component: CalendarPage,
 		subRoutes: [
 			{
 				path: 'post',
@@ -39,7 +39,7 @@ export const routes = [
 	{
 		path: 'grocery/*',
 		title: 'Groceries',
-		component: Grocery,
+		component: GroceryPage,
 		subRoutes: [
 			{
 				path: 'post',
@@ -54,7 +54,7 @@ export const routes = [
 	{
 		path: 'schedule/*',
 		title: 'Schedules',
-		component: Schedule,
+		component: SchedulePage,
 		subRoutes: [
 			{
 				path: 'update',
@@ -65,7 +65,7 @@ export const routes = [
 	{
 		path: 'options',
 		title: 'Options',
-		component: Options,
+		component: OptionsPage,
 		subRoutes: []
 	},
 ]

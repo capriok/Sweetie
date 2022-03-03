@@ -19,7 +19,7 @@ const DatetimeModule: React.FC<Props> = () => {
 	}, [currentTime])
 
 	function getTime() {
-		const time = format(new Date(), 'p')
+		const time = format(new Date(), 'pp')
 
 		return time
 	}

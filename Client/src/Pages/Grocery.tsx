@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Api from 'api'
 
-import ViewItem from 'Components/View/Item'
+import PageItem from 'Components/Page/Item'
 
-import 'Styles/views/grocery.scss'
+import 'Styles/pages/grocery.scss'
 
 interface Props {
 	socket: Socket
 	state: SwtState
 }
 
-const Grocery: React.FC<Props> = (props) => {
+const GroceryPage: React.FC<Props> = (props) => {
 	const { socket, state } = props
 
 	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
@@ -34,9 +34,9 @@ const Grocery: React.FC<Props> = (props) => {
 		<div className="grocery">
 			<div className="list-title"><p>Items</p></div>
 			{!groceryList.length
-				? <ViewItem><p className="gl-empty">No Items</p></ViewItem>
+				? <PageItem><p className="gl-empty">No Items</p></PageItem>
 				: groceryList.map((item: any, i) => (
-					<ViewItem key={i} className="grocery-wrap">
+					<PageItem key={i} className="grocery-wrap">
 						<p className="name">{item.name}</p>
 						<div className="check">
 							<input
@@ -44,11 +44,11 @@ const Grocery: React.FC<Props> = (props) => {
 								checked={item.checked}
 								onChange={(e) => checkGrocery(item, e.target.checked)} />
 						</div>
-					</ViewItem>
+					</PageItem>
 				))
 			}
 		</div>
 	)
 }
 
-export default Grocery
+export default GroceryPage

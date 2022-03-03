@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { FormatEventTimes } from 'Helpers/TimeHelp'
 
-import ViewItem from 'Components/View/Item'
+import PageItem from 'Components/Page/Item'
 
-import 'Styles/views/calendar.scss'
+import 'Styles/pages/calendar.scss'
 
 interface Props {
 	state: SwtState
 }
 
-const Calendar: React.FC<Props> = (props) => {
+const CalendarPage: React.FC<Props> = (props) => {
 	const { state } = props
 
 	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])
@@ -23,11 +23,11 @@ const Calendar: React.FC<Props> = (props) => {
 		<div className="calendar">
 			{!eventList.length && <div className="list-title"><p><b>Events</b></p></div>}
 			{!eventList.length
-				? <ViewItem><p className="ce-empty">No Events</p></ViewItem>
+				? <PageItem><p className="ce-empty">No Events</p></PageItem>
 				: eventList.map((event, i) => (
 					<div key={i} className="event">
 						<div className="month-wrap">{DisplayMonth(eventList, i)}</div>
-						<ViewItem className="event-wrap">
+						<PageItem className="event-wrap">
 							<div className="name">
 								<p>{event.name}</p>
 							</div>
@@ -41,14 +41,14 @@ const Calendar: React.FC<Props> = (props) => {
 									{`${event.timed ? `, ${FormatEventTimes(event)}` : ''}`}
 								</span>
 							</div>
-						</ViewItem>
+						</PageItem>
 					</div>
 				))}
 		</div>
 	)
 }
 
-export default Calendar
+export default CalendarPage
 
 export function FilterBeforeToday(events: Array<CalendarEvent>) {
 	return events.filter((e) => {

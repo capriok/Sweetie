@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import { Routes, Route, Outlet } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Routes, Route, Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { routes } from 'routes'
 
 import useDataFetch from 'Hooks/useDataFetch'
 import useAppMode from 'Hooks/useAppMode'
 import useAppTheme from 'Hooks/useAppTheme'
 
 import Auth from 'Components/Auth/Auth'
-import View from 'Components/View/View'
+import Page from 'Components/Page/Page'
 
 import 'Styles/app.scss'
-import { routes } from 'routes'
 
 interface Props {
   socket: Socket
@@ -18,11 +18,18 @@ interface Props {
 const App: React.FC<Props> = (props) => {
   const { socket } = props
 
+  const navigate = useNavigate()
+  const location = useLocation()
+
   const { loading, state } = useDataFetch(socket)
   const { setModeValue } = useAppMode()
   const { setThemeValues } = useAppTheme()
 
   const [auth, setAuth] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (auth) navigate('/overview')
+  }, [auth])
 
   const routeProps = {
     socket,
@@ -43,13 +50,13 @@ const App: React.FC<Props> = (props) => {
   if (!auth) return <Auth {...authProps} />
 
   return (
-    <Routes>
+    <Routes key={location.pathname} location={location}>
       <Route path="/" element={<Layout />}>
         {routes.map((props) =>
           <Route
             key={props.path}
             path={props.path}
-            element={<View props={routeProps} {...props} />} />
+            element={<Page props={routeProps} {...props} />} />
         )}
       </Route>
     </Routes>
@@ -58,8 +65,10 @@ const App: React.FC<Props> = (props) => {
 
 export default App
 
-const Layout = () => (
-  <div id="App">
-    <Outlet />
-  </div>
-)
+const Layout: React.FC<any> = () => {
+  return (
+    <div id="App">
+      <Outlet />
+    </div>
+  )
+}

@@ -2,8 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import Api from 'api'
 
-import 'Styles/components/forms/form.scss'
-import 'Styles/components/forms/grocery.scss'
+import 'Styles/components/form/form.scss'
+import 'Styles/components/form/grocery.scss'
 
 interface Props {
 	socket: Socket

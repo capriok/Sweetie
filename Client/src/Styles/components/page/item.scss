@@ -1,11 +1,11 @@
 @import "../../index.scss";
 
-#View .view-item * {
+.page-item * {
 	user-select: none;
 	cursor: pointer;
 }
 
-#View .view-item {
+.page-item {
 	user-select: none;
 	cursor: pointer;
 	width: 100%;
@@ -19,7 +19,7 @@
 	}
 }
 
-#View .vi-active {
+.pi-active {
 	&:active {
 		transition: 0.2s;
 		transform: scale(0.98);

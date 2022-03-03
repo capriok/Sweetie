@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useLocalStorage } from 'Hooks/useLocalStorage'
 
-import ViewItem from 'Components/View/Item'
+import PageItem from 'Components/Page/Item'
 
-import 'Styles/views/options.scss'
+import 'Styles/pages/options.scss'
 
 const HEXtoHSL = require('hex-to-hsl')
 
@@ -14,7 +14,7 @@ interface Props {
 	setThemeValues: (theme: any) => any
 }
 
-const Options: React.FC<Props> = (props) => {
+const OptionsPage: React.FC<Props> = (props) => {
 	const { auth, setAuth, setModeValue, setThemeValues } = props
 
 	const [modeState, setModeState] = useState(false)
@@ -77,13 +77,13 @@ const Options: React.FC<Props> = (props) => {
 	)
 }
 
-export default Options
+export default OptionsPage
 
 const Option: React.FC<any> = ({ label, children }) => (
-	<ViewItem className="option-wrap">
+	<PageItem className="option-wrap">
 		<label>{label}</label>
 		<p>{children}</p>
-	</ViewItem>
+	</PageItem>
 )
 
 function boolToString(bool: boolean) {
