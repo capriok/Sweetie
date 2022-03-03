@@ -1,24 +1,15 @@
 import React, { useState } from 'react'
+import { Routes, Route, Outlet } from 'react-router-dom'
+
 import useDataFetch from 'Hooks/useDataFetch'
 import useAppMode from 'Hooks/useAppMode'
 import useAppTheme from 'Hooks/useAppTheme'
 
-import Secret from 'Components/Auth/Secret'
-import ViewMotion from 'Components/View/Motion'
+import Auth from 'Components/Auth/Auth'
 import View from 'Components/View/View'
-import Overview from 'Views/Overview'
-import Calendar from 'Views/Calendar'
-import CalendarPost from 'Components/Forms/Calendar/Post'
-import CalendarUpdate from 'Components/Forms/Calendar/Update'
-import CalendarDelete from 'Components/Forms/Calendar/Delete'
-import Grocery from 'Views/Grocery'
-import GroceryPost from 'Components/Forms/Grocery/Post'
-import GroceryDelete from 'Components/Forms/Grocery/Delete'
-import Schedule from 'Views/Schedule'
-import ScheduleUpdate from 'Components/Forms/Schedule/Update'
-import Options from 'Views/Options'
 
 import 'Styles/app.scss'
+import { routes } from 'routes'
 
 interface Props {
   socket: Socket
@@ -26,120 +17,49 @@ interface Props {
 
 const App: React.FC<Props> = (props) => {
   const { socket } = props
-  const { loading, state, dispatch } = useDataFetch(socket)
 
-  const [auth, setAuth] = useState<boolean>(false)
+  const { loading, state } = useDataFetch(socket)
   const { setModeValue } = useAppMode()
   const { setThemeValues } = useAppTheme()
 
-  const [component, setComponent] = useState<{ [key: string]: boolean }>({ overview: true })
+  const [auth, setAuth] = useState<boolean>(false)
 
-  function dispatchView(value: string) {
-    setComponent({ [value]: true })
-  }
-
-  const suiteProps = {
+  const routeProps = {
     socket,
     state,
-    dispatch,
-    dispatchView
-  }
-
-  const authProps = {
     auth,
-    setAuth
-  }
-
-  const optionProps = {
-    ...suiteProps,
-    ...authProps,
+    setAuth,
     setModeValue,
     setThemeValues
   }
 
-  const fromLeftVariants = {
-    hidden: { opacity: 0, y: 0, x: -300 },
-    visible: { opacity: 1, y: 0, x: 0 },
-    exit: { opacity: 0, y: 0, x: -300 }
-  }
-  const fromRightVariants = {
-    hidden: { opacity: 0, y: 0, x: 300 },
-    visible: { opacity: 1, y: 0, x: 0 },
-    exit: { opacity: 0, y: 0, x: 300 }
+  const authProps = {
+    auth,
+    setAuth,
   }
 
   if (loading) return <></>
 
-  if (!auth) return <Secret {...authProps} />
+  if (!auth) return <Auth {...authProps} />
 
   return (
-    <div id="App">
-      <ViewMotion
-        visible={component.overview}
-        variants={fromLeftVariants}
-        component={
-          <View
-            title="Overview"
-            props={suiteProps}
-            component={Overview}
-            actions={[]}
-          />
-        } />
-      <ViewMotion
-        visible={component.calendar}
-        variants={fromRightVariants}
-        component={
-          <View
-            title="Calendar Events"
-            props={suiteProps}
-            component={Calendar}
-            actions={[
-              { type: 'post', component: CalendarPost },
-              { type: 'update', component: CalendarUpdate },
-              { type: 'delete', component: CalendarDelete }
-            ]}
-          />
-        } />
-      <ViewMotion
-        visible={component.grocery}
-        variants={fromRightVariants}
-        component={
-          <View
-            title="Groceries"
-            props={suiteProps}
-            component={Grocery}
-            actions={[
-              { type: 'post', component: GroceryPost },
-              { type: 'delete', component: GroceryDelete }
-            ]}
-          />
-        } />
-      <ViewMotion
-        visible={component.schedule}
-        variants={fromRightVariants}
-        component={
-          <View
-            title="Schedules"
-            props={suiteProps}
-            component={Schedule}
-            actions={[
-              { type: 'update', component: ScheduleUpdate }
-            ]}
-          />
-        } />
-      <ViewMotion
-        visible={component.options}
-        variants={fromRightVariants}
-        component={
-          <View
-            title="Options"
-            props={optionProps}
-            component={Options}
-            actions={[]}
-          />
-        } />
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {routes.map((props) =>
+          <Route
+            key={props.path}
+            path={props.path}
+            element={<View props={routeProps} {...props} />} />
+        )}
+      </Route>
+    </Routes>
   )
 }
 
 export default App
+
+const Layout = () => (
+  <div id="App">
+    <Outlet />
+  </div>
+)

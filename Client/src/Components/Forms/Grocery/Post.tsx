@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
 import Api from 'api'
 
 import 'Styles/components/forms/form.scss'
@@ -6,7 +7,6 @@ import 'Styles/components/forms/form.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
-	closeForm: () => React.SetStateAction<any>
 }
 
 interface FormState {
@@ -20,7 +20,9 @@ const INITIAL_FORM: FormState = {
 }
 
 const GroceryPost: React.FC<Props> = (props) => {
-	const { socket, closeForm } = props
+	const { socket } = props
+
+	const navigate = useNavigate()
 
 	const [form, setForm] = useState<any>(INITIAL_FORM)
 
@@ -30,7 +32,7 @@ const GroceryPost: React.FC<Props> = (props) => {
 			submit(name)
 			if (i === form.names.length - 1) resolve('Done')
 		})
-		).then(() => closeForm())
+		).then(() => navigate(-1))
 	}
 
 	function submit(name: string) {

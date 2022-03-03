@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom"
 import { DatesAreOnSameDay } from 'Helpers/TimeHelp'
 
 import ViewItem from 'Components/View/Item'
@@ -8,11 +9,11 @@ import 'Styles/views/overview.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
-	dispatchView: (value: string) => void
 }
 
 const Overview: React.FC<Props> = (props) => {
-	const { state, dispatchView } = props
+	const { state } = props
+	const navigate = useNavigate()
 
 	function renderCalendarOverview() {
 		const todaysEvents = state.calendarEvents.filter((event, i) => {
@@ -62,23 +63,23 @@ const Overview: React.FC<Props> = (props) => {
 		<div className="overview">
 			<Tile
 				title="Todays Events"
-				onClick={() => dispatchView('calendar')}>
+				onClick={() => navigate('calendar')}>
 				{renderCalendarOverview()}
 			</Tile>
 			<Tile
 				title="Groceries"
-				onClick={() => dispatchView('grocery')}>
+				onClick={() => navigate('grocery')}>
 				{renderGroceryOverview()}
 			</Tile>
 			<Tile
 				title="Schedules"
-				onClick={() => dispatchView('schedule')}>
+				onClick={() => navigate('schedule')}>
 				{renderScheduleOverview()}
 			</Tile>
 			<Tile
 				title="Options"
 				cname="option-tile"
-				onClick={() => dispatchView('options')}>
+				onClick={() => navigate('options')}>
 				Options
 			</Tile>
 		</div>
@@ -90,7 +91,7 @@ export default Overview
 const Tile: React.FC<any> = ({ title, onClick, cname, children }) => {
 	const tileProps = {
 		onClick,
-		className: `tile-wrap vi-active ${cname}`
+		className: `tile-wrap vi-active${cname ? ` ${cname}` : ''}`
 	}
 	return (
 		<div className="tile">

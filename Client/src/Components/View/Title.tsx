@@ -1,26 +1,21 @@
 import React from 'react'
+import { useNavigate } from 'react-router'
 
 import 'Styles/components/view/title.scss'
 
 interface Props {
 	title: string
-	goBack?: () => any
 }
 
 const ViewTitle: React.FC<Props> = (props) => {
-	const titleProps = {
-		className: 'view-title'
-	}
-	const navProps = {
-		className: 'view-nav',
-		onClick: props.goBack
-	}
+	const { title } = props
+	const navigate = useNavigate()
 
 	return (
-		<div {...titleProps}>
-			<h2>{props.title}</h2>
-			{props.title !== 'Overview' &&
-				<div {...navProps}>Go back</div>
+		<div className="view-title">
+			<h2>{title}</h2>
+			{title !== 'Overview' &&
+				<div className="view-nav" onClick={() => navigate(-1)}>Go back</div>
 			}
 		</div>
 	)

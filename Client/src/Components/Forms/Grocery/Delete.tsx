@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router'
 import Api from 'api'
 
 import 'Styles/components/forms/form.scss'
@@ -7,11 +8,12 @@ import 'Styles/components/forms/grocery.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
-	closeForm: () => React.SetStateAction<any>
 }
 
 const GroceryDelete: React.FC<Props> = (props) => {
-	const { socket, state, closeForm } = props
+	const { socket, state } = props
+
+	const navigate = useNavigate()
 
 	function clearAllClick() {
 		const confirmation = window.confirm(
@@ -20,7 +22,7 @@ const GroceryDelete: React.FC<Props> = (props) => {
 		if (confirmation) {
 			Api.RemoveAllGrocery().then(gl => {
 				socket.emit('grocery-change', gl)
-				closeForm()
+				navigate(-1)
 			})
 		}
 	}
@@ -34,7 +36,7 @@ const GroceryDelete: React.FC<Props> = (props) => {
 		if (confirmation) {
 			Api.RemoveCheckedGrocery().then(gl => {
 				socket.emit('grocery-change', gl)
-				closeForm()
+				navigate(-1)
 			})
 		}
 	}

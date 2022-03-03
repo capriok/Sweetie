@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import useSocket from 'Hooks/useSocket'
 import { useLocalStorage } from 'Hooks/useLocalStorage'
@@ -37,7 +38,11 @@ function Index() {
 
   if (serverIdle) return <Splash />
 
-  return <App socket={socket} />
+  return (
+    <BrowserRouter>
+      <App socket={socket} />
+    </BrowserRouter>
+  )
 }
 
 ReactDOM.render(

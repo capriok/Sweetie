@@ -17,8 +17,8 @@ type SwtAction =
 	{ type: SwtReducerActions.SETGROCERY, value: Array<Grocery> } |
 	{ type: SwtReducerActions.SETSCHEDULE, value: CatScheduleDay }
 
-interface ViewAction {
-	type: string
+interface SubRoute {
+	path: string
 	component: any
 }
 

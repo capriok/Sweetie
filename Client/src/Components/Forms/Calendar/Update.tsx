@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { motion, MotionProps } from 'framer-motion'
 import { FormatEventTimes } from 'Helpers/TimeHelp'
 import Api from 'api'
@@ -10,7 +11,6 @@ import 'Styles/components/forms/form.scss'
 interface Props {
 	socket: Socket
 	state: SwtState
-	closeForm: () => React.Dispatch<any>
 }
 
 interface FormState {
@@ -32,7 +32,10 @@ const INITIAL_FORM: FormState = {
 }
 
 const CalendarUpdate: React.FC<Props> = (props) => {
-	const { socket, state, closeForm } = props
+	const { socket, state } = props
+
+	const navigate = useNavigate()
+
 	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])
 
 	useEffect(() => {
@@ -80,7 +83,7 @@ const CalendarUpdate: React.FC<Props> = (props) => {
 		console.log(event)
 		Api.UpdateCalendarEvent(event).then(ce => {
 			socket.emit('calendar-change', ce)
-			closeForm()
+			navigate(-1)
 		})
 	}
 

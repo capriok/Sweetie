@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
 import { MotionProps, motion } from 'framer-motion'
 
 import { MdMoreHoriz, MdMoreVert, MdPostAdd, MdOutlineUpdate, MdDeleteOutline } from 'react-icons/md'
@@ -6,24 +7,24 @@ import { MdMoreHoriz, MdMoreVert, MdPostAdd, MdOutlineUpdate, MdDeleteOutline } 
 import 'Styles/components/view/actions.scss'
 
 interface Props {
-	component: React.FC<any>
-	actions: Array<ViewAction>
-	activeForm: ViewAction
-	dispatchForm: (action: ViewAction) => void
+	open: boolean
+	setOpen: React.Dispatch<boolean>
+	actions: Array<SubRoute>
 }
 
 const ViewActions: React.FC<Props> = (props) => {
-	const { component, actions, activeForm, dispatchForm } = props
+	const { open, setOpen, actions } = props
 
-	const [open, setOpen] = useState(false)
-
-	useEffect(() => {
-		setOpen(false)
-	}, [component, activeForm])
+	const navigate = useNavigate()
 
 	const actionButtonProps = {
 		open,
-		setOpen
+		toggle: () => setOpen(!open)
+	}
+
+	function actionClick(path: string) {
+		navigate(path)
+		setOpen(false)
 	}
 
 	const slideUpProps: MotionProps = {
@@ -42,17 +43,17 @@ const ViewActions: React.FC<Props> = (props) => {
 		}
 	}
 
-	if (!actions.length || activeForm.type) return <></>
+	if (!actions.length) return <></>
 
 	return (
 		<div className="view-actions">
 			<div className="actions-wrap">
 				<motion.div {...slideUpProps}>
 					{open && actions.map((action, i) => (
-						<ActionType
+						<Action
 							key={i}
-							action={action}
-							onClick={() => dispatchForm(action)} />
+							path={action.path}
+							onClick={() => actionClick(action.path)} />
 					))}
 				</motion.div>
 				<ActionsButton {...actionButtonProps} />
@@ -63,16 +64,18 @@ const ViewActions: React.FC<Props> = (props) => {
 
 export default ViewActions
 
-const ActionsButton: React.FC<any> = ({ open, setOpen }) => (
+const ActionsButton: React.FC<any> = ({ open, toggle }) => (
 	<div
 		className="actions-button"
-		onClick={() => setOpen(!open)}>
+		onClick={toggle}>
 		{!open ? <MdMoreHoriz /> : <MdMoreVert />}
 	</div>
 )
 
-const ActionType: React.FC<any> = ({ action, onClick }) => {
-	switch (action.type) {
+const Action: React.FC<any> = ({ path, onClick }) => {
+	console.log(path);
+
+	switch (path) {
 		case 'post':
 			return <div className="action" onClick={onClick}><MdPostAdd /></div>
 		case 'update':

@@ -5,14 +5,14 @@ import { useLocalStorage } from 'Hooks/useLocalStorage'
 import Pinpad from './Pinpad'
 import Pinview from './Pinview'
 
-import 'Styles/components/auth/secret.scss'
+import 'Styles/components/auth/auth.scss'
 
 interface Props {
 	auth: boolean
 	setAuth: React.Dispatch<boolean>
 }
 
-const Secret: React.FC<Props> = ({ auth, setAuth }) => {
+const Auth: React.FC<Props> = ({ auth, setAuth }) => {
 	const passcode = process.env.REACT_APP_PASSCODE
 
 	const [lsAuth, setLsAuth] = useLocalStorage('Swt-Auth')
@@ -86,7 +86,7 @@ const Secret: React.FC<Props> = ({ auth, setAuth }) => {
 		}
 	}
 	return (
-		<div className="secret">
+		<div className="auth">
 			<motion.div {...slideDownProps} animate={!loading ? 'visible' : 'hidden'}>
 				<div id="pinpad">
 					<Pinview pincode={pincode} />
@@ -97,4 +97,4 @@ const Secret: React.FC<Props> = ({ auth, setAuth }) => {
 	)
 }
 
-export default Secret
+export default Auth
