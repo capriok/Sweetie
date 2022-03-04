@@ -1,16 +1,16 @@
 @import "../../index.scss";
 
-.page-router {
+.page-actions {
 	margin-top: 60px;
 	width: 100%;
 
-	.router-wrap {
+	.actions-wrap {
 		position: fixed;
 		right: 20px;
 		bottom: 20px;
 
-		.router-button,
-		.route {
+		.actions-button,
+		.action {
 			font-size: 1.2rem;
 			user-select: none;
 			cursor: pointer;
@@ -25,14 +25,14 @@
 			}
 		}
 
-		.router-button {
+		.actions-button {
 			background-color: $theme;
 			&:active {
 				background-color: $themelight;
 			}
 		}
 
-		.route {
+		.action {
 			background-color: $themelight;
 			margin-bottom: 10px;
 			font-size: 1.2rem;

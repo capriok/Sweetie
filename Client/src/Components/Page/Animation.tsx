@@ -28,6 +28,7 @@ const PageAnimation: React.FC<Props> = (props) => {
 		initial: 'initial',
 		animate: 'animate',
 		exit: 'exit',
+		style: { width: '100%' },
 		transition: {
 			type: 'spring',
 			stiffness: 80,

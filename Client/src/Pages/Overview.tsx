@@ -42,21 +42,14 @@ const OverviewPage: React.FC<Props> = (props) => {
 		const isFoodDay = state.schedules.food.is
 		const isWasteDay = state.schedules.waste.is
 		const isFloorDay = state.schedules.floor.is
+		const isDayOff = !isFoodDay && !isWasteDay && !isFloorDay
 
-		if (!isFoodDay && !isWasteDay && !isFloorDay) {
-			return <p>Day off</p>
-		} else if (isFoodDay && (!isWasteDay || !isFloorDay)) {
-			return <p>Food Day</p>
-		} else if (isWasteDay && (!isFoodDay || !isFloorDay)) {
-			return <p>Waste Day</p>
-		} else if (isFloorDay && (!isFoodDay || !isWasteDay)) {
-			return <p>Floor Day</p>
-		} else {
-			return <div className="cs-ov">
-				<p>Food Day</p>
-				<p>Waste Day</p>
-			</div>
-		}
+		return <div className="cs-ov">
+			{isDayOff && <p>Day off</p>}
+			{isFoodDay && <p>Food Day</p>}
+			{isWasteDay && <p>Waste Day</p>}
+			{isFloorDay && <p>Floor Day</p>}
+		</div>
 	}
 
 	return (

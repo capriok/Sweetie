@@ -1,28 +1,28 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router'
 import { MotionProps, motion } from 'framer-motion'
 
 import { MdMoreHoriz, MdMoreVert, MdPostAdd, MdOutlineUpdate, MdDeleteOutline } from 'react-icons/md'
 
-import 'Styles/components/page/router.scss'
+import 'Styles/components/page/actions.scss'
 
 interface Props {
 	open: boolean
 	setOpen: React.Dispatch<boolean>
-	routes: Array<SubRoute>
+	actions: Array<SubRoute>
 }
 
-const PageRouter: React.FC<Props> = (props) => {
-	const { open, setOpen, routes: router } = props
+const PageActions: React.FC<Props> = (props) => {
+	const { open, setOpen, actions } = props
 
 	const navigate = useNavigate()
 
-	const routerButtonProps = {
+	const actionsButtonProps = {
 		open,
 		toggle: () => setOpen(!open)
 	}
 
-	function routeClick(path: string) {
+	function actionClick(path: string) {
 		navigate(path)
 		setOpen(false)
 	}
@@ -31,7 +31,6 @@ const PageRouter: React.FC<Props> = (props) => {
 		initial: 'hidden',
 		transition: {
 			type: 'spring',
-			duration: 0.1,
 			stiffness: 80,
 			mass: .4
 		},
@@ -43,30 +42,30 @@ const PageRouter: React.FC<Props> = (props) => {
 		}
 	}
 
-	if (!router.length) return <></>
+	if (!actions.length) return <></>
 
 	return (
-		<div className="page-router">
-			<div className="router-wrap">
+		<div className="page-actions">
+			<div className="actions-wrap">
 				<motion.div {...slideUpProps}>
-					{open && router.map((action, i) => (
+					{open && actions.map((action, i) => (
 						<Route
 							key={i}
 							path={action.path}
-							onClick={() => routeClick(action.path)} />
+							onClick={() => actionClick(action.path)} />
 					))}
 				</motion.div>
-				<RouterButton {...routerButtonProps} />
+				<ActionsButton {...actionsButtonProps} />
 			</div>
 		</div>
 	)
 }
 
-export default PageRouter
+export default PageActions
 
-const RouterButton: React.FC<any> = ({ open, toggle }) => (
+const ActionsButton: React.FC<any> = ({ open, toggle }) => (
 	<div
-		className="router-button"
+		className="actions-button"
 		onClick={toggle}>
 		{!open ? <MdMoreHoriz /> : <MdMoreVert />}
 	</div>
@@ -75,11 +74,11 @@ const RouterButton: React.FC<any> = ({ open, toggle }) => (
 const Route: React.FC<any> = ({ path, onClick }) => {
 	switch (path) {
 		case 'post':
-			return <div className="route" onClick={onClick}><MdPostAdd /></div>
+			return <div className="action" onClick={onClick}><MdPostAdd /></div>
 		case 'update':
-			return <div className="route" onClick={onClick}><MdOutlineUpdate /></div>
+			return <div className="action" onClick={onClick}><MdOutlineUpdate /></div>
 		case 'delete':
-			return <div className="route" onClick={onClick}><MdDeleteOutline /></div>
+			return <div className="action" onClick={onClick}><MdDeleteOutline /></div>
 		default:
 			return <></>
 	}

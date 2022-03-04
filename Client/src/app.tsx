@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route, Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { routes } from 'routes'
 
 import useDataFetch from 'Hooks/useDataFetch'
@@ -19,7 +19,6 @@ const App: React.FC<Props> = (props) => {
   const { socket } = props
 
   const navigate = useNavigate()
-  const location = useLocation()
 
   const { loading, state } = useDataFetch(socket)
   const { setModeValue } = useAppMode()
@@ -50,25 +49,17 @@ const App: React.FC<Props> = (props) => {
   if (!auth) return <Auth {...authProps} />
 
   return (
-    <Routes key={location.pathname} location={location}>
-      <Route path="/" element={<Layout />}>
+    <div id="App">
+      <Routes>
         {routes.map((props) =>
           <Route
             key={props.path}
             path={props.path}
-            element={<Page props={routeProps} {...props} />} />
+            element={<Page pageProps={routeProps} {...props} />} />
         )}
-      </Route>
-    </Routes>
+      </Routes>
+    </div>
   )
 }
 
 export default App
-
-const Layout: React.FC<any> = () => {
-  return (
-    <div id="App">
-      <Outlet />
-    </div>
-  )
-}
