@@ -1,12 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { AppContext } from 'app'
 import { useNavigate } from 'react-router'
 import Api from 'api'
 
 import 'Styles/components/form/form.scss'
-
-interface Props {
-	socket: Socket
-}
 
 interface FormState {
 	name?: string
@@ -25,8 +22,8 @@ const INITIAL_FORM: FormState = {
 	endTime: undefined
 }
 
-const CalendarPost: React.FC<Props> = (props) => {
-	const { socket } = props
+const CalendarPost: React.FC = () => {
+	const { socket } = useContext(AppContext)
 
 	const navigate = useNavigate()
 
@@ -59,7 +56,7 @@ const CalendarPost: React.FC<Props> = (props) => {
 
 		console.log(event)
 		Api.PostCalendarEvent(event).then(ce => {
-			socket.emit('calendar-change', ce)
+			socket!.emit('calendar-change', ce)
 		})
 	}
 

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from 'app'
 import { useLocalStorage } from 'Hooks/useLocalStorage'
 
 import PageItem from 'Components/Page/Item'
@@ -7,15 +8,8 @@ import 'Styles/pages/options.scss'
 
 const HEXtoHSL = require('hex-to-hsl')
 
-interface Props {
-	auth: boolean
-	setAuth: React.Dispatch<boolean>
-	setModeValue: (mode: any) => any
-	setThemeValues: (theme: any) => any
-}
-
-const OptionsPage: React.FC<Props> = (props) => {
-	const { auth, setAuth, setModeValue, setThemeValues } = props
+const OptionsPage: React.FC = () => {
+	const { auth, setAuth, setModeValue, setThemeValues } = useContext(AppContext)
 
 	const [modeState, setModeState] = useState(false)
 
@@ -25,23 +19,23 @@ const OptionsPage: React.FC<Props> = (props) => {
 	useEffect(() => {
 		if (lsMode) {
 			setModeState(lsMode.dark)
-			setModeValue(lsMode.dark)
+			setModeValue!(lsMode.dark)
 		}
 	}, [])
 
 	function logoutClick() {
-		setAuth(false)
+		setAuth!(false)
 		localStorage.removeItem('Swt-Auth')
 	}
 
 	function modeChange(e: any) {
 		setModeState(e.target.checked)
-		setModeValue(e.target.checked)
+		setModeValue!(e.target.checked)
 	}
 
 	function themeChange(e: any) {
 		const hsl = HEXtoHSL(e.target.value)
-		setThemeValues({
+		setThemeValues!({
 			h: hsl[0],
 			s: `${hsl[1]}%`,
 			l: `${hsl[2]}%`
@@ -57,7 +51,7 @@ const OptionsPage: React.FC<Props> = (props) => {
 			</Option>
 			<Option
 				label="Authenticated">
-				{boolToString(auth)}
+				{boolToString(auth!)}
 			</Option>
 			<Option label="Theme">
 				<input

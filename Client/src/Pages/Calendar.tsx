@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FormatEventTimes } from 'Helpers/TimeHelp'
+import { AppContext } from 'app'
 
 import PageItem from 'Components/Page/Item'
 
 import 'Styles/pages/calendar.scss'
 
-interface Props {
-	state: SwtState
-}
-
-const CalendarPage: React.FC<Props> = (props) => {
-	const { state } = props
+const CalendarPage: React.FC = () => {
+	const { state } = useContext(AppContext)
 
 	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])
 
 	useEffect(() => {
-		const events = FilterBeforeToday(state.calendarEvents)
+		const events = FilterBeforeToday(state!.calendarEvents)
 		setEventList(events)
-	}, [state.calendarEvents])
+	}, [state!.calendarEvents])
 
 	return (
 		<div className="calendar">

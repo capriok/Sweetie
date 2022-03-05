@@ -1,13 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { AppContext } from 'app'
 import { useNavigate } from 'react-router'
 import Api from 'api'
 
 import 'Styles/components/form/form.scss'
-
-interface Props {
-	socket: Socket
-	state: SwtState
-}
 
 interface FormState {
 	names: Array<string>
@@ -19,8 +15,8 @@ const INITIAL_FORM: FormState = {
 	checked: false
 }
 
-const GroceryPost: React.FC<Props> = (props) => {
-	const { socket } = props
+const GroceryPost: React.FC = () => {
+	const { socket } = useContext(AppContext)
 
 	const navigate = useNavigate()
 
@@ -45,7 +41,7 @@ const GroceryPost: React.FC<Props> = (props) => {
 
 		console.log(item)
 		Api.PostGrocery(item).then(gl => {
-			socket.emit('grocery-change', gl)
+			socket!.emit('grocery-change', gl)
 		})
 	}
 

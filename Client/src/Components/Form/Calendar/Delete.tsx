@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from 'app'
 import { FormatEventTimes } from 'Helpers/TimeHelp'
 import Api from 'api'
 
@@ -6,20 +7,15 @@ import PageItem from 'Components/Page/Item'
 
 import 'Styles/components/form/form.scss'
 
-interface Props {
-	socket: Socket
-	state: SwtState
-}
-
-const CalendarDelete: React.FC<Props> = (props) => {
-	const { socket, state } = props
+const CalendarDelete: React.FC = () => {
+	const { socket, state } = useContext(AppContext)
 
 	const [eventList, setEventList] = useState<Array<CalendarEvent>>([])
 
 	useEffect(() => {
-		const filteredList = filterEvents(state.calendarEvents)
+		const filteredList = filterEvents(state!.calendarEvents)
 		setEventList(filteredList)
-	}, [state.calendarEvents])
+	}, [state!.calendarEvents])
 
 	async function deleteClick(event: CalendarEvent) {
 		const confirmation = window.confirm(`Remove '${event.name}' ?`);
@@ -27,7 +23,7 @@ const CalendarDelete: React.FC<Props> = (props) => {
 		if (confirmation) {
 			Api.RemoveCalendarEvent(event).then(ce => {
 				setEventList(ce)
-				socket.emit('calendar-change', ce)
+				socket!.emit('calendar-change', ce)
 			})
 		}
 	}

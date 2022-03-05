@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from 'app'
 import { useNavigate } from 'react-router'
 import Api from 'api'
 
 import 'Styles/components/form/form.scss'
-
-interface Props {
-	socket: Socket
-	state: SwtState
-}
 
 const INITIAL_FORM = {
 	foodDay: new Date().toJSON().split('T')[0],
@@ -15,8 +11,8 @@ const INITIAL_FORM = {
 	floorDay: new Date().toJSON().split('T')[0]
 }
 
-const ScheduleUpdate: React.FC<Props> = (props) => {
-	const { socket } = props
+const ScheduleUpdate: React.FC = () => {
+	const { socket } = useContext(AppContext)
 
 	const navigate = useNavigate()
 
@@ -62,7 +58,7 @@ const ScheduleUpdate: React.FC<Props> = (props) => {
 		Api.UpdateSchedulesConfig(config).then(sc => {
 			setSchedulesConfig(sc)
 			Api.GetSchedules().then(schedules => {
-				socket.emit('schedule-change', schedules)
+				socket!.emit('schedule-change', schedules)
 				navigate(-1)
 			})
 		})

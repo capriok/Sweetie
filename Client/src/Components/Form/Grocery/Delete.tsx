@@ -1,17 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext } from 'app'
 import { useNavigate } from 'react-router'
 import Api from 'api'
 
 import 'Styles/components/form/form.scss'
 import 'Styles/components/form/grocery.scss'
 
-interface Props {
-	socket: Socket
-	state: SwtState
-}
 
-const GroceryDelete: React.FC<Props> = (props) => {
-	const { socket, state } = props
+const GroceryDelete: React.FC = () => {
+	const { socket, state } = useContext(AppContext)
 
 	const navigate = useNavigate()
 
@@ -21,21 +18,21 @@ const GroceryDelete: React.FC<Props> = (props) => {
 		)
 		if (confirmation) {
 			Api.RemoveAllGrocery().then(gl => {
-				socket.emit('grocery-change', gl)
+				socket!.emit('grocery-change', gl)
 				navigate(-1)
 			})
 		}
 	}
 
 	function clearCheckedClick() {
-		if (!state.groceryList.filter(g => g.checked).length) return
+		if (!state!.groceryList.filter(g => g.checked).length) return
 
 		const confirmation = window.confirm(
 			'Clear checked items?'
 		)
 		if (confirmation) {
 			Api.RemoveCheckedGrocery().then(gl => {
-				socket.emit('grocery-change', gl)
+				socket!.emit('grocery-change', gl)
 				navigate(-1)
 			})
 		}
@@ -48,11 +45,11 @@ const GroceryDelete: React.FC<Props> = (props) => {
 				<div className="grocery">
 					<div className="form-line">
 						<label>Checked Items</label>
-						<button onClick={clearCheckedClick}>{state.groceryList.filter(g => g.checked).length}</button>
+						<button onClick={clearCheckedClick}>{state!.groceryList.filter(g => g.checked).length}</button>
 					</div>
 					<div className="form-line">
 						<label>All Items</label>
-						<button onClick={clearAllClick}>{state.groceryList.length}</button>
+						<button onClick={clearAllClick}>{state!.groceryList.length}</button>
 					</div>
 				</div>
 			</div>
