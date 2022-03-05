@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext } from 'app'
 import { useNavigate } from "react-router-dom"
 import { DatesAreOnSameDay } from 'Helpers/TimeHelp'
 
@@ -6,17 +7,12 @@ import PageItem from 'Components/Page/Item'
 
 import 'Styles/pages/overview.scss'
 
-interface Props {
-	socket: Socket
-	state: SwtState
-}
-
-const OverviewPage: React.FC<Props> = (props) => {
-	const { state } = props
+const OverviewPage: React.FC = () => {
+	const { state } = useContext(AppContext)
 	const navigate = useNavigate()
 
 	function renderCalendarOverview() {
-		const todaysEvents = state.calendarEvents.filter((event, i) => {
+		const todaysEvents = state!.calendarEvents.filter((event, i) => {
 			return DatesAreOnSameDay(new Date(), new Date(event.date))
 		})
 
@@ -33,15 +29,15 @@ const OverviewPage: React.FC<Props> = (props) => {
 	}
 
 	function renderGroceryOverview() {
-		const groceryItems = state.groceryList.length
+		const groceryItems = state!.groceryList.length
 
 		return <p>{groceryItems} Items</p>
 	}
 
 	function renderScheduleOverview() {
-		const isFoodDay = state.schedules.food.is
-		const isWasteDay = state.schedules.waste.is
-		const isFloorDay = state.schedules.floor.is
+		const isFoodDay = state!.schedules.food.is
+		const isWasteDay = state!.schedules.waste.is
+		const isFloorDay = state!.schedules.floor.is
 		const isDayOff = !isFoodDay && !isWasteDay && !isFloorDay
 
 		return <div className="cs-ov">

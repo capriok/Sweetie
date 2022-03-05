@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from 'app'
 import Api from 'api'
 
 import PageItem from 'Components/Page/Item'
 
 import 'Styles/pages/grocery.scss'
 
-interface Props {
-	socket: Socket
-	state: SwtState
-}
-
-const GroceryPage: React.FC<Props> = (props) => {
-	const { socket, state } = props
+const GroceryPage: React.FC = () => {
+	const { socket, state } = useContext(AppContext)
 
 	const [groceryList, setGroceryList] = useState<Array<Grocery>>([])
 
@@ -22,13 +18,13 @@ const GroceryPage: React.FC<Props> = (props) => {
 			checked: val
 		}
 		Api.UpdateGrocery(item).then(gl => {
-			socket.emit('grocery-list-change', gl)
+			socket!.emit('grocery-change', gl)
 		})
 	}
 
 	useEffect(() => {
-		setGroceryList(state.groceryList)
-	}, [state.groceryList])
+		setGroceryList(state!.groceryList)
+	}, [state!.groceryList])
 
 	return (
 		<div className="grocery">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { routes } from 'routes'
 
@@ -15,6 +15,17 @@ interface Props {
   socket: Socket
 }
 
+interface Context {
+  socket: Socket
+  state: SwtState
+  auth: boolean
+  setAuth: React.Dispatch<boolean>
+  setModeValue: (mode: any) => any
+  setThemeValues: (theme: any) => any
+}
+
+export const AppContext = createContext<Partial<Context>>({})
+
 const App: React.FC<Props> = (props) => {
   const { socket } = props
 
@@ -30,7 +41,7 @@ const App: React.FC<Props> = (props) => {
     if (auth) navigate('/overview')
   }, [auth])
 
-  const routeProps = {
+  const context = {
     socket,
     state,
     auth,
@@ -49,16 +60,18 @@ const App: React.FC<Props> = (props) => {
   if (!auth) return <Auth {...authProps} />
 
   return (
-    <div id="App">
-      <Routes>
-        {routes.map((props) =>
-          <Route
-            key={props.path}
-            path={props.path}
-            element={<Page pageProps={routeProps} {...props} />} />
-        )}
-      </Routes>
-    </div>
+    <AppContext.Provider value={context}>
+      <div id="App">
+        <Routes>
+          {routes.map((routeProps) =>
+            <Route
+              key={routeProps.path}
+              path={routeProps.path}
+              element={<Page {...routeProps} />} />
+          )}
+        </Routes>
+      </div>
+    </AppContext.Provider>
   )
 }
 

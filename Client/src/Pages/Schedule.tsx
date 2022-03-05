@@ -1,27 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from 'app'
 
 import PageItem from 'Components/Page/Item'
 import ProgressCircle from 'Components/Common/ProgressCircle'
 
 import 'Styles/pages/schedule.scss'
 
-interface Props {
-	state: SwtState
-}
-
-const SchedulePage: React.FC<Props> = (props) => {
-	const { state } = props
+const SchedulePage: React.FC = () => {
+	const { state } = useContext(AppContext)
 
 	const [foodProgress, setFoodProgress] = useState(0)
 	const [wasteProgress, setWasteProgress] = useState(0)
 	const [floorProgress, setFloorProgress] = useState(0)
 
 	useEffect(() => {
-		if (!state.schedules.date) return
-		setFoodProgress(state.schedules.food.progress)
-		setWasteProgress(state.schedules.waste.progress)
-		setFloorProgress(state.schedules.floor.progress)
-	}, [state.schedules])
+		if (!state!.schedules.date) return
+		setFoodProgress(state!.schedules.food.progress)
+		setWasteProgress(state!.schedules.waste.progress)
+		setFloorProgress(state!.schedules.floor.progress)
+	}, [state!.schedules])
 
 	return (
 		<div className="schedule">
