@@ -1,16 +1,39 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { swtReducer, SwtReducerActions, swtState } from '../state'
 
 import Api from '../api'
 
-const useDataFetch = (socket: Socket) => {
-	const [loading, setLoading] = useState(true)
+const useDataFetch = (socket: Socket, path: string) => {
 	const [state, dispatch] = useReducer(swtReducer, swtState)
 
 	useEffect(() => {
-		setLoading(true)
-		FetchData()
-	}, [])
+		switch (path) {
+			case '/overview':
+				FetchData([
+					{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCALENDAR },
+					{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGROCERY },
+					{ req: Api.GetSchedules(), dispatch: SwtReducerActions.SETSCHEDULE }
+				])
+				break
+			case '/calendar':
+				FetchData([
+					{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCALENDAR },
+				])
+				break
+			case '/grocery':
+				FetchData([
+					{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGROCERY },
+				])
+				break
+			case '/schedule':
+				FetchData([
+					{ req: Api.GetSchedules(), dispatch: SwtReducerActions.SETSCHEDULE }
+				])
+				break
+			default:
+				break
+		}
+	}, [path])
 
 	useEffect(() => {
 		socket.on('calendar-update', (data: Array<CalendarEvent>) => {
@@ -29,12 +52,7 @@ const useDataFetch = (socket: Socket) => {
 		})
 	}, [])
 
-	function FetchData() {
-		const requests = [
-			{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCALENDAR },
-			{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGROCERY },
-			{ req: Api.GetSchedules(), dispatch: SwtReducerActions.SETSCHEDULE }
-		]
+	function FetchData(requests: Array<any>) {
 		Promise.all(requests.map((req: any) => req.req))
 			.then((responses) => {
 				responses.forEach((res, i) => {
@@ -42,10 +60,9 @@ const useDataFetch = (socket: Socket) => {
 					dispatch({ type: requests[i].dispatch, value: res })
 				})
 			})
-			.finally(() => setLoading(false))
 	}
 
-	return { loading, state, dispatch }
+	return { state, dispatch }
 }
 
 export default useDataFetch

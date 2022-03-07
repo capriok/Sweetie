@@ -1,11 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { routes } from 'routes'
 
 import useDataFetch from 'Hooks/useDataFetch'
 import useAppMode from 'Hooks/useAppMode'
 import useAppTheme from 'Hooks/useAppTheme'
 
+import { AiOutlineLoading } from 'react-icons/ai'
 import Auth from 'Components/Auth/Auth'
 import Page from 'Components/Page/Page'
 
@@ -30,8 +31,9 @@ const App: React.FC<Props> = (props) => {
   const { socket } = props
 
   const navigate = useNavigate()
+  const location = useLocation()
 
-  const { loading, state } = useDataFetch(socket)
+  const { state } = useDataFetch(socket, location.pathname)
   const { setModeValue } = useAppMode()
   const { setThemeValues } = useAppTheme()
 
@@ -54,8 +56,6 @@ const App: React.FC<Props> = (props) => {
     auth,
     setAuth,
   }
-
-  if (loading) return <></>
 
   if (!auth) return <Auth {...authProps} />
 
