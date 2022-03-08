@@ -17,11 +17,6 @@ const PageActions: React.FC<Props> = (props) => {
 
 	const navigate = useNavigate()
 
-	const actionsButtonProps = {
-		open,
-		toggle: () => setOpen(!open)
-	}
-
 	function actionClick(path: string) {
 		navigate(path)
 		setOpen(false)
@@ -29,6 +24,7 @@ const PageActions: React.FC<Props> = (props) => {
 
 	const slideUpProps: MotionProps = {
 		initial: 'hidden',
+		exit: 'hidden',
 		transition: {
 			type: 'spring',
 			stiffness: 80,
@@ -37,8 +33,8 @@ const PageActions: React.FC<Props> = (props) => {
 		animate: open ? 'visible' : 'hidden',
 		style: { position: 'absolute' },
 		variants: {
-			hidden: { bottom: -250 },
-			visible: { bottom: 50 }
+			hidden: { opacity: 0, bottom: -200 },
+			visible: { opacity: 1, bottom: 50 }
 		}
 	}
 
@@ -48,14 +44,14 @@ const PageActions: React.FC<Props> = (props) => {
 		<div className="page-actions">
 			<div className="actions-wrap">
 				<motion.div {...slideUpProps}>
-					{open && actions.map((action, i) => (
-						<Route
+					{actions.map((action, i) => (
+						<Action
 							key={i}
 							path={action}
 							onClick={() => actionClick(action)} />
 					))}
 				</motion.div>
-				<ActionsButton {...actionsButtonProps} />
+				<ActionsButton open={open} toggle={() => setOpen(!open)} />
 			</div>
 		</div>
 	)
@@ -71,7 +67,7 @@ const ActionsButton: React.FC<any> = ({ open, toggle }) => (
 	</div>
 )
 
-const Route: React.FC<any> = ({ path, onClick }) => {
+const Action: React.FC<any> = ({ path, onClick }) => {
 	switch (path) {
 		case 'post':
 			return <div className="action" onClick={onClick}><MdPostAdd /></div>
