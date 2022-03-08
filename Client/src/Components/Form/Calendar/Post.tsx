@@ -63,14 +63,13 @@ const CalendarPost: React.FC = () => {
 	return (
 		<div id="form">
 			<div className="form-wrap">
-				<div className="title">Add Events</div>
 				<form onSubmit={(e) => submitClick(e)} >
 					<div className="form-line name">
 						<label>Name</label>
 						<input
 							type="text"
-							autoFocus={true}
 							autoComplete="off"
+							autoCorrect="off"
 							placeholder="Name"
 							value={form.name}
 							onChange={(e) => setForm({ ...form, name: e.target.value })} />

@@ -9,7 +9,7 @@ import 'Styles/components/page/actions.scss'
 interface Props {
 	open: boolean
 	setOpen: React.Dispatch<boolean>
-	actions: Array<SubRoute>
+	actions: Array<string>
 }
 
 const PageActions: React.FC<Props> = (props) => {
@@ -51,8 +51,8 @@ const PageActions: React.FC<Props> = (props) => {
 					{open && actions.map((action, i) => (
 						<Route
 							key={i}
-							path={action.path}
-							onClick={() => actionClick(action.path)} />
+							path={action}
+							onClick={() => actionClick(action)} />
 					))}
 				</motion.div>
 				<ActionsButton {...actionsButtonProps} />

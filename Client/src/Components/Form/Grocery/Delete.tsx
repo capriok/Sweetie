@@ -41,7 +41,6 @@ const GroceryDelete: React.FC = () => {
 	return (
 		<div id="form">
 			<div className="form-wrap">
-				<div className="title">Delete Items</div>
 				<div className="grocery">
 					<div className="form-line">
 						<label>Checked Items</label>

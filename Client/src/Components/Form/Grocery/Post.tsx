@@ -48,7 +48,6 @@ const GroceryPost: React.FC = () => {
 	return (
 		<div id="form">
 			<div className="form-wrap">
-				<div className="title">Add Items</div>
 				<form onSubmit={(e) => submitClick(e)}>
 					{form.names.map((name: string, i: number) =>
 						<div key={i} className="form-line name">
@@ -56,7 +55,8 @@ const GroceryPost: React.FC = () => {
 							<input
 								type="text"
 								value={name}
-								autoFocus={true}
+								autoComplete="off"
+								autoCorrect="off"
 								onChange={(e) => setForm({
 									...form,
 									names: form.names.map((n: string, index: number) => {

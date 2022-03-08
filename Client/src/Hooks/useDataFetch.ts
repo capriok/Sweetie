@@ -8,7 +8,7 @@ const useDataFetch = (socket: Socket, path: string) => {
 
 	useEffect(() => {
 		switch (path) {
-			case '/overview':
+			case '/':
 				FetchData([
 					{ req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCALENDAR },
 					{ req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGROCERY },

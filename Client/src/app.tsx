@@ -11,6 +11,8 @@ import Auth from 'Components/Auth/Auth'
 import Page from 'Components/Page/Page'
 
 import 'Styles/app.scss'
+import { AnimatePresence } from 'framer-motion'
+import PageAnimation from 'Components/Page/Animation'
 
 interface Props {
   socket: Socket
@@ -40,7 +42,7 @@ const App: React.FC<Props> = (props) => {
   const [auth, setAuth] = useState<boolean>(false)
 
   useEffect(() => {
-    if (auth) navigate('/overview')
+    if (auth) navigate('/')
   }, [auth])
 
   const context = {
@@ -60,18 +62,25 @@ const App: React.FC<Props> = (props) => {
   if (!auth) return <Auth {...authProps} />
 
   return (
-    <AppContext.Provider value={context}>
-      <div id="App">
-        <Routes>
-          {routes.map((routeProps) =>
-            <Route
-              key={routeProps.path}
-              path={routeProps.path}
-              element={<Page {...routeProps} />} />
-          )}
-        </Routes>
-      </div>
-    </AppContext.Provider>
+    <div id="App">
+      <AppContext.Provider value={context}>
+        <AnimatePresence>
+          <Routes key={location.pathname} location={location}>
+            {routes.map((props) =>
+              <Route
+                key={props.path}
+                path={props.path}
+                element={
+                  <PageAnimation >
+                    <Page {...props} />
+                  </PageAnimation>
+                }
+              />
+            )}
+          </Routes>
+        </AnimatePresence>
+      </AppContext.Provider>
+    </div>
   )
 }
 

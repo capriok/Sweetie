@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from 'app'
 import { useNavigate } from 'react-router'
-import { motion, MotionProps } from 'framer-motion'
 import { FormatEventTimes } from 'Helpers/TimeHelp'
 import Api from 'api'
 
@@ -83,117 +82,100 @@ const CalendarUpdate: React.FC = () => {
 		})
 	}
 
-	const slideDownProps: MotionProps = {
-		initial: 'hidden',
-		transition: {
-			duration: .5,
-		},
-		style: { width: '100%', },
-		variants: {
-			hidden: { opacity: 0, y: -40 },
-			visible: { opacity: 1, y: 0 }
-		}
-	}
-
 	return (
 		<>
-			<motion.div {...slideDownProps} animate={!event ? 'visible' : 'hidden'}>
-				{!event &&
-					<div id="form" className="no-form-bg">
-						<div className="form-wrap">
-							<div className="title no-mt">Choose Event</div>
-							<div className="calendar">
-								{eventList.map((event, i) => (
-									<div key={i} className="event" onClick={() => setUpdatingEvent(event)}>
-										<PageItem className="event-wrap">
-											<div className="name">
-												<p>{event.name}</p>
-											</div>
-											<div className="date-time">
-												<span className="date">
-													{new Date(event.date).toLocaleDateString('en-us',
-														{ weekday: 'short', month: event.timed ? 'short' : 'long', day: 'numeric' })
-													}
-												</span>
-												<span className="time">
-													{`${event.timed ? `, ${FormatEventTimes(event)}` : ''}`}
-												</span>
-											</div>
-										</PageItem>
-									</div>
-								))}
+			{!event &&
+				<div id="form" className="no-form-bg">
+					<div className="form-wrap">
+						<div className="title no-mt">Choose Event</div>
+						<div className="calendar">
+							{eventList.map((event, i) => (
+								<div key={i} className="event" onClick={() => setUpdatingEvent(event)}>
+									<PageItem className="event-wrap">
+										<div className="name">
+											<p>{event.name}</p>
+										</div>
+										<div className="date-time">
+											<span className="date">
+												{new Date(event.date).toLocaleDateString('en-us',
+													{ weekday: 'short', month: event.timed ? 'short' : 'long', day: 'numeric' })
+												}
+											</span>
+											<span className="time">
+												{`${event.timed ? `, ${FormatEventTimes(event)}` : ''}`}
+											</span>
+										</div>
+									</PageItem>
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
+			}
+			{event &&
+				<div id="form">
+					<div className="form-wrap">
+						<form onSubmit={(e) => submit(e)}>
+							<div className="form-line name">
+								<label htmlFor="name">Name</label>
+								<input
+									name="name"
+									type="text"
+									autoFocus={true}
+									autoComplete="off"
+									placeholder="Name"
+									value={form.name}
+									onChange={(e) => setForm({ ...form, name: e.target.value })} />
 							</div>
-						</div>
+							<div className="form-line date">
+								<label htmlFor="date">Date</label>
+								<input
+									name="date"
+									type="date"
+									value={form.date}
+									onChange={(e) => setForm({ ...form, date: e.target.value })} />
+							</div>
+							<div className="form-line timed">
+								<label htmlFor="timed">Timed</label>
+								<input
+									name="timed"
+									type="checkbox"
+									checked={form.timed}
+									onChange={(e) => setForm({ ...form, timed: e.target.checked })} />
+							</div>
+							{form.timed && <>
+								<div className="form-line start-time">
+									<label htmlFor="start-time">Start</label>
+									<input
+										name="start-time"
+										type="time"
+										value={form.startTime}
+										onChange={(e) => {
+											console.log(e.target.value);
+											setForm({ ...form, startTime: e.target.value })
+										}} />
+								</div>
+								<div className="form-line end-time">
+									<label htmlFor="start-time">End</label>
+									<input
+										name="end-time"
+										type="time"
+										value={form.endTime}
+										onChange={(e) => {
+											console.log(e.target.value);
+											const nullTime = e.target.value === ''
+											setForm({ ...form, endTime: nullTime ? undefined : e.target.value })
+										}} />
+								</div>
+							</>}
+							<div className="form-submit">
+								<button type="submit">Submit</button>
+							</div>
+						</form>
 					</div>
-				}
-			</motion.div>
-			<motion.div {...slideDownProps} animate={event ? 'visible' : 'hidden'}>
-				{event &&
-					<div id="form">
-						<div className="form-wrap">
-							<div className="title">Update Event</div>
-							<form onSubmit={(e) => submit(e)}>
-								<div className="form-line name">
-									<label htmlFor="name">Name</label>
-									<input
-										name="name"
-										type="text"
-										autoFocus={true}
-										autoComplete="off"
-										placeholder="Name"
-										value={form.name}
-										onChange={(e) => setForm({ ...form, name: e.target.value })} />
-								</div>
-								<div className="form-line date">
-									<label htmlFor="date">Date</label>
-									<input
-										name="date"
-										type="date"
-										value={form.date}
-										onChange={(e) => setForm({ ...form, date: e.target.value })} />
-								</div>
-								<div className="form-line timed">
-									<label htmlFor="timed">Timed</label>
-									<input
-										name="timed"
-										type="checkbox"
-										checked={form.timed}
-										onChange={(e) => setForm({ ...form, timed: e.target.checked })} />
-								</div>
-								{form.timed && <>
-									<div className="form-line start-time">
-										<label htmlFor="start-time">Start</label>
-										<input
-											name="start-time"
-											type="time"
-											value={form.startTime}
-											onChange={(e) => {
-												console.log(e.target.value);
-												setForm({ ...form, startTime: e.target.value })
-											}} />
-									</div>
-									<div className="form-line end-time">
-										<label htmlFor="start-time">End</label>
-										<input
-											name="end-time"
-											type="time"
-											value={form.endTime}
-											onChange={(e) => {
-												console.log(e.target.value);
-												const nullTime = e.target.value === ''
-												setForm({ ...form, endTime: nullTime ? undefined : e.target.value })
-											}} />
-									</div>
-								</>}
-								<div className="form-submit">
-									<button type="submit">Submit</button>
-								</div>
-							</form>
-						</div>
-					</div>
+				</div>
 
-				}
-			</motion.div>
+			}
 		</>
 	)
 }

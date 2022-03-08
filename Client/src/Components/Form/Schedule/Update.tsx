@@ -67,11 +67,10 @@ const ScheduleUpdate: React.FC = () => {
 	return (
 		<div id="form">
 			<div className="form-wrap">
-				<div className="title">Update</div>
 				<form onSubmit={(e) => submit(e)}>
 					<div className="line-title">Cats</div>
 					<div className="form-line food">
-						<label>Food Day</label>
+						<label>Food</label>
 						<input
 							type="date"
 							max={new Date().toJSON().split('T')[0]}
@@ -79,7 +78,7 @@ const ScheduleUpdate: React.FC = () => {
 							onChange={(e) => setForm({ ...form, foodDay: e.target.value })} />
 					</div>
 					<div className="form-line waste">
-						<label>Waste Day</label>
+						<label>Waste</label>
 						<input
 							type="date"
 							max={new Date().toJSON().split('T')[0]}
@@ -88,7 +87,7 @@ const ScheduleUpdate: React.FC = () => {
 					</div>
 					<div className="line-title">House</div>
 					<div className="form-line floor">
-						<label>Floor Day</label>
+						<label>Floor</label>
 						<input
 							type="date"
 							max={new Date().toJSON().split('T')[0]}

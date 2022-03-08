@@ -12,60 +12,69 @@ import OptionsPage from 'Pages/Options'
 
 export const routes = [
 	{
-		path: 'overview/*',
+		path: '/',
 		title: 'Overview',
 		component: OverviewPage,
-		subRoutes: []
+		actions: []
 	},
 	{
 		path: 'calendar/*',
 		title: 'Calendar Events',
 		component: CalendarPage,
-		subRoutes: [
-			{
-				path: 'post',
-				component: CalendarPost
-			},
-			{
-				path: 'update',
-				component: CalendarUpdate
-			},
-			{
-				path: 'delete',
-				component: CalendarDelete
-			}
-		]
+		actions: ['post', 'update', 'delete']
+	},
+	{
+		path: 'calendar/post',
+		title: 'Add Events',
+		component: CalendarPost,
+		actions: []
+	},
+	{
+		path: 'calendar/update',
+		title: 'Update Event',
+		component: CalendarUpdate,
+		actions: []
+	},
+	{
+		path: 'calendar/delete',
+		title: 'Delete Events',
+		component: CalendarDelete,
+		actions: []
 	},
 	{
 		path: 'grocery/*',
 		title: 'Groceries',
 		component: GroceryPage,
-		subRoutes: [
-			{
-				path: 'post',
-				component: GroceryPost
-			},
-			{
-				path: 'delete',
-				component: GroceryDelete
-			}
-		]
+		actions: ['post', 'delete']
+	},
+	{
+		path: 'grocery/post',
+		title: 'Add Items',
+		component: GroceryPost,
+		actions: []
+	},
+	{
+		path: 'grocery/delete',
+		title: 'Delete Items',
+		component: GroceryDelete,
+		actions: []
 	},
 	{
 		path: 'schedule/*',
 		title: 'Schedules',
 		component: SchedulePage,
-		subRoutes: [
-			{
-				path: 'update',
-				component: ScheduleUpdate
-			}
-		]
+		actions: ['update']
+	},
+	{
+		path: 'schedule/update',
+		title: 'Update Schedules',
+		component: ScheduleUpdate,
+		actions: []
 	},
 	{
 		path: 'options',
 		title: 'Options',
 		component: OptionsPage,
-		subRoutes: []
+		actions: []
 	},
 ]
