@@ -1,8 +1,8 @@
 @import "../index.scss";
 
 .schedule-module {
+	width: 100%;
 	.module-cont {
-		width: 100%;
 		@include flex;
 		justify-content: space-around;
 

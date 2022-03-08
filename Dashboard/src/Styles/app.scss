@@ -14,9 +14,7 @@
 	#Module {
 		width: 100%;
 		@include flex;
-		align-items: flex-start;
-		flex: 1;
-		padding: 0 100px;
+		padding: 110px 100px;
 	}
 
 	._module-title {
@@ -27,14 +25,5 @@
 		padding-bottom: 20px;
 		margin-bottom: 40px;
 		border-bottom: 2px solid grey;
-	}
-
-	.datetime-module,
-	.calendar-module,
-	.weather-module,
-	.schedule-module,
-	.grocery-module {
-		width: 100%;
-		margin: 110px 0;
 	}
 }

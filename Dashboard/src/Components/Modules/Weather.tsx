@@ -44,11 +44,11 @@ const WeatherModule: React.FC<Props> = () => {
 					<div className="bot _underline">
 						<div className="line">
 							<span className="icon high"><WiThermometer /></span>
-							<span className="max sub-title">{stats.max}</span>
+							<span className="max">{stats.max}</span>
 						</div>
 						<div className="line">
 							<div className="icon low"><WiThermometerExterior /></div>
-							<span className="min sub-title">{stats.min}</span>
+							<span className="min">{stats.min}</span>
 						</div>
 					</div>
 				</div>

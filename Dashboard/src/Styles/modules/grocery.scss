@@ -1,6 +1,7 @@
 @import "../index.scss";
 
 .grocery-module {
+	width: 100%;
 	@include flex;
 
 	.module-cont {

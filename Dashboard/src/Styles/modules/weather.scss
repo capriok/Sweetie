@@ -1,6 +1,7 @@
 @import "../index.scss";
 
 .weather-module {
+	width: 100%;
 	.module-cont {
 		width: 100%;
 		@include flex;
