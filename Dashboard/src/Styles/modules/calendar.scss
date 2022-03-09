@@ -27,7 +27,7 @@
 			display: grid;
 			grid-template-columns: repeat(7, 1fr);
 
-			border: 1px solid $lightgrey;
+			border: 1px solid $greylight;
 			border-radius: 20px;
 
 			.day,
@@ -41,14 +41,14 @@
 					opacity: 0.7;
 				}
 				.number {
-					color: $lightgrey;
+					color: $greylight;
 				}
 			}
 			.day {
 				overflow: hidden;
 				display: flex;
 				flex-direction: column;
-				border: 1px solid $lightgrey;
+				border: 1px solid $greylight;
 
 				background-color: rgba(10, 10, 10, 0.15);
 				.number {
@@ -77,11 +77,11 @@
 					color: rgb(212, 57, 88);
 				}
 				.line {
-					border-bottom: 2px solid grey;
+					border-bottom: 2px solid $greylight;
 					border-image-slice: 1;
 					border-image-source: linear-gradient(
 						to right,
-						grey,
+						$greylight,
 						#00000000
 					);
 				}

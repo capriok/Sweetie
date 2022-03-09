@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import ProgressCircle from 'Components/Common/ProgressCircle'
+import Progress from 'Components/Common/Progress'
 
 import 'Styles/modules/schedule.scss'
 
@@ -28,15 +28,15 @@ const ScheduleModule: React.FC<Props> = (props) => {
 			<div className="module-cont">
 				<div className="schedule">
 					<p className="schedule-title _module-title">Food</p>
-					<ProgressCircle progress={foodProgress} />
+					<Progress progress={foodProgress} />
 				</div>
 				<div className="schedule">
 					<p className="schedule-title _module-title">Waste</p>
-					<ProgressCircle progress={wasteProgress} />
+					<Progress progress={100} />
 				</div>
 				<div className="schedule">
 					<p className="schedule-title _module-title">Floor</p>
-					<ProgressCircle progress={floorProgress} />
+					<Progress progress={floorProgress} />
 				</div>
 			</div>
 		</div>
