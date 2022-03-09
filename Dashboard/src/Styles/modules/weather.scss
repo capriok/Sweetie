@@ -2,6 +2,7 @@
 
 .weather-module {
 	width: 100%;
+
 	.module-cont {
 		width: 100%;
 		@include flex;
@@ -13,9 +14,11 @@
 			width: 100%;
 			padding: 60px 0;
 			border: 2px solid $greylight;
+
 			.icon {
 				font-size: 5rem;
 			}
+
 			.label {
 				color: $greylight;
 			}
@@ -26,14 +29,15 @@
 			@include flex;
 			justify-content: space-around;
 			min-height: 300px;
-
 			border-top-left-radius: 20px;
 			border-top-right-radius: 20px;
+
 			.information-icon {
 				position: absolute;
 				top: -125px;
 				left: 50%;
 				transform: translate(-50%);
+
 				img {
 					width: 250px;
 				}
@@ -50,6 +54,7 @@
 			.middle,
 			.right {
 				align-self: flex-end;
+
 				.info {
 					@include flex;
 					flex-direction: column;
@@ -60,9 +65,11 @@
 				flex: 2;
 				@include flex;
 				justify-content: space-evenly;
+
 				.temperature {
 					font-size: 7rem;
 				}
+
 				.label {
 					font-size: 2.5rem;
 					margin: 20px;
@@ -73,16 +80,18 @@
 		.day-overview {
 			@include flex;
 			justify-content: space-around;
-
 			border-top: none;
 			border-bottom-left-radius: 20px;
 			border-bottom-right-radius: 20px;
+
 			.interval {
 				@include flex;
 				flex-direction: column;
+
 				.label {
 					margin-bottom: 20px;
 				}
+
 				.stat {
 					font-size: 2.5rem;
 				}

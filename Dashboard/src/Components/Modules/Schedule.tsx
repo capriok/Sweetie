@@ -32,7 +32,7 @@ const ScheduleModule: React.FC<Props> = (props) => {
 				</div>
 				<div className="schedule">
 					<p className="schedule-title _module-title">Waste</p>
-					<Progress progress={100} />
+					<Progress progress={wasteProgress} />
 				</div>
 				<div className="schedule">
 					<p className="schedule-title _module-title">Floor</p>

@@ -4,10 +4,12 @@
 	@include flex;
 	width: 100%;
 	transform: rotate(180deg);
+
 	svg {
 		border: $greylight 2px solid;
 		border-radius: 20px;
 	}
+
 	svg rect {
 		fill: $greydark;
 		opacity: 0.5;
