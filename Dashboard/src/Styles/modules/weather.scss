@@ -31,11 +31,11 @@
 			border-top-right-radius: 20px;
 			.information-icon {
 				position: absolute;
-				top: -100px;
+				top: -125px;
 				left: 50%;
 				transform: translate(-50%);
 				img {
-					width: 200px;
+					width: 250px;
 				}
 			}
 
@@ -64,6 +64,7 @@
 					font-size: 7rem;
 				}
 				.label {
+					font-size: 2.5rem;
 					margin: 20px;
 				}
 			}
@@ -83,7 +84,7 @@
 					margin-bottom: 20px;
 				}
 				.stat {
-					font-size: 3rem;
+					font-size: 2.5rem;
 				}
 			}
 		}
