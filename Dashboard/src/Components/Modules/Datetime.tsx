@@ -8,20 +8,24 @@ interface Props {
 }
 
 const DatetimeModule: React.FC<Props> = () => {
+	const [currentSeconds, setCurrentSeconds] = useState(getSeconds())
 	const [currentTime, setCurrentTime] = useState(getTime())
 	const [currentDate, setCurrentDate] = useState(getDate())
 
 	useEffect(() => {
 		setTimeout(() => {
+			setCurrentSeconds(getSeconds())
 			setCurrentTime(getTime())
 			setCurrentDate(getDate())
 		}, 1000)
-	}, [currentTime])
+	}, [currentSeconds])
+
+	function getSeconds() {
+		return format(new Date(), 'pp')
+	}
 
 	function getTime() {
-		const time = format(new Date(), 'pp')
-
-		return time
+		return format(new Date(), 'p')
 	}
 
 	function getDate() {
