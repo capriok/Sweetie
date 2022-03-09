@@ -18,14 +18,17 @@
 		@include flex;
 		flex-direction: column;
 		width: 100%;
+
 		.title {
 			font-size: 1.1rem;
 			font-weight: bold;
 			margin: 20px 0;
 		}
+
 		.no-mt {
 			margin-top: 0 !important;
 		}
+
 		form {
 			width: 100%;
 			max-width: 500px;
@@ -38,6 +41,7 @@
 					margin-top: 0;
 				}
 			}
+
 			.form-line {
 				@include flex;
 				justify-content: space-between;
@@ -51,26 +55,31 @@
 					text-align: left;
 					white-space: nowrap;
 				}
+
 				input,
 				select {
 					outline: none;
 					width: 100%;
 					flex: 2;
 				}
+
 				input[type="checkbox"] {
 					flex: 0.1;
 					width: 15px;
 					height: 15px;
+
 					@media (max-width: 500px) {
 						flex: unset;
 						width: 20px;
 						height: 20px;
 					}
 				}
+
 				.minus-button {
 					margin-right: 5px;
 				}
 			}
+
 			.form-submit {
 				margin-top: 20px;
 			}

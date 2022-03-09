@@ -15,6 +15,7 @@
 		background-color: rgba(145, 145, 145, 0.1);
 		border: 1px solid rgb(211, 211, 211);
 	}
+
 	button {
 		font-size: 0.9rem;
 		user-select: none;
@@ -26,10 +27,12 @@
 		border-radius: 5px;
 		background-color: $themelight;
 		transition: 0.2s;
+
 		&:active {
 			background-color: rgba(120, 120, 120, 0.32);
 		}
 	}
+
 	h1,
 	h2,
 	h3,

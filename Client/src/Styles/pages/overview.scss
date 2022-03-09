@@ -13,12 +13,14 @@
 		&:nth-child(4) {
 			grid-column: span 2;
 		}
+
 		.tile-title {
 			width: 50%;
 			text-align: left;
 			font-weight: bold;
 			margin: 10px 0;
 		}
+
 		.tile-wrap {
 			@include flex;
 			height: 100px;
@@ -26,9 +28,11 @@
 			.ce-ov,
 			.cs-ov {
 				width: 100%;
+
 				p {
 					@include flex;
 					width: 100%;
+
 					&:not(:first-child) {
 						margin-top: 5px !important;
 					}
@@ -40,6 +44,7 @@
 				}
 			}
 		}
+
 		.option-tile {
 			height: 50px !important;
 			color: $themefont !important;

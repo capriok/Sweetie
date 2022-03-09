@@ -1,17 +1,15 @@
 @import "../../index.scss";
 
 .auth {
+	color: white;
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100vw;
 	@include flex;
 	flex-direction: column;
-
-	color: white;
-	background-color: $mode !important;
-
+	width: 100vw;
 	padding-top: 15vh;
+	background-color: $mode !important;
 
 	.invalid {
 		animation: shake 1s ease;

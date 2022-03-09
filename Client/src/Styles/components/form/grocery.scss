@@ -3,12 +3,14 @@
 #form .grocery {
 	@include flex;
 	flex-direction: column;
+
 	.form-line {
 		@include flex;
 		justify-content: space-between;
 		width: 100%;
 		margin: 5px;
 	}
+
 	button {
 		min-width: 75px;
 	}
