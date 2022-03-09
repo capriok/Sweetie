@@ -25,7 +25,7 @@ class Api {
 
 	// WEATHER
 
-	public async GetWeatherStats(): Promise<any> {
+	public async GetWeatherStats(): Promise<WeatherStats> {
 		const res = await AxiosInstance.get('/weather')
 		return res.data.stats
 	}

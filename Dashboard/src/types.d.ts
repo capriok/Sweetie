@@ -22,6 +22,24 @@ interface ViewAction {
 	component: any
 }
 
+interface WeatherStats {
+	current: {
+		loading: boolean
+		temperature: string
+		rain: string
+		clouds: string
+		max: string
+		min: string
+		windSpeed: string
+		windGust: string
+		icon: string
+	}
+	hours: Array<{
+		time: string
+		temp: string
+	}>
+}
+
 interface CalendarEvent {
 	_id?: string
 	name: string

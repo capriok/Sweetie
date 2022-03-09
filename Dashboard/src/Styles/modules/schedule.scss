@@ -2,16 +2,18 @@
 
 .schedule-module {
 	width: 100%;
+
 	.module-cont {
 		@include flex;
 		justify-content: space-around;
 
 		.schedule {
+			position: relative;
 			@include flex;
 			flex-direction: column;
 
 			.schedule-title {
-				margin-bottom: 50px;
+				margin-bottom: 60px;
 			}
 
 			#Progress {

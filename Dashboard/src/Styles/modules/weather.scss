@@ -5,61 +5,85 @@
 	.module-cont {
 		width: 100%;
 		@include flex;
-		justify-content: space-between;
+		flex-direction: column;
 
-		.overview,
-		.stats {
-			width: 45%;
+		.information,
+		.day-overview {
 			@include flex;
-			align-items: stretch;
-			flex-direction: column;
-			.top,
-			.mid,
-			.bot {
-				width: 100%;
-				@include flex;
-				justify-content: space-evenly;
-				.icon {
-					@include flex;
-					font-size: 5rem;
-				}
-			}
-			.line {
-				flex: 1;
-				@include flex;
-				justify-content: space-evenly;
-				width: 100%;
-			}
-		}
-
-		.overview {
-			.description {
-				margin: 0;
-				margin-bottom: 20px;
-			}
-			.mid {
-				.icon {
-					img {
-						width: 160px;
-						filter: drop-shadow(
-							-2px 2px 5px rgba(0, 0, 0, 0.3)
-						);
-					}
-				}
-				.temperature {
-					font-size: 6.5rem;
-				}
-			}
-			.bot {
-				@include flex;
-				justify-content: space-evenly;
-			}
-		}
-
-		.stats {
+			width: 100%;
+			padding: 60px 0;
+			border: 2px solid $lightgrey;
 			.icon {
-				svg {
-					margin: 10px 40px;
+				font-size: 5rem;
+			}
+			.label {
+				color: $lightgrey;
+			}
+		}
+
+		.information {
+			position: relative;
+			@include flex;
+			justify-content: space-around;
+			min-height: 300px;
+
+			border-top-left-radius: 20px;
+			border-top-right-radius: 20px;
+			.information-icon {
+				position: absolute;
+				top: -100px;
+				left: 50%;
+				transform: translate(-50%);
+				img {
+					width: 200px;
+				}
+			}
+
+			.left,
+			.right {
+				flex: 1.5;
+				@include flex;
+				justify-content: space-evenly;
+			}
+
+			.left,
+			.middle,
+			.right {
+				align-self: flex-end;
+				.info {
+					@include flex;
+					flex-direction: column;
+				}
+			}
+
+			.middle {
+				flex: 2;
+				@include flex;
+				justify-content: space-evenly;
+				.temperature {
+					font-size: 7rem;
+				}
+				.label {
+					margin: 20px;
+				}
+			}
+		}
+
+		.day-overview {
+			@include flex;
+			justify-content: space-around;
+
+			border-top: none;
+			border-bottom-left-radius: 20px;
+			border-bottom-right-radius: 20px;
+			.interval {
+				@include flex;
+				flex-direction: column;
+				.label {
+					margin-bottom: 20px;
+				}
+				.stat {
+					font-size: 3rem;
 				}
 			}
 		}

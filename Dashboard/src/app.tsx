@@ -57,7 +57,7 @@ const App: React.FC = () => {
     CalendarModule,
     WeatherModule,
     ScheduleModule,
-    GroceryModule
+    GroceryModule,
   ]
 
   if (loading) return <div id="App" />

@@ -2,14 +2,10 @@ import { useEffect } from 'react'
 import useWeather from 'Hooks/useWeather'
 
 import {
-	WiThermometer,
-	WiThermometerExterior,
 	WiRain,
 	WiCloudy,
 	WiStrongWind,
 	WiWindy,
-	WiSunrise,
-	WiSunset
 } from 'react-icons/wi'
 
 import 'Styles/modules/weather.scss'
@@ -22,68 +18,57 @@ const WeatherModule: React.FC<Props> = () => {
 	const stats = useWeather()
 
 	useEffect(() => {
-		!stats.loading && console.log({ Weather: stats })
+		console.log({ Weather: stats })
 	}, [stats])
 
 	return (
 		<div className="weather-module">
 			<div className="module-cont">
-
-				<div className="overview">
-					<div className="top _underline">
-						<p className="description _module-title">{stats.description}</p>
+				<div className="information">
+					<div className="information-icon">
+						<img src={stats.current.icon} draggable={false} alt="" />
 					</div>
-					<div className="mid _underline">
-						<div className="icon">
-							<img src={stats.icon} draggable={false} alt="" />
+					<div className="left">
+						<div className="info">
+							<span className="label icon"><WiCloudy /></span>
+							<span className="stat">{stats.current.clouds}</span>
+						</div>
+						<div className="info">
+							<span className="label icon"><WiRain /></span>
+							<span className="stat">{stats.current.rain}</span>
+						</div>
+					</div>
+					<div className="middle">
+						<div className="info">
+							<span className="label">L</span>
+							<span className="stat">{stats.current.min}</span>
 						</div>
 						<div className="temperature">
-							<span>{stats.temperature}</span>
+							<span>{stats.current.temperature}</span>
+						</div>
+						<div className="info">
+							<span className="label">H</span>
+							<span className="stat">{stats.current.max}</span>
 						</div>
 					</div>
-					<div className="bot _underline">
-						<div className="line">
-							<span className="icon high"><WiThermometer /></span>
-							<span className="max">{stats.max}</span>
+					<div className="right">
+						<div className="info">
+							<span className="label icon"><WiStrongWind /></span>
+							<span className="stat">{stats.current.windSpeed}</span>
 						</div>
-						<div className="line">
-							<div className="icon low"><WiThermometerExterior /></div>
-							<span className="min">{stats.min}</span>
+						<div className="info">
+							<span className="label icon"><WiWindy /></span>
+							<span className="stat">{stats.current.windGust}</span>
 						</div>
 					</div>
 				</div>
 
-				<div className="stats">
-					<div className="top _underline">
-						<div className="line rain">
-							<div className="icon"><WiRain /></div>
-							<span>{stats.rain}</span>
-						</div>
-						<div className="line cloudiness">
-							<div className="icon"><WiCloudy /></div>
-							<span>{stats.clouds}</span>
-						</div>
-					</div>
-					<div className="mid _underline">
-						<div className="line windspeed">
-							<div className="icon"><WiStrongWind /></div>
-							<span>{stats.windSpeed}</span>
-						</div>
-						<div className="line windgust">
-							<div className="icon"><WiWindy /></div>
-							<span>{stats.windGust}</span>
-						</div>
-					</div>
-					<div className="bot _underline">
-						<div className="line sunrise">
-							<div className="icon"><WiSunrise /></div>
-							<span>{stats.sunrise}</span>
-						</div>
-						<div className="line sunset">
-							<div className="icon"><WiSunset /></div>
-							<span>{stats.sunset}</span>
-						</div>
-					</div>
+				<div className="day-overview">
+					{stats.hours.map((hour: any, i: number) =>
+						<div key={i} className="interval">
+							<span className="label">{hour.time}</span>
+							<span className="stat">{hour.temp}</span>
+						</div>)}
 				</div>
 			</div>
 		</div>
