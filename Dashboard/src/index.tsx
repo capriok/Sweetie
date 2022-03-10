@@ -18,12 +18,11 @@ function Index() {
         if (status === 200) {
           let ms = 0
           const countdown = setInterval(() => {
-            let progress = ++ms * 10 / 100
+            let progress = ++ms * 20 / 100
             if (progress >= 100) {
               clearInterval(countdown)
               return setServerIdle(false)
             }
-
             ProgressBar.style.width = `${progress}vw`
           }, 10)
         }
