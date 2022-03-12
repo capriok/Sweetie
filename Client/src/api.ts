@@ -33,22 +33,22 @@ class Api {
 	// CALENDAR
 
 	public async GetCalendarEvents(): Promise<Array<CalendarEvent>> {
-		const res = await AxiosInstance.get('/calendar')
+		const res = await AxiosInstance.get('/calendar-events')
 		return res.data.list
 	}
 
 	public async PostCalendarEvent(event: CalendarEvent): Promise<Array<CalendarEvent>> {
-		const res = await AxiosInstance.post('/calendar', { event: event })
+		const res = await AxiosInstance.post('/calendar-events', { event: event })
 		return res.data.list
 	}
 
 	public async UpdateCalendarEvent(event: Partial<CalendarEvent>): Promise<Array<CalendarEvent>> {
-		const res = await AxiosInstance.put('/calendar', { event: event })
+		const res = await AxiosInstance.put('/calendar-events', { event: event })
 		return res.data.list
 	}
 
 	public async RemoveCalendarEvent(event: CalendarEvent): Promise<Array<CalendarEvent>> {
-		const res = await AxiosInstance.delete('/calendar', { data: { id: event._id } })
+		const res = await AxiosInstance.delete('/calendar-events', { data: { id: event._id } })
 		return res.data.list
 	}
 
