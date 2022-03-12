@@ -1,7 +1,7 @@
 type Socket = SocketIOClient.Socket
 
 interface SwtState {
-	calendarEvents: Array<CalendarEvent>
+	calendar: Array<CalendarDay>
 	groceryList: Array<Grocery>
 	schedules: CatScheduleDay
 }
@@ -13,7 +13,7 @@ enum SwtReducerActions {
 }
 
 type SwtAction =
-	{ type: SwtReducerActions.SETCALENDAR, value: Array<CalendarEvent> } |
+	{ type: SwtReducerActions.SETCALENDAR, value: Array<CalendarDay> } |
 	{ type: SwtReducerActions.SETGROCERY, value: Array<Grocery> } |
 	{ type: SwtReducerActions.SETSCHEDULE, value: CatScheduleDay }
 
@@ -38,6 +38,15 @@ interface WeatherStats {
 		time: string
 		temp: string
 	}>
+}
+
+interface CalendarDay {
+	number: number
+	events: Array<CalendarEvent>
+	classNames: {
+		number: string,
+		day: string,
+	}
 }
 
 interface CalendarEvent {

@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormatEventTimes } from 'Helpers/TimeHelp'
-import useCalendarDays from 'Hooks/useCalendarDays'
 
 import 'Styles/modules/calendar.scss'
 
@@ -10,14 +9,15 @@ interface Props {
 
 const CalendarModule: React.FC<Props> = (props) => {
 	const { state } = props
-	const { calendarDays, MapEvents } = useCalendarDays()
+	// const { calendarDays, MapEvents } = useCalendarDays()
+	const [calendar, setCalendar] = useState<Array<CalendarDay>>([])
 
 	useEffect(() => {
-		MapEvents(state.calendarEvents)
-	}, [state.calendarEvents])
+		setCalendar(state.calendar)
+	}, [state.calendar])
 
-	function calendarEventClassName(event: CalendarEvent) {
-		const cns = ['event']
+	function eventClassName(event: CalendarEvent) {
+		const cns = ['dot']
 		const work = 'Work'
 
 		if (event.name) cns.push('line')
@@ -37,10 +37,18 @@ const CalendarModule: React.FC<Props> = (props) => {
 					))}
 				</div>
 				<div className="content">
-					{calendarDays.map((day, i: number) => (
-						<div key={i} className={day.dayCns}>
-							<p className={day.numberCns}>{day.number}</p>
-							{day.events.slice(0, 4).map((event, i) =>
+					{calendar.map((day, i) => (
+						<div key={i} className={day.classNames.day}>
+							<p className={day.classNames.number}>{day.number}</p>
+							<div className="events">
+								{day.events.map((event, i) =>
+									<div key={i}
+										className={eventClassName(event)}>
+										•
+									</div>
+								)}
+							</div>
+							{/* {day.events.slice(0, 4).map((event, i) =>
 								<p key={i} className={calendarEventClassName(event)}>
 									<span className="name">{event.name}</span>
 									<span className="timed">
@@ -49,7 +57,7 @@ const CalendarModule: React.FC<Props> = (props) => {
 											: ''
 										}</span>
 								</p>
-							)}
+							)} */}
 						</div>
 					))}
 				</div>

@@ -21,7 +21,7 @@ const App: React.FC = () => {
   useEffect(() => {
     setLoading(true)
     const requests = [
-      { req: Api.GetCalendarEvents(), dispatch: SwtReducerActions.SETCALENDAR },
+      { req: Api.GetCalendarWithEvents(), dispatch: SwtReducerActions.SETCALENDAR },
       { req: Api.GetGroceryList(), dispatch: SwtReducerActions.SETGROCERY },
       { req: Api.GetCatSchedule(), dispatch: SwtReducerActions.SETSCHEDULE }
     ]
@@ -36,7 +36,7 @@ const App: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    socket.on('calendar-update', (data: Array<CalendarEvent>) => {
+    socket.on('calendar-update', (data: Array<CalendarDay>) => {
       console.log({ UpdatedCalendar: data })
       dispatch({ type: SwtReducerActions.SETCALENDAR, value: data })
     })

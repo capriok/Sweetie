@@ -1,5 +1,5 @@
 export const swtState: SwtState = {
-	calendarEvents: [],
+	calendar: [],
 	groceryList: [],
 	schedules: {
 		date: '',
@@ -27,7 +27,7 @@ export enum SwtReducerActions {
 export const swtReducer = (state: SwtState, action: SwtAction): SwtState => {
 	switch (action.type) {
 		case SwtReducerActions.SETCALENDAR:
-			return { ...state, calendarEvents: action.value }
+			return { ...state, calendar: action.value }
 
 		case SwtReducerActions.SETGROCERY:
 			return { ...state, groceryList: action.value }

@@ -32,9 +32,9 @@ class Api {
 
 	// CALENDAR
 
-	public async GetCalendarEvents(): Promise<Array<CalendarEvent>> {
+	public async GetCalendarWithEvents(): Promise<Array<CalendarDay>> {
 		const res = await AxiosInstance.get('/calendar')
-		return res.data.list
+		return res.data.calendar
 	}
 
 	// GROCERY
