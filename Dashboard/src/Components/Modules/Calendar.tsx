@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { FormatEventTimes } from 'Helpers/TimeHelp'
 
 import 'Styles/modules/calendar.scss'
 
@@ -9,7 +8,6 @@ interface Props {
 
 const CalendarModule: React.FC<Props> = (props) => {
 	const { state } = props
-	// const { calendarDays, MapEvents } = useCalendarDays()
 	const [calendar, setCalendar] = useState<Array<CalendarDay>>([])
 
 	useEffect(() => {
@@ -42,22 +40,11 @@ const CalendarModule: React.FC<Props> = (props) => {
 							<p className={day.classNames.number}>{day.number}</p>
 							<div className="events">
 								{day.events.map((event, i) =>
-									<div key={i}
-										className={eventClassName(event)}>
+									<div key={i} className={eventClassName(event)}>
 										•
 									</div>
 								)}
 							</div>
-							{/* {day.events.slice(0, 4).map((event, i) =>
-								<p key={i} className={calendarEventClassName(event)}>
-									<span className="name">{event.name}</span>
-									<span className="timed">
-										{event.timed
-											? FormatEventTimes(event)
-											: ''
-										}</span>
-								</p>
-							)} */}
 						</div>
 					))}
 				</div>
