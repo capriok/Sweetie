@@ -5,10 +5,10 @@
 
 	.module-cont {
 		width: 100%;
+
 		@include flex;
 		flex-direction: column;
-
-		.header {
+		.calendar-header {
 			width: 100%;
 			display: flex;
 			align-items: center;
@@ -22,7 +22,7 @@
 				text-align: center;
 			}
 		}
-		.content {
+		.calendar-body {
 			overflow: hidden;
 			width: 100%;
 			display: grid;
@@ -72,45 +72,6 @@
 					color: $greylight;
 				}
 			}
-			// .event {
-			// 	font-size: 1.6rem;
-			// 	padding: 7px 10px;
-			// 	margin: 0;
-			// 	@include flex;
-			// 	justify-content: space-between;
-			// 	background-color: rgba(80, 80, 80, 0.1);
-
-			// 	.name {
-			// 		overflow: hidden;
-			// 		white-space: nowrap;
-			// 		text-overflow: ellipsis;
-			// 	}
-
-			// 	.timed {
-			// 		margin-left: 5px;
-			// 		min-width: fit-content;
-			// 	}
-			// }
-
-			// 	.line {
-			// 		border-bottom: 2px solid $greylight;
-			// 		border-image-slice: 1;
-			// 		border-image-source: linear-gradient(
-			// 			to right,
-			// 			$greylight,
-			// 			#00000000
-			// 		);
-			// 	}
-
-			// 	.work {
-			// 		border-bottom: 2px solid;
-			// 		border-image-slice: 1;
-			// 		border-image-source: linear-gradient(
-			// 			to right,
-			// 			#008026,
-			// 			#00000000
-			// 		);
-			// 	}
 		}
 	}
 }

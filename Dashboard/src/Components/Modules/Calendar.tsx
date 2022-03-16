@@ -18,7 +18,6 @@ const CalendarModule: React.FC<Props> = (props) => {
 		const cns = ['dot']
 		const work = 'Work'
 
-		if (event.name) cns.push('line')
 		if (event.name.includes(work)) cns.push('work')
 
 		return cns.join(' ')
@@ -27,14 +26,14 @@ const CalendarModule: React.FC<Props> = (props) => {
 	return (
 		<div className="calendar-module">
 			<div className="module-cont">
-				<div className="header">
+				<div className="calendar-header">
 					{weekdays.map((weekday, i) => (
 						<div key={i} className="weekday">
 							<p>{weekday}</p>
 						</div>
 					))}
 				</div>
-				<div className="content">
+				<div className="calendar-body">
 					{calendar.map((day, i) => (
 						<div key={i} className={day.classNames.day}>
 							<p className={day.classNames.number}>{day.number}</p>
