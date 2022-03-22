@@ -3,54 +3,53 @@ import axios from 'axios'
 const ENDPOINT = process.env.REACT_APP_SERVER
 
 const baseInstanceParams = {
-	baseURL: ENDPOINT + '/swt/',
-	timeout: 10000
+  baseURL: ENDPOINT + '/swt/',
+  timeout: 10000
 }
 
 const AxiosInstance = axios.create({
-	...baseInstanceParams,
-	headers: {
-		'Content-Type': 'application/json'
-	}
+  ...baseInstanceParams,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
 class Api {
 
-	// PING
+  // PING
 
-	public async ServerPing(): Promise<{ status: number }> {
-		const res = await AxiosInstance.get('/ping', { timeout: 60000 })
-		return res.data
-	}
+  public async ServerPing(): Promise<{ status: number }> {
+    const res = await AxiosInstance.get('/ping', { timeout: 60000 })
+    return res.data
+  }
 
-	// WEATHER
+  // WEATHER
 
-	public async GetWeatherStats(): Promise<WeatherStats> {
-		const res = await AxiosInstance.get('/weather')
-		return res.data.stats
-	}
+  public async GetWeatherStats(): Promise<WeatherStats> {
+    const res = await AxiosInstance.get('/weather')
+    return res.data.stats
+  }
 
-	// CALENDAR
+  // CALENDAR
 
-	public async GetCalendarWithEvents(): Promise<Array<CalendarDay>> {
-		const res = await AxiosInstance.get('/calendar')
-		return res.data.calendar
-	}
+  public async GetCalendarWithEvents(): Promise<Array<CalendarDay>> {
+    const res = await AxiosInstance.get('/calendar')
+    return res.data.calendar
+  }
 
-	// GROCERY
+  // GROCERY
 
-	public async GetGroceryList(): Promise<Array<Grocery>> {
-		const res = await AxiosInstance.get('/grocery')
-		return res.data.list
-	}
+  public async GetGroceryList(): Promise<Array<Grocery>> {
+    const res = await AxiosInstance.get('/grocery')
+    return res.data.list
+  }
 
-	// SCHEDULE
+  // SCHEDULE
 
-	public async GetCatSchedule(): Promise<ScheduleDay> {
-		const res = await AxiosInstance.get('/schedule')
-		return res.data.schedules
-	}
-
+  public async GetCatSchedule(): Promise<ScheduleDay> {
+    const res = await AxiosInstance.get('/schedule')
+    return res.data.schedules
+  }
 }
 
 export default new Api()
