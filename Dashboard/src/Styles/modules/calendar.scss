@@ -1,77 +1,102 @@
-@import "../index.scss";
+@import '../index.scss';
 
 .calendar-module {
-	width: 100%;
+  width: 100%;
 
-	.module-cont {
-		width: 100%;
+  .module-cont {
+    width: 100%;
+    @include flex;
+    flex-direction: column;
 
-		@include flex;
-		flex-direction: column;
-		.calendar-header {
-			width: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
-			margin-bottom: 20px;
+    .calendar-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-bottom: 20px;
 
-			.weekday {
-				flex: 1;
-				width: 100%;
-				margin: 20px 0;
-				text-align: center;
-			}
-		}
-		.calendar-body {
-			overflow: hidden;
-			width: 100%;
-			display: grid;
-			grid-template-columns: repeat(7, 1fr);
-			border: 1px solid $greylight;
-			border-radius: 20px;
-			.day {
-				position: relative;
-				overflow: hidden;
-				display: flex;
-				flex-direction: column;
-				width: 100%;
-				height: 200px;
-				border: 1px solid $greylight;
+      .weekday {
+        flex: 1;
+        width: 100%;
+        margin: 20px 0;
+        text-align: center;
+      }
+    }
 
-				.number {
-					font-size: 2.5rem;
-					width: 100%;
-					height: 100%;
-					@include flex;
-					flex: 1;
-				}
-				.events {
-					min-height: 50px;
-					max-height: 50px;
-					@include flex;
-					.dot {
-						@include flex;
-						width: 25px;
-						font-size: 2.5rem;
-					}
-					.work {
-						color: dodgerblue;
-					}
-				}
+    .calendar-body {
+      overflow: hidden;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      border: 1px solid $greylight;
+      border-radius: 20px;
 
-				.today {
-					font-weight: bold;
-					color: rgb(212, 57, 88);
-				}
-			}
-			.blur {
-				* {
-					opacity: 0.7;
-				}
-				.number {
-					color: $greylight;
-				}
-			}
-		}
-	}
+      .day {
+        position: relative;
+        overflow: hidden;
+        @include flex;
+        flex-direction: column;
+        width: 100%;
+        height: 200px;
+        border: 1px solid $greylight;
+
+        .number {
+          font-size: 2.5rem;
+          width: 100%;
+          height: 100%;
+          max-height: 100px;
+          min-height: 100px;
+          @include flex;
+        }
+
+        .today {
+          font-weight: bold;
+          color: rgb(212, 57, 88);
+        }
+
+        .dots,
+        .events {
+          max-height: 100px;
+          min-height: 100px;
+          @include flex;
+        }
+
+        .dots {
+          .dot {
+            @include flex;
+            width: 25px;
+            font-size: 2.5rem;
+          }
+
+          .work {
+            color: dodgerblue;
+          }
+
+          .payday {
+            color: forestgreen;
+          }
+        }
+
+        .events {
+          flex-direction: column;
+
+          .today-event {
+            @include flex;
+            font-size: 1.5rem;
+            &:not(:last-child) {
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
+      .blur {
+        * {
+          opacity: 0.7;
+        }
+        .number {
+          color: $greylight;
+        }
+      }
+    }
+  }
 }
