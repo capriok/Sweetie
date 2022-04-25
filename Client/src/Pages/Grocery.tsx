@@ -17,6 +17,10 @@ const GroceryPage: React.FC = () => {
 			name: grocery.name,
 			checked: val
 		}
+		setGroceryList(gl => gl.map(g => {
+			if (g._id === grocery._id) g.checked = val
+			return g
+		}))
 		Api.UpdateGrocery(item).then(gl => {
 			socket!.emit('grocery-change', gl)
 		})

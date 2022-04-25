@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from 'app'
 
 import PageItem from 'Components/Page/Item'
-import ProgressCircle from 'Components/Common/ProgressCircle'
+import { ProgressBar } from 'progresses'
 
 import 'Styles/pages/schedule.scss'
 
@@ -20,22 +20,26 @@ const SchedulePage: React.FC = () => {
 		setFloorProgress(state!.schedules.floor.progress)
 	}, [state!.schedules])
 
+	const progressBarOptions = {
+		showPercent: false
+	}
+
 	return (
 		<div className="schedule">
 			<div className="schedule-title"><p>Cats</p></div>
 			<div className="schedules">
 				<PageItem className="schedule-wrap">
 					<div className="schedule-title">Food</div>
-					<ProgressCircle progress={foodProgress} />
+					<ProgressBar percent={foodProgress} options={progressBarOptions} />
 				</PageItem>
 				<PageItem className="schedule-wrap">
 					<div className="schedule-title">Waste</div>
-					<ProgressCircle progress={wasteProgress} />
+					<ProgressBar percent={wasteProgress} options={progressBarOptions} />
 				</PageItem>
 				<div className="schedule-title">House</div>
 				<PageItem className="schedule-wrap">
 					<div className="schedule-title">Floor</div>
-					<ProgressCircle progress={floorProgress} />
+					<ProgressBar percent={floorProgress} options={progressBarOptions} />
 				</PageItem>
 			</div>
 		</div>
