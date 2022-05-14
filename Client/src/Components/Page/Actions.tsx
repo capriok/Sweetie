@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router'
 import { MotionProps, motion } from 'framer-motion'
 
-import { MdMoreHoriz, MdMoreVert, MdPostAdd, MdOutlineUpdate, MdDeleteOutline } from 'react-icons/md'
+import { MdMoreHoriz, MdMoreVert, MdPostAdd, MdOutlineUpdate } from 'react-icons/md'
+import { RiDeleteBin4Line, RiDeleteBin3Line } from 'react-icons/ri'
 
 import 'Styles/components/page/actions.scss'
+import { AppContext } from 'app'
 
 interface Props {
 	open: boolean
@@ -68,13 +70,19 @@ const ActionsButton: React.FC<any> = ({ open, toggle }) => (
 )
 
 const Action: React.FC<any> = ({ path, onClick }) => {
+	const { state } = useContext(AppContext)
+
 	switch (path) {
 		case 'post':
 			return <div className="action" onClick={onClick}><MdPostAdd /></div>
 		case 'update':
 			return <div className="action" onClick={onClick}><MdOutlineUpdate /></div>
 		case 'delete':
-			return <div className="action" onClick={onClick}><MdDeleteOutline /></div>
+			return <div className="action" onClick={onClick}><RiDeleteBin4Line /></div>
+		case 'deleteChecked':
+			return state!.groceryList.filter(g => g.checked).length
+				? <div className="action" onClick={onClick}><RiDeleteBin3Line /></div>
+				: <></>
 		default:
 			return <></>
 	}

@@ -71,7 +71,7 @@ const App: React.FC<Props> = (props) => {
                 key={props.path}
                 path={props.path}
                 element={
-                  <PageAnimation >
+                  <PageAnimation>
                     <Page {...props} />
                   </PageAnimation>
                 }

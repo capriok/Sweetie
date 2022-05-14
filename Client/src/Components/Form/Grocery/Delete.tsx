@@ -25,8 +25,6 @@ const GroceryDelete: React.FC = () => {
 	}
 
 	function clearCheckedClick() {
-		if (!state!.groceryList.filter(g => g.checked).length) return
-
 		const confirmation = window.confirm(
 			'Clear checked items?'
 		)
@@ -41,11 +39,13 @@ const GroceryDelete: React.FC = () => {
 	return (
 		<div id="form">
 			<div className="form-wrap">
-				<div className="grocery">
-					<div className="form-line">
-						<label>Checked Items</label>
-						<button onClick={clearCheckedClick}>{state!.groceryList.filter(g => g.checked).length}</button>
-					</div>
+				<div className="grocery" style={{ padding: '0 20px' }}>
+					{state!.groceryList.filter(g => g.checked).length > 0 &&
+						<div className="form-line">
+							<label>Checked Items</label>
+							<button onClick={clearCheckedClick}>{state!.groceryList.filter(g => g.checked).length}</button>
+						</div>
+					}
 					<div className="form-line">
 						<label>All Items</label>
 						<button onClick={clearAllClick}>{state!.groceryList.length}</button>

@@ -6,6 +6,7 @@ import CalendarDelete from 'Components/Form/Calendar/Delete'
 import GroceryPage from 'Pages/Grocery'
 import GroceryPost from 'Components/Form/Grocery/Post'
 import GroceryDelete from 'Components/Form/Grocery/Delete'
+import GroceryDeleteChecked from 'Components/Form/Grocery/DeleteChecked'
 import SchedulePage from 'Pages/Schedule'
 import ScheduleUpdate from 'Components/Form/Schedule/Update'
 import OptionsPage from 'Pages/Options'
@@ -45,7 +46,7 @@ export const routes = [
 		path: 'grocery/*',
 		title: 'Groceries',
 		component: GroceryPage,
-		actions: ['post', 'delete']
+		actions: ['post', 'delete', 'deleteChecked']
 	},
 	{
 		path: 'grocery/post',
@@ -57,6 +58,12 @@ export const routes = [
 		path: 'grocery/delete',
 		title: 'Delete Items',
 		component: GroceryDelete,
+		actions: []
+	},
+	{
+		path: 'grocery/deleteChecked',
+		title: 'Delete Checked Items',
+		component: GroceryDeleteChecked,
 		actions: []
 	},
 	{
