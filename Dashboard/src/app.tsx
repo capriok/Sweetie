@@ -18,6 +18,8 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [state, dispatch] = useReducer(swtReducer, swtState)
 
+  const isMobile = window.innerWidth < 500
+
   useEffect(() => {
     setLoading(true)
     const requests = [
@@ -66,7 +68,7 @@ const App: React.FC = () => {
     <div id="App">
       {modules.map((Component, i) => (
         <div id="Module" key={i}>
-          <Component state={state} />
+          <Component state={state} isMobile={isMobile} />
         </div>
       ))}
     </div>

@@ -40,4 +40,17 @@
 			}
 		}
 	}
+	@media (max-width: 500px) {
+		.module-cont {
+			min-height: auto;
+			.items {
+				padding: 20px 0;
+				.item {
+					font-size: .8rem;
+					padding: 20px 0;
+				min-width: 50%;
+			}
+			}
+		}
+	}
 }

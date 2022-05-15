@@ -18,4 +18,16 @@
 	._module-title {
 		font-size: 3rem;
 	}
+
+	@media (max-width: 500px) {
+		overflow: auto;
+		font-size: 1.2rem;
+
+		#Module {
+			padding: 25px 20px;
+		}
+		._module-title {
+			font-size: 1.2rem;
+		}
+	}
 }

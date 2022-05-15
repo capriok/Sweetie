@@ -14,4 +14,12 @@
 	.time {
 		font-size: 7rem;
 	}
+
+	@media (max-width: 500px) {
+		margin-bottom: 0 !important;
+		.date,
+		.time {
+			font-size: 1.2rem;
+		}
+	}
 }

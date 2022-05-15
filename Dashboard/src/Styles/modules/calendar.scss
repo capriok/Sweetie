@@ -99,4 +99,43 @@
       }
     }
   }
+
+	@media (max-width: 500px) {
+    margin-top: -25px !important;
+    
+    .module-cont {
+      .calendar-header {
+        margin-bottom: 25px;
+        .weekday{
+          font-size: 1.2rem;
+          margin:  0;
+        }
+      }
+      .calendar-body {
+        .day{
+          height: auto;
+          .number {
+            font-size: .8rem;
+            max-height: 25px;
+            min-height: 25px;
+          }
+          .dots, .events {
+            max-height: 25px;
+            min-height: 25px;
+          }
+          .dots {
+            width: 20px;
+            .dot, .work, .payday {
+            font-size: .8rem;
+            }
+          }
+          .events{
+            .today-event {
+            font-size: .6rem;
+            }
+          }
+        }
+      }
+    }
+  }
 }

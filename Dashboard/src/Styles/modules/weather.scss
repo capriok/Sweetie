@@ -98,4 +98,58 @@
 			}
 		}
 	}
+	@media (max-width: 500px) {
+		.module-cont {
+			.information {
+				min-height: auto;
+				padding: 20px 0;
+				.information-icon{
+					position: absolute;
+					top: -41px;
+					left: 50%;
+					transform: translate(-50%);
+
+					img {
+						width: 80px;
+					}
+				}
+				.icon {
+					font-size: 1.4rem;
+					margin-bottom: 5px;
+				}
+				.stat {
+					margin-bottom: 10px;
+				}
+				.left, .right {
+					font-size: .8rem;
+					flex-direction: column;
+				}
+				.middle {
+					.info {
+						.stat {
+								font-size: .8rem;
+						}
+					}
+					.temperature {
+						font-size: 1.5rem;
+					}
+					.label {
+						font-size: 1.2rem;
+						margin: 20px 25px;
+					}
+				}
+			}
+			.day-overview {
+				padding: 20px 10px;
+				.interval {
+					.label {
+						font-size: .8rem;
+					}
+					.stat {
+						font-size: .8rem;
+					}
+				}
+			}
+		}
+	}
 }

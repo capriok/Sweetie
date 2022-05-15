@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
-
-import Progress from 'Components/Common/Progress'
+import { ProgressBar } from 'progresses'
 
 import 'Styles/modules/schedule.scss'
 
 interface Props {
   state: SwtState
+  isMobile: boolean
 }
 
 const ScheduleModule: React.FC<Props> = (props) => {
-  const { state } = props
+  const { state, isMobile } = props
 
   const [foodProgress, setFoodProgress] = useState(0)
   const [wasteProgress, setWasteProgress] = useState(0)
@@ -23,20 +23,30 @@ const ScheduleModule: React.FC<Props> = (props) => {
     }
   }, [state.schedules])
 
+  const progressOptions = {
+    height: 8,
+    width: 75,
+    showPercent: false,
+    colors: {
+      back: 'rgba(0, 0, 0, 0.4)',
+      fill: 'rgba(255, 255, 255, 0.4)',
+    }
+  }
+
   return (
     <div className="schedule-module">
       <div className="module-cont">
         <div className="schedule">
           <p className="schedule-title _module-title">Food</p>
-          <Progress progress={foodProgress} />
+          <ProgressBar percent={foodProgress} options={progressOptions} />
         </div>
         <div className="schedule">
           <p className="schedule-title _module-title">Waste</p>
-          <Progress progress={wasteProgress} />
+          <ProgressBar percent={wasteProgress} options={progressOptions} />
         </div>
         <div className="schedule">
           <p className="schedule-title _module-title">Floor</p>
-          <Progress progress={floorProgress} />
+          <ProgressBar percent={floorProgress} options={progressOptions} />
         </div>
       </div>
     </div>

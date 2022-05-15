@@ -12,9 +12,11 @@ import 'Styles/modules/weather.scss'
 
 interface Props {
   state: SwtState
+  isMobile: boolean
 }
 
-const WeatherModule: React.FC<Props> = () => {
+const WeatherModule: React.FC<Props> = (props) => {
+  const { isMobile } = props
   const stats = useWeather()
 
   useEffect(() => {
@@ -66,7 +68,7 @@ const WeatherModule: React.FC<Props> = () => {
         <div className="day-overview">
           {stats.hours.map((hour: any, i: number) => (
             <div key={i} className="interval">
-              <span className="label">{hour.time}</span>
+              <span className="label">{isMobile ? hour.time.split(' ')[0] : hour.time}</span>
               <span className="stat">{hour.temp}</span>
             </div>
           ))}

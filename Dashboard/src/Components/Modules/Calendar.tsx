@@ -4,11 +4,16 @@ import 'Styles/modules/calendar.scss'
 
 interface Props {
   state: SwtState
+  isMobile: boolean
 }
 
 const CalendarModule: React.FC<Props> = (props) => {
-  const { state } = props
+  const { state, isMobile } = props
   const [calendar, setCalendar] = useState<Array<CalendarDay>>([])
+
+  const weekdays = isMobile
+    ? ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+    : ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
   useEffect(() => {
     setCalendar(state.calendar)
@@ -37,9 +42,9 @@ const CalendarModule: React.FC<Props> = (props) => {
           {calendar.map((day, i) => (
             <div key={i} className={day.classNames.day}>
               <p className={day.classNames.number}>{day.number}</p>
-              <div className={day.classNames.number.includes('today') ? 'events' : 'dots'}>
+              <div className={!isMobile && day.classNames.number.includes('today') ? 'events' : 'dots'}>
                 {day.events.map((event, i) =>
-                  day.classNames.number.includes('today')
+                  !isMobile && day.classNames.number.includes('today')
                     ? <div key={i} className="today-event">
                       {event.name}
                     </div>
@@ -57,5 +62,3 @@ const CalendarModule: React.FC<Props> = (props) => {
 }
 
 export default CalendarModule
-
-const weekdays = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
