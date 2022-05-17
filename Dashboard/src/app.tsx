@@ -18,7 +18,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [state, dispatch] = useReducer(swtReducer, swtState)
 
-  const isMobile = window.innerWidth < 500
+  const isMobile = window.innerWidth < 550
 
   useEffect(() => {
     setLoading(true)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ProgressBar } from 'progresses'
+import { ProgressBar, BarOptions } from 'progresses'
 
 import 'Styles/modules/schedule.scss'
 
@@ -23,9 +23,10 @@ const ScheduleModule: React.FC<Props> = (props) => {
     }
   }, [state.schedules])
 
-  const progressOptions = {
-    height: 8,
-    width: 75,
+  const progressOptions: BarOptions = {
+    height: isMobile ? 8 : 175,
+    width: isMobile ? 75 : 250,
+    orientation: isMobile ? 'horizontal' : 'vertical',
     showPercent: false,
     colors: {
       back: 'rgba(0, 0, 0, 0.4)',
