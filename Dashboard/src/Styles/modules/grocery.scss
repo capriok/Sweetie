@@ -41,8 +41,12 @@
 		}
 	}
 	@media (max-width: 500px) {
+		margin-top: 25px;
 		.module-cont {
 			min-height: auto;
+			._module-title{
+				top: -25px;
+			}
 			.items {
 				padding: 20px 0;
 				.item {
