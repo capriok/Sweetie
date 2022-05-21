@@ -73,7 +73,7 @@ const OverviewPage: React.FC = () => {
 			</Tile>
 			<Tile
 				cname="sweetie-tile"
-				onClick={() => window.open('https:/sweetie.kylecaprio.dev', '_self')}>
+				onClick={() => window.location.href = "https://sweetie.kylecaprio.dev"}>
 				Sweetie
 			</Tile>
 		</div>
