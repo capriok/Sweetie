@@ -71,6 +71,11 @@ const OverviewPage: React.FC = () => {
 				onClick={() => navigate('/options')}>
 				Options
 			</Tile>
+			<Tile
+				cname="sweetie-tile"
+				onClick={() => window.open('https:/sweetie.kylecaprio.dev', '_self')}>
+				Sweetie
+			</Tile>
 		</div>
 	)
 }
