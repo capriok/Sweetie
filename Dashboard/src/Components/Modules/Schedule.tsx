@@ -30,7 +30,8 @@ const ScheduleModule: React.FC<Props> = (props) => {
     showPercent: false,
     colors: {
       back: 'rgba(0, 0, 0, 0.4)',
-      fill: 'rgba(255, 255, 255, 0.4)',
+      fill: 'rgba(200, 200, 200, 0.4)',
+      anim: 'rgba(200, 30, 30, 0.4)'
     }
   }
 
