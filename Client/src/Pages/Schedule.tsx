@@ -22,10 +22,6 @@ const SchedulePage: React.FC = () => {
 
 	const progressBarOptions: BarOptions = {
 		showPercent: false,
-		colors: {
-			back: '#c1c1c1',
-			fill: 'steelblue'
-		}
 	}
 
 	return (

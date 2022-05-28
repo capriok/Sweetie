@@ -31,7 +31,7 @@ const ScheduleModule: React.FC<Props> = (props) => {
     colors: {
       back: 'rgba(0, 0, 0, 0.4)',
       fill: 'rgba(200, 200, 200, 0.4)',
-      anim: 'rgba(200, 30, 30, 0.4)'
+      anim: 'rgba(200, 10, 10, 0.4)'
     }
   }
 
