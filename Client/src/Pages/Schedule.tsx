@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from 'app'
 
 import PageItem from 'Components/Page/Item'
-import { ProgressBar } from 'progresses'
+import { ProgressBar, BarOptions } from 'progresses'
 
 import 'Styles/pages/schedule.scss'
 
@@ -20,8 +20,12 @@ const SchedulePage: React.FC = () => {
 		setFloorProgress(state!.schedules.floor.progress)
 	}, [state!.schedules])
 
-	const progressBarOptions = {
-		showPercent: false
+	const progressBarOptions: BarOptions = {
+		showPercent: false,
+		colors: {
+			back: '#c1c1c1',
+			fill: 'steelblue'
+		}
 	}
 
 	return (
