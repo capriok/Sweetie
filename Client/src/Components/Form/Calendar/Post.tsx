@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import Api from 'api'
 
 import 'Styles/components/form/form.scss'
+import { addDays } from 'date-fns'
 
 interface FormState {
 	name?: string
@@ -60,6 +61,15 @@ const CalendarPost: React.FC = () => {
 		})
 	}
 
+	const dateOptions: any = []
+	for (let i = 0; i < 60; i++) {
+		const d = addDays(new Date(), i)
+		dateOptions.push({
+			label: d.toDateString(),
+			value: d.toJSON().split("T")[0]
+		})
+	}
+
 	return (
 		<div id="form">
 			<div className="form-wrap">
@@ -77,16 +87,24 @@ const CalendarPost: React.FC = () => {
 					{form.dates.map((date: string, i: number) =>
 						<div key={i} className="form-line date">
 							<label>Date</label>
-							<input
-								type="date"
-								value={date}
-								onChange={(e) => setForm({
-									...form,
-									dates: form.dates.map((d: string, index: number) => {
-										if (index === i) d = e.target.value
-										return d
+							<select
+								name="date"
+								defaultValue={form.dates[i]}
+								onChange={(e) => {
+									console.log(Date.parse(e.target.value));
+
+									setForm({
+										...form,
+										dates: form.dates.map((d: string, index: number) => {
+											if (index === i) d = e.target.value
+											return d
+										})
 									})
-								})} />
+								}}>
+								{dateOptions.map((o: any, i: number) =>
+									<option key={i} value={o.value}>{o.label}</option>
+								)}
+							</select>
 						</div>
 					)}
 					<div className="form-line date">
@@ -109,9 +127,9 @@ const CalendarPost: React.FC = () => {
 							className="add-button"
 							tabIndex={-1}
 							onClick={() => {
-								if (form.dates[form.dates.length - 1] === undefined) return
+								const d = new Date(Date.parse(form.dates[form.dates.length - 1]))
 								setForm({
-									...form, dates: [...form.dates, undefined]
+									...form, dates: [...form.dates, addDays(d, 1).toJSON().split("T")[0]]
 								})
 							}}
 						>+</button>

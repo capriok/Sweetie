@@ -85,6 +85,12 @@
 			}
 		}
 	}
+
+	@media(max-width: 500px) {
+		width: calc(100% + 40px);
+		height: 100vh;
+		border-radius: 0;
+	}
 }
 
 .no-form-bg {
