@@ -22,8 +22,8 @@ const CalendarModule: React.FC<Props> = (props) => {
   function dotClassName(event: CalendarEvent) {
     const cns = ['dot']
 
-    if (event.name.includes('Work')) cns.push('work')
-    if (event.name.includes('Payday')) cns.push('payday')
+    if (event.name === 'Mayo Clinic') cns.push('mayo')
+    if (event.name === 'Clinic') cns.push('clinic')
 
     return cns.join(' ')
   }
