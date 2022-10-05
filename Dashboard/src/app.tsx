@@ -68,7 +68,7 @@ const App: React.FC = () => {
     <div id="App">
       {modules.map((Component, i) => (
         <div id="Module" key={i}>
-          <Component state={state} isMobile={isMobile} />
+          <Component state={state} isMobile={isMobile} socket={socket} />
         </div>
       ))}
     </div>

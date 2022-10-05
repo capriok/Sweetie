@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
 
 import 'Styles/modules/datetime.scss'
+import api from 'api'
 
 interface Props {
   state: SwtState
+  socket: Socket
 }
 
-const DatetimeModule: React.FC<Props> = () => {
+const DatetimeModule: React.FC<Props> = (props) => {
+  const { socket } = props
+  const [today, setToday] = useState(new Date().getDate())
   const [currentSeconds, setCurrentSeconds] = useState(getSeconds())
   const [currentTime, setCurrentTime] = useState(getTime())
   const [currentDate, setCurrentDate] = useState(getDate())
@@ -17,6 +21,9 @@ const DatetimeModule: React.FC<Props> = () => {
       setCurrentSeconds(getSeconds())
       setCurrentTime(getTime())
       setCurrentDate(getDate())
+      setToday(getToday())
+
+
     }, 1000)
   }, [currentSeconds])
 
@@ -34,6 +41,17 @@ const DatetimeModule: React.FC<Props> = () => {
     const date = format(new Date(), 'do')
 
     return `${day}, ${month} ${date}`
+  }
+
+  function getToday() {
+    const day = new Date().getDate()
+    if (day > today) {
+      api.GetCalendarWithEvents().then(gl => {
+        socket!.emit('calendar-change', gl)
+      })
+    }
+
+    return day
   }
 
   return (
