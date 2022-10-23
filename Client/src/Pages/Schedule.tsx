@@ -11,13 +11,11 @@ const SchedulePage: React.FC = () => {
 
 	const [foodProgress, setFoodProgress] = useState(0)
 	const [wasteProgress, setWasteProgress] = useState(0)
-	const [floorProgress, setFloorProgress] = useState(0)
 
 	useEffect(() => {
 		if (!state!.schedules.date) return
 		setFoodProgress(state!.schedules.food.progress)
 		setWasteProgress(state!.schedules.waste.progress)
-		setFloorProgress(state!.schedules.floor.progress)
 	}, [state!.schedules])
 
 	const progressBarOptions: BarOptions = {
@@ -35,11 +33,6 @@ const SchedulePage: React.FC = () => {
 				<PageItem className="schedule-wrap">
 					<div className="schedule-title">Waste</div>
 					<ProgressBar percent={wasteProgress} options={progressBarOptions} />
-				</PageItem>
-				<div className="schedule-title">House</div>
-				<PageItem className="schedule-wrap">
-					<div className="schedule-title">Floor</div>
-					<ProgressBar percent={floorProgress} options={progressBarOptions} />
 				</PageItem>
 			</div>
 		</div>

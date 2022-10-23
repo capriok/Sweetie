@@ -8,7 +8,6 @@ import 'Styles/components/form/form.scss'
 const INITIAL_FORM = {
 	foodDay: new Date().toJSON().split('T')[0],
 	wasteDay: new Date().toJSON().split('T')[0],
-	floorDay: new Date().toJSON().split('T')[0]
 }
 
 const ScheduleUpdate: React.FC = () => {
@@ -25,7 +24,6 @@ const ScheduleUpdate: React.FC = () => {
 			setSchedulesConfig({
 				lastFoodDay: sc.lastFoodDay,
 				lastWasteDay: sc.lastWasteDay,
-				lastFloorDay: sc.lastFloorDay
 			})
 		})
 	}, [])
@@ -37,7 +35,6 @@ const ScheduleUpdate: React.FC = () => {
 		setForm({
 			foodDay: schedulesConfig.lastFoodDay,
 			wasteDay: schedulesConfig.lastWasteDay,
-			floorDay: schedulesConfig.lastFloorDay
 		})
 	}, [schedulesConfig])
 
@@ -46,12 +43,10 @@ const ScheduleUpdate: React.FC = () => {
 
 		const lastFoodDay = new Date(form.foodDay!)
 		const lastWasteDay = new Date(form.wasteDay!)
-		const lastFloorDay = new Date(form.floorDay!)
 
 		let config = {
 			lastFoodDay: lastFoodDay.toJSON(),
 			lastWasteDay: lastWasteDay.toJSON(),
-			lastFloorDay: lastFloorDay.toJSON()
 		}
 
 		console.log('Updating', config)
@@ -84,16 +79,6 @@ const ScheduleUpdate: React.FC = () => {
 							max={new Date().toJSON().split('T')[0]}
 							value={new Date(form.wasteDay).toISOString().split('T')[0]}
 							onChange={(e) => setForm({ ...form, wasteDay: e.target.value })} />
-					</div>
-					<div className="line-title">House</div>
-					<div className="form-line floor">
-						<label>Floor</label>
-						<input
-							type="date"
-							max={new Date().toJSON().split('T')[0]}
-							value={new Date(form.floorDay).toISOString().split('T')[0]}
-							onChange={(e) => setForm({ ...form, floorDay: e.target.value })}
-						/>
 					</div>
 					<div className="form-submit">
 						<button className="submit" type="submit">Submit</button>

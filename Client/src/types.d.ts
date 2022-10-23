@@ -41,7 +41,6 @@ type ScheduleConfig = {
 	_id?: string
 	lastFoodDay: string
 	lastWasteDay: string
-	lastFloorDay: string
 }
 
 type ScheduleDay = {
