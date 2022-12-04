@@ -53,8 +53,4 @@ type ScheduleDay = {
 		is: boolean
 		progress: number
 	}
-	floor: {
-		is: boolean
-		progress: number
-	}
 }

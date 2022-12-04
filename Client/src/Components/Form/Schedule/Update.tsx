@@ -30,8 +30,7 @@ const ScheduleUpdate: React.FC = () => {
 
 	useEffect(() => {
 		if (!schedulesConfig.lastFoodDay ||
-			!schedulesConfig.lastWasteDay ||
-			!schedulesConfig.lastFloorDay) return
+			!schedulesConfig.lastWasteDay) return
 		setForm({
 			foodDay: schedulesConfig.lastFoodDay,
 			wasteDay: schedulesConfig.lastWasteDay,

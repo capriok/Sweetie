@@ -13,13 +13,11 @@ const ScheduleModule: React.FC<Props> = (props) => {
 
   const [foodProgress, setFoodProgress] = useState(0)
   const [wasteProgress, setWasteProgress] = useState(0)
-  // const [floorProgress, setFloorProgress] = useState(0)
 
   useEffect(() => {
     if (state.schedules) {
       setFoodProgress(state.schedules.food.progress)
       setWasteProgress(state.schedules.waste.progress)
-      // setFloorProgress(state.schedules.floor.progress)
     }
   }, [state.schedules])
 
@@ -46,10 +44,6 @@ const ScheduleModule: React.FC<Props> = (props) => {
           <p className="schedule-title _module-title">Waste</p>
           <ProgressBar percent={wasteProgress} options={progressOptions} />
         </div>
-        {/* <div className="schedule">
-          <p className="schedule-title _module-title">?</p>
-          <ProgressBar percent={floorProgress} options={progressOptions} />
-        </div> */}
       </div>
     </div>
   )

@@ -10,10 +10,6 @@ export const swtState: SwtState = {
     waste: {
       is: false,
       progress: 0
-    },
-    floor: {
-      is: false,
-      progress: 0
     }
   }
 }

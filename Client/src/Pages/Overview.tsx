@@ -37,14 +37,12 @@ const OverviewPage: React.FC = () => {
 	function renderScheduleOverview() {
 		const isFoodDay = state!.schedules.food.is
 		const isWasteDay = state!.schedules.waste.is
-		const isFloorDay = state!.schedules.floor.is
-		const isDayOff = !isFoodDay && !isWasteDay && !isFloorDay
+		const isDayOff = !isFoodDay && !isWasteDay
 
 		return <div className="cs-ov">
 			{isDayOff && <p>Day off</p>}
 			{isFoodDay && <p>Food Day</p>}
 			{isWasteDay && <p>Waste Day</p>}
-			{isFloorDay && <p>Floor Day</p>}
 		</div>
 	}
 
