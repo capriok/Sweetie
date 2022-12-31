@@ -38,7 +38,9 @@ function Index() {
 
   if (serverIdle) return <Splash />
 
-  return <App />
+  return <>
+    <App />
+  </>
 }
 
 ReactDOM.render(
