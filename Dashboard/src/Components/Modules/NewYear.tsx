@@ -31,7 +31,12 @@ const NewYearModule: React.FC<Props> = () => {
     else return false
   }
 
-  const greeting = "Happy New Year!"
+  const greeting = isNewYear
+    ? "Happy New Year!"
+    : <>
+      <div>For last years words belong to last years language</div>
+      <div>and next years words await another voice.</div>
+    </>
 
   return (
     <div className="new-year-module">
