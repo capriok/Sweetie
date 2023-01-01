@@ -11,7 +11,6 @@ import ScheduleModule from 'Components/Modules/Schedule'
 import GroceryModule from 'Components/Modules/Grocery'
 
 import 'Styles/app.scss'
-import NewYearModule from 'Components/Modules/NewYear'
 
 const App: React.FC = () => {
   const { socket } = useSocket()
@@ -60,8 +59,7 @@ const App: React.FC = () => {
     CalendarModule,
     WeatherModule,
     ScheduleModule,
-    // GroceryModule,
-    NewYearModule
+    GroceryModule
   ]
 
   if (loading) return <div id="App" />
