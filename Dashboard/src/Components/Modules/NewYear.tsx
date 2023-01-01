@@ -59,9 +59,6 @@ const NewYearModule: React.FC<Props> = () => {
       {isNewYear && <>
         <div className="firework" />
         <div className="firework" />
-        <div className="firework" />
-        <div className="firework" />
-        <div className="firework" />
       </>}
     </div>
   )
