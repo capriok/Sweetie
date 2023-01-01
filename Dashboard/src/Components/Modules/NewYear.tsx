@@ -7,6 +7,7 @@ interface Props {
 }
 
 const NewYearModule: React.FC<Props> = () => {
+  const [manualOverride, setManualOverride] = useState(false)
   const [isNewYear, setNewYear] = useState(false)
   const [currentSeconds, setCurrentSeconds] = useState(getSeconds())
 
@@ -14,10 +15,20 @@ const NewYearModule: React.FC<Props> = () => {
     setTimeout(() => {
       setCurrentSeconds(getSeconds())
       setNewYear(checkNewYear())
-
-
     }, 1000)
   }, [currentSeconds])
+
+  useEffect(() => {
+    window.addEventListener('keypress', handleKeyDown);
+    return () => {
+      window.removeEventListener('keypress', handleKeyDown);
+    };
+  }, []);
+
+  const handleKeyDown = (event: any) => {
+    if (event.keyCode === 49) setManualOverride(true)
+    if (event.keyCode === 50) setManualOverride(false)
+  };
 
   function getSeconds() {
     return format(new Date(), 'pp')
@@ -26,6 +37,8 @@ const NewYearModule: React.FC<Props> = () => {
   const checkNewYear = () => {
     const month = new Date().getMonth()
     const day = new Date().getDate()
+
+    if (manualOverride) return true
 
     if (month === 1 && day === 1) return true
     else return false
