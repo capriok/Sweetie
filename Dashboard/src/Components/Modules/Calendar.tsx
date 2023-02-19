@@ -13,7 +13,7 @@ const CalendarModule: React.FC<Props> = (props) => {
 
   const weekdays = isMobile
     ? ['S', 'M', 'T', 'W', 'T', 'F', 'S']
-    : ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
   useEffect(() => {
     setCalendar(state.calendar)
