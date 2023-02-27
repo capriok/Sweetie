@@ -1,0 +1,16 @@
+{
+  "name": "sweetie",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "devc": "concurrently \"cd.. & cd Swt-Server & npm run dev\" \"cd Client & npm start\"",
+    "devd": "concurrently \"cd.. & cd Swt-Server & npm run dev\" \"cd Dashboard & npm start\"",
+    "devn": "concurrently \"cd.. & cd Swt-Server & npm run dev\" \"cd.. & cd Next-Sweetie & npm run dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

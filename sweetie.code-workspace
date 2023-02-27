@@ -1,0 +1,14 @@
+{
+  "folders": [
+	{
+		"path": "."
+	},
+	{
+		"path": "../Swt-Server"
+	},
+	{
+		"path": "../Next-Sweetie"
+	}
+],
+  "settings": {}
+}
